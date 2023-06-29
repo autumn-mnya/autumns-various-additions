@@ -1,2 +1,2 @@
+60fps
 mod
-graphics_enhancement
