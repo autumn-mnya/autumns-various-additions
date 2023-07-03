@@ -20,3 +20,5 @@ void ActEntity375(NPCHAR* npc);
 void ActEntity376(NPCHAR* npc);
 void ActEntity377(NPCHAR* npc);
 void ActEntity378(NPCHAR* npc);
+void ActEntity379(NPCHAR* npc);
+void ActEntity380(NPCHAR* npc);

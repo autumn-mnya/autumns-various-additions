@@ -797,23 +797,34 @@ void ActEntity371(NPCHAR* npc)
 		y_radius = CustomNpcValues(npc).CustomValue02;
 
 	// Left, Right, Up, Down. 16 is 1 tile, so doing math we can have a radius for the Camera to target to.
-	if (npc->x - ((16 * x_radius) * 0x200)
-		< gMC->x && npc->x + ((16 * x_radius) * 0x200)
-		> gMC->x && npc->y - ((16 * y_radius) * 0x200)
-		< gMC->y && npc->y + ((16 * y_radius) * 0x200)
-		> gMC->y)
+	switch (npc->act_no)
 	{
-		gFrame->tgt_x = &npc->x;
-		gFrame->tgt_y = &npc->y;
-	}
-	else if (npc->x - ((16 * (x_radius + 1)) * 0x200)
-		< gMC->x && npc->x + ((16 * (x_radius + 1)) * 0x200)
-		> gMC->x && npc->y - ((16 * (y_radius + 1)) * 0x200)
-		< gMC->y && npc->y + ((16 * (y_radius + 1)) * 0x200)
-		> gMC->y)
-	{
-		gFrame->tgt_x = &gMC->tgt_x;
-		gFrame->tgt_y = &gMC->tgt_y;
+		case 0:
+			if (npc->x - ((16 * x_radius) * 0x200)
+				< gMC->x && npc->x + ((16 * x_radius) * 0x200)
+				> gMC->x && npc->y - ((16 * y_radius) * 0x200)
+				< gMC->y && npc->y + ((16 * y_radius) * 0x200)
+				> gMC->y)
+			{
+				gFrame->tgt_x = &npc->x;
+				gFrame->tgt_y = &npc->y;
+			}
+			else if (npc->x - ((16 * (x_radius + 1)) * 0x200)
+				< gMC->x && npc->x + ((16 * (x_radius + 1)) * 0x200)
+				> gMC->x && npc->y - ((16 * (y_radius + 1)) * 0x200)
+				< gMC->y && npc->y + ((16 * (y_radius + 1)) * 0x200)
+				> gMC->y)
+			{
+				gFrame->tgt_x = &gMC->tgt_x;
+				gFrame->tgt_y = &gMC->tgt_y;
+			}
+			break;
+
+		case 1:
+			gFrame->tgt_x = &gMC->tgt_x;
+			gFrame->tgt_y = &gMC->tgt_y;
+			npc->cond = 0;
+			break;
 	}
 
 	npc->rect = rect;
@@ -886,7 +897,7 @@ void ActEntity372(NPCHAR* npc)
 	npc->rect = rect;
 }
 
-// Custom EXP Capsule
+// Energy Capsule (Custom)
 void ActEntity373(NPCHAR* npc)
 {
 	int exp_amount = 10;
@@ -1142,7 +1153,7 @@ void ActEntity377(NPCHAR* npc)
 	npc->rect = rc[npc->ani_no];
 }
 
-// Custom Spikes
+// Spikes (Custom)
 void ActEntity378(NPCHAR* npc)
 {
 	RECT rects[4] = {
@@ -1153,4 +1164,157 @@ void ActEntity378(NPCHAR* npc)
 	};
 
 	npc->rect = rects[CustomNpcValues(npc).CustomValue01];
+}
+
+// Rolling (Custom)
+void ActEntity379(NPCHAR* npc)
+{
+	RECT rc[3] = {
+		{144, 136, 160, 152},
+		{160, 136, 176, 152},
+		{176, 136, 192, 152},
+	};
+
+	int acceleration = 64;
+	int maxspeed = 1024;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		acceleration = CustomNpcValues(npc).CustomValue01;
+
+	if (CustomNpcValues(npc).CustomValue02 != 0)
+		maxspeed = CustomNpcValues(npc).CustomValue02;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			ChangeMapParts(npc->x / 0x200 / 0x10, npc->y / 0x200 / 0x10, 0);
+
+			if (npc->direct == 0)
+				npc->act_no = 10;
+			else
+				npc->act_no = 30;
+
+			break;
+
+		case 10:
+			npc->xm -= acceleration;
+			npc->ym = 0;
+
+			if (npc->flag & 1)
+				npc->act_no = 20;
+
+			break;
+
+		case 20:
+			npc->xm = 0;
+			npc->ym -= acceleration;
+
+			if (npc->flag & 2)
+				npc->act_no = 30;
+
+			break;
+
+		case 30:
+			npc->xm += acceleration;
+			npc->ym = 0;
+
+			if (npc->flag & 4)
+				npc->act_no = 40;
+
+			break;
+
+		case 40:
+			npc->xm = 0;
+			npc->ym += acceleration;
+
+			if (npc->flag & 8)
+				npc->act_no = 10;
+
+			break;
+	}
+
+	if (npc->xm < -maxspeed)
+		npc->xm = -maxspeed;
+	if (npc->xm > maxspeed)
+		npc->xm = maxspeed;
+
+	if (npc->ym < -maxspeed)
+		npc->ym = -maxspeed;
+	if (npc->ym > maxspeed)
+		npc->ym = maxspeed;
+
+	npc->x += npc->xm;
+	npc->y += npc->ym;
+
+	if (++npc->ani_wait > 1)
+	{
+		npc->ani_wait = 0;
+		++npc->ani_no;
+	}
+
+	if (npc->ani_no > 2)
+		npc->ani_no = 0;
+
+	npc->rect = rc[npc->ani_no];
+}
+
+// Acid/Lava Drop Generator (Custom)
+void ActEntity380(NPCHAR* npc)
+{
+	RECT rc[4] = {
+		{0, 0, 0, 0},
+		{104, 0, 112, 16},
+		{112, 0, 120, 16},
+		{120, 0, 128, 16},
+	};
+
+	int dropWait = 0;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		dropWait = CustomNpcValues(npc).CustomValue01;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			npc->act_no = 1;
+			npc->tgt_x = npc->x;
+			npc->act_wait = npc->code_event;
+			// Fallthrough
+		case 1:
+			npc->ani_no = 0;
+
+			if (npc->act_wait != 0)
+			{
+				--npc->act_wait;
+				return;
+			}
+
+			npc->act_no = 10;
+			npc->ani_wait = 0;
+			break;
+
+		case 10:
+			if (++npc->ani_wait > 10)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
+
+			if (npc->ani_no > 3)
+			{
+				npc->ani_no = 0;
+				npc->act_no = 1;
+				npc->act_wait = dropWait;
+				SetNpChar(244, npc->x, npc->y, 0, 0, 0, NULL, 0x100);
+			}
+
+			break;
+	}
+
+	if (npc->ani_wait / 2 % 2)
+		npc->x = npc->tgt_x;
+	else
+		npc->x = npc->tgt_x + 0x200;
+
+	npc->rect = rc[npc->ani_no];
 }
