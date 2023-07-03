@@ -57,78 +57,6 @@ BOOL LoadCustomEvent(const char* path_event, int npc_count)
 	return TRUE;
 }
 
-BOOL Replacement_LoadEvent(const char* path_event)
-{
-	int i, n;
-	FILE* fp;
-	int count;
-	char code[4];
-	EVENT eve;
-
-	char path[MAX_PATH];
-	sprintf(path, "%s\\%s", gDataPath, path_event);
-
-	fp = fopen(path, "rb");
-	if (fp == NULL)
-		return FALSE;
-
-	// Read "PXE" check
-	fread(code, 1, 4, fp);
-	if (memcmp(code, gPassPixEve, 3) != 0)
-	{
-		fclose(fp);
-		return FALSE;
-	}
-
-	// Get amount of NPCs
-	fread(&count, 4, 1, fp);
-
-	// Load NPCs
-	memset(gNPC, 0, sizeof(gNPC));
-
-	n = 170;
-	for (i = 0; i < count; ++i)
-	{
-		// Get data from file
-		fread(&eve, sizeof(EVENT), 1, fp);
-
-		// Set NPC parameters
-		gNPC[n].direct = (eve.bits & NPC_SPAWN_IN_OTHER_DIRECTION) ? 2 : 0;
-		gNPC[n].code_char = eve.code_char;
-		gNPC[n].code_event = eve.code_event;
-		gNPC[n].code_flag = eve.code_flag;
-		gNPC[n].x = eve.x * 0x10 * 0x200;
-		gNPC[n].y = eve.y * 0x10 * 0x200;
-		gNPC[n].bits = eve.bits;
-		gNPC[n].bits |= gNpcTable[gNPC[n].code_char].bits;
-		gNPC[n].exp = gNpcTable[gNPC[n].code_char].exp;
-		SetUniqueParameter(&gNPC[n]);
-
-		// Check flags
-		if (gNPC[n].bits & NPC_APPEAR_WHEN_FLAG_SET)
-		{
-			if (GetNPCFlag(gNPC[n].code_flag) == TRUE)
-				gNPC[n].cond |= 0x80;
-		}
-		else if (gNPC[n].bits & NPC_HIDE_WHEN_FLAG_SET)
-		{
-			if (GetNPCFlag(gNPC[n].code_flag) == FALSE)
-				gNPC[n].cond |= 0x80;
-		}
-		else
-		{
-			gNPC[n].cond = 0x80;
-		}
-
-		// Increase index
-		++n;
-	}
-
-	fclose(fp);
-
-	return LoadCustomEvent(path_event, count);
-}
-
 void Replacement_ActNpChar(void)
 {
 	int i;
@@ -161,8 +89,8 @@ void Replacement_ChangeNpCharByEvent(int code_event, int code_char, int dir)
 		{
 			gNPC[n].bits &= ~(NPC_SOLID_SOFT | NPC_IGNORE_TILE_44 | NPC_INVULNERABLE | NPC_IGNORE_SOLIDITY | NPC_BOUNCY | NPC_SHOOTABLE | NPC_SOLID_HARD | NPC_REAR_AND_TOP_DONT_HURT | NPC_SHOW_DAMAGE);	// Clear these flags
 			gNPC[n].code_char = code_char;
-			gNPC[n].bits |= gNpcTable[gNPC[n].code_char].bits;
-			gNPC[n].exp = gNpcTable[gNPC[n].code_char].exp;
+			gNPC[n].bits |= (*gNpcTable)[gNPC[n].code_char].bits;
+			gNPC[n].exp = (*gNpcTable)[gNPC[n].code_char].exp;
 			SetUniqueParameter(&gNPC[n]);
 			gNPC[n].cond |= 0x80;
 			gNPC[n].act_no = 0;
@@ -209,8 +137,8 @@ void Replacement_ChangeCheckableNpCharByEvent(int code_event, int code_char, int
 			gNPC[n].bits &= ~(NPC_SOLID_SOFT | NPC_IGNORE_TILE_44 | NPC_INVULNERABLE | NPC_IGNORE_SOLIDITY | NPC_BOUNCY | NPC_SHOOTABLE | NPC_SOLID_HARD | NPC_REAR_AND_TOP_DONT_HURT | NPC_SHOW_DAMAGE);	// Clear these flags
 			gNPC[n].bits |= NPC_INTERACTABLE;
 			gNPC[n].code_char = code_char;
-			gNPC[n].bits |= gNpcTable[gNPC[n].code_char].bits;
-			gNPC[n].exp = gNpcTable[gNPC[n].code_char].exp;
+			gNPC[n].bits |= (*gNpcTable)[gNPC[n].code_char].bits;
+			gNPC[n].exp = (*gNpcTable)[gNPC[n].code_char].exp;
 			SetUniqueParameter(&gNPC[n]);
 			gNPC[n].cond |= 0x80;
 			gNPC[n].act_no = 0;

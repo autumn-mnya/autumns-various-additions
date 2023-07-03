@@ -15,7 +15,7 @@ struct CNPCHAR
 
 extern CNPCHAR gCustomNPC[NPC_MAX];
 
-BOOL Replacement_LoadEvent(const char* path_event);
+BOOL LoadCustomEvent(const char* path_event, int npc_count);
 void Replacement_ActNpChar(void);
 void Replacement_ChangeNpCharByEvent(int code_event, int code_char, int dir);
 void Replacement_ChangeCheckableNpCharByEvent(int code_event, int code_char, int dir);

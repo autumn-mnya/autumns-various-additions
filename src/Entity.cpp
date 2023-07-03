@@ -599,6 +599,7 @@ void ActEntity369(NPCHAR* npc)
 	npc->rect = rect;
 }
 
+// Purple Critter (upside down)
 void ActEntity370(NPCHAR* npc)
 {
 	int xm, ym;
@@ -779,4 +780,377 @@ void ActEntity370(NPCHAR* npc)
 		npc->rect = rcLeft[npc->ani_no];
 	else
 		npc->rect = rcRight[npc->ani_no];
+}
+
+// Camera Target
+void ActEntity371(NPCHAR* npc)
+{
+	RECT rect = { 0, 0, 16, 16 };
+
+	int x_radius = 5;
+	int y_radius = 5;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		x_radius = CustomNpcValues(npc).CustomValue01;
+
+	if (CustomNpcValues(npc).CustomValue02 != 0)
+		y_radius = CustomNpcValues(npc).CustomValue02;
+
+	// Left, Right, Up, Down. 16 is 1 tile, so doing math we can have a radius for the Camera to target to.
+	if (npc->x - ((16 * x_radius) * 0x200)
+		< gMC->x && npc->x + ((16 * x_radius) * 0x200)
+		> gMC->x && npc->y - ((16 * y_radius) * 0x200)
+		< gMC->y && npc->y + ((16 * y_radius) * 0x200)
+		> gMC->y)
+	{
+		gFrame->tgt_x = &npc->x;
+		gFrame->tgt_y = &npc->y;
+	}
+	else if (npc->x - ((16 * (x_radius + 1)) * 0x200)
+		< gMC->x && npc->x + ((16 * (x_radius + 1)) * 0x200)
+		> gMC->x && npc->y - ((16 * (y_radius + 1)) * 0x200)
+		< gMC->y && npc->y + ((16 * (y_radius + 1)) * 0x200)
+		> gMC->y)
+	{
+		gFrame->tgt_x = &gMC->tgt_x;
+		gFrame->tgt_y = &gMC->tgt_y;
+	}
+
+	npc->rect = rect;
+}
+
+// Transport Trigger
+void ActEntity372(NPCHAR* npc)
+{
+	RECT rect = { 0, 0, 16, 16 };
+
+	int tra_map = 1;
+	int tra_event = 90;
+	int tra_x = 10;
+	int tra_y = 8;
+	int fade_dir = 4;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		tra_map = CustomNpcValues(npc).CustomValue01;
+
+	if (CustomNpcValues(npc).CustomValue02 != 0)
+		tra_event = CustomNpcValues(npc).CustomValue02;
+
+	if (CustomNpcValues(npc).CustomValue03 != 0)
+		tra_x = CustomNpcValues(npc).CustomValue03;
+
+	if (CustomNpcValues(npc).CustomValue04 != 0)
+		tra_y = CustomNpcValues(npc).CustomValue04;
+
+	if (CustomNpcValues(npc).CustomValue05 != 0)
+		fade_dir = CustomNpcValues(npc).CustomValue05;
+
+	if (npc->direct == 0)
+	{
+		if (npc->x < gMC->x)
+			npc->x += 0x5FF;
+		else
+			npc->x -= 0x5FF;
+	}
+	else
+	{
+		if (npc->y < gMC->y)
+			npc->y += 0x5FF;
+		else
+			npc->y -= 0x5FF;
+	}
+
+	switch (npc->act_no)
+	{
+		case 0:
+			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
+				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
+				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			{
+				g_GameFlags &= ~2;
+				g_GameFlags |= 1;
+				gMC->xm = 0;
+				if (fade_dir <= 4)
+					StartFadeOut(fade_dir);
+				npc->act_no = 1;
+			}
+			break;
+
+		case 1:
+			if (gFade->mode == 0)
+				TransferStage(tra_map, tra_event, tra_x, tra_y);
+			break;
+	}
+
+	npc->rect = rect;
+}
+
+// Custom EXP Capsule
+void ActEntity373(NPCHAR* npc)
+{
+	int exp_amount = 10;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		exp_amount = CustomNpcValues(npc).CustomValue01;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			npc->act_no = 1;
+			// Fallthrough
+		case 1:
+			if (++npc->ani_wait > 4)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
+
+			if (npc->ani_no > 1)
+				npc->ani_no = 0;
+
+			break;
+		}
+
+		if (npc->life <= 100)
+		{
+			SetExpObjects(npc->x, npc->y, exp_amount);
+			SetDestroyNpChar(npc->x, npc->y, npc->view.back, 8);
+			PlaySoundObject(25, SOUND_MODE_PLAY);
+			npc->cond = 0;
+		}
+
+	RECT rc[2] = {
+		{0, 64, 16, 80},
+		{16, 64, 32, 80},
+	};
+
+	npc->rect = rc[npc->ani_no];
+}
+
+// Customizable Fan (left)
+void ActEntity374(NPCHAR* npc)
+{
+	RECT rc[3] = {
+		{272, 120, 288, 136},
+		{288, 120, 304, 136},
+		{304, 120, 320, 136},
+	};
+
+	int speed = 136;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		speed = CustomNpcValues(npc).CustomValue01;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			if (npc->direct == 2)
+				npc->act_no = 2;
+			else
+				npc->ani_no = 1;
+
+			// Fallthrough
+		case 1:
+			npc->ani_no = 0;
+			break;
+
+		case 2:
+			if (++npc->ani_wait > 0)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
+
+			if (npc->ani_no > 2)
+				npc->ani_no = 0;
+
+			if (gMC->x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC->y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
+			{
+				if (Random(0, 5) == 1)
+					SetNpChar(199, npc->x, npc->y + (Random(-8, 8) * 0x200), 0, 0, 0, NULL, 0x100);
+			}
+
+			if (gMC->y < npc->y + (8 * 0x200) && gMC->y > npc->y - (8 * 0x200) && gMC->x < npc->x && gMC->x > npc->x - (96 * 0x200))
+			{
+				gMC->xm -= speed;
+				gMC->cond |= 0x20;
+			}
+
+			break;
+	}
+
+	npc->rect = rc[npc->ani_no];
+}
+
+// Customizable Fan (up)
+void ActEntity375(NPCHAR* npc)
+{
+	RECT rc[3] = {
+		{272, 136, 288, 152},
+		{288, 136, 304, 152},
+		{304, 136, 320, 152},
+	};
+
+	int speed = 136;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		speed = CustomNpcValues(npc).CustomValue01;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			if (npc->direct == 2)
+				npc->act_no = 2;
+			else
+				npc->ani_no = 1;
+
+			// Fallthrough
+		case 1:
+			npc->ani_no = 0;
+			break;
+
+		case 2:
+			if (++npc->ani_wait > 0)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
+
+			if (npc->ani_no > 2)
+				npc->ani_no = 0;
+
+			if (gMC->x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC->y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
+			{
+				if (Random(0, 5) == 1)
+					SetNpChar(199, npc->x + (Random(-8, 8) * 0x200), npc->y, 0, 0, 1, NULL, 0x100);
+			}
+
+			if (gMC->x < npc->x + (8 * 0x200) && gMC->x > npc->x - (8 * 0x200) && gMC->y < npc->y && gMC->y > npc->y - (96 * 0x200))
+				gMC->ym -= speed;
+
+			break;
+	}
+
+	npc->rect = rc[npc->ani_no];
+}
+
+// Customizable Fan (right)
+void ActEntity376(NPCHAR* npc)
+{
+	RECT rc[3] = {
+		{272, 152, 288, 168},
+		{288, 152, 304, 168},
+		{304, 152, 320, 168},
+	};
+
+	int speed = 136;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		speed = CustomNpcValues(npc).CustomValue01;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			if (npc->direct == 2)
+				npc->act_no = 2;
+			else
+				npc->ani_no = 1;
+
+			// Fallthrough
+		case 1:
+			npc->ani_no = 0;
+			break;
+
+		case 2:
+			if (++npc->ani_wait > 0)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
+
+			if (npc->ani_no > 2)
+				npc->ani_no = 0;
+
+			if (gMC->x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC->y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
+			{
+				if (Random(0, 5) == 1)
+					SetNpChar(199, npc->x, npc->y + (Random(-8, 8) * 0x200), 0, 0, 2, NULL, 0x100);
+			}
+
+			if (gMC->y < npc->y + (8 * 0x200) && gMC->y > npc->y - (8 * 0x200) && gMC->x < npc->x + (96 * 0x200) && gMC->x > npc->x)
+			{
+				gMC->xm += speed;
+				gMC->cond |= 0x20;
+			}
+
+			break;
+	}
+
+	npc->rect = rc[npc->ani_no];
+}
+
+// Customizable Fan (down)
+void ActEntity377(NPCHAR* npc)
+{
+	RECT rc[3] = {
+		{272, 168, 288, 184},
+		{288, 168, 304, 184},
+		{304, 168, 320, 184},
+	};
+
+	int speed = 136;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		speed = CustomNpcValues(npc).CustomValue01;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			if (npc->direct == 2)
+				npc->act_no = 2;
+			else
+				npc->ani_no = 1;
+
+			// Fallthrough
+		case 1:
+			npc->ani_no = 0;
+			break;
+
+		case 2:
+			if (++npc->ani_wait > 0)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
+
+			if (npc->ani_no > 2)
+				npc->ani_no = 0;
+
+			if (gMC->x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC->y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
+			{
+				if (Random(0, 5) == 1)
+					SetNpChar(199, npc->x + (Random(-8, 8) * 0x200), npc->y, 0, 0, 3, NULL, 0x100);
+			}
+
+			if (gMC->x < npc->x + (8 * 0x200) && gMC->x > npc->x - (8 * 0x200) && gMC->y < npc->y + (96 * 0x200) && gMC->y > npc->y)
+				gMC->ym += speed;
+
+			break;
+	}
+
+	npc->rect = rc[npc->ani_no];
+}
+
+// Custom Spikes
+void ActEntity378(NPCHAR* npc)
+{
+	RECT rects[4] = {
+		{256, 200, 272, 216},
+		{272, 200, 288, 216},
+		{288, 200, 304, 216},
+		{304, 200, 320, 216},
+	};
+
+	npc->rect = rects[CustomNpcValues(npc).CustomValue01];
 }

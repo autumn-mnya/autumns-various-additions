@@ -410,6 +410,19 @@ static struct
 	RECT rect2;
 } flash;
 
+// Frame
+
+typedef struct FRAME
+{
+	int x;
+	int y;
+	int* tgt_x;
+	int* tgt_y;
+	int wait;
+	int quake;
+	int quake2;
+} FRAME;
+
 // Input
 
 struct DIRECTINPUTSTATUS
@@ -822,10 +835,12 @@ static BULLET_TABLE* gBulTbl = (BULLET_TABLE*)0x48F044;
 static NPCHAR* gBoss = (NPCHAR*)0x4BBA58;
 static CARET* gCrt = (CARET*)0x49BCA8;
 static CARET_TABLE* gCaretTable = (CARET_TABLE*)0x48F830;
+static FADE* gFade = (FADE*)0x49DB30;
+static FRAME* gFrame = (FRAME*)0x49E1C8;
 static ITEM* gItemData = (ITEM*)0x499B40;
 static MYCHAR* gMC = (MYCHAR*)0x49E638;
 static NPCHAR* gNPC = (NPCHAR*)0x4A6220;
-static NPC_TABLE* gNpcTable = (NPC_TABLE*)0x4A6220;
+static NPC_TABLE** gNpcTable = (NPC_TABLE**)0x4BBA34;
 static PERMIT_STAGE* gPermitStage = (PERMIT_STAGE*)0x4A5500;
 static STAGE_TABLE* oTMT = (STAGE_TABLE*)0x4937B0; // Default stage table in the exe.
 static STAGE_TABLE* gTMT = (STAGE_TABLE*)(*(unsigned*)0x420C2F); // This is a pointer to where it gets used, instead of the actual table, so that it has compatibility with mods.
