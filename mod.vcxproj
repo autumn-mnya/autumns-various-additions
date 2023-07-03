@@ -87,16 +87,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Draw.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\EntityLoad.cpp" />
-    <ClCompile Include="src\\main.cpp" />
+    <ClCompile Include="src\EntityTable.cpp" />
+    <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\cave_story.h" />
+    <ClInclude Include="src\Draw.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\EntityLoad.h" />
-    <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\EntityTable.h" />
+    <ClInclude Include="src\Main.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />
   </ItemGroup>

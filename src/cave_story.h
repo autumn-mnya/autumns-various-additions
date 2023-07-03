@@ -5,7 +5,7 @@
 #include <ddraw.h>
 #include <dinput.h>
 #include <dsound.h>
-#include <windows.h>
+#include <Windows.h>
 
 #define WINDOW_WIDTH 320
 #define WINDOW_HEIGHT 240
@@ -105,6 +105,7 @@
 #define g_GameFlags (*(int*)0x49E1E8)
 #define bFPS (*(BOOL*)0x49E464) // bFPS (if true it shows a framerate display)
 #define bFullscreen (*(BOOL*)0x49E460) // bFullscreen (if true, window.rect won't be saved or loaded)
+#define BoosterFuel (*(int*)0x49E6E8)
 
 // <MIM Compatibility
 #define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)
@@ -112,6 +113,15 @@
 
 // String array
 #define gMusicTable (*(char*(*)[42])0x4981E8)
+
+enum Collisions
+{
+	COLL_LEFT_WALL = 1,     // Touching a left wall
+	COLL_CEILING = 2,       // Touching a ceiling
+	COLL_RIGHT_WALL = 4,    // Touching a right wall
+	COLL_GROUND = 8         // Touching the ground
+	// To be continued
+};
 
 struct OTHER_RECT	// The original name for this struct is unknown
 {
@@ -124,47 +134,73 @@ struct OTHER_RECT	// The original name for this struct is unknown
 // Enums
 typedef enum SurfaceID
 {
-	SURFACE_ID_TITLE,
-	SURFACE_ID_PIXEL,
-	SURFACE_ID_LEVEL_TILESET,
-	SURFACE_ID_UNKNOWN_3,
-	SURFACE_ID_UNKNOWN_4,
-	SURFACE_ID_UNKNOWN_5,
-	SURFACE_ID_FADE,
-	SURFACE_ID_UNKNOWN_7,
-	SURFACE_ID_ITEM_IMAGE,
-	SURFACE_ID_MAP,
-	SURFACE_ID_SCREEN_GRAB,
-	SURFACE_ID_ARMS,
-	SURFACE_ID_ARMS_IMAGE,
-	SURFACE_ID_ROOM_NAME,
-	SURFACE_ID_STAGE_ITEM,
-	SURFACE_ID_LOADING,
-	SURFACE_ID_MY_CHAR,
-	SURFACE_ID_BULLET,
-	SURFACE_ID_UNKNOWN_12,
-	SURFACE_ID_CARET,
-	SURFACE_ID_NPC_SYM,
-	SURFACE_ID_LEVEL_SPRITESET_1,
-	SURFACE_ID_LEVEL_SPRITESET_2,
-	SURFACE_ID_NPC_REGU,
-	SURFACE_ID_UNKNOWN_18,
-	SURFACE_ID_UNKNOWN_19,
-	SURFACE_ID_TEXT_BOX,
-	SURFACE_ID_FACE,
-	SURFACE_ID_LEVEL_BACKGROUND,
-	SURFACE_ID_UNKNOWN_1D,
-	SURFACE_ID_UNKNOWN_1E,
-	SURFACE_ID_UNKNOWN_1F,
-	SURFACE_ID_UNKNOWN_20,
-	SURFACE_ID_UNKNOWN_21,
-	SURFACE_ID_UNKNOWN_22,
-	SURFACE_ID_UNKNOWN_23,
-	SURFACE_ID_CREDITS_IMAGE,
-	SURFACE_ID_CASTS,
-	SURFACE_ID_UNKNOWN_26,
-	SURFACE_ID_UNKNOWN_27
+	SURFACE_ID_TITLE = 0,
+	SURFACE_ID_PIXEL = 1,
+	SURFACE_ID_LEVEL_TILESET = 2,
+	SURFACE_ID_FADE = 6,
+	SURFACE_ID_ITEM_IMAGE = 8,
+	SURFACE_ID_MAP = 9,
+	SURFACE_ID_SCREEN_GRAB = 10,
+	SURFACE_ID_ARMS = 11,
+	SURFACE_ID_ARMS_IMAGE = 12,
+	SURFACE_ID_ROOM_NAME = 13,
+	SURFACE_ID_STAGE_ITEM = 14,
+	SURFACE_ID_LOADING = 15,
+	SURFACE_ID_MY_CHAR = 16,
+	SURFACE_ID_BULLET = 17,
+	SURFACE_ID_CARET = 19,
+	SURFACE_ID_NPC_SYM = 20,
+	SURFACE_ID_LEVEL_SPRITESET_1 = 21,
+	SURFACE_ID_LEVEL_SPRITESET_2 = 22,
+	SURFACE_ID_NPC_REGU = 23,
+	SURFACE_ID_TEXT_BOX = 26,
+	SURFACE_ID_FACE = 27,
+	SURFACE_ID_LEVEL_BACKGROUND = 28,
+	SURFACE_ID_VALUE_VIEW = 29,
+	SURFACE_ID_TEXT_LINE1 = 30,
+	SURFACE_ID_TEXT_LINE2 = 31,
+	SURFACE_ID_TEXT_LINE3 = 32,
+	SURFACE_ID_TEXT_LINE4 = 33,
+	SURFACE_ID_TEXT_LINE5 = 34,
+	SURFACE_ID_CREDIT_CAST = 35,
+	SURFACE_ID_CREDITS_IMAGE = 36,
+	SURFACE_ID_CASTS = 37,
+	SURFACE_ID_AUTUMN_HAZEL = 38,
+	SURFACE_ID_MAX = 40
 } SurfaceID;
+
+// Carets
+enum Carets
+{
+	CARET_NULL = 0,
+	CARET_BUBBLE = 1,
+	CARET_PROJECTILE_DISSIPATION = 2,
+	CARET_SHOOT = 3,
+	CARET_SNAKE_AFTERIMAGE = 4,
+	CARET_ZZZ = 5,
+	CARET_SNAKE_AFTERIMAGE_DUPLICATE = 6,
+	CARET_EXHAUST = 7,
+	CARET_DROWNED_QUOTE = 8,
+	CARET_QUESTION_MARK = 9,
+	CARET_LEVEL_UP = 10,
+	CARET_HURT_PARTICLES = 11,
+	CARET_EXPLOSION = 12,
+	CARET_TINY_PARTICLES = 13,
+	CARET_UNKNOWN = 14,
+	CARET_PROJECTILE_DISSIPATION_TINY = 15,
+	CARET_EMPTY = 16,
+	CARET_PUSH_JUMP_KEY = 17
+};
+
+enum Direction
+{
+	DIR_LEFT = 0,
+	DIR_UP = 1,
+	DIR_RIGHT = 2,
+	DIR_DOWN = 3,
+	DIR_AUTO = 4,
+	DIR_OTHER = 5
+};
 
 // Structs
 
@@ -476,6 +512,7 @@ enum NPCFlags
 	NPC_REAR_AND_TOP_DONT_HURT = 1 << 7,    // Rear and top don't hurt when touched
 	NPC_EVENT_WHEN_TOUCHED = 1 << 8,        // Run event when touched
 	NPC_EVENT_WHEN_KILLED = 1 << 9,         // Run event when killed
+	NPC_CUSTOM_FLAG = 1 << 10,
 	NPC_APPEAR_WHEN_FLAG_SET = 1 << 11,     // Only appear when flag is set
 	NPC_SPAWN_IN_OTHER_DIRECTION = 1 << 12, // Spawn facing to the right (or however the NPC interprets the direction)
 	NPC_INTERACTABLE = 1 << 13,             // Run event when interacted with
@@ -776,6 +813,7 @@ typedef struct VALUEVIEW
 } VALUEVIEW;
 
 // Pointers to structs
+typedef void (*NPCFUNCTION)(NPCHAR*);
 
 static ARMS* gArmsData = (ARMS*)0x499BC8;
 static ARMS_LEVEL* gArmsLevelTable = (ARMS_LEVEL*)0x493660;
@@ -787,6 +825,7 @@ static CARET_TABLE* gCaretTable = (CARET_TABLE*)0x48F830;
 static ITEM* gItemData = (ITEM*)0x499B40;
 static MYCHAR* gMC = (MYCHAR*)0x49E638;
 static NPCHAR* gNPC = (NPCHAR*)0x4A6220;
+static NPC_TABLE* gNpcTable = (NPC_TABLE*)0x4A6220;
 static PERMIT_STAGE* gPermitStage = (PERMIT_STAGE*)0x4A5500;
 static STAGE_TABLE* oTMT = (STAGE_TABLE*)0x4937B0; // Default stage table in the exe.
 static STAGE_TABLE* gTMT = (STAGE_TABLE*)(*(unsigned*)0x420C2F); // This is a pointer to where it gets used, instead of the actual table, so that it has compatibility with mods.
@@ -795,6 +834,9 @@ static int* gNumberTextScript = (int*)0x4A5B34;
 static VALUEVIEW* gVV = (VALUEVIEW*)0x4A5F98;
 static signed char* gMapping = (signed char*)0x49E5B8;
 static unsigned char* gFlagNPC = (unsigned char*)0x49DDA0;
+
+// Npc Function Table
+static NPCFUNCTION* gpNpcFuncTbl = (NPCFUNCTION*)0x498548;
 
 ///////////////
 // Functions //
