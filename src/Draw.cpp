@@ -21,7 +21,9 @@ void ReplaceSurfaceID(const char* n, SurfaceID no)
 
 void Replacement_StageImageSurfaceCall(int x, int y, int s, BOOL b)
 {
-	MakeSurface_File("Autumn", SurfaceID(38));
+	MakeSurface_File("Npc\\NpcAutumnObj", SURFACE_ID_AUTUMN_OBJECTS);
+	MakeSurface_File("Autumn", SURFACE_ID_AUTUMN_ITEMS);
+	MakeSurface_File("Npc\\NpcAutumnChar", SURFACE_ID_AUTUMN_CHARACTERS);
 	MakeSurface_Generic(427, 240, s, b);
 }
 

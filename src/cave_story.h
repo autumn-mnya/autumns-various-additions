@@ -50,6 +50,11 @@
 #define KEY_PLUS 0x100000
 #define KEY_ESCAPE 0x8000
 
+// Npc Variable used for shared coordinate related things
+#define gCurlyShoot_x (*(int*)0x4BBA20)
+#define gCurlyShoot_y (*(int*)0x4BBA24)
+#define gSuperXpos (*(int*)0x4BBA30)
+#define gSuperYpos (*(int*)0x4BBA28)
 
 // Variables
 #define lpWindowName (*(char*)0x493640) // lpWindowName
@@ -108,7 +113,7 @@
 #define BoosterFuel (*(int*)0x49E6E8)
 
 // <MIM Compatibility
-#define CSM_MIM_unobstructive (*(unsigned int*)0x49E184)
+#define gCurrentMim (*(unsigned int*)0x49E184)
 #define CSM_MIM_tsc_plus  (*(int*)0x49E09C)
 
 // String array
@@ -153,6 +158,7 @@ typedef enum SurfaceID
 	SURFACE_ID_LEVEL_SPRITESET_1 = 21,
 	SURFACE_ID_LEVEL_SPRITESET_2 = 22,
 	SURFACE_ID_NPC_REGU = 23,
+	SURFACE_ID_AUTUMN_OBJECTS = 25,
 	SURFACE_ID_TEXT_BOX = 26,
 	SURFACE_ID_FACE = 27,
 	SURFACE_ID_LEVEL_BACKGROUND = 28,
@@ -165,7 +171,8 @@ typedef enum SurfaceID
 	SURFACE_ID_CREDIT_CAST = 35,
 	SURFACE_ID_CREDITS_IMAGE = 36,
 	SURFACE_ID_CASTS = 37,
-	SURFACE_ID_AUTUMN_HAZEL = 38,
+	SURFACE_ID_AUTUMN_ITEMS = 38,
+	SURFACE_ID_AUTUMN_CHARACTERS = 39,
 	SURFACE_ID_MAX = 40
 } SurfaceID;
 
@@ -454,6 +461,20 @@ typedef struct MAP_NAME
 } MAP_NAME;
 
 // MyChar
+
+// gMC.equip
+enum
+{
+	EQUIP_BOOSTER_0_8 = 1,
+	EQUIP_MAP = 2,
+	EQUIP_ARMS_BARRIER = 4,
+	EQUIP_TURBOCHARGE = 8,
+	EQUIP_AIR_TANK = 0x10,
+	EQUIP_BOOSTER_2_0 = 0x20,
+	EQUIP_MIMIGA_MASK = 0x40,
+	EQUIP_WHIMSICAL_STAR = 0x80,
+	EQUIP_NIKUMARU_COUNTER = 0x100
+};
 
 typedef struct MYCHAR
 {
@@ -839,7 +860,7 @@ static FADE* gFade = (FADE*)0x49DB30;
 static FRAME* gFrame = (FRAME*)0x49E1C8;
 static ITEM* gItemData = (ITEM*)0x499B40;
 static MYCHAR* gMC = (MYCHAR*)0x49E638;
-static NPCHAR* gNPC = (NPCHAR*)0x4A6220;
+static NPCHAR(&gNPC)[512] = *(NPCHAR(*)[512])0x4A6220;
 static NPC_TABLE** gNpcTable = (NPC_TABLE**)0x4BBA34;
 static PERMIT_STAGE* gPermitStage = (PERMIT_STAGE*)0x4A5500;
 static STAGE_TABLE* oTMT = (STAGE_TABLE*)0x4937B0; // Default stage table in the exe.
@@ -1665,7 +1686,7 @@ static void (* const ActNpc360)(NPCHAR* npc) = (void(*)(NPCHAR*))0x46EA90;
 static void (* const InitNpChar)(void) = (void(*)(void))0x46EB30;
 static BOOL (* const LoadEvent)(const char *path_event) = (BOOL(*)(const char*))0x46EB50;
 static void (* const SetUniqueParameter)(NPCHAR *npc) = (void(*)(NPCHAR*))0x46EE50;
-static void (* const SetNpChar)(int object_ID, int x_pos, int y_pos, int a4, int a5, int facing_right, int a7, int object_RAM_index) = (void(*)(int, int, int, int, int, int, int, int))0x46EFD0;
+static void (* const SetNpChar)(int object_ID, int x_pos, int y_pos, int a4, int a5, int facing_right, NPCHAR* a7, int object_RAM_index) = (void(*)(int, int, int, int, int, int, NPCHAR*, int))0x46EFD0;
 static void (* const SetDestroyNpChar)(int x, int y, signed int w, int num) = (void(*)(int, int, int, int))0x46F150;
 static void (* const SetDestroyNpCharUp)(int x, int y, signed int w, int num) = (void(*)(int, int, int, int))0x46F200;
 static void (* const SetExpObjects)(int x, int y, int exp) = (void(*)(int, int, int))0x46F2B0;
