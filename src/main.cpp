@@ -18,8 +18,9 @@
 char gModulePath[MAX_PATH];
 char gDataPath[MAX_PATH];
 
-// Options
+// Options (none exist in Settings.ini currently)
 
+// Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
 {
 	PlaySoundObject(17, SOUND_MODE_PLAY);
@@ -28,11 +29,12 @@ void PlayerDeath()
 	StartTextScript(40);
 }
 
+// For settings related things, this function will be used.
 void InitMod_Settings()
 {
 }
 
-// solution by periwinkle
+// solution by periwinkle for loading the custom .pxe file -- Autumn genuinely doesn't really know what this does exactly but it fits the function call into memory so woohoo
 void InitCustomEntity()
 {
 	unsigned char bytes[] = {
@@ -47,6 +49,7 @@ void InitCustomEntity()
 	WriteProcessMemory(GetCurrentProcess(), (void*)0x46EE37, bytes, sizeof bytes, NULL);
 }
 
+// Inits anything relating to entities. The main thing are the 3 ModLoader_WriteJump's -- These replace every function that uses the Npc Table, and instead we also insert our new table!
 void InitMod_Entity()
 {
 	InitCustomEntity();
@@ -55,11 +58,13 @@ void InitMod_Entity()
 	ModLoader_WriteJump((void*)0x46FD10, (void*)Replacement_ChangeCheckableNpCharByEvent);
 }
 
+// Loads the new surface files (We can't go above 40, but we can use the unused ones. Except 3 and 4 as they are used in the netplay dll!)
 void InitMod_Sprites()
 {
 	ModLoader_WriteCall((void*)0x411546, (void*)Replacement_StageImageSurfaceCall);
 }
 
+// Init the whole mod
 void InitMod(void)
 {
 	// Get executable's path
@@ -69,6 +74,8 @@ void InitMod(void)
 	// Get path of the data folder
 	strcpy(gDataPath, gModulePath);
 	strcat(gDataPath, "\\data");
+
+	// The 4 calls above setup gDataPath and gModulePath so they can be used
 
 	// Settings set by User
 	// InitMod_Settings();

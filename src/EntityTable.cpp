@@ -12,6 +12,8 @@
 #include "Entity.h"
 #include "EntityLoad.h"
 
+// Contains the NPC function table.
+
 // Npc function table
 const NPCFUNCTION gpEntityFuncTbl[] = {
 	ActEntity361,

@@ -13,6 +13,12 @@
 
 #define CustomNpcValues(N) gCustomNPC[(N - gNPC)]
 
+// Currently contains every single custom entity's code!! Add new ones here basically, its the same process as CSE2 except you add the functions into the Entity.h file, and add them to
+// the list in EntityTable.cpp.
+
+// Another note: Certain values use " -> "'s instead of " . "'s. gMC.x becomes gMC->x, for example. Most things like gMC and gFrame are in "cave_story.h" but i may have forgotten one or two.
+// If you need help using custom npc values, look at the Booster Refill npc as an example of the CustomNpcValues. It's pretty much a copy paste !!
+
 // Booster Fuel Refill
 void ActEntity361(NPCHAR* npc)
 {
@@ -6258,8 +6264,8 @@ void ActEntity429(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Santa's Key (Custom)
@@ -6312,8 +6318,8 @@ void ActEntity430(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Chest (Closed, Custom)
@@ -6380,8 +6386,8 @@ void ActEntity431(NPCHAR* npc)
 	npc->rect = rcLeft[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Save Point (Custom)
@@ -6446,8 +6452,8 @@ void ActEntity432(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Health refill (Custom)
@@ -6529,8 +6535,8 @@ void ActEntity433(NPCHAR* npc)
 	npc->y += npc->ym;
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Door (Custom)
@@ -6568,8 +6574,8 @@ void ActEntity434(NPCHAR* npc)
 	}
 
 	// Custom Rect
-	npc->rect.top += (24 * 2) * customrect;
-	npc->rect.bottom += (24 * 2) * customrect;
+	npc->rect.top += (24 * 1) * customrect;
+	npc->rect.bottom += (24 * 1) * customrect;
 }
 
 // Chest (Open, Custom)
@@ -6593,8 +6599,8 @@ void ActEntity435(NPCHAR* npc)
 	npc->rect = rect;
 
 	// Custom Rect
-	npc->rect.top += (8 * 2) * customrect;
-	npc->rect.bottom += (8 * 2) * customrect;
+	npc->rect.top += (8 * 1) * customrect;
+	npc->rect.bottom += (8 * 1) * customrect;
 }
 
 // Computer (Custom)
@@ -6657,8 +6663,8 @@ void ActEntity437(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (32 * 2) * customrect;
-	npc->rect.bottom += (32 * 2) * customrect;
+	npc->rect.top += (32 * 1) * customrect;
+	npc->rect.bottom += (32 * 1) * customrect;
 }
 
 // Teleporter lights (Custom)
@@ -6692,8 +6698,8 @@ void ActEntity438(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (32 * 2) * customrect;
-	npc->rect.bottom += (32 * 2) * customrect;
+	npc->rect.top += (32 * 1) * customrect;
+	npc->rect.bottom += (32 * 1) * customrect;
 }
 
 // Deathtrap (Custom)
@@ -6711,8 +6717,8 @@ void ActEntity439(NPCHAR* npc)
 	npc->rect = rcLeft[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (24 * 2) * customrect;
-	npc->rect.bottom += (24 * 2) * customrect;
+	npc->rect.top += (24 * 1) * customrect;
+	npc->rect.bottom += (24 * 1) * customrect;
 }
 
 // Life Capsule (Custom)
@@ -6740,8 +6746,8 @@ void ActEntity440(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Signpost (Custom)
@@ -6769,8 +6775,8 @@ void ActEntity441(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Fireplace (Custom)
@@ -6814,8 +6820,8 @@ void ActEntity442(NPCHAR* npc)
 	}
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Save Sign (Custom)
@@ -6839,8 +6845,8 @@ void ActEntity443(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Sparkle (Custom)
@@ -6870,8 +6876,8 @@ void ActEntity444(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Terminal (Custom)
@@ -6920,8 +6926,8 @@ void ActEntity445(NPCHAR* npc)
 		npc->rect = rcRight[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (24 * 2) * customrect;
-	npc->rect.bottom += (24 * 2) * customrect;
+	npc->rect.top += (24 * 1) * customrect;
+	npc->rect.bottom += (24 * 1) * customrect;
 }
 
 // Malco computer screen (Custom)
@@ -6950,8 +6956,8 @@ void ActEntity446(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }
 
 // Malco computer wave (Custom)
@@ -6987,6 +6993,6 @@ void ActEntity447(NPCHAR* npc)
 	npc->rect = rect[npc->ani_no];
 
 	// Custom Rect
-	npc->rect.top += (16 * 2) * customrect;
-	npc->rect.bottom += (16 * 2) * customrect;
+	npc->rect.top += (16 * 1) * customrect;
+	npc->rect.bottom += (16 * 1) * customrect;
 }

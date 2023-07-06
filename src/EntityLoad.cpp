@@ -12,6 +12,8 @@
 #include "Entity.h"
 #include "EntityTable.h"
 
+// This file loads certain things relating to entities, but does not hold entity code itself.
+
 CNPCHAR gCustomNPC[NPC_MAX];
 
 const char* const gPassPixEve = "PXE";
