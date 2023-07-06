@@ -10,13 +10,14 @@
 #include "main.h"
 #include "cave_story.h"
 #include "EntityLoad.h"
+#include "MyChar.h"
 
 #define CustomNpcValues(N) gCustomNPC[(N - gNPC)]
 
 // Currently contains every single custom entity's code!! Add new ones here basically, its the same process as CSE2 except you add the functions into the Entity.h file, and add them to
 // the list in EntityTable.cpp.
 
-// Another note: Certain values use " -> "'s instead of " . "'s. gMC.x becomes gMC->x, for example. Most things like gMC and gFrame are in "cave_story.h" but i may have forgotten one or two.
+// Another note: Certain values use " -> "'s instead of " . "'s. gMC .x becomes gMC->x, for example. Most things like gMC and gFrame are in "cave_story.h" but i may have forgotten one or two.
 // If you need help using custom npc values, look at the Booster Refill npc as an example of the CustomNpcValues. It's pretty much a copy paste !!
 
 // Booster Fuel Refill
@@ -6995,4 +6996,113 @@ void ActEntity447(NPCHAR* npc)
 	// Custom Rect
 	npc->rect.top += (16 * 1) * customrect;
 	npc->rect.bottom += (16 * 1) * customrect;
+}
+
+//Jump Refill
+void ActEntity448(NPCHAR* npc)
+{
+	RECT rect[2] = {
+		{0, 0, 16, 16},
+		{16, 0, 32, 16},
+	};
+
+	int jump_amount = 1;
+	int cooldown = 150;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		jump_amount = CustomNpcValues(npc).CustomValue01;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		cooldown = CustomNpcValues(npc).CustomValue02;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			npc->act_wait = 0;
+			npc->ani_no = 0;
+
+			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
+				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
+				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			{
+				PlaySoundObject(22, SOUND_MODE_PLAY);
+				current_jumps = jump_amount; // Set jumps to the jump amount -> 1 by default
+				npc->act_no = 1;
+			}
+			break;
+		case 1:
+			npc->ani_no = 1;
+			if (++npc->act_wait > 150) {
+				npc->act_no = 0;
+				PlaySoundObject(70, SOUND_MODE_PLAY);
+			}
+			break;
+	}
+
+	npc->rect = rect[npc->ani_no];
+}
+
+//Rewind Refill
+void ActEntity449(NPCHAR* npc)
+{
+	RECT rect[2] = {
+		{64, 16, 80, 32},
+		{80, 16, 96, 32},
+	};
+
+	int cooldown_rewind = 150;
+	int cooldown_respawn = 50;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		cooldown_rewind = CustomNpcValues(npc).CustomValue01;
+
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		cooldown_respawn = CustomNpcValues(npc).CustomValue02;
+
+	int i = 0;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			npc->act_wait = cooldown_respawn;
+			npc->act_no = 1;
+			break;
+
+		case 1:
+			if (--npc->act_wait == 0)
+				npc->act_no = 2;
+			break;
+		case 2:
+			npc->act_wait = 0;
+			npc->ani_no = 0;
+
+
+			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
+				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
+				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			{
+				PlaySoundObject(22, SOUND_MODE_PLAY);
+				npc->act_no = 3;
+			}
+			break;
+		case 3:
+			npc->ani_no = 1;
+			if (++npc->act_wait > cooldown_rewind)
+			{
+				// Restore the players X/Y values to this entity
+				gMC->x = npc->x;
+				gMC->y = npc->y;
+
+				for (i = 0; i < 4; ++i)
+					SetNpChar(4, npc->x + (Random(-12, 12) * 0x200), npc->y + (Random(-12, 12) * 0x200), Random(-341, 341), Random(-0x600, 0), 0, NULL, 0x100);
+
+				npc->act_no = 0;
+				PlaySoundObject(70, SOUND_MODE_PLAY);
+			}
+			break;
+	}
+
+	npc->rect = rect[npc->ani_no];
 }

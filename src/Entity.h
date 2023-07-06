@@ -108,3 +108,5 @@ void ActEntity444(NPCHAR* npc);
 void ActEntity445(NPCHAR* npc);
 void ActEntity446(NPCHAR* npc);
 void ActEntity447(NPCHAR* npc);
+void ActEntity448(NPCHAR* npc);
+void ActEntity449(NPCHAR* npc);

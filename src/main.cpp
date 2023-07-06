@@ -13,6 +13,7 @@
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
+#include "MyChar.h"
 
 // Paths
 char gModulePath[MAX_PATH];
@@ -27,11 +28,6 @@ void PlayerDeath()
 	gMC->cond = 0;
 	SetDestroyNpChar(gMC->x, gMC->y, 10 * 0x200, 0x40);
 	StartTextScript(40);
-}
-
-// For settings related things, this function will be used.
-void InitMod_Settings()
-{
 }
 
 // solution by periwinkle for loading the custom .pxe file -- Autumn genuinely doesn't really know what this does exactly but it fits the function call into memory so woohoo
@@ -64,6 +60,46 @@ void InitMod_Sprites()
 	ModLoader_WriteCall((void*)0x411546, (void*)Replacement_StageImageSurfaceCall);
 }
 
+void InitCustomMyChar()
+{
+	unsigned char optimizedSpdLimit[] = {
+		0xFF, 0x75, 0x08,             // push dword ptr [ebp+8] ; bKey
+		0x90, 0x90, 0x90, 0x90, 0x90, // space for call to new code
+		0x59,                         // pop ecx
+		0xA1, 0x3C, 0xE6, 0x49, 0x00, // mov eax, dword ptr [49E63C] ; gMC.flag
+		0xF6, 0xC4, 0x01,             // test ah, 1
+		0x74, 0x61                    // je short 4160D7
+	};
+	WriteProcessMemory(GetCurrentProcess(), (void*)0x416063, optimizedSpdLimit, sizeof optimizedSpdLimit, NULL);
+	ModLoader_WriteCall((void*)0x416066, ActMyChar_Normal_Custom); // Insert your function here
+}
+
+// Init MyChar replacement
+void InitMod_MyChar()
+{
+	InitCustomMyChar();
+}
+
+// For settings related things, this function will be used.
+void InitMod_Settings()
+{
+	// Walljumps
+	setting_walljumps_enabled = ModLoader_GetSettingBool("Walljumps Enabled", false);
+	setting_walljumps_flag_enabled = ModLoader_GetSettingBool("Walljumps Enable on Flag", false);
+	setting_walljumps_flag = ModLoader_GetSettingInt("Walljumps Flag", 6500);
+	setting_walljump_jump_height = ModLoader_GetSettingInt("Walljumps Jump Momentum", 1280);
+	setting_walljump_sliding_speed = ModLoader_GetSettingInt("Wallsliding Speed", 554);
+	
+	// Extra Jumps
+	setting_extrajump_jump_height = ModLoader_GetSettingInt("Extra Jump Momentum", 1280);
+
+	// Double Jump
+	setting_doublejump_enabled = ModLoader_GetSettingBool("Double Jump Enabled", false);
+	setting_doublejump_flag_enabled = ModLoader_GetSettingBool("Double Jump Enable on Flag", false);
+	setting_doublejump_flag = ModLoader_GetSettingInt("Double Jump Flag", 6501);
+}
+
+
 // Init the whole mod
 void InitMod(void)
 {
@@ -77,12 +113,14 @@ void InitMod(void)
 
 	// The 4 calls above setup gDataPath and gModulePath so they can be used
 
-	// Settings set by User
-	// InitMod_Settings();
+	// Init settings set by the user
+	InitMod_Settings();
 
 	// Functions
 	InitMod_Entity();
 	InitMod_Sprites();
+	InitMod_MyChar();
+	
 	// debug putmylife
 	ModLoader_WriteJump((void*)0x41A1D0, (void*)Replacement_PutMyLife);
 }

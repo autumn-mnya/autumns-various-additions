@@ -42,6 +42,7 @@
 #define gKeyUp (*(int*)0x493634)
 #define gKeyRight (*(int*)0x493638)
 #define gKeyDown (*(int*)0x49363C)
+#define gKeyShift 0x200
 #define KEY_ALT_LEFT 0x10000
 #define KEY_ALT_DOWN 0x20000
 #define KEY_ALT_RIGHT 0x40000
