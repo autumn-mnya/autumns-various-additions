@@ -124,7 +124,4 @@ void InitMod(void)
 	InitMod_Entity();
 	InitMod_Sprites();
 	InitMod_MyChar();
-	
-	// debug putmylife
-	ModLoader_WriteJump((void*)0x41A1D0, (void*)Replacement_PutMyLife);
 }
