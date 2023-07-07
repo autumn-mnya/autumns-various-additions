@@ -12,6 +12,7 @@
 
 #include "mod_loader.h"
 #include "cave_story.h"
+#include "MyChar.h"
 
 // Replace MakeSurfaceFile with another call
 void ReplaceSurfaceID(const char* n, SurfaceID no)
@@ -59,4 +60,5 @@ void Replacement_PutMyLife(BOOL flash)
 	PutBitmap3(&grcGame, 40, 40, &rcLife, SURFACE_ID_TEXT_BOX);
 	PutNumber4(8, 40, gMC->lifeBr, FALSE);
 	PutNumber4(8, 48, gMC->boost_cnt, FALSE);
+	PutNumber4(8, 48 + 8, abs(gMC->xm), FALSE);
 }

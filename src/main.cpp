@@ -6,10 +6,11 @@
 #include <string.h>
 #include <string>
 
-#include "main.h"
+#include "Main.h"
 
 #include "mod_loader.h"
 #include "cave_story.h"
+#include "ASMPatches.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
@@ -30,25 +31,10 @@ void PlayerDeath()
 	StartTextScript(40);
 }
 
-// solution by periwinkle for loading the custom .pxe file -- Autumn genuinely doesn't really know what this does exactly but it fits the function call into memory so woohoo
-void InitCustomEntity()
-{
-	unsigned char bytes[] = {
-		0xFF, 0x75, 0xFC, // push dword ptr [ebp-4] ; count
-		0xFF, 0x75, 0x08, // push dword ptr [ebp+8] ; path_event
-		0xE8, 0x00, 0x00, 0x00, 0x00, // call [...]
-		0x59, 0x59       // pop ecx (x2)
-	};
-	// Write call location
-	*(unsigned int*)(&bytes[7]) = (unsigned int)LoadCustomEvent - 0x46EE42;
-	// Patch bytes
-	WriteProcessMemory(GetCurrentProcess(), (void*)0x46EE37, bytes, sizeof bytes, NULL);
-}
-
 // Inits anything relating to entities. The main thing are the 3 ModLoader_WriteJump's -- These replace every function that uses the Npc Table, and instead we also insert our new table!
 void InitMod_Entity()
 {
-	InitCustomEntity();
+	InitCustomEntityPatch();
 	ModLoader_WriteJump((void*)0x46FA00, (void*)Replacement_ActNpChar);
 	ModLoader_WriteJump((void*)0x46FAB0, (void*)Replacement_ChangeNpCharByEvent);
 	ModLoader_WriteJump((void*)0x46FD10, (void*)Replacement_ChangeCheckableNpCharByEvent);
@@ -60,24 +46,12 @@ void InitMod_Sprites()
 	ModLoader_WriteCall((void*)0x411546, (void*)Replacement_StageImageSurfaceCall);
 }
 
-void InitCustomMyChar()
-{
-	unsigned char optimizedSpdLimit[] = {
-		0xFF, 0x75, 0x08,             // push dword ptr [ebp+8] ; bKey
-		0x90, 0x90, 0x90, 0x90, 0x90, // space for call to new code
-		0x59,                         // pop ecx
-		0xA1, 0x3C, 0xE6, 0x49, 0x00, // mov eax, dword ptr [49E63C] ; gMC.flag
-		0xF6, 0xC4, 0x01,             // test ah, 1
-		0x74, 0x61                    // je short 4160D7
-	};
-	WriteProcessMemory(GetCurrentProcess(), (void*)0x416063, optimizedSpdLimit, sizeof optimizedSpdLimit, NULL);
-	ModLoader_WriteCall((void*)0x416066, ActMyChar_Normal_Custom); // Insert your function here
-}
 
 // Init MyChar replacement
 void InitMod_MyChar()
 {
-	InitCustomMyChar();
+	InitMyCharPhysicsPatch();
+	InitCustomMyCharPatch();
 }
 
 // For settings related things, this function will be used.

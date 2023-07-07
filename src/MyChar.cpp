@@ -23,6 +23,68 @@ int setting_walljump_jump_height = 1280; // the jump force of a wall jump
 int setting_walljump_sliding_speed = 554; // wall jump sliding speed
 int setting_extrajump_jump_height = 1280; // the jump force of an extra jump
 
+// physics settings
+// if the run button is enabled, you must set your own physics
+
+int setting_physics_water_max_dash = 406;
+int setting_physics_water_max_move = 767;
+int setting_physics_water_gravity1 = 40;
+int setting_physics_water_gravity2 = 16;
+int setting_physics_water_jump = 640;
+int setting_physics_water_dash1 = 42;
+int setting_physics_water_dash2 = 16;
+int setting_physics_water_resist = 25;
+
+int setting_physics_max_dash = 812;
+int setting_physics_max_move = 1535;
+int setting_physics_gravity1 = 80;
+int setting_physics_gravity2 = 32;
+int setting_physics_jump = 1280;
+int setting_physics_dash1 = 85;
+int setting_physics_dash2 = 32;
+int setting_physics_resist = 51;
+
+void ActMyChar_RunButton(BOOL bKey, Physics *physics)
+{
+	// Controller players can't do this.
+	if (gKey & gKeyShift)
+	{
+		physics->max_dash = 0x32C * 1.5;
+	}
+	else
+	{
+		physics->max_dash = 0x32C;
+	}
+}
+
+void setPlayerPhysics(BOOL bKey, Physics *physics)
+{
+	if (gMC->flag & 0x100)
+	{
+		physics->max_dash = 0x32C / 2;
+		physics->max_move = 0x5FF / 2;
+		physics->gravity1 = 0x50 / 2;
+		physics->gravity2 = 0x20 / 2;
+		physics->jump = 0x500 / 2;
+		physics->dash1 = 0x200 / 6 / 2;
+		physics->dash2 = 0x200 / 16 / 2;
+		physics->resist = 0x200 / 10 / 2;
+	}
+	else
+	{
+		physics->max_dash = 0x32C;
+		physics->max_move = 0x5FF;
+		physics->gravity1 = 0x50;
+		physics->gravity2 = 0x20;
+		physics->jump = 0x500;
+		physics->dash1 = 0x200 / 6;
+		physics->dash2 = 0x200 / 16;
+		physics->resist = 0x200 / 10;
+	}
+
+	ActMyChar_RunButton(bKey, physics);
+}
+
 void ActMyChar_OnWall(BOOL bKey)
 {
 	if (gMC->flag & 4 && gKeyRight) // In contact with right wall

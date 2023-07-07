@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ASMPatches.cpp" />
     <ClCompile Include="src\Draw.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\EntityLoad.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="src\\mod_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ASMPatches.h" />
     <ClInclude Include="src\cave_story.h" />
     <ClInclude Include="src\Draw.h" />
     <ClInclude Include="src\Entity.h" />
