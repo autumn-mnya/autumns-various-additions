@@ -59,11 +59,14 @@ int setting_running_speed = 1218;
 void ActMyChar_RunButton(BOOL bKey, Physics *physics)
 {
 	// Controller players can't do this.
-	if (gMC->flag & 8) // only while grounded
+	if ((setting_run_button_flag_enabled == true && GetNPCFlag(setting_run_button_flag)) || (setting_run_button_flag_enabled == false))
 	{
-		if ((gKey & gKeyShift) && !(gMC->flag & 0x100)) // if running + not in water
+		if (gMC->flag & 8) // only while grounded
 		{
-			physics->max_dash = setting_running_speed;
+			if ((gKey & gKeyShift) && !(gMC->flag & 0x100)) // if running + not in water
+			{
+				physics->max_dash = setting_running_speed;
+			}
 		}
 	}
 }
