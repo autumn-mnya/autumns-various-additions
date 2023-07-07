@@ -16,12 +16,16 @@
 <TRA0012:0091:0037:0011
 
 #0101
-<TRA0095:0000:0000:0000
+<KEY<FAO0004<TRA0095:0094:0007:0021
 
 #0200
-<KEY<KEY<KEY<AM+0009:0000<EQ+0032<EVE0091<PRI<CMU0000<MSG
-From somewhere, a transmission...<NOD<CLO<FL+0430<TRA0018:0500:0002:0000
+<KEY<KEY<EVE0091
 
+#0201
+<KEY<MSG
+This teleporter will take you
+to a separate map for testing
+your own mechanics (To Quotation)<NOD<CLO<END
 #0300
 <MSG<TUR
 the bottom<WAI0030<CLO<END
