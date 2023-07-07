@@ -61,16 +61,46 @@ void InitMod_Settings()
 	setting_walljumps_enabled = ModLoader_GetSettingBool("Walljumps Enabled", false);
 	setting_walljumps_flag_enabled = ModLoader_GetSettingBool("Walljumps Enable on Flag", false);
 	setting_walljumps_flag = ModLoader_GetSettingInt("Walljumps Flag", 6500);
-	setting_walljump_jump_height = ModLoader_GetSettingInt("Walljumps Jump Momentum", 1280);
+	setting_walljump_horizontal_speed = ModLoader_GetSettingInt("Walljumps Horizontal Speed", 1000);
+	setting_walljump_water_horizontal_speed = ModLoader_GetSettingInt("Underwater Walljumps Horizontal Speed", 300);
+	setting_walljump_jump_height = ModLoader_GetSettingInt("Walljumps Jump Momentum", 1113);
+	setting_walljump_water_jump_height = ModLoader_GetSettingInt("Underwater Walljumps Jump Momentum", 556);
 	setting_walljump_sliding_speed = ModLoader_GetSettingInt("Wallsliding Speed", 554);
 	
 	// Extra Jumps
 	setting_extrajump_jump_height = ModLoader_GetSettingInt("Extra Jump Momentum", 1280);
+	setting_extrajump_water_jump_height = ModLoader_GetSettingInt("Underwater Extra Jump Momentum", 640);
 
 	// Double Jump
 	setting_doublejump_enabled = ModLoader_GetSettingBool("Double Jump Enabled", false);
 	setting_doublejump_flag_enabled = ModLoader_GetSettingBool("Double Jump Enable on Flag", false);
 	setting_doublejump_flag = ModLoader_GetSettingInt("Double Jump Flag", 6501);
+
+	// Physics + Run button
+	setting_physics_ini_enabled = ModLoader_GetSettingBool("Physics in Settings.ini", false);
+	setting_run_button_enabled = ModLoader_GetSettingBool("Enable Run Button", false);
+	setting_run_button_flag_enabled = ModLoader_GetSettingBool("Enable Run Button on Flag", false);
+	setting_run_button_flag = ModLoader_GetSettingInt("Run Button Flag", 6502);
+
+	setting_physics_max_dash = ModLoader_GetSettingInt("Max Walking Speed", 812);
+	setting_physics_max_move = ModLoader_GetSettingInt("Max Top Movement Speed", 1535);
+	setting_physics_gravity1 = ModLoader_GetSettingInt("Gravity", 80);
+	setting_physics_gravity2 = ModLoader_GetSettingInt("Rising Gravity", 32);
+	setting_physics_jump = ModLoader_GetSettingInt("Jump Momentum", 1280);
+	setting_physics_dash1 = ModLoader_GetSettingInt("Walking Acceleration", 85);
+	setting_physics_dash2 = ModLoader_GetSettingInt("Air Control", 32);
+	setting_physics_resist = ModLoader_GetSettingInt("Friction", 51);
+
+	setting_physics_water_max_dash = ModLoader_GetSettingInt("Underwater Max Walking Speed", 406);
+	setting_physics_water_max_move = ModLoader_GetSettingInt("Underwater Top Movement Speed", 767);
+	setting_physics_water_gravity1 = ModLoader_GetSettingInt("Underwater Gravity", 40);
+	setting_physics_water_gravity2 = ModLoader_GetSettingInt("Underwater Rising Gravity", 16);
+	setting_physics_water_jump = ModLoader_GetSettingInt("Underwater Jump Momentum", 640);
+	setting_physics_water_dash1 = ModLoader_GetSettingInt("Underwater Walking Acceleration", 42);
+	setting_physics_water_dash2 = ModLoader_GetSettingInt("Underwater Air Control", 16);
+	setting_physics_water_resist = ModLoader_GetSettingInt("Underwater Friction", 25);
+
+	setting_running_speed = ModLoader_GetSettingInt("Max Running Speed", 1218);
 }
 
 

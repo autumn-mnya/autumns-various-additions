@@ -38,12 +38,16 @@ void ActEntity361(NPCHAR* npc)
 
 	int boostfuelamount = 50;
 	int cooldown = 150;
+	int sprite_index = 0;
 
 	if (CustomNpcValues(npc).CustomValue01 != 0)
 		boostfuelamount = CustomNpcValues(npc).CustomValue01;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
+	if (CustomNpcValues(npc).CustomValue02 != 0)
 		cooldown = CustomNpcValues(npc).CustomValue02;
+
+	if (CustomNpcValues(npc).CustomValue03 != 0)
+		sprite_index = CustomNpcValues(npc).CustomValue03;
 
 	switch (npc->act_no)
 	{
@@ -80,6 +84,9 @@ void ActEntity361(NPCHAR* npc)
 		npc->rect = rect[npc->ani_no];
 	else
 		npc->rect = rectDir2[npc->ani_no];
+
+	npc->rect.top += (16 * 1) * sprite_index;
+	npc->rect.bottom += (16 * 1) * sprite_index;
 }
 
 // Lock-On Trigger
@@ -280,24 +287,28 @@ void ActEntity366(NPCHAR* npc)
 void ActEntity367(NPCHAR* npc)
 {
 	RECT rectLeft[2] = {
-		{32, 64, 48, 80},
-		{48, 64, 64, 80},
+		{96, 0, 112, 16},
+		{112, 0, 128, 16},
 	};
 
 	RECT rectRight[2] =
 	{
-		{32, 48, 48, 64},
-		{48, 48, 64, 64},
+		{128, 0, 144, 16},
+		{144, 0, 160, 16},
 	};
 
 	int amount = 50;
 	int cooldown = 50;
+	int sprite_index = 0;
 
 	if (CustomNpcValues(npc).CustomValue01 != 0)
 		amount = CustomNpcValues(npc).CustomValue01;
 
 	if (CustomNpcValues(npc).CustomValue02 != 0)
 		cooldown = CustomNpcValues(npc).CustomValue02;
+
+	if (CustomNpcValues(npc).CustomValue03 != 0)
+		sprite_index = CustomNpcValues(npc).CustomValue03;
 
 
 	switch (npc->act_no)
@@ -410,30 +421,37 @@ void ActEntity367(NPCHAR* npc)
 		npc->rect = rectLeft[npc->ani_no];
 	else
 		npc->rect = rectRight[npc->ani_no];
+
+	npc->rect.top += (16 * 1) * sprite_index;
+	npc->rect.bottom += (16 * 1) * sprite_index;
 }
 
 // Forced Boost (Vertical)
 void ActEntity368(NPCHAR* npc)
 {
 	RECT rectUp[2] = {
-		{0, 48, 16, 64},
-		{16, 48, 32, 64},
+		{160, 0, 176, 16},
+		{176, 0, 192, 16},
 	};
 
 	RECT rectDown[2] =
 	{
-		{0, 64, 16, 80},
-		{16, 64, 32, 80},
+		{192, 0, 208, 16},
+		{208, 0, 224, 16},
 	};
 
 	int amount = 50;
 	int cooldown = 50;
+	int sprite_index = 0;
 
 	if (CustomNpcValues(npc).CustomValue01 != 0)
 		amount = CustomNpcValues(npc).CustomValue01;
 
 	if (CustomNpcValues(npc).CustomValue02 != 0)
 		cooldown = CustomNpcValues(npc).CustomValue02;
+
+	if (CustomNpcValues(npc).CustomValue03 != 0)
+		sprite_index = CustomNpcValues(npc).CustomValue03;
 
 	switch (npc->act_no)
 	{
@@ -534,6 +552,9 @@ void ActEntity368(NPCHAR* npc)
 		npc->rect = rectUp[npc->ani_no];
 	else
 		npc->rect = rectDown[npc->ani_no];
+
+	npc->rect.top += (16 * 1) * sprite_index;
+	npc->rect.bottom += (16 * 1) * sprite_index;
 }
 
 // Flag Trigger
@@ -7008,12 +7029,16 @@ void ActEntity448(NPCHAR* npc)
 
 	int jump_amount = 1;
 	int cooldown = 150;
+	int sprite_index = 0;
 
 	if (CustomNpcValues(npc).CustomValue01 != 0)
 		jump_amount = CustomNpcValues(npc).CustomValue01;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
+	if (CustomNpcValues(npc).CustomValue02 != 0)
 		cooldown = CustomNpcValues(npc).CustomValue02;
+
+	if (CustomNpcValues(npc).CustomValue03 != 0)
+		sprite_index = CustomNpcValues(npc).CustomValue03;
 
 	switch (npc->act_no)
 	{
@@ -7033,7 +7058,7 @@ void ActEntity448(NPCHAR* npc)
 			break;
 		case 1:
 			npc->ani_no = 1;
-			if (++npc->act_wait > 150) {
+			if (++npc->act_wait > cooldown) {
 				npc->act_no = 0;
 				PlaySoundObject(70, SOUND_MODE_PLAY);
 			}
@@ -7041,24 +7066,31 @@ void ActEntity448(NPCHAR* npc)
 	}
 
 	npc->rect = rect[npc->ani_no];
+
+	npc->rect.top += (16 * 1) * sprite_index;
+	npc->rect.bottom += (16 * 1) * sprite_index;
 }
 
 //Rewind Refill
 void ActEntity449(NPCHAR* npc)
 {
 	RECT rect[2] = {
-		{64, 16, 80, 32},
-		{80, 16, 96, 32},
+		{224, 0, 240, 16},
+		{240, 0, 256, 16},
 	};
 
 	int cooldown_rewind = 150;
 	int cooldown_respawn = 50;
+	int sprite_index = 0;
 
 	if (CustomNpcValues(npc).CustomValue01 != 0)
 		cooldown_rewind = CustomNpcValues(npc).CustomValue01;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
+	if (CustomNpcValues(npc).CustomValue02 != 0)
 		cooldown_respawn = CustomNpcValues(npc).CustomValue02;
+
+	if (CustomNpcValues(npc).CustomValue03 != 0)
+		sprite_index = CustomNpcValues(npc).CustomValue03;
 
 	int i = 0;
 
@@ -7105,4 +7137,7 @@ void ActEntity449(NPCHAR* npc)
 	}
 
 	npc->rect = rect[npc->ani_no];
+
+	npc->rect.top += (16 * 1) * sprite_index;
+	npc->rect.bottom += (16 * 1) * sprite_index;
 }
