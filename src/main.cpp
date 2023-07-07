@@ -57,6 +57,14 @@ void InitMod_MyChar()
 // For settings related things, this function will be used.
 void InitMod_Settings()
 {
+	///////////////
+	// ASM Hacks //
+	///////////////
+
+	////////////
+	// MyChar //
+	////////////
+
 	// Walljumps
 	setting_walljumps_enabled = ModLoader_GetSettingBool("Walljumps Enabled", false);
 	setting_walljumps_flag_enabled = ModLoader_GetSettingBool("Walljumps Enable on Flag", false);
@@ -103,6 +111,10 @@ void InitMod_Settings()
 	setting_running_speed = ModLoader_GetSettingInt("Max Running Speed", 1218);
 }
 
+void InitASMPatches()
+{
+	// Random ASM Patches that arent related to any of the other Init functions go here
+}
 
 // Init the whole mod
 void InitMod(void)
@@ -124,4 +136,5 @@ void InitMod(void)
 	InitMod_Entity();
 	InitMod_Sprites();
 	InitMod_MyChar();
+	InitASMPatches();
 }
