@@ -860,6 +860,7 @@ static CARET_TABLE* gCaretTable = (CARET_TABLE*)0x48F830;
 static FADE* gFade = (FADE*)0x49DB30;
 static FRAME* gFrame = (FRAME*)0x49E1C8;
 static ITEM* gItemData = (ITEM*)0x499B40;
+static MAP_DATA* gMap = (MAP_DATA*)0x49E480;
 static MYCHAR* gMC = (MYCHAR*)0x49E638;
 static NPCHAR(&gNPC)[512] = *(NPCHAR(*)[512])0x4A6220;
 static NPC_TABLE** gNpcTable = (NPC_TABLE**)0x4BBA34;

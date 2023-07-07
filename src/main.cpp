@@ -111,6 +111,11 @@ void InitMod_Settings()
 	setting_running_speed = ModLoader_GetSettingInt("Max Running Speed", 1218);
 }
 
+void InitGameUI()
+{
+	// UI related things go here
+}
+
 void InitASMPatches()
 {
 	// Random ASM Patches that arent related to any of the other Init functions go here
@@ -133,8 +138,10 @@ void InitMod(void)
 	InitMod_Settings();
 
 	// Functions
+	
 	InitMod_Entity();
 	InitMod_Sprites();
 	InitMod_MyChar();
+	InitGameUI();
 	InitASMPatches();
 }
