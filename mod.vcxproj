@@ -15,7 +15,7 @@
     <ProjectGuid>{16034316-37DE-44CB-B557-81550CA96C13}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
-    <ProjectName>mod</ProjectName>
+    <ProjectName>autumns_various_additions</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,13 +42,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>CaveStory\mods\mod</OutDir>
-    <TargetName>mod</TargetName>
+    <OutDir>CaveStory\mods\autumns_various_additions</OutDir>
+    <TargetName>autumns_various_additions</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>CaveStory\mods\mod</OutDir>
-    <TargetName>mod</TargetName>
+    <OutDir>CaveStory\mods\autumns_various_additions</OutDir>
+    <TargetName>autumns_various_additions</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -94,6 +94,10 @@
     <ClCompile Include="src\EntityTable.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MyChar.cpp" />
+    <ClCompile Include="src\TileCollisionBoss.cpp" />
+    <ClCompile Include="src\TileCollisionBullet.cpp" />
+    <ClCompile Include="src\TileCollisionMyChar.cpp" />
+    <ClCompile Include="src\TileCollisionEntity.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +109,10 @@
     <ClInclude Include="src\EntityTable.h" />
     <ClInclude Include="src\Main.h" />
     <ClInclude Include="src\MyChar.h" />
+    <ClInclude Include="src\TileCollisionBoss.h" />
+    <ClInclude Include="src\TileCollisionBullet.h" />
+    <ClInclude Include="src\TileCollisionMyChar.h" />
+    <ClInclude Include="src\TileCollisionEntity.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />
   </ItemGroup>

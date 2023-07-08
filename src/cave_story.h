@@ -852,9 +852,9 @@ typedef void (*NPCFUNCTION)(NPCHAR*);
 
 static ARMS* gArmsData = (ARMS*)0x499BC8;
 static ARMS_LEVEL* gArmsLevelTable = (ARMS_LEVEL*)0x493660;
-static BULLET* gBul = (BULLET*)0x499C98;
+static BULLET(&gBul)[BULLET_MAX] = *(BULLET(*)[BULLET_MAX])0x499C98;
 static BULLET_TABLE* gBulTbl = (BULLET_TABLE*)0x48F044;
-static NPCHAR* gBoss = (NPCHAR*)0x4BBA58;
+static NPCHAR(&gBoss)[BOSS_MAX] = *(NPCHAR(*)[BOSS_MAX])0x4BBA58;
 static CARET* gCrt = (CARET*)0x49BCA8;
 static CARET_TABLE* gCaretTable = (CARET_TABLE*)0x48F830;
 static FADE* gFade = (FADE*)0x49DB30;
@@ -862,7 +862,7 @@ static FRAME* gFrame = (FRAME*)0x49E1C8;
 static ITEM* gItemData = (ITEM*)0x499B40;
 static MAP_DATA* gMap = (MAP_DATA*)0x49E480;
 static MYCHAR* gMC = (MYCHAR*)0x49E638;
-static NPCHAR(&gNPC)[512] = *(NPCHAR(*)[512])0x4A6220;
+static NPCHAR(&gNPC)[NPC_MAX] = *(NPCHAR(*)[512])0x4A6220;
 static NPC_TABLE** gNpcTable = (NPC_TABLE**)0x4BBA34;
 static PERMIT_STAGE* gPermitStage = (PERMIT_STAGE*)0x4A5500;
 static STAGE_TABLE* oTMT = (STAGE_TABLE*)0x4937B0; // Default stage table in the exe.

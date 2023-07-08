@@ -52,6 +52,11 @@ the right<WAI0030<CLO<END
 <KEY<MSG<TUR
 There is nothing here.<NOD<CLO<END
 
+#0650
+<KEY<MSG<FAC0001
+hey hi hello how are you
+whats goin onnn<NOD<CLO<END
+
 #0800
 <FLJ0300:0801
 <KEY<MSG

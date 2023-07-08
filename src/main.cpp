@@ -15,12 +15,20 @@
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "MyChar.h"
+#include "TileCollisionBoss.h"
+#include "TileCollisionBullet.h"
+#include "TileCollisionEntity.h"
+#include "TileCollisionMyChar.h"
 
 // Paths
 char gModulePath[MAX_PATH];
 char gDataPath[MAX_PATH];
 
-// Options (none exist in Settings.ini currently)
+// Options
+bool setting_enable_surfaces;
+bool setting_enable_entity;
+bool setting_enable_mychar;
+bool setting_enable_tilecollision;
 
 // Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
@@ -57,6 +65,15 @@ void InitMod_MyChar()
 // For settings related things, this function will be used.
 void InitMod_Settings()
 {
+	////////////
+	// Global //
+	////////////
+
+	setting_enable_surfaces = ModLoader_GetSettingBool("Enable Custom Surface Code", true);
+	setting_enable_entity = ModLoader_GetSettingBool("Enable Custom Entity Code", true);
+	setting_enable_mychar = ModLoader_GetSettingBool("Enable Custom MyChar Code", true);
+	setting_enable_tilecollision = ModLoader_GetSettingBool("Enable Custom Tileset Code", true);
+
 	///////////////
 	// ASM Hacks //
 	///////////////
@@ -109,14 +126,29 @@ void InitMod_Settings()
 	setting_physics_water_resist = ModLoader_GetSettingInt("Underwater Friction", 25);
 
 	setting_running_speed = ModLoader_GetSettingInt("Max Running Speed", 1218);
+
+	////////////////////
+	// Tile Collision //
+	////////////////////
+
+	setting_bounce_speed = ModLoader_GetSettingInt("Bouncy Block Speed", 1535);
+	setting_bounce_sfx = ModLoader_GetSettingInt("Bouncy Block Sound Effect", 25);
 }
 
-void InitGameUI()
+void InitMod_TileCollision()
+{
+	ModLoader_WriteJump((void*)0x417E40, (void*)Replacement_HitMyCharMap);
+	ModLoader_WriteJump((void*)0x417E40, (void*)Replacement_HitMyCharMap);
+	ModLoader_WriteJump((void*)0x471160, (void*)Replacement_HitNpCharMap);
+	ModLoader_WriteJump((void*)0x473080, (void*)Replacement_HitBossMap);
+}
+
+void InitMod_GameUI()
 {
 	// UI related things go here
 }
 
-void InitASMPatches()
+void InitMod_ASMPatches()
 {
 	// Random ASM Patches that arent related to any of the other Init functions go here
 }
@@ -139,9 +171,20 @@ void InitMod(void)
 
 	// Functions
 	
-	InitMod_Entity();
-	InitMod_Sprites();
-	InitMod_MyChar();
-	InitGameUI();
-	InitASMPatches();
+	if (setting_enable_entity)
+		InitMod_Entity();
+
+	if (setting_enable_surfaces)
+		InitMod_Sprites();
+
+	if (setting_enable_mychar)
+		InitMod_MyChar();
+
+	if (setting_enable_tilecollision)
+		InitMod_TileCollision();
+
+	/*
+	InitMod_GameUI();
+	InitMod_ASMPatches();
+	*/
 }
