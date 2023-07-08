@@ -71,6 +71,21 @@ void ActMyChar_RunButton(BOOL bKey, Physics *physics)
 	}
 }
 
+// Apologies Autumn
+int sign(double x) {
+	if (x > 0) return 1;
+	if (x < 0) return -1;
+	return 0;
+}
+
+int abs(int x) 
+{
+	if (x >= 0)
+		return 1;
+	else
+		return 1;
+}
+
 void setPlayerPhysics(BOOL bKey, Physics *physics)
 {
 	if (gMC->flag & 0x100) // While in water
@@ -99,6 +114,25 @@ void setPlayerPhysics(BOOL bKey, Physics *physics)
 	// Run button when the setting is set to true
 	if (setting_run_button_enabled)
 		ActMyChar_RunButton(bKey, physics);
+	
+	// Ice
+	int kLeft = (bKey && gKey & gKeyLeft) ? 1 : 0;
+	int kRight = (bKey && gKey & gKeyRight) ? 1 : 0;
+
+	int h_input = (kRight - kLeft);
+	bool resisting = (h_input != 0 && sign(gMC->xm) != h_input && sign(gMC->xm) != 0);
+
+	if (gMC->flag & 0x200)
+	{
+		if (h_input)
+			SetCaret(gMC->x, gMC->y + (4 * 0x200), 13, 0);
+
+		if (resisting)
+			physics->dash1 = setting_physics_water_dash1 / 2;
+		else
+			physics->dash1 = setting_physics_water_dash1;
+		physics->resist = 12;
+	}
 }
 
 void ActMyChar_OnWall(BOOL bKey)

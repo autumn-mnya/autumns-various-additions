@@ -221,6 +221,22 @@ int JudgeHitMyCharJumpThruSidewayLeft(int x, int y)
 	return hit;
 }
 
+int JudgeHitMyCharIce(int x, int y)
+{
+	int hit = 0;
+	// Floor
+	if (gMC->x - gMC->hit.back < (x * 0x10 + 5) * 0x200
+		&& gMC->x + gMC->hit.back >((x * 0x10 - 5) * 0x200)
+		&& gMC->y + gMC->hit.bottom > (y * 0x10 - 8) * 0x200
+		&& gMC->y + gMC->hit.bottom < y * 0x10 * 0x200)
+	{
+		// Set that a floor was hit
+		hit |= 0x200;
+	}
+
+	return hit;
+}
+
 void Replacement_HitMyCharMap(void)
 {
 	int x, y;
@@ -277,6 +293,11 @@ void Replacement_HitMyCharMap(void)
 
 		case 0x4B:
 			gMC->flag |= JudgeHitMyCharJumpThruSidewayLeft(x + offx[i], y + offy[i]);
+			break;
+
+		case 0x4C:
+			gMC->flag |= JudgeHitMyCharIce(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharBlock(x + offx[i], y + offy[i]);
 			break;
 
 			// Slopes
