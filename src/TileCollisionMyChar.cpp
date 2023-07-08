@@ -275,7 +275,7 @@ void Replacement_HitMyCharMap(void)
 			gMC->flag |= JudgeHitMyCharJumpThruSidewayRight(x + offx[i], y + offy[i]);
 			break;
 
-		case 0x4Bc:
+		case 0x4B:
 			gMC->flag |= JudgeHitMyCharJumpThruSidewayLeft(x + offx[i], y + offy[i]);
 			break;
 
