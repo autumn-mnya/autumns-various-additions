@@ -88,9 +88,6 @@ void Replacement_HitBulletMap(void)
 				case 0x43:
 				case 0x44:
 				case 0x47:
-					gBul[i].flag |= JudgeHitBulletBlock(x + offx[j], y + offy[j], &gBul[i]);
-					break;
-
 				case 0x48:
 				case 0x49:
 				case 0x4A:

@@ -13,6 +13,7 @@
 #include "mod_loader.h"
 #include "cave_story.h"
 
+// Tiletype 0x48
 void JudgeHitNpCharJumpThru(NPCHAR* npc, int x, int y)
 {
 	int hit = 0;
@@ -28,6 +29,81 @@ void JudgeHitNpCharJumpThru(NPCHAR* npc, int x, int y)
 		npc->y = ((y * 0x10 - 8) * 0x200) - npc->hit.bottom;
 		npc->ym = 0;
 		hit |= 8;
+	}
+
+	npc->flag |= hit;
+}
+
+// Tiletype 0x49
+void JudgeHitNpCharJumpThruUpsideDown(NPCHAR* npc, int x, int y)
+{
+	int hit = 0;
+
+	if (npc->ym > 0 || npc->y + npc->ym - npc->hit.top < (y * 0x10 - 8) * 0x200)
+		hit |= 0;
+
+	if (npc->x - npc->hit.back < (x * 0x10 + 5) * 0x200
+		&& npc->x + npc->hit.back >(x * 0x10 - 5) * 0x200
+		&& npc->y - npc->hit.top < (y * 0x10 + 8) * 0x200
+		&& npc->y - npc->hit.top > y * 0x10 * 0x200)
+	{
+		npc->y = ((y * 0x10 + 8) * 0x200) + npc->hit.top;
+		npc->ym = 0;
+		hit |= 2;
+	}
+
+	npc->flag |= hit;
+}
+
+// Tiletype 0x4A
+void JudgeHitNpCharJumpThruSidewayRight(NPCHAR* npc, int x, int y)
+{
+	int hit = 0;
+
+	if (npc->xm > 0 || npc->x + npc->xm - npc->hit.back < (x * 0x10 - 8) * 0x200)
+		hit |= 0;
+
+	if (npc->y - npc->hit.top < (y * 0x10 + 4) * 0x200
+		&& npc->y + npc->hit.bottom >(y * 0x10 - 4) * 0x200
+		&& npc->x - npc->hit.back < (x * 0x10 + 8) * 0x200
+		&& npc->x - npc->hit.back > x * 0x10 * 0x200)
+	{
+		// Clip
+		npc->x = ((x * 0x10 + 8) * 0x200) + npc->hit.back;
+
+		// Halt momentum
+		if (npc->xm < 0)
+			npc->xm = 0;
+
+		// Set that a left wall was hit
+		hit |= 1;
+	}
+
+	npc->flag |= hit;
+}
+
+// Tiletype 0x4B
+void JudgeHitNpCharJumpThruSidewayLeft(NPCHAR* npc, int x, int y)
+{
+	int hit = 0;
+
+	if (npc->xm < 0 || npc->x - npc->xm + npc->hit.back >(x * 0x10 - 8) * 0x200)
+		hit |= 0;
+
+	// Right wall
+	if (npc->y - npc->hit.top < (y * 0x10 + 4) * 0x200
+		&& npc->y + npc->hit.bottom >(y * 0x10 - 4) * 0x200
+		&& npc->x + npc->hit.back > (x * 0x10 - 8) * 0x200
+		&& npc->x + npc->hit.back < x * 0x10 * 0x200)
+	{
+		// Clip
+		npc->x = ((x * 0x10 - 8) * 0x200) - npc->hit.back;
+
+		if (npc->xm > 0)
+			npc->xm = 0;
+
+		// Set that a right wall was hit
+		hit |= 4;
 	}
 
 	npc->flag |= hit;
@@ -110,6 +186,18 @@ void Replacement_HitNpCharMap(void)
 				// Jump Thru's
 			case 0x48:
 				JudgeHitNpCharJumpThru(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			case 0x49:
+				JudgeHitNpCharJumpThruUpsideDown(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			case 0x4A:
+				JudgeHitNpCharJumpThruSidewayRight(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			case 0x4B:
+				JudgeHitNpCharJumpThruSidewayLeft(&gNPC[i], x + offx[j], y + offy[j]);
 				break;
 
 				// Slopes

@@ -101,6 +101,15 @@ void Replacement_HitBossMap(void)
 			case 0x48:
 				JudgeHitNpCharJumpThru(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
+			case 0x49:
+				JudgeHitNpCharJumpThruUpsideDown(&gBoss[b], x + offx[j], y + offy[j]);
+				break;
+			case 0x4A:
+				JudgeHitNpCharJumpThruSidewayRight(&gBoss[b], x + offx[j], y + offy[j]);
+				break;
+			case 0x4B:
+				JudgeHitNpCharJumpThruSidewayLeft(&gBoss[b], x + offx[j], y + offy[j]);
+				break;
 			case 0x50:
 				JudgeHitNpCharTriangleA(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
