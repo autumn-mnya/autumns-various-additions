@@ -202,7 +202,8 @@ void InitMod(void)
 	if (setting_enable_pause_screen)
 		InitMod_PauseScreen();
 
-	InitMod_TSC();
+	if (setting_enable_text_script_code)
+		InitMod_TSC();
 
 	/*
 	InitMod_GameUI();
