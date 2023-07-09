@@ -248,6 +248,26 @@ void Replacement_HitNpCharMap(void)
 				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
 				break;
 
+			case 0x65:
+				JudgeHitNpCharJumpThru(&gNPC[i], x + offx[j], y + offy[j]);
+				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			case 0x66:
+				JudgeHitNpCharJumpThruUpsideDown(&gNPC[i], x + offx[j], y + offy[j]);
+				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			case 0x67:
+				JudgeHitNpCharJumpThruSidewayRight(&gNPC[i], x + offx[j], y + offy[j]);
+				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			case 0x68:
+				JudgeHitNpCharJumpThruSidewayLeft(&gNPC[i], x + offx[j], y + offy[j]);
+				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
 				// Water slopes
 			case 0x70:
 				JudgeHitNpCharTriangleA(&gNPC[i], x + offx[j], y + offy[j]);

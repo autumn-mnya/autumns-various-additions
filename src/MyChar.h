@@ -58,5 +58,7 @@ extern int setting_physics_resist;
 
 extern int setting_running_speed;
 
+extern bool setting_ice_particles;
+
 void setPlayerPhysics(BOOL bKey, Physics* physics);
 void ActMyChar_Normal_Custom(BOOL bKey);

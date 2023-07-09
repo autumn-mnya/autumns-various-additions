@@ -56,6 +56,9 @@ int setting_physics_resist = 51;
 // Speed for running with the run button
 int setting_running_speed = 1218;
 
+// Ice particles
+bool setting_ice_particles = true;
+
 void ActMyChar_RunButton(BOOL bKey, Physics *physics)
 {
 	// Controller players can't do this.
@@ -124,7 +127,7 @@ void setPlayerPhysics(BOOL bKey, Physics *physics)
 
 	if (gMC->flag & 0x200)
 	{
-		if (h_input)
+		if (h_input && setting_ice_particles)
 			SetCaret(gMC->x, gMC->y + (4 * 0x200), 13, 0);
 
 		if (resisting)
@@ -170,7 +173,7 @@ void ActMyChar_WallJump(BOOL bKey)
 	{
 		if (bKey)
 		{
-			if (onWall != 0)
+			if ((onWall != 0) && !(gMC->flag & 8))
 			{
 				if (gKeyTrg & gKeyJump)
 				{

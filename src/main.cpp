@@ -131,13 +131,18 @@ void InitMod_Settings()
 	// Tile Collision //
 	////////////////////
 
+	// Bounce Tile
 	setting_bounce_speed = ModLoader_GetSettingInt("Bouncy Block Speed", 1535);
 	setting_bounce_sfx = ModLoader_GetSettingInt("Bouncy Block Sound Effect", 25);
+
+	// Ice Tile
+	setting_ice_particles = ModLoader_GetSettingBool("Ice Block Particle Effects", true);
 }
 
 void InitMod_TileCollision()
 {
-	ModLoader_WriteJump((void*)0x417E40, (void*)Replacement_HitMyCharMap);
+	ModLoader_WriteJump((void*)0x402B30, (void*)Replacement_JudgeHitBulletBlock2);
+	ModLoader_WriteJump((void*)0x403740, (void*)Replacement_HitBulletMap);
 	ModLoader_WriteJump((void*)0x417E40, (void*)Replacement_HitMyCharMap);
 	ModLoader_WriteJump((void*)0x471160, (void*)Replacement_HitNpCharMap);
 	ModLoader_WriteJump((void*)0x473080, (void*)Replacement_HitBossMap);

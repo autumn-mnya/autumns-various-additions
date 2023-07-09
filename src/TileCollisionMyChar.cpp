@@ -375,6 +375,28 @@ void Replacement_HitMyCharMap(void)
 			gMC->flag |= JudgeHitMyCharWater(x + offx[i], y + offy[i]);
 			break;
 
+			// Jump Thru's Water
+		case 0x65:
+			gMC->flag |= JudgeHitMyCharJumpThru(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharWater(x + offx[i], y + offy[i]);
+			break;
+
+		case 0x66:
+			gMC->flag |= JudgeHitMyCharJumpThruUpsideDown(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharWater(x + offx[i], y + offy[i]);
+			break;
+
+		case 0x67:
+			gMC->flag |= JudgeHitMyCharJumpThruSidewayRight(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharWater(x + offx[i], y + offy[i]);
+			break;
+
+		case 0x68:
+			gMC->flag |= JudgeHitMyCharJumpThruSidewayLeft(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharWater(x + offx[i], y + offy[i]);
+			break;
+
+
 			// Water slopes
 		case 0x70:
 			gMC->flag |= JudgeHitMyCharTriangleA(x + offx[i], y + offy[i]);
