@@ -8,6 +8,7 @@
 #include "Entity.h"
 
 #include "main.h"
+#include "Draw.h"
 #include "cave_story.h"
 #include "EntityLoad.h"
 #include "MyChar.h"
@@ -7138,4 +7139,56 @@ void ActEntity449(NPCHAR* npc)
 
 	npc->rect.top += (16 * 1) * sprite_index;
 	npc->rect.bottom += (16 * 1) * sprite_index;
+}
+
+// Conveyor
+void ActEntity450(NPCHAR* npc)
+{
+	int speed = CustomNpcValues(npc).CustomValue01;
+
+	switch (npc->act_no)
+	{
+		case 0:
+			// todo make it detect if there's another conveyor next and if not change sprite
+			if (npc->direct == 0)
+				npc->act_no = 10;
+			else
+				npc->act_no = 20;
+			break;
+		case 10:
+			if (gMC->x < npc->x + (8 * 0x200) && gMC->x > npc->x - (8 * 0x200) && gMC->y < npc->y && gMC->y > npc->y - (16 * 0x200) && gMC->flag & 8)
+				gMC->x -= (0.5 * 0x200) * speed;
+			break;
+		case 20:
+			if (gMC->x < npc->x + (8 * 0x200) && gMC->x > npc->x - (8 * 0x200) && gMC->y < npc->y && gMC->y > npc->y - (16 * 0x200) && gMC->flag & 8)
+				gMC->x += (0.5 * 0x200) * speed;
+			break;
+	}
+
+
+	// Visuals
+	static float frame = 0; // initialize once
+	float ani_speed = 0.1 * speed;
+	frame += ani_speed;
+	frame = fmod(frame, 8);
+	npc->ani_no = floor(frame);
+
+	RECT rcLeft = {
+		32 + (npc->ani_no * 16),
+		16,
+		48 + (npc->ani_no * 16),
+		32
+	};
+
+	RECT rcRight = {
+		144 - (npc->ani_no * 16),
+		16,
+		160 - (npc->ani_no * 16),
+		32
+	};
+
+	if (npc->direct == 0)
+		npc->rect = rcLeft;
+	else
+		npc->rect = rcRight;
 }
