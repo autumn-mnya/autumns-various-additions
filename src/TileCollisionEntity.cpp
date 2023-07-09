@@ -60,7 +60,7 @@ void JudgeHitNpCharJumpThruSidewayRight(NPCHAR* npc, int x, int y)
 {
 	int hit = 0;
 
-	if (npc->xm > 0 || npc->x + npc->xm - npc->hit.back < (x * 0x10 - 8) * 0x200)
+	if (npc->xm >= 0 || (npc->x - npc->xm - npc->hit.back < (x * 0x10 + 8) * 0x200))
 		hit |= 0;
 
 	if (npc->y - npc->hit.top < (y * 0x10 + 4) * 0x200
@@ -87,7 +87,7 @@ void JudgeHitNpCharJumpThruSidewayLeft(NPCHAR* npc, int x, int y)
 {
 	int hit = 0;
 
-	if (npc->xm < 0 || npc->x - npc->xm + npc->hit.back >(x * 0x10 - 8) * 0x200)
+	if (npc->xm <= 0 || npc->x - npc->xm + npc->hit.back >(x * 0x10 - 8) * 0x200)
 		hit |= 0;
 
 	// Right wall

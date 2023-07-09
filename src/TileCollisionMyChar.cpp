@@ -167,7 +167,7 @@ int JudgeHitMyCharJumpThruSidewayRight(int x, int y)
 {
 	int hit = 0;
 
-	if (gMC->xm > 0 || gMC->x + gMC->xm - gMC->hit.back < (x * 0x10 - 8) * 0x200)
+	if (gMC->xm >= 0 || (gMC->x - gMC->xm - gMC->hit.back < (x * 0x10 + 8) * 0x200))
 		return hit;
 
 	if (gMC->y - gMC->hit.top < (y * 0x10 + 4) * 0x200
@@ -196,7 +196,7 @@ int JudgeHitMyCharJumpThruSidewayLeft(int x, int y)
 {
 	int hit = 0;
 
-	if (gMC->xm < 0 || gMC->x - gMC->xm + gMC->hit.back > (x * 0x10 - 8) * 0x200)
+	if (gMC->xm <= 0 || gMC->x - gMC->xm + gMC->hit.back > (x * 0x10 - 8) * 0x200)
 		return hit;
 
 	// Right wall
