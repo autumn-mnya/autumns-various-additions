@@ -88,12 +88,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ASMPatches.cpp" />
+    <ClCompile Include="src\Config.cpp" />
     <ClCompile Include="src\Draw.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\EntityLoad.cpp" />
     <ClCompile Include="src\EntityTable.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MyChar.cpp" />
+    <ClCompile Include="src\PauseScreen.cpp" />
+    <ClCompile Include="src\TextScript.cpp" />
     <ClCompile Include="src\TileCollisionBoss.cpp" />
     <ClCompile Include="src\TileCollisionBullet.cpp" />
     <ClCompile Include="src\TileCollisionMyChar.cpp" />
@@ -103,12 +106,15 @@
   <ItemGroup>
     <ClInclude Include="src\ASMPatches.h" />
     <ClInclude Include="src\cave_story.h" />
+    <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\Draw.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\EntityLoad.h" />
     <ClInclude Include="src\EntityTable.h" />
     <ClInclude Include="src\Main.h" />
     <ClInclude Include="src\MyChar.h" />
+    <ClInclude Include="src\PauseScreen.h" />
+    <ClInclude Include="src\TextScript.h" />
     <ClInclude Include="src\TileCollisionBoss.h" />
     <ClInclude Include="src\TileCollisionBullet.h" />
     <ClInclude Include="src\TileCollisionMyChar.h" />

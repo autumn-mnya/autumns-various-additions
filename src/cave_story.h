@@ -50,6 +50,10 @@
 #define KEY_L 0x80000
 #define KEY_PLUS 0x100000
 #define KEY_ESCAPE 0x8000
+#define KEY_PAUSE 0x8000
+
+#define gKeyOk (*(int*)0x493628)
+#define gKeyCancel (*(int*)0x49362C)
 
 // Npc Variable used for shared coordinate related things
 #define gCurlyShoot_x (*(int*)0x4BBA20)
@@ -113,12 +117,27 @@
 #define bFullscreen (*(BOOL*)0x49E460) // bFullscreen (if true, window.rect won't be saved or loaded)
 #define BoosterFuel (*(int*)0x49E6E8)
 
+#define gConfigHeader (*(char*)0x48F908) // config header
+#define gConfigFileName (*(char**)0x48F90C) // config filename
+
+#define gbUseJoystick (*(BOOL*)0x49E45C) // use joystick boolean
+
 // <MIM Compatibility
 #define gCurrentMim (*(unsigned int*)0x49E184)
 #define CSM_MIM_tsc_plus  (*(int*)0x49E09C)
 
 // String array
 #define gMusicTable (*(char*(*)[42])0x4981E8)
+
+// Hookspaces & Hookjumps
+
+#define TextScriptBuffer (*(char**)0x4A5AD8)
+#define CS_tsc_offset (*(unsigned int*)0x4A5AE0)
+
+#define CSH_tsc_start (void*) 0x4225D5, 12
+#define CSH_tsc_end (void*) 0x425244, 12
+// Aka 4252A7, or "ParserEnd", but minus some indirection.
+#define CSJ_tsc_done 0x4225CB
 
 enum Collisions
 {
@@ -383,6 +402,15 @@ struct ISLAND_SPRITE
 {
 	int x;
 	int y;
+};
+
+// Escape
+
+enum enum_ESCRETURN
+{
+	enum_ESCRETURN_exit,
+	enum_ESCRETURN_continue,
+	enum_ESCRETURN_restart
 };
 
 // Fade
@@ -753,6 +781,25 @@ typedef struct PROFILEDATA
 } PROFILEDATA;
 
 // Sound
+
+enum SoundEffectNames
+{
+	SND_YES_NO_CHANGE_CHOICE = 1,
+	SND_MESSAGE_TYPING = 2,
+	SND_QUOTE_BUMP_HEAD = 3,
+	SND_SWITCH_WEAPON = 4,
+	SND_YES_NO_PROMPT = 5,
+	// To be continued
+	SND_SILLY_EXPLOSION = 25,
+	SND_LARGE_OBJECT_HIT_GROUND = 26,
+	// To be continued
+	SND_ENEMY_SHOOT_PROJETILE = 39,
+	// To be continued
+	SND_BEHEMOTH_LARGE_HURT = 52,
+	// To be continued
+	SND_EXPLOSION = 72
+	// To be continued
+};
 
 enum SoundMode
 {

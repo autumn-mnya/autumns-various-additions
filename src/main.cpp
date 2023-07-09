@@ -15,6 +15,8 @@
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "MyChar.h"
+#include "PauseScreen.h"
+#include "TextScript.h"
 #include "TileCollisionBoss.h"
 #include "TileCollisionBullet.h"
 #include "TileCollisionEntity.h"
@@ -25,10 +27,12 @@ char gModulePath[MAX_PATH];
 char gDataPath[MAX_PATH];
 
 // Options
-bool setting_enable_surfaces;
-bool setting_enable_entity;
-bool setting_enable_mychar;
-bool setting_enable_tilecollision;
+bool setting_enable_surfaces = true;
+bool setting_enable_entity = true;
+bool setting_enable_mychar = true;
+bool setting_enable_tilecollision = true;
+bool setting_enable_text_script_code = true;
+bool setting_enable_pause_screen = false;
 
 // Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
@@ -73,6 +77,8 @@ void InitMod_Settings()
 	setting_enable_entity = ModLoader_GetSettingBool("Enable Custom Entity Code", true);
 	setting_enable_mychar = ModLoader_GetSettingBool("Enable Custom MyChar Code", true);
 	setting_enable_tilecollision = ModLoader_GetSettingBool("Enable Custom Tileset Code", true);
+	setting_enable_text_script_code = ModLoader_GetSettingBool("Enable Custom TSC Code", true);
+	setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
 
 	///////////////
 	// ASM Hacks //
@@ -148,6 +154,11 @@ void InitMod_TileCollision()
 	ModLoader_WriteJump((void*)0x473080, (void*)Replacement_HitBossMap);
 }
 
+void InitMod_PauseScreen()
+{
+	ModLoader_WriteJump((void*)0x40DD70, (void*)Call_Pause);
+}
+
 void InitMod_GameUI()
 {
 	// UI related things go here
@@ -187,6 +198,11 @@ void InitMod(void)
 
 	if (setting_enable_tilecollision)
 		InitMod_TileCollision();
+
+	if (setting_enable_pause_screen)
+		InitMod_PauseScreen();
+
+	InitMod_TSC();
 
 	/*
 	InitMod_GameUI();

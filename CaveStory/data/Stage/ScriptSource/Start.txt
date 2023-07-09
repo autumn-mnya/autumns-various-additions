@@ -68,5 +68,9 @@ Flag 300 has been set.<NOD<CLO<END
 <KEY<MSG
 Flag 300 has not been set.<NOD<CLO<END
 
+#0900
+<KEY<MSG<TUR
+this should kill you<NOD<CLO<WAI0005<DIE<END
+
 #1000
 <END
