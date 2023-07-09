@@ -18,6 +18,33 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
+const char* setting_pausetext_paused = "PAUSED";
+const char* setting_pausetext_resume = "Resume";
+const char* setting_pausetext_reset = "Reset";
+const char* setting_pausetext_options = "Options";
+const char* setting_pausetext_quit = "Quit";
+
+const char* setting_pausetext_restart_required = "RESTART REQUIRED";
+const char* setting_pausetext_menu_options = "OPTIONS";
+
+const char* setting_pausetext_resolution = "Resolution";
+const char* setting_pausetext_gamepad_enabled = "Gamepad Enabled";
+
+const char* setting_pausetext_windowsize_a = "Fullscreen";
+const char* setting_pausetext_windowsize_b = "Windowed 320x240";
+const char* setting_pausetext_windowsize_c = "Windowed 640x480";
+const char* setting_pausetext_windowsize_d = "Fullscreen 24-Bit";
+const char* setting_pausetext_windowsize_e = "Fullscreen 32-Bit";
+
+const char* setting_pausetext_disabled = "Disabled";
+const char* setting_pausetext_enabled = "Enabled";
+
+const char* setting_pausetext_yes = "Yes";
+const char* setting_pausetext_no = "No";
+
+const char* setting_pausetext_are_you_sure = "Are you sure?";
+const char* setting_pausetext_unsaved_progress = "Unsaved progress will be lost!";
+
 enum
 {
 	CALLBACK_CONTINUE = -1,
@@ -212,7 +239,7 @@ static int Callback_Resolution(OptionsMenu* parent_menu, size_t this_option, Cal
 {
 	ConfigData* conf = (ConfigData*)parent_menu->options[this_option].user_data;
 
-	const char* strings[] = { "Fullscreen", "Windowed 320x240", "Windowed 640x480", "Fullscreen 24-Bit", "Fullscreen 32-Bit" };
+	const char* strings[] = { setting_pausetext_windowsize_a, setting_pausetext_windowsize_b, setting_pausetext_windowsize_c, setting_pausetext_windowsize_d, setting_pausetext_windowsize_e };
 
 	switch (action)
 	{
@@ -229,7 +256,7 @@ static int Callback_Resolution(OptionsMenu* parent_menu, size_t this_option, Cal
 		case ACTION_LEFT:
 		case ACTION_RIGHT:
 			restart_required = TRUE;
-			parent_menu->subtitle = "RESTART REQUIRED";
+			parent_menu->subtitle = setting_pausetext_restart_required;
 
 			if (action == ACTION_LEFT)
 			{
@@ -260,7 +287,7 @@ static int Callback_ControllerEnabled(OptionsMenu* parent_menu, size_t this_opti
 {
 	ConfigData* conf = (ConfigData*)parent_menu->options[this_option].user_data;
 
-	const char* strings[] = { "Disabled", "Enabled" };
+	const char* strings[] = { setting_pausetext_disabled, setting_pausetext_enabled };
 
 	switch (action)
 	{
@@ -306,13 +333,13 @@ static int Callback_Options(OptionsMenu* parent_menu, size_t this_option, Callba
 		DefaultConfigData(&conf);
 
 	Option options_pc[] = {
-		{"Resolution", Callback_Resolution, &conf, NULL, 0, FALSE},
-		{"Gamepad Enabled", Callback_ControllerEnabled, &conf, NULL, 0, FALSE},
+		{setting_pausetext_resolution, Callback_Resolution, &conf, NULL, 0, FALSE},
+		{setting_pausetext_gamepad_enabled, Callback_ControllerEnabled, &conf, NULL, 0, FALSE},
 	};
 
 	OptionsMenu options_menu = {
-		"OPTIONS",
-		restart_required ? "RESTART REQUIRED" : NULL,
+		setting_pausetext_menu_options,
+		restart_required ? setting_pausetext_restart_required : NULL,
 		options_pc,
 		(sizeof(options_pc) / sizeof(options_pc[0])),
 		-70,
@@ -362,13 +389,13 @@ static int PromptAreYouSure(void)
 	};
 
 	Option options[] = {
-		{"Yes", FunctionHolder::Callback_Yes, NULL, NULL, 0, FALSE},
-		{"No", FunctionHolder::Callback_No, NULL, NULL, 0, FALSE}
+		{setting_pausetext_yes, FunctionHolder::Callback_Yes, NULL, NULL, 0, FALSE},
+		{setting_pausetext_no, FunctionHolder::Callback_No, NULL, NULL, 0, FALSE}
 	};
 
 	OptionsMenu options_menu = {
-		"ARE YOU SURE?",
-		"UNSAVED PROGRESS WILL BE LOST",
+		setting_pausetext_are_you_sure,
+		setting_pausetext_unsaved_progress,
 		options,
 		sizeof(options) / sizeof(options[0]),
 		-10,
@@ -444,14 +471,14 @@ static int Callback_Quit(OptionsMenu* parent_menu, size_t this_option, CallbackA
 int Call_Pause(void)
 {
 	Option options[] = {
-		{"Resume", Callback_Resume, NULL, NULL, 0, FALSE},
-		{"Reset", Callback_Reset, NULL, NULL, 0, FALSE},
-		{"Options", Callback_Options, NULL, NULL, 0, FALSE},
-		{"Quit", Callback_Quit, NULL, NULL, 0, FALSE}
+		{setting_pausetext_resume, Callback_Resume, NULL, NULL, 0, FALSE},
+		{setting_pausetext_reset, Callback_Reset, NULL, NULL, 0, FALSE},
+		{setting_pausetext_options, Callback_Options, NULL, NULL, 0, FALSE},
+		{setting_pausetext_quit, Callback_Quit, NULL, NULL, 0, FALSE}
 	};
 
 	OptionsMenu options_menu = {
-		"PAUSED",
+		setting_pausetext_paused,
 		NULL,
 		options,
 		sizeof(options) / sizeof(options[0]),
