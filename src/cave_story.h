@@ -136,7 +136,6 @@
 
 #define CSH_tsc_start (void*) 0x4225D5, 12
 #define CSH_tsc_end (void*) 0x425244, 12
-// Aka 4252A7, or "ParserEnd", but minus some indirection.
 #define CSJ_tsc_done 0x4225CB
 
 enum Collisions

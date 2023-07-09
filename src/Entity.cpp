@@ -12,8 +12,6 @@
 #include "EntityLoad.h"
 #include "MyChar.h"
 
-#define CustomNpcValues(N) gCustomNPC[(N - gNPC)]
-
 // Currently contains every single custom entity's code!! Add new ones here basically, its the same process as CSE2 except you add the functions into the Entity.h file, and add them to
 // the list in EntityTable.cpp.
 

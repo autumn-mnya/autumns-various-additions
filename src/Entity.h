@@ -2,6 +2,8 @@
 
 #include "cave_story.h"
 
+#define CustomNpcValues(N) gCustomNPC[(N - gNPC)]
+
 enum NPCNames
 {
 	NPC_NULL = 0,
