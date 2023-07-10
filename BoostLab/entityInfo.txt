@@ -452,6 +452,6 @@
 #445	Custom	Terminal	Terminal (Custom)	1696:0:1728:48	Read Custom Entities txt file.	Custom:ReskinObjects ;
 #446	Custom	ControlScr	Control Screen (Custom)	1792:0:1824:32	Read Custom Entities txt file.	Custom:ReskinObjects ;
 #447	Custom	PowerWav	Power Wave (Custom)	1856:0:1888:32	Read Custom Entities txt file.	Custom:ReskinObjects ;
-#448	no	name	unnamed	0:0:0:0	null	;
-#449	no	name	unnamed	0:0:0:0	null	;
-#450	Custom	ConveBelt	Conveyor Belt (Parent)	64:32:96:64	This entity has not yet been defined	;
+#448	Jump	Refill	Jump Refill	0:0:32:32	Read Custom Entities txt file.	;
+#449	Rewind	Refill	Rewind Refill	448:0:480:32	Read Custom Entities txt file.	;
+#450	Custom	ConveBelt	Conveyor Belt (Parent)	512:0:544:32	This entity has not yet been defined	;
