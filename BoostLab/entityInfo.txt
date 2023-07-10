@@ -454,6 +454,6 @@
 #447	Custom	PowerWav	Power Wave (Custom)	1856:0:1888:32	Read Custom Entities txt file.	Custom:ReskinObjects ;
 #448	Jump	Refill	Jump Refill	0:0:32:32	Read Custom Entities txt file.	;
 #449	Rewind	Refill	Rewind Refill	448:0:480:32	Read Custom Entities txt file.	;
-#450	Custom	ConveBelt	Conveyor Belt (Parent)	512:0:544:32	This entity has not yet been defined	;
-#451	Wall	Booster	Wallbooster	0:0:0:0	This entity has not yet been defined	;
-#452	Ice	Wall	Ice Wall	0:0:0:0	This entity has not yet been defined	;
+#450	Custom	ConveBelt	Conveyor Belt (Parent)	512:0:544:32	Read Custom Entities txt file.	;
+#451	Wall	Booster	Wallbooster	1024:0:1056:32	Read Custom Entities txt file.	;
+#452	Ice	Wall	Ice Wall	1440:0:1472:32	Read Custom Entities txt file.	;
