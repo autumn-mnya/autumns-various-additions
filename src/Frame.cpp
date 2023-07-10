@@ -14,6 +14,7 @@
 int coordinate_focus_x = 0;
 int coordinate_focus_y = 0;
 
+// Focus on an NPC with the camera panning right/left + up/down
 void SetFrameTargetNpCharWithMyCharIndex(int event, int wait)
 {
 	int i;
@@ -29,6 +30,7 @@ void SetFrameTargetNpCharWithMyCharIndex(int event, int wait)
 	gFrame->wait = wait;
 }
 
+// Focus on the player with an offset
 void SetFrameTargetMyCharOffset(int wait, int mode, int offset_x, int offset_y)
 {
 	// Change to negative value depending on the mode
@@ -59,6 +61,7 @@ void SetFrameTargetMyCharOffset(int wait, int mode, int offset_x, int offset_y)
 	gFrame->wait = wait;
 }
 
+// Focus on a coordinate
 void SetFrameTargetCoordinate(int wait, int x, int y)
 {
 	coordinate_focus_x = x;

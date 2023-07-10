@@ -72,8 +72,6 @@ int lock_direction = 0;
 
 void Replacement_SetMyCharPosition_InitStar_Call()
 {
-	is_direction_locked = false;
-	lock_direction = 0;
 	custom_tgt_x = gMC->x;
 	custom_tgt_y = gMC->y;
 	InitStar();
