@@ -231,6 +231,9 @@ void InitMod(void)
 	if (setting_enable_text_script_code)
 		InitMod_TSC();
 
+	// debug testing hud
+	ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);
+
 	/*
 	InitMod_GameUI();
 	InitMod_ASMPatches();

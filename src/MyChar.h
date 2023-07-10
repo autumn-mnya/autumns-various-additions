@@ -16,6 +16,7 @@ struct Physics {
 };
 
 extern int current_jumps;
+extern int onWall;
 
 extern bool setting_walljumps_enabled;
 extern bool setting_walljumps_flag_enabled;

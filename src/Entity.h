@@ -1,8 +1,13 @@
 #pragma once
 
+#include <Windows.h>
+
 #include "cave_story.h"
 
 #define CustomNpcValues(N) gCustomNPC[(N - gNPC)]
+
+extern bool entity_IsWallboosting;
+extern bool entity_IsIceWalled;
 
 enum NPCNames
 {
@@ -113,3 +118,5 @@ void ActEntity447(NPCHAR* npc);
 void ActEntity448(NPCHAR* npc);
 void ActEntity449(NPCHAR* npc);
 void ActEntity450(NPCHAR* npc);
+void ActEntity451(NPCHAR* npc);
+void ActEntity452(NPCHAR* npc);

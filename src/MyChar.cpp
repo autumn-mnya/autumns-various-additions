@@ -9,6 +9,7 @@
 
 #include "main.h"
 #include "cave_story.h"
+#include "Entity.h"
 
 int current_jumps = 0;
 int onWall;
@@ -75,13 +76,15 @@ void ActMyChar_RunButton(BOOL bKey, Physics *physics)
 }
 
 // Apologies Autumn
-int sign(double x) {
+
+// Don't name these the same as normal functions as they apparently mess up using them normally
+int custom_sign(double x) {
 	if (x > 0) return 1;
 	if (x < 0) return -1;
 	return 0;
 }
 
-int abs(int x) 
+int custom_abs(int x) 
 {
 	if (x >= 0)
 		return 1;
@@ -123,7 +126,7 @@ void setPlayerPhysics(BOOL bKey, Physics *physics)
 	int kRight = (bKey && gKey & gKeyRight) ? 1 : 0;
 
 	int h_input = (kRight - kLeft);
-	bool resisting = (h_input != 0 && sign(gMC->xm) != h_input && sign(gMC->xm) != 0);
+	bool resisting = (h_input != 0 && custom_sign(gMC->xm) != h_input && custom_sign(gMC->xm) != 0);
 
 	if (gMC->flag & 0x200)
 	{
@@ -171,9 +174,9 @@ void ActMyChar_WallJump(BOOL bKey)
 
 	if ((setting_walljumps_flag_enabled == true && GetNPCFlag(setting_walljumps_flag)) || (setting_walljumps_flag_enabled == false))
 	{
-		if (bKey)
+		if (bKey && entity_IsIceWalled == false) // If you have input + arent on an ice wall
 		{
-			if ((onWall != 0) && !(gMC->flag & 8))
+			if ((onWall != 0) && ((!(gMC->flag & 8)) || entity_IsWallboosting == true)) // If on a wall, and not grounded/wallboosting..
 			{
 				if (gKeyTrg & gKeyJump)
 				{
@@ -193,10 +196,19 @@ void ActMyChar_WallJump(BOOL bKey)
 				}
 
 				// Slide down the wall if holding against it
-				if (gMC->ym > setting_walljump_sliding_speed)
-					gMC->ym = setting_walljump_sliding_speed;
+				if (entity_IsWallboosting == false)
+				{
+					if (gMC->ym > setting_walljump_sliding_speed)
+						gMC->ym = setting_walljump_sliding_speed;
+				}
+				else // if you're wallboosting on a wallboost entity
+					gMC->ym += -0x120; // not customizable atm
 			}
 		}
+
+		if (onWall == 0 && entity_IsIceWalled == true)
+			entity_IsIceWalled = false;
+
 	}
 }
 

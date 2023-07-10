@@ -12,6 +12,7 @@
 
 #include "mod_loader.h"
 #include "cave_story.h"
+#include "Entity.h"
 #include "MyChar.h"
 
 // Replace MakeSurfaceFile with another call
@@ -26,4 +27,49 @@ void Replacement_StageImageSurfaceCall(int x, int y, int s, BOOL b)
 	MakeSurface_File("Autumn", SURFACE_ID_AUTUMN_ITEMS);
 	MakeSurface_File("Npc\\NpcAutumnChar", SURFACE_ID_AUTUMN_CHARACTERS);
 	MakeSurface_Generic(427, 240, s, b);
+}
+
+void Replacement_Debug_PutMyLife(BOOL flash)
+{
+	RECT rcCase = { 0, 40, 232, 48 };
+	RECT rcLife = { 0, 24, 232, 32 };
+	RECT rcBr = { 0, 32, 232, 40 };
+
+	if (flash == TRUE && gMC->shock / 2 % 2)
+		return;
+
+	if (gMC->lifeBr < gMC->life)
+		gMC->lifeBr = gMC->life;
+
+	if (gMC->lifeBr > gMC->life)
+	{
+		if (++gMC->lifeBr_count > 30)
+			--gMC->lifeBr;
+	}
+	else
+	{
+		gMC->lifeBr_count = 0;
+	}
+
+	// Draw bar
+	rcCase.right = 64;
+	rcLife.right = ((gMC->life * 40) / gMC->max_life) - 1;
+	rcBr.right = ((gMC->lifeBr * 40) / gMC->max_life) - 1;
+
+	PutBitmap3(&grcGame, 16, 40, &rcCase, SURFACE_ID_TEXT_BOX);
+	PutBitmap3(&grcGame, 40, 40, &rcBr, SURFACE_ID_TEXT_BOX);
+	PutBitmap3(&grcGame, 40, 40, &rcLife, SURFACE_ID_TEXT_BOX);
+	PutNumber4(8, 40, gMC->lifeBr, FALSE);
+
+	if (entity_IsWallboosting)
+		PutNumber4(8, 48, 1, FALSE);
+	else
+		PutNumber4(8, 48, 0, FALSE);
+
+	if (entity_IsIceWalled)
+		PutNumber4(8, 56, 1, FALSE);
+	else
+		PutNumber4(8, 56, 0, FALSE);
+
+	PutNumber4(8, 48 + 32, gMC->ym * -1, FALSE);
 }
