@@ -7294,15 +7294,30 @@ void ActEntity452(NPCHAR* npc)
 		{704, 0, 720, 16},
 	};
 
+	// Randomize *when* the Ice Wall shining happens
+	if ((Random(1, 30) == 7) && npc->count2 != 1)
+		npc->count2 = 1;
+
 	// Do animation work
-	if (++npc->ani_wait > 8)
+	if (npc->count2 == 1)
 	{
-		npc->ani_wait = 0;
-		++npc->ani_no;
+		if (++npc->count1 > Random(75, 115)) // Randomize how long it takes for the shine animation to play
+		{
+			if (++npc->ani_wait > 8)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
+
+			if (npc->ani_no > 4)
+			{
+				npc->ani_no = 0;
+				npc->count1 = 0;
+			}
+		}
 	}
 
-	if (npc->ani_no > 4)
-		npc->ani_no = 0;
+
 
 	// Icewalled when inside of the hitbox and on a wall
 	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
