@@ -200,6 +200,11 @@ void Replacement_HitNpCharMap(void)
 				JudgeHitNpCharJumpThruSidewayLeft(&gNPC[i], x + offx[j], y + offy[j]);
 				break;
 
+			// Ice Block
+			case 0x4C:
+				JadgeHitNpCharBlock(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
 				// Slopes
 			case 0x50:
 				JudgeHitNpCharTriangleA(&gNPC[i], x + offx[j], y + offy[j]);
@@ -230,6 +235,23 @@ void Replacement_HitNpCharMap(void)
 				break;
 
 			case 0x57:
+				JudgeHitNpCharTriangleH(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			// Ice Slopes
+			case 0x58:
+				JudgeHitNpCharTriangleE(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			case 0x59:
+				JudgeHitNpCharTriangleF(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			case 0x5A:
+				JudgeHitNpCharTriangleG(&gNPC[i], x + offx[j], y + offy[j]);
+				break;
+
+			case 0x5B:
 				JudgeHitNpCharTriangleH(&gNPC[i], x + offx[j], y + offy[j]);
 				break;
 

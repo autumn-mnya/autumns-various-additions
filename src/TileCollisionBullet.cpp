@@ -257,22 +257,27 @@ void Replacement_HitBulletMap(void)
 					gBul[i].flag |= JudgeHitBulletTriangleD(x + offx[j], y + offy[j], &gBul[i]);
 					break;
 
+				// Includes Ice Slopes
 				case 0x54:
+				case 0x58:
 				case 0x74:
 					gBul[i].flag |= JudgeHitBulletTriangleE(x + offx[j], y + offy[j], &gBul[i]);
 					break;
 
 				case 0x55:
+				case 0x59:
 				case 0x75:
 					gBul[i].flag |= JudgeHitBulletTriangleF(x + offx[j], y + offy[j], &gBul[i]);
 					break;
 
 				case 0x56:
+				case 0x5A:
 				case 0x76:
 					gBul[i].flag |= JudgeHitBulletTriangleG(x + offx[j], y + offy[j], &gBul[i]);
 					break;
 
 				case 0x57:
+				case 0x5B:
 				case 0x77:
 					gBul[i].flag |= JudgeHitBulletTriangleH(x + offx[j], y + offy[j], &gBul[i]);
 					break;

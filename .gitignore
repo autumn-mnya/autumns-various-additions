@@ -9,6 +9,7 @@ autumns_various_additions.vcxproj.user
 *.pdb
 *.dll
 
+BoostLab/editor.rect
 CaveStory/fps
 CaveStory/mute
 CaveStory/Config.dat

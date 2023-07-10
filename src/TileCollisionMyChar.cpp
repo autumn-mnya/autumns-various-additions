@@ -318,19 +318,40 @@ void Replacement_HitMyCharMap(void)
 			break;
 
 		case 0x54:
-			gMC->flag |= JudgeHitMyCharTriangleE(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharTriangleE(x + offx[i], y + offy[i]); // Slope Left ground
 			break;
 
 		case 0x55:
-			gMC->flag |= JudgeHitMyCharTriangleF(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharTriangleF(x + offx[i], y + offy[i]); // Slope Left 2 ground
 			break;
 
 		case 0x56:
-			gMC->flag |= JudgeHitMyCharTriangleG(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharTriangleG(x + offx[i], y + offy[i]); // Slope Right ground
 			break;
 
 		case 0x57:
-			gMC->flag |= JudgeHitMyCharTriangleH(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharTriangleH(x + offx[i], y + offy[i]); // Slope Right 2 ground
+			break;
+
+			// Ice Slopes
+		case 0x58:
+			gMC->flag |= JudgeHitMyCharIce(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharTriangleE(x + offx[i], y + offy[i]); // Slope Left ground
+			break;
+
+		case 0x59:
+			gMC->flag |= JudgeHitMyCharIce(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharTriangleF(x + offx[i], y + offy[i]); // Slope Left 2 ground
+			break;
+
+		case 0x5A:
+			gMC->flag |= JudgeHitMyCharIce(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharTriangleG(x + offx[i], y + offy[i]); // Slope Right ground
+			break;
+
+		case 0x5B:
+			gMC->flag |= JudgeHitMyCharIce(x + offx[i], y + offy[i]);
+			gMC->flag |= JudgeHitMyCharTriangleH(x + offx[i], y + offy[i]); // Slope Right 2 ground
 			break;
 
 			// Spikes

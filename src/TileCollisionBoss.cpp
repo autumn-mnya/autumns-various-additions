@@ -110,6 +110,10 @@ void Replacement_HitBossMap(void)
 			case 0x4B:
 				JudgeHitNpCharJumpThruSidewayLeft(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
+			// Ice Block
+			case 0x4C:
+				JadgeHitNpCharBlock(&gBoss[b], x + offx[j], y + offy[j]);
+				break;
 			case 0x50:
 				JudgeHitNpCharTriangleA(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
@@ -132,6 +136,18 @@ void Replacement_HitBossMap(void)
 				JudgeHitNpCharTriangleG(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
 			case 0x57:
+				JudgeHitNpCharTriangleH(&gBoss[b], x + offx[j], y + offy[j]);
+				break;
+			case 0x58:
+				JudgeHitNpCharTriangleE(&gBoss[b], x + offx[j], y + offy[j]);
+				break;
+			case 0x59:
+				JudgeHitNpCharTriangleF(&gBoss[b], x + offx[j], y + offy[j]);
+				break;
+			case 0x5A:
+				JudgeHitNpCharTriangleG(&gBoss[b], x + offx[j], y + offy[j]);
+				break;
+			case 0x5B:
 				JudgeHitNpCharTriangleH(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
 			case 0x02:
