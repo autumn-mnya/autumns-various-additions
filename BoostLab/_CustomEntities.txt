@@ -136,3 +136,58 @@ Custom Values available:
 A - The cooldown for the object to rewind the player back to the entities X:Y position (Default is 150
 B - The cooldown for the object to be collected again after the player is returned to the entity, or if the room is just entered (Default is 50)
 C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
+
+#450 - Conveyor
+???
+
+Custom Values available:
+???
+
+#451 - Wall Booster [ Only when MyChar walljumping is enabled ]
+Instead of sliding down a wall, you will slide up the wall at a fast speed.
+
+Custom Values available:
+A - The sprite to use for the wall booster.
+
+Sprite Table:
+0 - 1 Tile tall
+1 - Top Portion of wall booster
+2 - Middle Portion of wall booster
+3 - Bottom Portion of wall booster
+
+#452 - Ice Wall [ Only when MyChar walljumping is enabled ]
+You will not slide down walls, and you aren't able to walljump off of these.
+
+Custom Values available:
+A - The sprite to use for the ice wall.
+
+Sprite Table:
+0 - 1 Tile tall
+1 - Top Portion of ice wall
+2 - Middle Portion of ice wall
+3 - Bottom Portion of ice wall
+
+#453 - Spring
+Bounces the player upwards with lots of momentum.
+
+Custom Values availble:
+A - Starting Y momentum (How much Y momentum the spring gives at the start, Default is 1535)
+B - Added Y momentum (How much Y momentum is given to the player for the first 3 frames of the springs animation, Default is 1535)
+
+#454 - Spring (Left)
+Bounces the player to the left with lots of momentum.
+
+Custom Values available:
+A - Starting X momentum (How much X momentum the spring gives at the start, Default is 336)
+B - Starting Y momentum (How much Y momentum the spring gives at the start, Default is 1024)
+C - Added X momentum (How much X momentum is given to the player for the first 2 frames of the springs animation, Default is 144)
+D - Added Y momentum (How much Y momentum is given to the player for the first 3 frames of the springs animation, Default is 32)
+
+#455 - Spring (Right)
+Bounces the player to the right with lots of momentum.
+
+Custom Values available:
+A - Starting X momentum (How much X momentum the spring gives at the start, Default is 336)
+B - Starting Y momentum (How much Y momentum the spring gives at the start, Default is 1024)
+C - Added X momentum (How much X momentum is given to the player for the first 2 frames of the springs animation, Default is 144)
+D - Added Y momentum (How much Y momentum is given to the player for the first 3 frames of the springs animation, Default is 32)

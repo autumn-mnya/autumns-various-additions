@@ -457,4 +457,6 @@
 #450	Custom	ConveBelt	Conveyor Belt (Parent)	512:0:544:32	Read Custom Entities txt file.	;
 #451	Wall	Booster	Wallbooster	1024:0:1056:32	Read Custom Entities txt file.	;
 #452	Ice	Wall	Ice Wall	1440:0:1472:32	Read Custom Entities txt file.	;
-#453	Spring	Up	Spring	1600:0:1632:32	This entity has not yet been defined	;
+#453	Spring	Up	Spring	1600:0:1632:32	Read Custom Entities txt file.	;
+#454	Spring	Left	Spring (Left)	1792:0:1824:32	Read Custom Entities txt file.	;
+#455	Spring	Right	Spring (Right)	1984:0:2016:32	Read Custom Entities txt file.	;

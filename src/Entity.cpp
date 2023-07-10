@@ -7328,16 +7328,14 @@ void ActEntity452(NPCHAR* npc)
 // Spring
 void ActEntity453(NPCHAR* npc)
 {
-	/*
-	RECT springTest[6] = {
-		{800, 0, 816, 16}, // 0
-		{816, 0, 832, 16}, // 1
-		{832, 0, 848, 16}, // 2
-		{848, 0, 864, 16}, // 3
-		{864, 0, 880, 16}, // 4
-		{864, 0, 880, 16}, // 5
-	};
-	*/
+	int start_momentum = 1535;
+	int added_momentum = 1535;
+
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		start_momentum = CustomNpcValues(npc).CustomValueA;
+
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		added_momentum = CustomNpcValues(npc).CustomValueB;
 
 	RECT spring[10] = {
 		{800, 0, 816, 16}, // 0 - 0
@@ -7392,16 +7390,22 @@ void ActEntity453(NPCHAR* npc)
 // Spring (Left)
 void ActEntity454(NPCHAR* npc)
 {
-	/*
-	RECT springTest[6] = {
-		{896, 0, 912, 16}, // 0
-		{912, 0, 928, 16}, // 1
-		{928, 0, 944, 16}, // 2
-		{944, 0, 960, 16}, // 3
-		{960, 0, 976, 16}, // 4
-		{976, 0, 992, 16}, // 5
-	};
-	*/
+	int start_x_momentum = 336;
+	int start_y_momentum = 1024;
+	int added_x_momentum = 144;
+	int added_y_momentum = 32;
+
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		start_x_momentum = CustomNpcValues(npc).CustomValueA;
+
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		start_y_momentum = CustomNpcValues(npc).CustomValueB;
+
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		added_x_momentum = CustomNpcValues(npc).CustomValueC;
+
+	if (CustomNpcValues(npc).CustomValueD != 0)
+		added_y_momentum = CustomNpcValues(npc).CustomValueD;
 
 	RECT spring[10] = {
 		{896, 0, 912, 16}, // 0 - 0
@@ -7425,8 +7429,8 @@ void ActEntity454(NPCHAR* npc)
 				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
 			{
 				PlaySoundObject(161, SOUND_MODE_PLAY);
-				gMC->xm += -0x300;
-				gMC->ym += -0x100;
+				gMC->xm = -start_x_momentum;
+				gMC->ym = -start_y_momentum;
 				npc->act_no = 1;
 			}
 			break;
@@ -7439,11 +7443,11 @@ void ActEntity454(NPCHAR* npc)
 				++npc->ani_no;
 			}
 
+			if (npc->ani_no < 2)
+				gMC->xm += -added_x_momentum;
+
 			if (npc->ani_no < 3)
-			{
-				gMC->xm += -0x300;
-				gMC->ym += -0x100;
-			}
+				gMC->ym += -added_y_momentum;
 
 
 			if (npc->ani_no > 8)
@@ -7460,16 +7464,22 @@ void ActEntity454(NPCHAR* npc)
 // Spring (Right)
 void ActEntity455(NPCHAR* npc)
 {
-	/*
-	RECT springTest[6] = {
-		{992, 0, 1008, 16}, // 0
-		{1008, 0, 1024, 16}, // 1
-		{1024, 0, 1040, 16}, // 2
-		{1040, 0, 1056, 16}, // 3
-		{1056, 0, 1072, 16}, // 4
-		{1072, 0, 1088, 16}, // 5
-	};
-	*/
+	int start_x_momentum = 336;
+	int start_y_momentum = 1024;
+	int added_x_momentum = 144;
+	int added_y_momentum = 32;
+
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		start_x_momentum = CustomNpcValues(npc).CustomValueA;
+
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		start_y_momentum = CustomNpcValues(npc).CustomValueB;
+
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		added_x_momentum = CustomNpcValues(npc).CustomValueC;
+
+	if (CustomNpcValues(npc).CustomValueD != 0)
+		added_y_momentum = CustomNpcValues(npc).CustomValueD;
 
 	RECT spring[10] = {
 		{992, 0, 1008, 16}, // 0 - 0
@@ -7486,40 +7496,40 @@ void ActEntity455(NPCHAR* npc)
 
 	switch (npc->act_no)
 	{
-	case 0:
-		if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-			npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-			npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-			npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
-		{
-			PlaySoundObject(161, SOUND_MODE_PLAY);
-			gMC->xm += 0x300;
-			gMC->ym += -0x100;
-			npc->act_no = 1;
-		}
-		break;
+		case 0:
+			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
+				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
+				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			{
+				PlaySoundObject(161, SOUND_MODE_PLAY);
+				gMC->xm = start_x_momentum;
+				gMC->ym = -start_y_momentum;
+				npc->act_no = 1;
+			}
+			break;
 
-	case 1:
-		// Do animation work
-		if (++npc->ani_wait > 3)
-		{
-			npc->ani_wait = 0;
-			++npc->ani_no;
-		}
+		case 1:
+			// Do animation work
+			if (++npc->ani_wait > 3)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
 
-		if (npc->ani_no < 3)
-		{
-			gMC->xm += 0x300;
-			gMC->ym += -0x100;
-		}
+			if (npc->ani_no < 2)
+				gMC->xm += added_x_momentum;
+
+			if (npc->ani_no < 3)
+				gMC->ym += -added_y_momentum;
 
 
-		if (npc->ani_no > 8)
-		{
-			npc->ani_no = 0;
-			npc->act_no = 0;
-		}
-		break;
+			if (npc->ani_no > 8)
+			{
+				npc->ani_no = 0;
+				npc->act_no = 0;
+			}
+			break;
 	}
 
 	npc->rect = spring[npc->ani_no];
