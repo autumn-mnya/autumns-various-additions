@@ -232,7 +232,7 @@ void InitMod(void)
 		InitMod_TSC();
 
 	// debug testing hud
-	ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);
+	// ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);
 
 	/*
 	InitMod_GameUI();
