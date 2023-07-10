@@ -7144,7 +7144,12 @@ void ActEntity449(NPCHAR* npc)
 // Conveyor
 void ActEntity450(NPCHAR* npc)
 {
-	int speed = CustomNpcValues(npc).CustomValue01;
+	// Default to 1 when the custom value is 0.
+	int speed = 1;
+
+	// If custom value does not equal 0, then use the custom value as the value instead of the default.
+	if (CustomNpcValues(npc).CustomValue01 != 0)
+		speed = CustomNpcValues(npc).CustomValue01;
 
 	switch (npc->act_no)
 	{
@@ -7174,17 +7179,17 @@ void ActEntity450(NPCHAR* npc)
 	npc->ani_no = floor(frame);
 
 	RECT rcLeft = {
-		32 + (npc->ani_no * 16),
-		16,
-		48 + (npc->ani_no * 16),
-		32
+		256 + (npc->ani_no * 16),
+		0,
+		272 + (npc->ani_no * 16),
+		16
 	};
 
 	RECT rcRight = {
-		144 - (npc->ani_no * 16),
-		16,
-		160 - (npc->ani_no * 16),
-		32
+		368 - (npc->ani_no * 16),
+		0,
+		384 - (npc->ani_no * 16),
+		16
 	};
 
 	if (npc->direct == 0)
