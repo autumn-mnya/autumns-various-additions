@@ -60,17 +60,4 @@ void Replacement_Debug_PutMyLife(BOOL flash)
 	PutBitmap3(&grcGame, 40, 40, &rcBr, SURFACE_ID_TEXT_BOX);
 	PutBitmap3(&grcGame, 40, 40, &rcLife, SURFACE_ID_TEXT_BOX);
 	PutNumber4(8, 40, gMC->lifeBr, FALSE);
-
-	if (entity_IsWallboosting)
-		PutNumber4(8, 48, 1, FALSE);
-	else
-		PutNumber4(8, 48, 0, FALSE);
-
-	if (entity_IsIceWalled)
-		PutNumber4(8, 56, 1, FALSE);
-	else
-		PutNumber4(8, 56, 0, FALSE);
-
-	PutText(8, 48 + 32, std::to_string(custom_tgt_x).c_str(), 0xFFFFFF);
-	PutText(8, 48 + 48, std::to_string(custom_tgt_y).c_str(), 0xFFFFFF);
 }
