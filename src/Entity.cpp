@@ -7389,8 +7389,138 @@ void ActEntity453(NPCHAR* npc)
 	npc->rect = spring[npc->ani_no];
 }
 
-// Spring (Sideways)
+// Spring (Left)
 void ActEntity454(NPCHAR* npc)
 {
+	/*
+	RECT springTest[6] = {
+		{896, 0, 912, 16}, // 0
+		{912, 0, 928, 16}, // 1
+		{928, 0, 944, 16}, // 2
+		{944, 0, 960, 16}, // 3
+		{960, 0, 976, 16}, // 4
+		{976, 0, 992, 16}, // 5
+	};
+	*/
 
+	RECT spring[10] = {
+		{896, 0, 912, 16}, // 0 - 0
+		{912, 0, 928, 16}, // 1 - 1
+		{928, 0, 944, 16}, // 2 - 2
+		{944, 0, 960, 16}, // 3 - 3
+		{928, 0, 944, 16}, // 2 - 4
+		{944, 0, 960, 16}, // 3 - 5
+		{928, 0, 944, 16}, // 2 - 6
+		{944, 0, 960, 16}, // 3 - 7
+		{960, 0, 976, 16}, // 4 - 8
+		{976, 0, 992, 16}, // 5 - 9
+	};
+
+	switch (npc->act_no)
+	{
+		case 0:
+			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
+				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
+				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			{
+				PlaySoundObject(161, SOUND_MODE_PLAY);
+				gMC->xm += -0x300;
+				gMC->ym += -0x100;
+				npc->act_no = 1;
+			}
+			break;
+
+		case 1:
+			// Do animation work
+			if (++npc->ani_wait > 3)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
+
+			if (npc->ani_no < 3)
+			{
+				gMC->xm += -0x300;
+				gMC->ym += -0x100;
+			}
+
+
+			if (npc->ani_no > 8)
+			{
+				npc->ani_no = 0;
+				npc->act_no = 0;
+			}
+			break;
+	}
+
+	npc->rect = spring[npc->ani_no];
+}
+
+// Spring (Right)
+void ActEntity455(NPCHAR* npc)
+{
+	/*
+	RECT springTest[6] = {
+		{992, 0, 1008, 16}, // 0
+		{1008, 0, 1024, 16}, // 1
+		{1024, 0, 1040, 16}, // 2
+		{1040, 0, 1056, 16}, // 3
+		{1056, 0, 1072, 16}, // 4
+		{1072, 0, 1088, 16}, // 5
+	};
+	*/
+
+	RECT spring[10] = {
+		{992, 0, 1008, 16}, // 0 - 0
+		{1008, 0, 1024, 16}, // 1 - 1
+		{1024, 0, 1040, 16}, // 2 - 2
+		{1040, 0, 1056, 16}, // 3 - 3
+		{1024, 0, 1040, 16}, // 2 - 4
+		{1040, 0, 1056, 16}, // 3 - 5
+		{1024, 0, 1040, 16}, // 2 - 6
+		{1040, 0, 1056, 16}, // 3 - 7
+		{1056, 0, 1072, 16}, // 4 - 8
+		{1072, 0, 1088, 16}, // 5 - 9
+	};
+
+	switch (npc->act_no)
+	{
+	case 0:
+		if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
+			npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
+			npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
+			npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+		{
+			PlaySoundObject(161, SOUND_MODE_PLAY);
+			gMC->xm += 0x300;
+			gMC->ym += -0x100;
+			npc->act_no = 1;
+		}
+		break;
+
+	case 1:
+		// Do animation work
+		if (++npc->ani_wait > 3)
+		{
+			npc->ani_wait = 0;
+			++npc->ani_no;
+		}
+
+		if (npc->ani_no < 3)
+		{
+			gMC->xm += 0x300;
+			gMC->ym += -0x100;
+		}
+
+
+		if (npc->ani_no > 8)
+		{
+			npc->ani_no = 0;
+			npc->act_no = 0;
+		}
+		break;
+	}
+
+	npc->rect = spring[npc->ani_no];
 }
