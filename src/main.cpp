@@ -29,6 +29,7 @@ char gDataPath[MAX_PATH];
 
 // Options
 bool setting_enable_surfaces = true;
+bool setting_enable_sound_effect_code = false;
 bool setting_enable_entity = true;
 bool setting_enable_mychar = true;
 bool setting_enable_tilecollision = true;
@@ -59,6 +60,10 @@ void InitMod_Sprites()
 	ModLoader_WriteCall((void*)0x411546, (void*)Replacement_StageImageSurfaceCall);
 }
 
+void InitMod_SFX()
+{
+	ModLoader_WriteCall((void*)0x411DEF, (void*)Replacement_LoadGenericData_Pixtone_Sprintf);
+}
 
 // Init MyChar replacement
 void InitMod_MyChar()
@@ -75,6 +80,7 @@ void InitMod_Settings()
 	////////////
 
 	setting_enable_surfaces = ModLoader_GetSettingBool("Enable Custom Surface Code", true);
+	setting_enable_sound_effect_code = ModLoader_GetSettingBool("Enable Custom Sound Effect Code", true);
 	setting_enable_entity = ModLoader_GetSettingBool("Enable Custom Entity Code", true);
 	setting_enable_mychar = ModLoader_GetSettingBool("Enable Custom MyChar Code", true);
 	setting_enable_tilecollision = ModLoader_GetSettingBool("Enable Custom Tileset Code", true);
@@ -186,11 +192,6 @@ void InitMod_PauseScreen()
 	ModLoader_WriteJump((void*)0x40DD70, (void*)Call_Pause);
 }
 
-void InitMod_SFX()
-{
-	ModLoader_WriteCall((void*)0x411DEF, (void*)Replacement_LoadGenericData_Pixtone_Sprintf);
-}
-
 void InitMod_GameUI()
 {
 	// UI related things go here
@@ -218,12 +219,15 @@ void InitMod(void)
 	InitMod_Settings();
 
 	// Functions
-	
+
 	if (setting_enable_entity)
 		InitMod_Entity();
 
 	if (setting_enable_surfaces)
 		InitMod_Sprites();
+
+	if (setting_enable_sound_effect_code)
+		InitMod_SFX();
 
 	if (setting_enable_mychar)
 		InitMod_MyChar();
@@ -237,7 +241,7 @@ void InitMod(void)
 	if (setting_enable_text_script_code)
 		InitMod_TSC();
 
-	InitMod_SFX();
+
 
 	// debug testing hud
 	// ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);

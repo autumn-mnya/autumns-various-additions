@@ -16,7 +16,9 @@ static const struct
 	const char* path;
 } gCustomPtpTable[] = {
 	// TODO - Possibly name these files
-	{161, "PixTone/161.pxt"}
+	{161, "PixTone/161.pxt"},
+	{162, "PixTone/162.pxt"}, // ok so anything above 161 just gets.. skipped? it doesnt work .
+	{163, "PixTone/163.pxt"},
 };
 
 // Decompiled from PTone103.exe
@@ -86,9 +88,6 @@ void LoadCustomPixtoneData()
 
 			pt_size += MakePixToneObject(pixtone_parameters, ptp_num, gCustomPtpTable[i].slot);
 		}
-
-		char str[0x40];
-		sprintf(str, "PixTone = %d byte", pt_size);
 	}
 }
 

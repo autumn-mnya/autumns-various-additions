@@ -206,7 +206,7 @@ void ActEntity364(NPCHAR* npc)
 	switch (npc->act_no)
 	{
 		case 0:
-			if (npc->direct == 0)
+			if (npc->direct == 2)
 			{
 				npc->x = gMC->x;
 				npc->y = gMC->y;
@@ -7533,4 +7533,45 @@ void ActEntity455(NPCHAR* npc)
 	}
 
 	npc->rect = spring[npc->ani_no];
+}
+
+// Player Matcher w/ Offset
+void ActEntity456(NPCHAR* npc)
+{
+	int x_offset = 0;
+	int y_offset = 0;
+
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		x_offset = CustomNpcValues(npc).CustomValueA;
+
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		y_offset = CustomNpcValues(npc).CustomValueB;
+
+	RECT rect = { 0, 0, 16, 16 };
+
+	switch (npc->act_no)
+	{
+		case 0: // dont do anything unless <ANP'd
+			break;
+
+		case 1:
+			if (npc->direct == 2)
+			{
+				npc->x = gMC->x + (x_offset * 0x200);
+				npc->y = gMC->y + (y_offset * 0x200);
+				npc->act_no = 2;
+			}
+			else
+			{
+				npc->x = gMC->x + (x_offset * 0x200);
+				npc->y = gMC->y + (y_offset * 0x200);
+			}
+			break;
+
+		case 2:
+			npc->cond = 0;
+			break;
+	}
+
+	npc->rect = rect;
 }

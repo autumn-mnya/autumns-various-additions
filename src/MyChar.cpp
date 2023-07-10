@@ -151,6 +151,32 @@ void ActMyChar_OnWall(BOOL bKey)
 		onWall = 0;
 }
 
+void SpawnWalljumpCarets(int type)
+{
+	switch (type)
+	{
+		default:
+			if (onWall == 1)
+			{
+				SetCaret(gMC->x + (8 * 0x200), gMC->y, 13, 0);
+				SetCaret(gMC->x + (8 * 0x200), gMC->y, 13, 0);
+			}
+			else {
+				SetCaret(gMC->x - (8 * 0x200), gMC->y, 13, 0);
+				SetCaret(gMC->x - (8 * 0x200), gMC->y, 13, 0);
+			}
+			break;
+
+		case 1:
+			if (onWall == 1)
+				SetCaret(gMC->x + (8 * 0x200), gMC->y, 13, 0);
+			else
+				SetCaret(gMC->x - (8 * 0x200), gMC->y, 13, 0);
+			break;
+	}
+	
+}
+
 void ActMyChar_WallJump(BOOL bKey)
 {
 	//Wall jumping
@@ -183,16 +209,7 @@ void ActMyChar_WallJump(BOOL bKey)
 					gMC->xm = onWall * -walljump_speed;
 					gMC->ym = -walljump_height;
 					PlaySoundObject(15, SOUND_MODE_PLAY);
-					if (onWall == 1)
-					{
-						SetCaret(gMC->x + (8 * 0x200), gMC->y, 13, 0);
-						SetCaret(gMC->x + (8 * 0x200), gMC->y, 13, 0);
-					}
-					else {
-						SetCaret(gMC->x - (8 * 0x200), gMC->y, 13, 0);
-						SetCaret(gMC->x - (8 * 0x200), gMC->y, 13, 0);
-					}
-
+					SpawnWalljumpCarets(0);
 				}
 
 				// Slide down the wall if holding against it
@@ -202,7 +219,11 @@ void ActMyChar_WallJump(BOOL bKey)
 						gMC->ym = setting_walljump_sliding_speed;
 				}
 				else // if you're wallboosting on a wallboost entity
+				{
+					SpawnWalljumpCarets(1);
 					gMC->ym += -0x120; // not customizable atm
+					PlaySoundObject(152, SOUND_MODE_PLAY);
+				}
 			}
 		}
 

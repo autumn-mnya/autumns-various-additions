@@ -15,6 +15,7 @@
 #include "cave_story.h"
 #include "Entity.h"
 #include "EntityLoad.h"
+#include "Frame.h"
 
 static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 {
@@ -42,6 +43,20 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		// Restore player velocity
 		gMC->xm = xm;
 		gMC->ym = ym;
+	}
+	else if (strncmp(where + 1, "FN2", 3) == 0) // Focus on Npc 2
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		SetFrameTargetNpCharWithMyCharIndex(x, y);
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "FM2", 3) == 0) // Focus on Me 2
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		SetFrameTargetMyCharOffset(x, y);
+		gTS->p_read += 13;
 	}
 	else
 		return 0;

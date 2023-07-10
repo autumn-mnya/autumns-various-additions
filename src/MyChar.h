@@ -63,3 +63,4 @@ extern bool setting_ice_particles;
 
 void setPlayerPhysics(BOOL bKey, Physics* physics);
 void ActMyChar_Normal_Custom(BOOL bKey);
+void SetPlayerCamera(BOOL bKey);
