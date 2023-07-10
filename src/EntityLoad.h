@@ -5,12 +5,12 @@
 
 struct CNPCHAR
 {
-	int CustomValue01;
-	int CustomValue02;
-	int CustomValue03;
-	int CustomValue04;
-	int CustomValue05;
-	int CustomValue06;
+	int CustomValueA;
+	int CustomValueB;
+	int CustomValueC;
+	int CustomValueD;
+	int CustomValueE;
+	int CustomValueF;
 };
 
 extern CNPCHAR gCustomNPC[NPC_MAX];

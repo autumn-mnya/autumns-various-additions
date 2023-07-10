@@ -42,14 +42,14 @@ void ActEntity361(NPCHAR* npc)
 	int cooldown = 150;
 	int sprite_index = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		boostfuelamount = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		boostfuelamount = CustomNpcValues(npc).CustomValueA;
 
-	if (CustomNpcValues(npc).CustomValue02 != 0)
-		cooldown = CustomNpcValues(npc).CustomValue02;
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		cooldown = CustomNpcValues(npc).CustomValueB;
 
-	if (CustomNpcValues(npc).CustomValue03 != 0)
-		sprite_index = CustomNpcValues(npc).CustomValue03;
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		sprite_index = CustomNpcValues(npc).CustomValueC;
 
 	switch (npc->act_no)
 	{
@@ -100,30 +100,30 @@ void ActEntity362(NPCHAR* npc)
 	int lockon_trigger_br_x = 16;
 	int lockon_trigger_br_y = 16;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		lockon_trigger_speed = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		lockon_trigger_speed = CustomNpcValues(npc).CustomValueA;
 
 	// Top Left X rect
-	if (CustomNpcValues(npc).CustomValue02 != 0)
-		lockon_trigger_tl_x = CustomNpcValues(npc).CustomValue02;
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		lockon_trigger_tl_x = CustomNpcValues(npc).CustomValueB;
 
 	// Top Left Y rect
-	if (CustomNpcValues(npc).CustomValue03 != 0)
-		lockon_trigger_tl_y = CustomNpcValues(npc).CustomValue03;
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		lockon_trigger_tl_y = CustomNpcValues(npc).CustomValueC;
 
 	// Bottom Right X rect
 
-	if (CustomNpcValues(npc).CustomValue04 != 0)
-		lockon_trigger_br_x = CustomNpcValues(npc).CustomValue04;
+	if (CustomNpcValues(npc).CustomValueD != 0)
+		lockon_trigger_br_x = CustomNpcValues(npc).CustomValueD;
 
 	// Bottom Right Y rect
 
-	if (CustomNpcValues(npc).CustomValue05 != 0)
-		lockon_trigger_br_y = CustomNpcValues(npc).CustomValue05;
+	if (CustomNpcValues(npc).CustomValueE != 0)
+		lockon_trigger_br_y = CustomNpcValues(npc).CustomValueE;
 
 	// Surface override
-	if (CustomNpcValues(npc).CustomValue06 != 0)
-		npc->surf = SurfaceID(CustomNpcValues(npc).CustomValue06);
+	if (CustomNpcValues(npc).CustomValueF != 0)
+		npc->surf = SurfaceID(CustomNpcValues(npc).CustomValueF);
 
 	RECT rect = { lockon_trigger_tl_x, lockon_trigger_tl_y, lockon_trigger_br_x, lockon_trigger_br_y };
 
@@ -303,14 +303,14 @@ void ActEntity367(NPCHAR* npc)
 	int cooldown = 50;
 	int sprite_index = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		amount = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		amount = CustomNpcValues(npc).CustomValueA;
 
-	if (CustomNpcValues(npc).CustomValue02 != 0)
-		cooldown = CustomNpcValues(npc).CustomValue02;
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		cooldown = CustomNpcValues(npc).CustomValueB;
 
-	if (CustomNpcValues(npc).CustomValue03 != 0)
-		sprite_index = CustomNpcValues(npc).CustomValue03;
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		sprite_index = CustomNpcValues(npc).CustomValueC;
 
 
 	switch (npc->act_no)
@@ -446,14 +446,14 @@ void ActEntity368(NPCHAR* npc)
 	int cooldown = 50;
 	int sprite_index = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		amount = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		amount = CustomNpcValues(npc).CustomValueA;
 
-	if (CustomNpcValues(npc).CustomValue02 != 0)
-		cooldown = CustomNpcValues(npc).CustomValue02;
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		cooldown = CustomNpcValues(npc).CustomValueB;
 
-	if (CustomNpcValues(npc).CustomValue03 != 0)
-		sprite_index = CustomNpcValues(npc).CustomValue03;
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		sprite_index = CustomNpcValues(npc).CustomValueC;
 
 	switch (npc->act_no)
 	{
@@ -586,43 +586,43 @@ void ActEntity369(NPCHAR* npc)
 	{
 		if (!(npc->bits & NPC_CUSTOM_FLAG))
 		{
-			if (CustomNpcValues(npc).CustomValue01 != 0)
-				CutNPCFlag(CustomNpcValues(npc).CustomValue01);
+			if (CustomNpcValues(npc).CustomValueA != 0)
+				CutNPCFlag(CustomNpcValues(npc).CustomValueA);
 
-			if (CustomNpcValues(npc).CustomValue02 != 0)
-				CutNPCFlag(CustomNpcValues(npc).CustomValue02);
+			if (CustomNpcValues(npc).CustomValueB != 0)
+				CutNPCFlag(CustomNpcValues(npc).CustomValueB);
 
-			if (CustomNpcValues(npc).CustomValue03 != 0)
-				CutNPCFlag(CustomNpcValues(npc).CustomValue03);
+			if (CustomNpcValues(npc).CustomValueC != 0)
+				CutNPCFlag(CustomNpcValues(npc).CustomValueC);
 
-			if (CustomNpcValues(npc).CustomValue04 != 0)
-				CutNPCFlag(CustomNpcValues(npc).CustomValue04);
+			if (CustomNpcValues(npc).CustomValueD != 0)
+				CutNPCFlag(CustomNpcValues(npc).CustomValueD);
 
-			if (CustomNpcValues(npc).CustomValue05 != 0)
-				CutNPCFlag(CustomNpcValues(npc).CustomValue05);
+			if (CustomNpcValues(npc).CustomValueE != 0)
+				CutNPCFlag(CustomNpcValues(npc).CustomValueE);
 
-			if (CustomNpcValues(npc).CustomValue06 != 0)
-				CutNPCFlag(CustomNpcValues(npc).CustomValue06);
+			if (CustomNpcValues(npc).CustomValueF != 0)
+				CutNPCFlag(CustomNpcValues(npc).CustomValueF);
 		}
 		else
 		{
-			if (CustomNpcValues(npc).CustomValue01 != 0)
-				SetNPCFlag(CustomNpcValues(npc).CustomValue01);
+			if (CustomNpcValues(npc).CustomValueA != 0)
+				SetNPCFlag(CustomNpcValues(npc).CustomValueA);
 
-			if (CustomNpcValues(npc).CustomValue02 != 0)
-				SetNPCFlag(CustomNpcValues(npc).CustomValue02);
+			if (CustomNpcValues(npc).CustomValueB != 0)
+				SetNPCFlag(CustomNpcValues(npc).CustomValueB);
 
-			if (CustomNpcValues(npc).CustomValue03 != 0)
-				SetNPCFlag(CustomNpcValues(npc).CustomValue03);
+			if (CustomNpcValues(npc).CustomValueC != 0)
+				SetNPCFlag(CustomNpcValues(npc).CustomValueC);
 
-			if (CustomNpcValues(npc).CustomValue04 != 0)
-				SetNPCFlag(CustomNpcValues(npc).CustomValue04);
+			if (CustomNpcValues(npc).CustomValueD != 0)
+				SetNPCFlag(CustomNpcValues(npc).CustomValueD);
 
-			if (CustomNpcValues(npc).CustomValue05 != 0)
-				SetNPCFlag(CustomNpcValues(npc).CustomValue05);
+			if (CustomNpcValues(npc).CustomValueE != 0)
+				SetNPCFlag(CustomNpcValues(npc).CustomValueE);
 
-			if (CustomNpcValues(npc).CustomValue06 != 0)
-				SetNPCFlag(CustomNpcValues(npc).CustomValue06);
+			if (CustomNpcValues(npc).CustomValueF != 0)
+				SetNPCFlag(CustomNpcValues(npc).CustomValueF);
 		}
 	}
 
@@ -820,11 +820,11 @@ void ActEntity371(NPCHAR* npc)
 	int x_radius = 5;
 	int y_radius = 5;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		x_radius = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		x_radius = CustomNpcValues(npc).CustomValueA;
 
-	if (CustomNpcValues(npc).CustomValue02 != 0)
-		y_radius = CustomNpcValues(npc).CustomValue02;
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		y_radius = CustomNpcValues(npc).CustomValueB;
 
 	// Left, Right, Up, Down. 16 is 1 tile, so doing math we can have a radius for the Camera to target to.
 	switch (npc->act_no)
@@ -871,20 +871,20 @@ void ActEntity372(NPCHAR* npc)
 	int tra_y = 8;
 	int fade_dir = 4;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		tra_map = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		tra_map = CustomNpcValues(npc).CustomValueA;
 
-	if (CustomNpcValues(npc).CustomValue02 != 0)
-		tra_event = CustomNpcValues(npc).CustomValue02;
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		tra_event = CustomNpcValues(npc).CustomValueB;
 
-	if (CustomNpcValues(npc).CustomValue03 != 0)
-		tra_x = CustomNpcValues(npc).CustomValue03;
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		tra_x = CustomNpcValues(npc).CustomValueC;
 
-	if (CustomNpcValues(npc).CustomValue04 != 0)
-		tra_y = CustomNpcValues(npc).CustomValue04;
+	if (CustomNpcValues(npc).CustomValueD != 0)
+		tra_y = CustomNpcValues(npc).CustomValueD;
 
-	if (CustomNpcValues(npc).CustomValue05 != 0)
-		fade_dir = CustomNpcValues(npc).CustomValue05;
+	if (CustomNpcValues(npc).CustomValueE != 0)
+		fade_dir = CustomNpcValues(npc).CustomValueE;
 
 	if (npc->direct == 0)
 	{
@@ -932,8 +932,8 @@ void ActEntity373(NPCHAR* npc)
 {
 	int exp_amount = 10;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		exp_amount = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		exp_amount = CustomNpcValues(npc).CustomValueA;
 
 	switch (npc->act_no)
 	{
@@ -980,8 +980,8 @@ void ActEntity374(NPCHAR* npc)
 
 	int speed = 136;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		speed = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		speed = CustomNpcValues(npc).CustomValueA;
 
 	switch (npc->act_no)
 	{
@@ -1035,8 +1035,8 @@ void ActEntity375(NPCHAR* npc)
 
 	int speed = 136;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		speed = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		speed = CustomNpcValues(npc).CustomValueA;
 
 	switch (npc->act_no)
 	{
@@ -1087,8 +1087,8 @@ void ActEntity376(NPCHAR* npc)
 
 	int speed = 136;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		speed = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		speed = CustomNpcValues(npc).CustomValueA;
 
 	switch (npc->act_no)
 	{
@@ -1142,8 +1142,8 @@ void ActEntity377(NPCHAR* npc)
 
 	int speed = 136;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		speed = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		speed = CustomNpcValues(npc).CustomValueA;
 
 	switch (npc->act_no)
 	{
@@ -1193,7 +1193,7 @@ void ActEntity378(NPCHAR* npc)
 		{304, 200, 320, 216},
 	};
 
-	npc->rect = rects[CustomNpcValues(npc).CustomValue01];
+	npc->rect = rects[CustomNpcValues(npc).CustomValueA];
 }
 
 // Rolling (Custom)
@@ -1208,11 +1208,11 @@ void ActEntity379(NPCHAR* npc)
 	int acceleration = 64;
 	int maxspeed = 1024;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		acceleration = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		acceleration = CustomNpcValues(npc).CustomValueA;
 
-	if (CustomNpcValues(npc).CustomValue02 != 0)
-		maxspeed = CustomNpcValues(npc).CustomValue02;
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		maxspeed = CustomNpcValues(npc).CustomValueB;
 
 	switch (npc->act_no)
 	{
@@ -1300,8 +1300,8 @@ void ActEntity380(NPCHAR* npc)
 
 	int dropWait = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		dropWait = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		dropWait = CustomNpcValues(npc).CustomValueA;
 
 	switch (npc->act_no)
 	{
@@ -1356,8 +1356,8 @@ void ActEntity381(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	int n;
 
@@ -1652,8 +1652,8 @@ void ActEntity382(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{112, 0, 128, 16}, // Teleport A (Same as Carried)
@@ -1732,8 +1732,8 @@ void ActEntity383(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[3] = {
 		{176, 0, 192, 24},
@@ -1808,8 +1808,8 @@ void ActEntity384(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[6] = {
 		{224, 0, 240, 24}, // Standing Still
@@ -1885,8 +1885,8 @@ void ActEntity385(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[3] = {
 		{288, 0, 304, 24},
@@ -1961,8 +1961,8 @@ void ActEntity386(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[8] = {
 		{336, 0, 352, 16}, // Standing Still
@@ -2150,8 +2150,8 @@ void ActEntity387(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[6] = {
 		{400, 0, 416, 16}, // Stick A
@@ -2296,8 +2296,8 @@ void ActEntity388(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[4] = {
 		{480, 0, 504, 24}, // Small Bubble
@@ -2387,8 +2387,8 @@ void ActEntity389(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	int i;
 
@@ -2626,8 +2626,8 @@ void ActEntity390(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[7] = {
 		{656, 0, 672, 16}, // Standing Still
@@ -2766,8 +2766,8 @@ void ActEntity391(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{752, 0, 768, 16}, // Frame 1
@@ -2821,8 +2821,8 @@ void ActEntity392(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[1] = {
 		{784, 0, 800, 16}
@@ -2847,8 +2847,8 @@ void ActEntity393(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[8] = {
 		{800, 0, 816, 16}, // Floating Still
@@ -3038,8 +3038,8 @@ void ActEntity394(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[9] = {
 		{800, 0, 816, 16}, // Floating Still
@@ -3251,8 +3251,8 @@ void ActEntity395(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[10] = {
 		{928, 0, 944, 16}, // Standing Still
@@ -3465,8 +3465,8 @@ void ActEntity396(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	int xx, yy;
 
@@ -3764,8 +3764,8 @@ void ActEntity397(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft = { 1120, 16, 1136, 32 };
 	RECT rcRight = { 1136, 16, 1152, 32 };
@@ -3832,8 +3832,8 @@ void ActEntity398(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[3] = {
 		{944, 0, 960, 16}, // Looking Left
@@ -3931,8 +3931,8 @@ void ActEntity399(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[7] = {
 		{1152, 0, 1168, 16}, // Standing Still
@@ -4029,8 +4029,8 @@ void ActEntity400(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{1152, 0, 1168, 16}, // Standing Still
@@ -4091,8 +4091,8 @@ void ActEntity401(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[7] = {
 		{1232, 0, 1248, 16}, // Standing Still
@@ -4197,8 +4197,8 @@ void ActEntity402(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{1232, 0, 1248, 16}, // Standing Still
@@ -4259,8 +4259,8 @@ void ActEntity403(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[6] = {
 		{1312, 0, 1328, 16}, // Standing Still
@@ -4358,8 +4358,8 @@ void ActEntity404(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[3] = {
 		{1376, 0, 1392, 16}, // Standing Still
@@ -4432,8 +4432,8 @@ void ActEntity405(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect = { 1456, 0, 1472, 16 };
 
@@ -4449,8 +4449,8 @@ void ActEntity406(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{1424, 0, 1440, 16}, // Standing Still
@@ -4505,8 +4505,8 @@ void ActEntity407(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rc = { 1472, 0, 1504, 16 };
 
@@ -4528,8 +4528,8 @@ void ActEntity408(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[2] = {
 		{1504, 0, 1520, 16},
@@ -4578,8 +4578,8 @@ void ActEntity409(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcRight[7] = {
 		{1552, 0, 1568, 24}, // Standing Still
@@ -4664,8 +4664,8 @@ void ActEntity410(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{1632, 0, 1656, 24}, // Eyes Closed
@@ -4700,8 +4700,8 @@ void ActEntity411(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{1680, 0, 1696, 16}, // Standing Still
@@ -4755,8 +4755,8 @@ void ActEntity412(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{1712, 0, 1728, 16}, // Standing Still
@@ -4810,8 +4810,8 @@ void ActEntity413(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcPoweron[10] = {
 		{1744, 0, 1760, 24}, // Powered Off
@@ -4985,8 +4985,8 @@ void ActEntity414(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	int i;
 
@@ -5067,8 +5067,8 @@ void ActEntity415(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{1872, 0, 1888, 24}, // Standing Still
@@ -5111,8 +5111,8 @@ void ActEntity416(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[8] = {
 		{1904, 0, 1920, 16}, // Standing Still
@@ -5246,8 +5246,8 @@ void ActEntity417(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rc = { 1968, 0, 1984, 16 };
 
@@ -5272,8 +5272,8 @@ void ActEntity418(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcRight[4] = {
 		{2000, 0, 2040, 40}, // Standing Still
@@ -5403,8 +5403,8 @@ void ActEntity419(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{2176, 0, 2208, 16}, // Default
@@ -5515,8 +5515,8 @@ void ActEntity420(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rc = { 2272, 0, 2336, 16 };
 
@@ -5541,8 +5541,8 @@ void ActEntity421(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[3] = {
 		{2352, 0, 2376, 32}, // Standing Still (idle 1)
@@ -5678,8 +5678,8 @@ void ActEntity422(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[6] = {
 		{2424, 0, 2448, 32}, // Turned Back A
@@ -5778,8 +5778,8 @@ void ActEntity423(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rc[8] = {
 		{2480, 0, 2496, 32}, // Standing Still A
@@ -5894,8 +5894,8 @@ void ActEntity424(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rc = { 2576, 0, 2592, 16 };
 	npc->rect = rc;
@@ -5910,8 +5910,8 @@ void ActEntity425(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[6] = {
 		{2592, 0, 2608, 16}, // Standing Still
@@ -6024,8 +6024,8 @@ void ActEntity426(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[2] = {
 		{2656, 0, 2672, 16}, // Standing Still
@@ -6079,8 +6079,8 @@ void ActEntity427(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[6] = {
 		{2656, 0, 2672, 16}, // Standing Still
@@ -6193,8 +6193,8 @@ void ActEntity428(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[3] = {
 		{2720, 0, 2736, 16}, // Standing Still
@@ -6266,8 +6266,8 @@ void ActEntity429(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[4] = {
 		{0, 0, 16, 16},
@@ -6297,8 +6297,8 @@ void ActEntity430(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[3] = {
 		{64, 0, 80, 16},
@@ -6351,8 +6351,8 @@ void ActEntity431(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[3] = {
 		{112, 0, 128, 16},
@@ -6419,8 +6419,8 @@ void ActEntity432(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[8] = {
 		{160, 0, 176, 16},
@@ -6485,8 +6485,8 @@ void ActEntity433(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[2] = {
 		{288, 0, 304, 16},
@@ -6568,8 +6568,8 @@ void ActEntity434(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	int i;
 
@@ -6607,8 +6607,8 @@ void ActEntity435(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	if (npc->act_no == 0)
 	{
@@ -6632,8 +6632,8 @@ void ActEntity436(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft = { 384, 0, 416, 24 };
 
@@ -6663,8 +6663,8 @@ void ActEntity437(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[2] = {
 		{504, 0, 528, 32},
@@ -6696,8 +6696,8 @@ void ActEntity438(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[8] = {
 		{552, 0, 576, 4},
@@ -6731,8 +6731,8 @@ void ActEntity439(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[1] = {
 		{576, 0, 608, 24}
@@ -6750,8 +6750,8 @@ void ActEntity440(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[2] = {
 		{608, 0, 624, 16},
@@ -6779,8 +6779,8 @@ void ActEntity441(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[2] = {
 		{640, 0, 656, 16},
@@ -6808,8 +6808,8 @@ void ActEntity442(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[4] = {
 		{672, 0, 688, 16},
@@ -6853,8 +6853,8 @@ void ActEntity443(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[2] = {
 		{736, 0, 752, 16},
@@ -6878,8 +6878,8 @@ void ActEntity444(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[4] = {
 		{768, 0, 784, 16},
@@ -6909,8 +6909,8 @@ void ActEntity445(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[3] = {
 		{832, 0, 848, 24},
@@ -6959,8 +6959,8 @@ void ActEntity446(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[3] = {
 		{896, 0, 912, 16},
@@ -6989,8 +6989,8 @@ void ActEntity447(NPCHAR* npc)
 {
 	int customrect = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		customrect = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		customrect = CustomNpcValues(npc).CustomValueA;
 
 	RECT rect[4] = {
 		{928, 0, 944, 16},
@@ -7033,14 +7033,14 @@ void ActEntity448(NPCHAR* npc)
 	int cooldown = 150;
 	int sprite_index = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		jump_amount = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		jump_amount = CustomNpcValues(npc).CustomValueA;
 
-	if (CustomNpcValues(npc).CustomValue02 != 0)
-		cooldown = CustomNpcValues(npc).CustomValue02;
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		cooldown = CustomNpcValues(npc).CustomValueB;
 
-	if (CustomNpcValues(npc).CustomValue03 != 0)
-		sprite_index = CustomNpcValues(npc).CustomValue03;
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		sprite_index = CustomNpcValues(npc).CustomValueC;
 
 	switch (npc->act_no)
 	{
@@ -7085,14 +7085,14 @@ void ActEntity449(NPCHAR* npc)
 	int cooldown_respawn = 50;
 	int sprite_index = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		cooldown_rewind = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		cooldown_rewind = CustomNpcValues(npc).CustomValueA;
 
-	if (CustomNpcValues(npc).CustomValue02 != 0)
-		cooldown_respawn = CustomNpcValues(npc).CustomValue02;
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		cooldown_respawn = CustomNpcValues(npc).CustomValueB;
 
-	if (CustomNpcValues(npc).CustomValue03 != 0)
-		sprite_index = CustomNpcValues(npc).CustomValue03;
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		sprite_index = CustomNpcValues(npc).CustomValueC;
 
 	int i = 0;
 
@@ -7151,8 +7151,8 @@ void ActEntity450(NPCHAR* npc)
 	int speed = 1;
 
 	// If custom value does not equal 0, then use the custom value as the value instead of the default.
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		speed = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		speed = CustomNpcValues(npc).CustomValueA;
 
 	switch (npc->act_no)
 	{
@@ -7206,8 +7206,8 @@ void ActEntity451(NPCHAR* npc)
 {
 	int wallbooster_sprite = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		wallbooster_sprite = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		wallbooster_sprite = CustomNpcValues(npc).CustomValueA;
 
 	// Default size (1 tile)
 	RECT rcLeft[8] = {
@@ -7275,8 +7275,8 @@ void ActEntity452(NPCHAR* npc)
 {
 	int icewall_sprite = 0;
 
-	if (CustomNpcValues(npc).CustomValue01 != 0)
-		icewall_sprite = CustomNpcValues(npc).CustomValue01;
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		icewall_sprite = CustomNpcValues(npc).CustomValueA;
 
 	RECT rcLeft[5] = {
 		{720, 0, 736, 16},
