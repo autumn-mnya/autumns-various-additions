@@ -108,4 +108,6 @@ const NPCFUNCTION gpEntityFuncTbl[] = {
 	ActEntity450,
 	ActEntity451,
 	ActEntity452,
+	ActEntity453,
+	ActEntity454,
 };

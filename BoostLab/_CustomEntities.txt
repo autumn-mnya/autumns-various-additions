@@ -1,23 +1,27 @@
 Ask the Cave Story Modding Community discord if you're confused about anything here! I (@autumn_mnya) will try my best to help if asked.
 
+Note: There are new custom values for certain entities, making them more customizable!
+[ If a custom value is set to 0, it will have a default value in most cases. ]
+
 #361 -> Booster Refill
 Refills the players Booster Fuel when touched. If Alt Direction is set, then it will set your fuel to 0.
 
 Custom Values available:
-A - How much fuel is given when touched (Default is 50 if set to 0)
-B - How many frames until it respawns (Default is 50 if set to 0)
+A - How much fuel is given when touched (Default is 50)
+B - How many frames until it respawns (Default is 50)
+C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
 
 #362 -> Lock-On Trigger
 Homes in towards the player in both X/Y directions.
 
 Custom Values available:
 
-A - How fast the trigger is. (Default is 1535 if set to 0)
-B - The Top Left X coordinate of the RECT (Default is 0 if set to 0)
-C - The Top Left Y coordinate of the RECT (Default is 0 if set to 0)
-D - The Bottom Right X coordinate of the RECT (Default is 16 if set to 0)
-E - The Bottom Right Y coordinate of the RECT (Default is 16 if set to 0)
-F - The Surface the npc uses (Default is the one set in npc.tbl if its set to 0)
+A - How fast the trigger is. (Default is 1535)
+B - The Top Left X coordinate of the RECT (Default is 0)
+C - The Top Left Y coordinate of the RECT (Default is 0)
+D - The Bottom Right X coordinate of the RECT (Default is 16)
+E - The Bottom Right Y coordinate of the RECT (Default is 16)
+F - The Surface the npc uses (Default is the one set in npc.tbl)
 
 #363 -> 2-Way Trigger
 Runs entity event X when going inside the trigger from 1 direction, and runs entity event X + 10 if coming from the other.
@@ -35,15 +39,17 @@ Forces the player to explode upon impact, no matter their HP or I-Frames.
 Forces the player to boost hozizontally even if they dont have a booster, with no means of stopping. By default it goes left, Alt Direction makes it go right.
 
 Custom Values available:
-A - How much fuel the forced boost has (Default is 50 if set to 0)
-B - How long until this forced boost respawns (Default is 50 if set to 0)
+A - How much fuel the forced boost has (Default is 50)
+B - How long until this forced boost respawns (Default is 50)
+C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
 
 #368 -> Forced Booster (Vertical)
 Forces the player to boost vertically even if they dont have a booster, with no means of stopping. By default it goes up, Alt Direction makes it go down.
 
 Custom Values available:
-A - How much fuel the forced boost has (Default is 50 if set to 0)
-B - How long until this forced boost respawns (Default is 50 if set to 0)
+A - How much fuel the forced boost has (Default is 50)
+B - How long until this forced boost respawns (Default is 50)
+C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
 
 #369 -> Flag Trigger
 Sets the flags assigned to the custom values available. When given the "Unused / Custom" checkbox, it unsets the flag IDs instead.
@@ -59,33 +65,33 @@ Focuses the camera on the entity within a set radius, and unfocuses the camera w
 Using <ANP to set the entity to state 1 will delete the entity and set the cameras focus back to the player.
 
 Custom Values available:
-A - Radius on the X axis in tiles to focus the camera.
-B - Radius on the Y axis in tiles to focus the camera.
+A - Radius on the X axis in tiles to focus the camera (Default is 5)
+B - Radius on the Y axis in tiles to focus the camera (Default is 5)
 
 #372 -> Transport Trigger
 Does the equivalent of a <KEY<MM0<FAOxxxx<TRA, except without any scripting. Note you will still need to run an event at the destination map.
 
 Custom Values available:
-A - The map to transport to.
-B - The event in the destination map to run.
-C - The X coordinate to spawn at in the destination map.
-D - The Y coordinate to spawn at in the destination map.
+A - The map to transport to
+B - The event in the destination map to run
+C - The X coordinate to spawn at in the destination map
+D - The Y coordinate to spawn at in the destination map
 E - The direction in which the Fade should occur. Anything above 4 will result in no fade occuring.
 
 #373 -> Energy Capsule (Custom)
-Same as Entity #253 (EXP Capsule), except it uses Custom Value 01 for the amount of experience instead of the Flag ID.
+Same as Entity #253 (EXP Capsule), except it uses Custom Value A for the amount of experience instead of the Flag ID.
 
 Custom Values available:
-A - Amount of experience dropped (Default is 10 if set to 0)
+A - Amount of experience dropped (Default is 10)
 
 #374 through #377 -> Customiable Fan
 Same as Entities 96 - 99, except the speed given to the player is customizable.
 
 Custom Values available:
-A - The speed given to the player. (Default is 136 when set to 0)
+A - The speed given to the player. (Default is 136)
 
 #378 -> Spikes (Custom)
-Same as Entity #211 (Spikes), except it uses Custom Value 01 for the direction instead of the Event #.
+Same as Entity #211 (Spikes), except it uses Custom Value A for the direction instead of the Event #.
 
 Custom Values available:
 A - The direction the spikes face.
@@ -94,11 +100,11 @@ A - The direction the spikes face.
 Same as Entity #330 (Rolling), except it uses Custom Values for its speed.
 
 Custom Values available:
-A - The acceleration speed of the rolling (Default is 64 if set to 0)
-B - The max speed of the rolling (Default is 1024 if set to 0)
+A - The acceleration speed of the rolling (Default is 64)
+B - The max speed of the rolling (Default is 1024)
 
 #380 -> Acid Drop Generator (Custom)
-Same as Entity #245 (Acid Generator), except it uses Custom Value 01 for the wait time between drops.
+Same as Entity #245 (Acid Generator), except it uses Custom Value A for the wait time between drops.
 
 Custom Values available:
 A - Wait time between drops (Default is 0)
@@ -114,3 +120,19 @@ There are the same as the above, but with objects from the NpcSym file.
 
 Custom Values available:
 A - Move the sprite down however many pixels neccessary for the sprite in question. See "_EntitySpriteSize.txt" for more info directly. Specifically the "Objects" section.
+
+#448 - Jump Refill
+Gives the player an extra jump in the air.
+
+Custom Values available:
+A - How many jumps the jump arrow gives you (Default is 1)
+B - How many frames until it respawns (Default is 50)
+C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
+
+#449 - Rewind Refill
+When touched, it does nothing. After the refills cooldown is up, however, it will move the players X/Y position back to the entities X/Y position
+
+Custom Values available:
+A - The cooldown for the object to rewind the player back to the entities X:Y position (Default is 150
+B - The cooldown for the object to be collected again after the player is returned to the entity, or if the room is just entered (Default is 50)
+C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
