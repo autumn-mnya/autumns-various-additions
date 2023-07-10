@@ -60,6 +60,129 @@ int setting_running_speed = 1218;
 // Ice particles
 bool setting_ice_particles = true;
 
+int custom_camera_offset_x = 0;
+int custom_camera_offset_y = 0;
+int custom_index_x = 0;
+int custom_index_y = 0;
+int custom_tgt_x = 0;
+int custom_tgt_y = 0;
+
+bool is_direction_locked = false;
+int lock_direction = 0;
+
+void Replacement_SetMyCharPosition_InitStar_Call()
+{
+	is_direction_locked = false;
+	lock_direction = 0;
+	custom_tgt_x = gMC->x;
+	custom_tgt_y = gMC->y;
+	InitStar();
+}
+
+void CameraHorizontalHelper(BOOL bKey)
+{
+	if (gMC->direct == 0)
+	{
+		custom_index_x -= 0x200;
+		if (custom_index_x < -0x8000)
+			custom_index_x = -0x8000;
+	}
+	else
+	{
+		custom_index_x += 0x200;
+		if (custom_index_x > 0x8000)
+			custom_index_x = 0x8000;
+	}
+}
+
+void CameraVerticalHelper(BOOL bKey)
+{
+	if (gKey & gKeyUp && bKey)
+	{
+		custom_index_y -= 0x200;
+		if (custom_index_y < -0x8000)
+			custom_index_y = -0x8000;
+	}
+	else if (gKey & gKeyDown && bKey)
+	{
+		custom_index_y += 0x200;
+		if (custom_index_y > 0x8000)
+			custom_index_y = 0x8000;
+	}
+}
+
+void ActMyChar_CustomCamOffset(BOOL bKey)
+{
+	// Camera
+	if (is_direction_locked == false)
+	{
+		if (gMC->direct == 0)
+		{
+			custom_index_x -= 0x200;
+			if (custom_index_x < -0x8000)
+				custom_index_x = -0x8000;
+		}
+		else
+		{
+			custom_index_x += 0x200;
+			if (custom_index_x > 0x8000)
+				custom_index_x = 0x8000;
+		}
+		if (gKey & gKeyUp && bKey)
+		{
+			custom_index_y -= 0x200;
+			if (custom_index_y < -0x8000)
+				custom_index_y = -0x8000;
+		}
+		else if (gKey & gKeyDown && bKey)
+		{
+			custom_index_y += 0x200;
+			if (custom_index_y > 0x8000)
+				custom_index_y = 0x8000;
+		}
+		else
+		{
+			if (custom_index_y > 0x200)
+				custom_index_y -= 0x200;
+			if (custom_index_y < -0x200)
+				custom_index_y += 0x200;
+		}
+	}
+	else if (is_direction_locked == true)
+	{
+		switch (lock_direction)
+		{
+			default:
+				custom_index_x = -0x8000;
+				CameraVerticalHelper(bKey);
+				break;
+
+			case 1:
+				custom_index_y = -0x8000;
+				CameraHorizontalHelper(bKey);
+				break;
+
+			case 2:
+				custom_index_x = 0x8000;
+				CameraVerticalHelper(bKey);
+				break;
+
+			case 3:
+				custom_index_y = 0x8000;
+				CameraHorizontalHelper(bKey);
+				break;
+
+			case 4:
+				custom_index_x = 0;
+				custom_index_y = 0;
+				break;
+		}
+	}
+
+	custom_tgt_x = gMC->x + (custom_index_x + (custom_camera_offset_x * 0x200));
+	custom_tgt_y = gMC->y + (custom_index_y + (custom_camera_offset_y * 0x200));
+}
+
 void ActMyChar_RunButton(BOOL bKey, Physics *physics)
 {
 	// Controller players can't do this.
@@ -281,4 +404,6 @@ void ActMyChar_Normal_Custom(BOOL bKey)
 		ActMyChar_WallJump(bKey);
 
 	ActMyChar_AirJumps(bKey);
+
+	ActMyChar_CustomCamOffset(bKey);
 }

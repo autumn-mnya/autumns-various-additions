@@ -71,5 +71,6 @@ void Replacement_Debug_PutMyLife(BOOL flash)
 	else
 		PutNumber4(8, 56, 0, FALSE);
 
-	PutNumber4(8, 48 + 32, gMC->ym * -1, FALSE);
+	PutText(8, 48 + 32, std::to_string(custom_tgt_x).c_str(), 0xFFFFFF);
+	PutText(8, 48 + 48, std::to_string(custom_tgt_y).c_str(), 0xFFFFFF);
 }

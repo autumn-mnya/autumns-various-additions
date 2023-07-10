@@ -16,6 +16,7 @@
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "Frame.h"
+#include "MyChar.h"
 
 static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 {
@@ -44,19 +45,47 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		gMC->xm = xm;
 		gMC->ym = ym;
 	}
-	else if (strncmp(where + 1, "FN2", 3) == 0) // Focus on Npc 2
+	else if (strncmp(where + 1, "FN2", 3) == 0) // Focus on Npc 2 (FON but with index_x and index_y in use?)
 	{
 		x = GetTextScriptNo(gTS->p_read + 4);
 		y = GetTextScriptNo(gTS->p_read + 9);
 		SetFrameTargetNpCharWithMyCharIndex(x, y);
 		gTS->p_read += 13;
 	}
-	else if (strncmp(where + 1, "FM2", 3) == 0) // Focus on Me 2
+	else if (strncmp(where + 1, "FM2", 3) == 0) // Focus on Me 2 ~ (Wait, Mode, OffsetX, OffsetY)
+	{
+		w = GetTextScriptNo(gTS->p_read + 4);
+		x = GetTextScriptNo(gTS->p_read + 9);
+		y = GetTextScriptNo(gTS->p_read + 14);
+		z = GetTextScriptNo(gTS->p_read + 19);
+		SetFrameTargetMyCharOffset(w, x, y, z);
+		gTS->p_read += 23;
+	}
+	else if (strncmp(where + 1, "LDR", 3) == 0) // Lock Direction (only when using <FM2)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		switch (x)
+		{
+			default:
+				is_direction_locked = false;
+				break;
+
+			case 1:
+				is_direction_locked = true;
+				lock_direction = y;
+				break;
+		}
+
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "FOC", 3) == 0) // Focus on Coordinate
 	{
 		x = GetTextScriptNo(gTS->p_read + 4);
 		y = GetTextScriptNo(gTS->p_read + 9);
 		z = GetTextScriptNo(gTS->p_read + 14);
-		SetFrameTargetMyCharOffset(x, y, z);
+		SetFrameTargetCoordinate(x, y * 0x200 * 0x10, z * 0x200 * 0x10);
 		gTS->p_read += 18;
 	}
 	else

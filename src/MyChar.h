@@ -61,6 +61,17 @@ extern int setting_running_speed;
 
 extern bool setting_ice_particles;
 
+extern int custom_camera_offset_x;
+extern int custom_camera_offset_y;
+extern int custom_index_x;
+extern int custom_index_y;
+extern int custom_tgt_x;
+extern int custom_tgt_y;
+
+extern bool is_direction_locked;
+extern int lock_direction;
+
+void Replacement_SetMyCharPosition_InitStar_Call();
 void setPlayerPhysics(BOOL bKey, Physics* physics);
 void ActMyChar_Normal_Custom(BOOL bKey);
 void SetPlayerCamera(BOOL bKey);

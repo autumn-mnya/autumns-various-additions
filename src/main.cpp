@@ -68,6 +68,7 @@ void InitMod_SFX()
 // Init MyChar replacement
 void InitMod_MyChar()
 {
+	ModLoader_WriteCall((void*)0x416B22, (void*)Replacement_SetMyCharPosition_InitStar_Call);
 	InitMyCharPhysicsPatch();
 	InitCustomMyCharPatch();
 }
@@ -244,7 +245,7 @@ void InitMod(void)
 
 
 	// debug testing hud
-	// ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);
+	ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);
 
 	/*
 	InitMod_GameUI();
