@@ -7340,22 +7340,45 @@ void ActEntity453(NPCHAR* npc)
 	*/
 
 	RECT spring[10] = {
-		{800, 0, 816, 16}, // 0
-		{816, 0, 832, 16}, // 1
-		{832, 0, 848, 16}, // 2
-		{848, 0, 864, 16}, // 3
-		{832, 0, 848, 16}, // 2
-		{848, 0, 864, 16}, // 3
-		{832, 0, 848, 16}, // 2
-		{848, 0, 864, 16}, // 3
-		{864, 0, 880, 16}, // 4
-		{864, 0, 880, 16}, // 5
+		{800, 0, 816, 16}, // 0 - 0
+		{816, 0, 832, 16}, // 1 - 1
+		{832, 0, 848, 16}, // 2 - 2
+		{848, 0, 864, 16}, // 3 - 3
+		{832, 0, 848, 16}, // 2 - 4
+		{848, 0, 864, 16}, // 3 - 5
+		{832, 0, 848, 16}, // 2 - 6
+		{848, 0, 864, 16}, // 3 - 7
+		{864, 0, 880, 16}, // 4 - 8
+		{864, 0, 880, 16}, // 5 - 9
 	};
 
 	switch (npc->act_no)
 	{
 		case 0:
-			
+			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
+				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
+				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			{
+				PlaySoundObject(15, SOUND_MODE_PLAY);
+				gMC->ym += -0x5FF;
+				npc->act_no = 1;
+			}
+			break;
+
+		case 1:
+			// Do animation work
+			if (++npc->ani_wait > 3)
+			{
+				npc->ani_wait = 0;
+				++npc->ani_no;
+			}
+
+			if (npc->ani_no > 8)
+			{
+				npc->ani_no = 0;
+				npc->act_no = 0;
+			}
 			break;
 	}
 }
