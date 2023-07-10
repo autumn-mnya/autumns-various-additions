@@ -7204,15 +7204,13 @@ void ActEntity450(NPCHAR* npc)
 // Wall Booster
 void ActEntity451(NPCHAR* npc)
 {
-	// Don't kill me for these rects i promise it works 
-
 	int wallbooster_sprite = 0;
 
 	if (CustomNpcValues(npc).CustomValue01 != 0)
 		wallbooster_sprite = CustomNpcValues(npc).CustomValue01;
 
 	// Default size (1 tile)
-	RECT rcLeft_1tile[8] = {
+	RECT rcLeft[8] = {
 	{ 512, 0, 528, 16 },
 	{ 528, 0, 544, 16 },
 	{ 544, 0, 560, 16 },
@@ -7224,7 +7222,7 @@ void ActEntity451(NPCHAR* npc)
 	};
 
 	// Default size (1 tile)
-	RECT rcRight_1tile[8] = {
+	RECT rcRight[8] = {
 	{ 384, 0, 400, 16 },
 	{ 400, 0, 416, 16 },
 	{ 416, 0, 432, 16 },
@@ -7233,78 +7231,6 @@ void ActEntity451(NPCHAR* npc)
 	{ 464, 0, 480, 16 },
 	{ 480, 0, 496, 16 },
 	{ 496, 0, 512, 16 },
-	};
-
-	// Top part
-	RECT rcLeft_TopPart[8] = {
-	{ 512, 16, 528, 32 },
-	{ 528, 16, 544, 32 },
-	{ 544, 16, 560, 32 },
-	{ 560, 16, 576, 32 },
-	{ 576, 16, 592, 32 },
-	{ 592, 16, 608, 32 },
-	{ 608, 16, 624, 32 },
-	{ 624, 16, 640, 32 },
-	};
-
-	// Top part
-	RECT rcRight_TopPart[8] = {
-	{ 384, 16, 400, 32 },
-	{ 400, 16, 416, 32 },
-	{ 416, 16, 432, 32 },
-	{ 432, 16, 448, 32 },
-	{ 448, 16, 464, 32 },
-	{ 464, 16, 480, 32 },
-	{ 480, 16, 496, 32 },
-	{ 496, 16, 512, 32 },
-	};
-
-	// Middle part
-	RECT rcLeft_MidPart[8] = {
-	{ 512, 32, 528, 48 },
-	{ 528, 32, 544, 48 },
-	{ 544, 32, 560, 48 },
-	{ 560, 32, 576, 48 },
-	{ 576, 32, 592, 48 },
-	{ 592, 32, 608, 48 },
-	{ 608, 32, 624, 48 },
-	{ 624, 32, 640, 48 },
-	};
-
-	// Middle part
-	RECT rcRight_MidPart[8] = {
-	{ 384, 32, 400, 48 },
-	{ 400, 32, 416, 48 },
-	{ 416, 32, 432, 48 },
-	{ 432, 32, 448, 48 },
-	{ 448, 32, 464, 48 },
-	{ 464, 32, 480, 48 },
-	{ 480, 32, 496, 48 },
-	{ 496, 32, 512, 48 },
-	};
-
-	// Bottom part
-	RECT rcLeft_BotPart[8] = {
-	{ 512, 48, 528, 64 },
-	{ 528, 48, 544, 64 },
-	{ 544, 48, 560, 64 },
-	{ 560, 48, 576, 64 },
-	{ 576, 48, 592, 64 },
-	{ 592, 48, 608, 64 },
-	{ 608, 48, 624, 64 },
-	{ 624, 48, 640, 64 },
-	};
-
-	// Bottom part
-	RECT rcRight_BotPart[8] = {
-	{ 384, 48, 400, 64 },
-	{ 400, 48, 416, 64 },
-	{ 416, 48, 432, 64 },
-	{ 432, 48, 448, 64 },
-	{ 448, 48, 464, 64 },
-	{ 464, 48, 480, 64 },
-	{ 480, 48, 496, 64 },
-	{ 496, 48, 512, 64 },
 	};
 
 	// Do animation work
@@ -7332,36 +7258,15 @@ void ActEntity451(NPCHAR* npc)
 	if (onWall == 0)
 		entity_IsWallboosting = false;
 
+	if (npc->direct == 0)
+		npc->rect = rcLeft[npc->ani_no];
+	else
+		npc->rect = rcRight[npc->ani_no];
 
-	switch (wallbooster_sprite)
+	if (wallbooster_sprite < 4)
 	{
-		default:
-			if (npc->direct == 0)
-				npc->rect = rcLeft_1tile[npc->ani_no];
-			else
-				npc->rect = rcRight_1tile[npc->ani_no];
-			break;
-
-		case 1:
-			if (npc->direct == 0)
-				npc->rect = rcLeft_TopPart[npc->ani_no];
-			else
-				npc->rect = rcRight_TopPart[npc->ani_no];
-			break;
-
-		case 2:
-			if (npc->direct == 0)
-				npc->rect = rcLeft_MidPart[npc->ani_no];
-			else
-				npc->rect = rcRight_MidPart[npc->ani_no];
-			break;
-
-		case 3:
-			if (npc->direct == 0)
-				npc->rect = rcLeft_BotPart[npc->ani_no];
-			else
-				npc->rect = rcRight_BotPart[npc->ani_no];
-			break;
+		npc->rect.top += (16 * 1) * wallbooster_sprite;
+		npc->rect.bottom += (16 * 1) * wallbooster_sprite;
 	}
 }
 
@@ -7373,7 +7278,7 @@ void ActEntity452(NPCHAR* npc)
 	if (CustomNpcValues(npc).CustomValue01 != 0)
 		icewall_sprite = CustomNpcValues(npc).CustomValue01;
 
-	RECT rcLeft_1tile[5] = {
+	RECT rcLeft[5] = {
 		{720, 0, 736, 16},
 		{736, 0, 752, 16},
 		{752, 0, 768, 16},
@@ -7381,60 +7286,12 @@ void ActEntity452(NPCHAR* npc)
 		{784, 0, 800, 16},
 	};
 
-	RECT rcRight_1tile[5] = {
+	RECT rcRight[5] = {
 		{640, 0, 656, 16},
 		{656, 0, 672, 16},
 		{672, 0, 688, 16},
 		{688, 0, 704, 16},
 		{704, 0, 720, 16},
-	};
-
-	RECT rcLeft_TopPart[5] = {
-		{720, 16, 736, 32},
-		{736, 16, 752, 32},
-		{752, 16, 768, 32},
-		{768, 16, 784, 32},
-		{784, 16, 800, 32},
-	};
-
-	RECT rcRight_TopPart[5] = {
-		{640, 16, 656, 32},
-		{656, 16, 672, 32},
-		{672, 16, 688, 32},
-		{688, 16, 704, 32},
-		{704, 16, 720, 32},
-	};
-
-	RECT rcLeft_MidPart[5] = {
-		{720, 32, 736, 48},
-		{736, 32, 752, 48},
-		{752, 32, 768, 48},
-		{768, 32, 784, 48},
-		{784, 32, 800, 48},
-	};
-
-	RECT rcRight_MidPart[5] = {
-		{640, 32, 656, 48},
-		{656, 32, 672, 48},
-		{672, 32, 688, 48},
-		{688, 32, 704, 48},
-		{704, 32, 720, 48},
-	};
-
-	RECT rcLeft_BotPart[5] = {
-		{720, 48, 736, 64},
-		{736, 48, 752, 64},
-		{752, 48, 768, 64},
-		{768, 48, 784, 64},
-		{784, 48, 800, 64},
-	};
-
-	RECT rcRight_BotPart[5] = {
-		{640, 48, 656, 64},
-		{656, 48, 672, 64},
-		{672, 48, 688, 64},
-		{688, 48, 704, 64},
-		{704, 48, 720, 64},
 	};
 
 	// Do animation work
@@ -7456,34 +7313,14 @@ void ActEntity452(NPCHAR* npc)
 			entity_IsIceWalled = true;
 	}
 
-	switch (icewall_sprite)
+	if (npc->direct == 0)
+		npc->rect = rcLeft[npc->ani_no];
+	else
+		npc->rect = rcRight[npc->ani_no];
+
+	if (icewall_sprite < 4)
 	{
-		default:
-			if (npc->direct == 0)
-				npc->rect = rcLeft_1tile[npc->ani_no];
-			else
-				npc->rect = rcRight_1tile[npc->ani_no];
-			break;
-
-		case 1:
-			if (npc->direct == 0)
-				npc->rect = rcLeft_TopPart[npc->ani_no];
-			else
-				npc->rect = rcRight_TopPart[npc->ani_no];
-			break;
-
-		case 2:
-			if (npc->direct == 0)
-				npc->rect = rcLeft_MidPart[npc->ani_no];
-			else
-				npc->rect = rcRight_MidPart[npc->ani_no];
-			break;
-
-		case 3:
-			if (npc->direct == 0)
-				npc->rect = rcLeft_BotPart[npc->ani_no];
-			else
-				npc->rect = rcRight_BotPart[npc->ani_no];
-			break;
+		npc->rect.top += (16 * 1) * icewall_sprite;
+		npc->rect.bottom += (16 * 1) * icewall_sprite;
 	}
 }
