@@ -5,4 +5,4 @@
 #include "cave_story.h"
 
 void SetFrameTargetNpCharWithMyCharIndex(int event, int wait);
-void SetFrameTargetMyCharOffset(int wait, int offset);
+void SetFrameTargetMyCharOffset(int wait, int offset_x, int offset_y);

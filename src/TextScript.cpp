@@ -55,7 +55,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	{
 		x = GetTextScriptNo(gTS->p_read + 4);
 		y = GetTextScriptNo(gTS->p_read + 9);
-		SetFrameTargetMyCharOffset(x, y);
+		SetFrameTargetMyCharOffset(x, y, z);
 		gTS->p_read += 13;
 	}
 	else

@@ -25,9 +25,9 @@ void SetFrameTargetNpCharWithMyCharIndex(int event, int wait)
 	gFrame->wait = wait;
 }
 
-void SetFrameTargetMyCharOffset(int wait, int offset)
+void SetFrameTargetMyCharOffset(int wait, int offset_x, int offset_y)
 {
-	gFrame->tgt_x = &gMC->tgt_x + offset;
-	gFrame->tgt_y = &gMC->tgt_y + offset;
+	gFrame->tgt_x = &gMC->tgt_x + offset_x;
+	gFrame->tgt_y = &gMC->tgt_y + offset_y;
 	gFrame->wait = wait;
 }
