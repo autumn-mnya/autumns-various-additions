@@ -7360,7 +7360,7 @@ void ActEntity453(NPCHAR* npc)
 				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
 				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
 			{
-				PlaySoundObject(15, SOUND_MODE_PLAY);
+				PlaySoundObject(161, SOUND_MODE_PLAY);
 				gMC->ym += -0x5FF;
 				npc->act_no = 1;
 			}
@@ -7374,6 +7374,10 @@ void ActEntity453(NPCHAR* npc)
 				++npc->ani_no;
 			}
 
+			if (npc->ani_no < 3)
+				gMC->ym += -0x5FF;
+
+
 			if (npc->ani_no > 8)
 			{
 				npc->ani_no = 0;
@@ -7381,6 +7385,8 @@ void ActEntity453(NPCHAR* npc)
 			}
 			break;
 	}
+
+	npc->rect = spring[npc->ani_no];
 }
 
 // Spring (Sideways)

@@ -14,6 +14,7 @@
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
+#include "LoadPixtone.h"
 #include "MyChar.h"
 #include "PauseScreen.h"
 #include "TextScript.h"
@@ -185,6 +186,11 @@ void InitMod_PauseScreen()
 	ModLoader_WriteJump((void*)0x40DD70, (void*)Call_Pause);
 }
 
+void InitMod_SFX()
+{
+	ModLoader_WriteCall((void*)0x411DEF, (void*)Replacement_LoadGenericData_Pixtone_Sprintf);
+}
+
 void InitMod_GameUI()
 {
 	// UI related things go here
@@ -230,6 +236,8 @@ void InitMod(void)
 
 	if (setting_enable_text_script_code)
 		InitMod_TSC();
+
+	InitMod_SFX();
 
 	// debug testing hud
 	// ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);
