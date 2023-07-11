@@ -208,9 +208,8 @@ The way the locked camera direction works is simple. If you lock the direction h
 It's the same way for setting the camera to be locked in a vertical direction (direction 1/3), you wont be able to force the camera up or down, but you can still look left/right.
 
 Custom Values available:
-
-A - X offset in amount of tiles.
-B - Y offset in amount of tiles.
+A - X offset in amount of pixels.
+B - Y offset in amount of pixels.
 C - How many frames it takes for the camera to move. (Default is 16)
 D - Locked Camera Direction [If Unused/Custom flag is set] (Default is 0)
 
