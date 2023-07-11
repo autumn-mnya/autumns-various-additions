@@ -11,6 +11,7 @@
 #include "Draw.h"
 #include "cave_story.h"
 #include "EntityLoad.h"
+#include "Frame.h"
 #include "MyChar.h"
 
 // Currently contains every single custom entity's code!! Add new ones here basically, its the same process as CSE2 except you add the functions into the Entity.h file, and add them to
@@ -7566,26 +7567,131 @@ void ActEntity456(NPCHAR* npc)
 
 	switch (npc->act_no)
 	{
-		case 0: // dont do anything unless <ANP'd
-			break;
-
-		case 1:
+		case 0:
 			if (npc->direct == 2)
 			{
-				npc->x = gMC->x + (x_offset * 0x200);
-				npc->y = gMC->y + (y_offset * 0x200);
-				npc->act_no = 2;
+				npc->x = gMC->x + (x_offset * 0x200 * 0x10);
+				npc->y = gMC->y + (y_offset * 0x200 * 0x10);
+				npc->act_no = 1;
 			}
 			else
 			{
-				npc->x = gMC->x + (x_offset * 0x200);
-				npc->y = gMC->y + (y_offset * 0x200);
+				npc->x = gMC->x + (x_offset * 0x200 * 0x10);
+				npc->y = gMC->y + (y_offset * 0x200 * 0x10);
 			}
 			break;
 
-		case 2:
+		case 1:
 			npc->cond = 0;
 			break;
+	}
+
+	npc->rect = rect;
+}
+
+// Camera Offset Trigger
+void ActEntity457(NPCHAR* npc)
+{
+	int camera_x_offset = 0;
+	int camera_y_offset = 0;
+	int wait = 16;
+	int lock_cam_dir = 0;
+
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		camera_x_offset = CustomNpcValues(npc).CustomValueA;
+
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		camera_y_offset = CustomNpcValues(npc).CustomValueB;
+
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		wait = CustomNpcValues(npc).CustomValueC;
+
+	if (CustomNpcValues(npc).CustomValueD != 0)
+		lock_cam_dir = CustomNpcValues(npc).CustomValueD;
+
+	RECT rect = { 0, 0, 16, 16 };
+
+	if (npc->direct == 0)
+	{
+		if (npc->x < gMC->x)
+			npc->x += 0x5FF;
+		else
+			npc->x -= 0x5FF;
+	}
+	else
+	{
+		if (npc->y < gMC->y)
+			npc->y += 0x5FF;
+		else
+			npc->y -= 0x5FF;
+	}
+
+	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
+		npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
+		npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
+		npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+	{
+		// Do Camera Offset
+		SetFrameTargetMyCharOffset(wait, 0, camera_x_offset, camera_y_offset);
+
+		// Set locked camera direction if the flag is set
+		if (npc->bits & NPC_CUSTOM_FLAG)
+		{
+			is_direction_locked = true;
+			lock_direction = lock_cam_dir;
+		}
+
+		// Reset locked camera direction if the flag isnt set
+		if (!(npc->bits & NPC_CUSTOM_FLAG))
+		{
+			is_direction_locked = false;
+			lock_direction = 0;
+		}
+	}
+
+	npc->rect = rect;
+}
+
+// Camera Target Trigger (Coordinate)
+void ActEntity458(NPCHAR* npc)
+{
+	int camera_x_coordinate = 0;
+	int camera_y_coordinate = 0;
+	int wait = 16;
+
+	if (CustomNpcValues(npc).CustomValueA != 0)
+		camera_x_coordinate = CustomNpcValues(npc).CustomValueA;
+
+	if (CustomNpcValues(npc).CustomValueB != 0)
+		camera_y_coordinate = CustomNpcValues(npc).CustomValueB;
+
+	if (CustomNpcValues(npc).CustomValueC != 0)
+		wait = CustomNpcValues(npc).CustomValueC;
+
+	RECT rect = { 0, 0, 16, 16 };
+
+	if (npc->direct == 0)
+	{
+		if (npc->x < gMC->x)
+			npc->x += 0x5FF;
+		else
+			npc->x -= 0x5FF;
+	}
+	else
+	{
+		if (npc->y < gMC->y)
+			npc->y += 0x5FF;
+		else
+			npc->y -= 0x5FF;
+	}
+
+	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
+		npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
+		npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
+		npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+	{
+		// Do Camera Target
+		SetFrameTargetCoordinate(wait, camera_x_coordinate * 0x200 * 0x10, camera_y_coordinate * 0x200 * 0x10);
 	}
 
 	npc->rect = rect;

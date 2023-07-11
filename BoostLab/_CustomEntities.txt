@@ -2,13 +2,14 @@ Ask the Cave Story Modding Community discord if you're confused about anything h
 
 Note: There are new custom values for certain entities, making them more customizable!
 [ If a custom value is set to 0, it will have a default value in most cases. ]
+[ You can set custom values for entities to be negative without using symbols! ]
 
 #361 -> Booster Refill
 Refills the players Booster Fuel when touched. If Alt Direction is set, then it will set your fuel to 0.
 
 Custom Values available:
-A - How much fuel is given when touched (Default is 50)
-B - How many frames until it respawns (Default is 50)
+A - How much fuel is given when touched. (Default is 50)
+B - How many frames until it respawns. (Default is 50)
 C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
 
 #362 -> Lock-On Trigger
@@ -17,11 +18,11 @@ Homes in towards the player in both X/Y directions.
 Custom Values available:
 
 A - How fast the trigger is. (Default is 1535)
-B - The Top Left X coordinate of the RECT (Default is 0)
-C - The Top Left Y coordinate of the RECT (Default is 0)
-D - The Bottom Right X coordinate of the RECT (Default is 16)
-E - The Bottom Right Y coordinate of the RECT (Default is 16)
-F - The Surface the npc uses (Default is the one set in npc.tbl)
+B - The Top Left X coordinate of the RECT. (Default is 0)
+C - The Top Left Y coordinate of the RECT. (Default is 0)
+D - The Bottom Right X coordinate of the RECT. (Default is 16)
+E - The Bottom Right Y coordinate of the RECT. (Default is 16)
+F - The Surface the npc uses. (Default is the one set in npc.tbl)
 
 #363 -> 2-Way Trigger
 Runs entity event X when going inside the trigger from 1 direction, and runs entity event X + 10 if coming from the other.
@@ -39,16 +40,16 @@ Forces the player to explode upon impact, no matter their HP or I-Frames.
 Forces the player to boost hozizontally even if they dont have a booster, with no means of stopping. By default it goes left, Alt Direction makes it go right.
 
 Custom Values available:
-A - How much fuel the forced boost has (Default is 50)
-B - How long until this forced boost respawns (Default is 50)
+A - How much fuel the forced boost has. (Default is 50)
+B - How long until this forced boost respawns. (Default is 50)
 C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
 
 #368 -> Forced Booster (Vertical)
 Forces the player to boost vertically even if they dont have a booster, with no means of stopping. By default it goes up, Alt Direction makes it go down.
 
 Custom Values available:
-A - How much fuel the forced boost has (Default is 50)
-B - How long until this forced boost respawns (Default is 50)
+A - How much fuel the forced boost has. (Default is 50)
+B - How long until this forced boost respawns. (Default is 50)
 C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
 
 #369 -> Flag Trigger
@@ -65,24 +66,24 @@ Focuses the camera on the entity within a set radius, and unfocuses the camera w
 Using <ANP to set the entity to state 1 will delete the entity and set the cameras focus back to the player.
 
 Custom Values available:
-A - Radius on the X axis in tiles to focus the camera (Default is 5)
-B - Radius on the Y axis in tiles to focus the camera (Default is 5)
+A - Radius on the X axis in tiles to focus the camera. (Default is 5)
+B - Radius on the Y axis in tiles to focus the camera. (Default is 5)
 
 #372 -> Transport Trigger
 Does the equivalent of a <KEY<MM0<FAOxxxx<TRA, except without any scripting. Note you will still need to run an event at the destination map.
 
 Custom Values available:
-A - The map to transport to
-B - The event in the destination map to run
-C - The X coordinate to spawn at in the destination map
-D - The Y coordinate to spawn at in the destination map
+A - The map to transport to.
+B - The event in the destination map to run.
+C - The X coordinate to spawn at in the destination map.
+D - The Y coordinate to spawn at in the destination map.
 E - The direction in which the Fade should occur. Anything above 4 will result in no fade occuring.
 
 #373 -> Energy Capsule (Custom)
 Same as Entity #253 (EXP Capsule), except it uses Custom Value A for the amount of experience instead of the Flag ID.
 
 Custom Values available:
-A - Amount of experience dropped (Default is 10)
+A - Amount of experience dropped. (Default is 10)
 
 #374 through #377 -> Customiable Fan
 Same as Entities 96 - 99, except the speed given to the player is customizable.
@@ -100,14 +101,14 @@ A - The direction the spikes face.
 Same as Entity #330 (Rolling), except it uses Custom Values for its speed.
 
 Custom Values available:
-A - The acceleration speed of the rolling (Default is 64)
-B - The max speed of the rolling (Default is 1024)
+A - The acceleration speed of the rolling. (Default is 64)
+B - The max speed of the rolling. (Default is 1024)
 
 #380 -> Acid Drop Generator (Custom)
 Same as Entity #245 (Acid Generator), except it uses Custom Value A for the wait time between drops.
 
 Custom Values available:
-A - Wait time between drops (Default is 0)
+A - Wait time between drops. (Default is 0)
 
 #381 through #428 - Custom Vanilla NPCs
 These are clones of the NPC code from the vanilla game, but all in 1 globally loaded spritesheet (NpcAutumnChar), and you can add more sprites infinitely to the file using Custom Value 01, similar to <MIM.
@@ -125,16 +126,16 @@ A - Move the sprite down however many pixels neccessary for the sprite in questi
 Gives the player an extra jump in the air.
 
 Custom Values available:
-A - How many jumps the jump arrow gives you (Default is 1)
-B - How many frames until it respawns (Default is 50)
+A - How many jumps the jump arrow gives you. (Default is 1)
+B - How many frames until it respawns. (Default is 50)
 C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
 
 #449 - Rewind Refill
 When touched, it does nothing. After the refills cooldown is up, however, it will move the players X/Y position back to the entities X/Y position
 
 Custom Values available:
-A - The cooldown for the object to rewind the player back to the entities X:Y position (Default is 150
-B - The cooldown for the object to be collected again after the player is returned to the entity, or if the room is just entered (Default is 50)
+A - The cooldown for the object to rewind the player back to the entities X:Y position. (Default is 150
+B - The cooldown for the object to be collected again after the player is returned to the entity, or if the room is just entered. (Default is 50)
 C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
 
 #450 - Conveyor
@@ -150,10 +151,10 @@ Custom Values available:
 A - The sprite to use for the wall booster.
 
 Sprite Table:
-0 - 1 Tile tall
-1 - Top Portion of wall booster
-2 - Middle Portion of wall booster
-3 - Bottom Portion of wall booster
+0 - 1 Tile tall.
+1 - Top Portion of wall booster.
+2 - Middle Portion of wall booster.
+3 - Bottom Portion of wall booster.
 
 #452 - Ice Wall [ Only when MyChar walljumping is enabled ]
 You will not slide down walls, and you aren't able to walljump off of these.
@@ -162,32 +163,61 @@ Custom Values available:
 A - The sprite to use for the ice wall.
 
 Sprite Table:
-0 - 1 Tile tall
-1 - Top Portion of ice wall
-2 - Middle Portion of ice wall
-3 - Bottom Portion of ice wall
+0 - 1 Tile tall.
+1 - Top Portion of ice wall.
+2 - Middle Portion of ice wall.
+3 - Bottom Portion of ice wall.
 
 #453 - Spring
 Bounces the player upwards with lots of momentum.
 
 Custom Values availble:
-A - Starting Y momentum (How much Y momentum the spring gives at the start, Default is 1535)
-B - Added Y momentum (How much Y momentum is given to the player for the first 3 frames of the springs animation, Default is 1535)
+A - Starting Y momentum. (How much Y momentum the spring gives at the start, Default is 1535)
+B - Added Y momentum. (How much Y momentum is given to the player for the first 3 frames of the springs animation, Default is 1535)
 
 #454 - Spring (Left)
 Bounces the player to the left with lots of momentum.
 
 Custom Values available:
-A - Starting X momentum (How much X momentum the spring gives at the start, Default is 336)
-B - Starting Y momentum (How much Y momentum the spring gives at the start, Default is 1024)
-C - Added X momentum (How much X momentum is given to the player for the first 2 frames of the springs animation, Default is 144)
-D - Added Y momentum (How much Y momentum is given to the player for the first 3 frames of the springs animation, Default is 32)
+A - Starting X momentum. (How much X momentum the spring gives at the start, Default is 336)
+B - Starting Y momentum. (How much Y momentum the spring gives at the start, Default is 1024)
+C - Added X momentum. (How much X momentum is given to the player for the first 2 frames of the springs animation, Default is 144)
+D - Added Y momentum. (How much Y momentum is given to the player for the first 3 frames of the springs animation, Default is 32)
 
 #455 - Spring (Right)
 Bounces the player to the right with lots of momentum.
 
 Custom Values available:
-A - Starting X momentum (How much X momentum the spring gives at the start, Default is 336)
-B - Starting Y momentum (How much Y momentum the spring gives at the start, Default is 1024)
-C - Added X momentum (How much X momentum is given to the player for the first 2 frames of the springs animation, Default is 144)
-D - Added Y momentum (How much Y momentum is given to the player for the first 3 frames of the springs animation, Default is 32)
+A - Starting X momentum. (How much X momentum the spring gives at the start, Default is 336)
+B - Starting Y momentum. (How much Y momentum the spring gives at the start, Default is 1024)
+C - Added X momentum. (How much X momentum is given to the player for the first 2 frames of the springs animation, Default is 144)
+D - Added Y momentum. (How much Y momentum is given to the player for the first 3 frames of the springs animation, Default is 32)
+
+#456 - Player Matcher (Offset)
+Same as Entity 364, but you can offset it from the players position using Custom Values.
+
+Custom Values available:
+A - X offset in amount of tiles.
+B - Y offset in amount of tiles.
+
+#457 - Camera Offset Trigger
+Offset the cameras position targeting the Player. Use the "Unused / Custom" npc flag to lock the camera direction.
+
+Locked Camera Direction:
+The way the locked camera direction works is simple. If you lock the direction horizontally (direction 0/2), you wont be able to force the camera left or right, but you can still look up/down.
+It's the same way for setting the camera to be locked in a vertical direction (direction 1/3), you wont be able to force the camera up or down, but you can still look left/right.
+
+Custom Values available:
+
+A - X offset in amount of tiles.
+B - Y offset in amount of tiles.
+C - How many frames it takes for the camera to move. (Default is 16)
+D - Locked Camera Direction [If Unused/Custom flag is set] (Default is 0)
+
+#458 - Camera Target Trigger (X:Y, Coordinates)
+Target the Camera to specific coordinates when the player comes in contact with the trigger.
+
+Custom Values available:
+A - X coordinate to target.
+B - Y coordinate to target.
+C - How many frames it takes for the camera to move. (Default is 16)

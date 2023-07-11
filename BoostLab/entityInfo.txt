@@ -461,3 +461,5 @@
 #454	Spring	Left	Spring (Left)	1792:0:1824:32	Read Custom Entities txt file.	;
 #455	Spring	Right	Spring (Right)	1984:0:2016:32	Read Custom Entities txt file.	;
 #456	Match	Offset	Player Match (Offset)	0:0:0:0	This entity has not yet been defined	;
+#457	CamOffset	Trigger	Camera Offset Trigger	0:0:0:0	This entity has not yet been defined	;
+#458	CamCoord	Trigger	Camera Target Trigger (X:Y)	0:0:0:0	This entity has not yet been defined	;
