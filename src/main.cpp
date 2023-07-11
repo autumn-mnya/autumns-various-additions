@@ -32,6 +32,7 @@ bool setting_enable_surfaces = true;
 bool setting_enable_sound_effect_code = false;
 bool setting_enable_entity = true;
 bool setting_enable_mychar = true;
+bool setting_enable_ui = true;
 bool setting_enable_tilecollision = true;
 bool setting_enable_text_script_code = true;
 bool setting_enable_pause_screen = false;
@@ -84,6 +85,7 @@ void InitMod_Settings()
 	setting_enable_sound_effect_code = ModLoader_GetSettingBool("Enable Custom Sound Effect Code", true);
 	setting_enable_entity = ModLoader_GetSettingBool("Enable Custom Entity Code", true);
 	setting_enable_mychar = ModLoader_GetSettingBool("Enable Custom MyChar Code", true);
+	setting_enable_ui = ModLoader_GetSettingBool("Enable Custom UI Code", true);
 	setting_enable_tilecollision = ModLoader_GetSettingBool("Enable Custom Tileset Code", true);
 	setting_enable_text_script_code = ModLoader_GetSettingBool("Enable Custom TSC Code", true);
 	setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
@@ -109,6 +111,17 @@ void InitMod_Settings()
 	// Extra Jumps
 	setting_extrajump_jump_height = ModLoader_GetSettingInt("Extra Jump Momentum", 1280);
 	setting_extrajump_water_jump_height = ModLoader_GetSettingInt("Underwater Extra Jump Momentum", 640);
+
+	// Extra Jump UI
+	setting_jump_arrow_x_offset = ModLoader_GetSettingInt("Jump Arrow UI X Offset", 4);
+	setting_jump_arrow_y_offset = ModLoader_GetSettingInt("Jump Arrow UI Y Offset", 20);
+
+	// Extra Jump Limit
+	setting_max_jump_arrow_display = ModLoader_GetSettingInt("Jump Arrow UI Limit", 5);
+
+	// Extra Jump UI (Negative/Positive)
+	setting_jump_arrow_x_offset_negative = ModLoader_GetSettingBool("Jump Arrow X Offset is negative", true);
+	setting_jump_arrow_y_offset_negative = ModLoader_GetSettingBool("Jump Arrow Y Offset is negative", true);
 
 	// Double Jump
 	setting_doublejump_enabled = ModLoader_GetSettingBool("Double Jump Enabled", false);
@@ -195,7 +208,7 @@ void InitMod_PauseScreen()
 
 void InitMod_GameUI()
 {
-	// UI related things go here
+	ModLoader_WriteCall((void*)0x410683, (void*)Replacement_PutMyChar_Call);
 }
 
 void InitMod_ASMPatches()
@@ -242,13 +255,13 @@ void InitMod(void)
 	if (setting_enable_text_script_code)
 		InitMod_TSC();
 
-
+	if (setting_enable_ui)
+		InitMod_GameUI();
 
 	// debug testing hud
 	// ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);
 
 	/*
-	InitMod_GameUI();
 	InitMod_ASMPatches();
 	*/
 }

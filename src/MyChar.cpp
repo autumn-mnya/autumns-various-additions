@@ -60,6 +60,17 @@ int setting_running_speed = 1218;
 // Ice particles
 bool setting_ice_particles = true;
 
+// Jump Arrow Display Offsets
+int setting_jump_arrow_x_offset = 4;
+int setting_jump_arrow_y_offset = 20;
+
+// Jump Arrow is negative
+bool setting_jump_arrow_x_offset_negative = true;
+bool setting_jump_arrow_y_offset_negative = true;
+
+// Jump Arrow max display (Won't show anymore)
+int setting_max_jump_arrow_display = 5;
+
 int custom_camera_offset_x = 0;
 int custom_camera_offset_y = 0;
 int custom_index_x = 0;
@@ -69,6 +80,53 @@ int custom_tgt_y = 0;
 
 bool is_direction_locked = false;
 int lock_direction = 0;
+
+void PutPlayersJumps(int fx, int fy)
+{
+	RECT rcJumpArrow = { 0, 0, 8, 8 };
+
+	// Jank way of allowing negative/positive values in settings.ini
+	int jump_arrow_negative_x = -1;
+	int jump_arrow_negative_y = -1;
+
+	if (setting_jump_arrow_x_offset_negative == true)
+		jump_arrow_negative_x = -1;
+	else
+		jump_arrow_negative_x = 1;
+
+	// This is so fucked
+	if (setting_jump_arrow_y_offset_negative == true)
+		jump_arrow_negative_y = -1;
+	else
+		jump_arrow_negative_y = 1;
+
+	// Rect Changing
+	if (current_jumps >= 2)
+	{
+		// Only do change rect if you arent going above the max limit
+		if (!(current_jumps >= (setting_max_jump_arrow_display + 1)))
+		{
+			rcJumpArrow.top += 8 * (current_jumps - 1);
+			rcJumpArrow.bottom += 8 * (current_jumps - 1);
+		}
+
+		// Display final jump for the max display setting
+		if (current_jumps > setting_max_jump_arrow_display)
+		{
+			rcJumpArrow.top += 8 * (setting_max_jump_arrow_display - 1);
+			rcJumpArrow.bottom += 8 * (setting_max_jump_arrow_display - 1);
+		}
+	}
+
+	if (current_jumps >= 1)
+		PutBitmap3(&grcGame, (gMC->x / 0x200) + (setting_jump_arrow_x_offset * jump_arrow_negative_x) - (fx / 0x200), (gMC->y / 0x200) + (setting_jump_arrow_y_offset * jump_arrow_negative_y) - (fy / 0x200), &rcJumpArrow, SURFACE_ID_AUTUMN_HUD);
+}
+
+void Replacement_PutMyChar_Call(int fx, int fy)
+{
+	PutMyChar(fx, fy);
+	PutPlayersJumps(fx, fy);
+}
 
 void Replacement_SetMyCharPosition_InitStar_Call()
 {

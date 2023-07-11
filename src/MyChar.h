@@ -61,6 +61,14 @@ extern int setting_running_speed;
 
 extern bool setting_ice_particles;
 
+extern int setting_jump_arrow_x_offset;
+extern int setting_jump_arrow_y_offset;
+
+extern bool setting_jump_arrow_x_offset_negative;
+extern bool setting_jump_arrow_y_offset_negative;
+
+extern int setting_max_jump_arrow_display;
+
 extern int custom_camera_offset_x;
 extern int custom_camera_offset_y;
 extern int custom_index_x;
@@ -71,6 +79,7 @@ extern int custom_tgt_y;
 extern bool is_direction_locked;
 extern int lock_direction;
 
+void Replacement_PutMyChar_Call(int fx, int fy);
 void Replacement_SetMyCharPosition_InitStar_Call();
 void setPlayerPhysics(BOOL bKey, Physics* physics);
 void ActMyChar_Normal_Custom(BOOL bKey);
