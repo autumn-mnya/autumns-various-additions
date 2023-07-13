@@ -96,6 +96,7 @@
     <ClCompile Include="src\Frame.cpp" />
     <ClCompile Include="src\LoadPixtone.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\ModSettings.cpp" />
     <ClCompile Include="src\MyChar.cpp" />
     <ClCompile Include="src\PauseScreen.cpp" />
     <ClCompile Include="src\TextScript.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="src\Frame.h" />
     <ClInclude Include="src\LoadPixtone.h" />
     <ClInclude Include="src\Main.h" />
+    <ClInclude Include="src\ModSettings.h" />
     <ClInclude Include="src\MyChar.h" />
     <ClInclude Include="src\PauseScreen.h" />
     <ClInclude Include="src\TextScript.h" />

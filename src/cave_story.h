@@ -131,8 +131,8 @@
 
 // Hookspaces & Hookjumps
 
-#define TextScriptBuffer (*(char**)0x4A5AD8)
-#define CS_tsc_offset (*(unsigned int*)0x4A5AE0)
+#define TextScriptBuffer (*(char**)0x4A5AD8) // I renamed this one but you get the idea
+#define CS_tsc_offset (*(unsigned int*)0x4A5AE0) // gTS.p_read
 
 #define CSH_tsc_start (void*) 0x4225D5, 12
 #define CSH_tsc_end (void*) 0x425244, 12
