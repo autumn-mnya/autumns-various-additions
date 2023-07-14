@@ -93,7 +93,6 @@
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\EntityLoad.cpp" />
     <ClCompile Include="src\EntityTable.cpp" />
-    <ClCompile Include="src\ExternalTables.cpp" />
     <ClCompile Include="src\Frame.cpp" />
     <ClCompile Include="src\LoadPixtone.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -117,7 +116,6 @@
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\EntityLoad.h" />
     <ClInclude Include="src\EntityTable.h" />
-    <ClInclude Include="src\ExternalTables.h" />
     <ClInclude Include="src\Frame.h" />
     <ClInclude Include="src\LoadPixtone.h" />
     <ClInclude Include="src\Main.h" />

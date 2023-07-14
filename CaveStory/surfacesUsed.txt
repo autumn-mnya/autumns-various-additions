@@ -1,0 +1,15 @@
+Autumns Various Additions uses unused surfaces in the game.
+If an assembly hack attempts to touch an unused surface value.. Or another dll does, this will break.
+I only know of my Netplay dll that uses 2 surfaces, which i am keeping in mind.
+
+Anything listed as "UNUSED" isnt used by this dll. Anything listed as "AVA" is used by this dll.
+
+[ Free Surface List ]
+Surface 3 -> NETPLAY DLL
+Surface 4 -> NETPLAY DLL
+Surface 5 -> AVA (<IMG)
+Surface 7 -> UNUSED
+Surface 18 -> UNUSED
+Surface 25 -> AVA (Reskinnable Objects)
+Surface 38 -> AVA (Autumn Items)
+Surface 39 -> AVA (Reskinnable Characters)

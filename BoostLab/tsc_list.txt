@@ -39,7 +39,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	107
+[BL_TSC]	109
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -133,11 +133,13 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <ZAM	0	----	Zero ArMs	Sets all weapon energy to zero.	0	0	1	4	4	4	4
 <FM2	4	.###	Focus on Me 2	Focus on the PC in W ticks (Use W > 0), with Mode X (Check TSC command txt), with Offset Y:Z.	0	0	1	4	4	4	4
 <FN2	2	N.--	Focus on Npc 2	Same as <FON but the players direction can effect the Camera.	0	0	1	4	4	4	4
+<FNJ	2	Fe--	Flag Not Jump	Opposite of <FLJ. Jump to event X if flag W is not set.	0	0	1	4	4	4	4
 <FOC	3	.xy-	Focus On Coordinates	Focus on Coordinates X:Y in W ticks. Use W > 0.	0	0	1	4	4	4	4
 <LDR	2	#d--	Lock DiRection	Lock Direction when using <FM2 Camera (Check TSC command txt).	1	0	1	4	4	4	4
 <LSC	0	----	Load SCript	Load TSC script and run event 0 afterwards. Use $ at the end of the script name to mark the end of the text input.	0	0	1	4	4	4	4
 <ML-	1	#---	Max Life -	Decrease the current and maximum health by W.	0	0	1	4	4	4	4
 <RNJ	2	ee--	Random Number Jump	Jump to Random Event between W and X. Min to Max.	0	0	1	4	4	4	4
+<SNJ	2	Fe--	Skipflag Not Jump	Opposite of <SKJ. Jump to event X if skipflag W is not set.	0	0	1	4	4	4	4
 <SWN	0	----	Set Window Name	Set the games Window Name in TSC. Use $ at the end of the window name to mark the end of the text input.	0	0	1	4	4	4	4
 <TRM	4	mexy	TRansport Momentum	Same as <TRA but keep X/Y momentum between transition.	1	0	1	4	4	4	4
 <TRX	2	me--	TRansport keep X:y	Same as <TRA but cut out the last 2 arguments and keep X/Y position between transition. Somewhat buggy (Check TSC command txt).	1	0	1	4	4	4	4

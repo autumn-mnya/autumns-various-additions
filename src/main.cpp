@@ -15,7 +15,6 @@
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
-#include "ExternalTables.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "PauseScreen.h"
@@ -143,9 +142,6 @@ void InitMod(void)
 
 	if (setting_enable_savedata_code)
 		InitMod_SaveData();
-
-	if (setting_enable_write_tables)
-		InitMod_CreateTables();
 
 	// debug testing hud
 	// ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);

@@ -14,7 +14,6 @@
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
-#include "ExternalTables.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "PauseScreen.h"
@@ -51,7 +50,6 @@ void InitMod_Settings()
 	setting_enable_text_script_code = ModLoader_GetSettingBool("Enable Custom TSC Code", true);
 	setting_enable_savedata_code = ModLoader_GetSettingBool("Enable Custom Save Data Code", true);
 	setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
-	setting_enable_write_tables = ModLoader_GetSettingBool("Enable External Table Writing", false);
 
 	///////////////
 	// ASM Hacks //

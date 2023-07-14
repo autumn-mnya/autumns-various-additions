@@ -177,6 +177,26 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 
 		ModLoader_WriteCall((void*)strtol(address, NULL, 0x10), (void*)strtol(address2, NULL, 0x10));
 	}
+	else if (strncmp(where + 1, "FNJ", 3) == 0) // Flag Not Jump
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS->p_read + 9);
+
+		if (!(GetNPCFlag(x)))
+			JumpTextScript(z);
+		else
+			gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "SNJ", 3) == 0) // Skipflag Not Jump
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS->p_read + 9);
+
+		if (!(GetSkipFlag(x)))
+			JumpTextScript(z);
+		else
+			gTS->p_read += 13;
+	}
 	else
 		return 0;
 	

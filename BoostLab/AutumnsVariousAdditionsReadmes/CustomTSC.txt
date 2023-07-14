@@ -27,7 +27,7 @@ Arguments: 4 [<FM2wwww:zzzz:xxxx:yyyy] [wait:mode:x_offset:y_offset]
 
 - <LDR - Lock DiRection
 Only when <FM2 has been used -- This can lock the players direction they're facing.
-Arguments: 2 [<LDRxxxx:yyyy] [mode:direction]
+Arguments: 2 [<LDRwwww:zzzz] [mode:direction]
 
 ######################################
 #          Modes for <LDR            #
@@ -50,7 +50,11 @@ Example: <LSCPens1$
 
 - <FN2 - Focus on Npc 2
 Same as <FON, except the player can still effect the camera depending on where they're facing.
-Arguments: 2 [<FN2xxxx:yyyy] [npc:wait]
+Arguments: 2 [<FN2wwww:zzzz] [npc:wait]
+
+- <FNJ - Flag Not Jump
+Same as <FLJ, except it jumps to an event if the flag is NOT set.
+Arguments: 2 [<FNJwwww:zzzz] [flag:event]
 
 - <FOC - Focus On Coordinates
 Focus the Camera at an X:Y position on the map.
@@ -59,6 +63,10 @@ Arguments: 3 [<FOCwwww:xxxx:yyyy] [wait:x:y]
 - <RNJ - Random Number Jump
 Jump to a random event between W and Z.
 Arguments: 2 [<RNJwwww:zzzz] [event_min:event_max]
+
+- <SNJ - Skipflag Not Jump
+Same as <SKJ, except it jumps to an event if the skipflag is NOT set.
+Arguments: 2 [<SNJwwww:zzzz] [skipflag:event]
 
 - <SWN - Set Window Name
 Set the Window Name to a text string -- End the text string with a $ so the game knows to stop reading the text.
