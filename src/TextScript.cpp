@@ -17,6 +17,31 @@
 #include "EntityLoad.h"
 #include "Frame.h"
 #include "MyChar.h"
+#include "MycParam.h"
+
+char CustomWindowName[MAX_PATH] = "";
+char CustomScriptName[0x20] = "";
+
+void SetCustomWindowTitle(char* window_name)
+{
+	sprintf(window_name, "%s", window_name);
+	SetWindowTextA(ghWnd, window_name);
+}
+
+// JakeV wrote this in "TSC Extended"
+void GetTextScriptString(char returnData[])
+{
+	int i = 0;
+	while (gTS->data[gTS->p_read] != '$') {
+		returnData[i] = gTS->data[gTS->p_read];
+		gTS->p_read++;
+		i++;
+	}
+	//Insert the null terminator overtop the $
+	returnData[i] = '\0';
+	//Skip over the '$'
+	gTS->p_read++;
+}
 
 static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 {
@@ -26,7 +51,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	char* where = TextScriptBuffer + gTS->p_read;
 	if (where[0] != '<')
 		return 0;
-	if (strncmp(where + 1, "TRM", 3) == 0)
+	if (strncmp(where + 1, "TRM", 3) == 0) //TRansport Momentum
 	{
 		z = GetTextScriptNo(gTS->p_read + 4);
 		w = GetTextScriptNo(gTS->p_read + 9);
@@ -44,6 +69,19 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		// Restore player velocity
 		gMC->xm = xm;
 		gMC->ym = ym;
+	}
+	if (strncmp(where + 1, "TRX", 3) == 0) //TRansport keep X:Y (buggy)
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		w = GetTextScriptNo(gTS->p_read + 9);
+
+		int trx_x = gMC->x / 0x200 / 0x10;
+		int trx_y = gMC->y / 0x200 / 0x10;
+
+		if (!TransferStage(z, w, trx_x, trx_y))
+		{
+			return enum_ESCRETURN_exit;
+		}
 	}
 	else if (strncmp(where + 1, "FN2", 3) == 0) // Focus on Npc 2 (FON but with index_x and index_y in use?)
 	{
@@ -87,6 +125,57 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		z = GetTextScriptNo(gTS->p_read + 14);
 		SetFrameTargetCoordinate(x, y * 0x200 * 0x10, z * 0x200 * 0x10);
 		gTS->p_read += 18;
+	}
+	else if (strncmp(where + 1, "RNJ", 3) == 0) // Random Number Jump
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS->p_read + 9);
+		JumpTextScript(Random(x, z));
+	}
+	else if (strncmp(where + 1, "SWN", 3) == 0) // Set Window Name
+	{
+		gTS->p_read += 4;
+		memset(CustomWindowName, 0, sizeof(CustomWindowName));
+		GetTextScriptString(CustomWindowName);
+		SetCustomWindowTitle(CustomWindowName);
+	}
+	else if (strncmp(where + 1, "ML-", 3) == 0) // Max Life -
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		RemoveMaxLifeMyChar(z);
+		gTS->p_read += 8;
+	}
+	else if (strncmp(where + 1, "LSC", 3) == 0) // Load tsc SCript
+	{
+		char path[MAX_PATH];
+		char path_dir[20];
+
+		gTS->p_read += 4;
+		memset(CustomScriptName, 0, sizeof(CustomScriptName));
+		GetTextScriptString(CustomScriptName);
+
+		// Get path
+		strcpy(path_dir, "Stage");
+
+		sprintf(path, "%s\\%s.tsc", path_dir, CustomScriptName);
+
+		LoadTextScript_Stage(path);
+		JumpTextScript(0);
+	}
+	else if (strncmp(where + 1, "WCL", 3) == 0) // Write CaLl (Jank)
+	{
+		char address[8];
+		char address2[8];
+
+		gTS->p_read += 4;
+
+		memset(address, 0, sizeof(address));
+		memset(address2, 0, sizeof(address2));
+
+		GetTextScriptString(address);
+		GetTextScriptString(address2);
+
+		ModLoader_WriteCall((void*)strtol(address, NULL, 0x10), (void*)strtol(address2, NULL, 0x10));
 	}
 	else
 		return 0;

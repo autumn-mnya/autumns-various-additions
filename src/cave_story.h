@@ -898,7 +898,7 @@ typedef struct VALUEVIEW
 typedef void (*NPCFUNCTION)(NPCHAR*);
 
 static ARMS* gArmsData = (ARMS*)0x499BC8;
-static ARMS_LEVEL* gArmsLevelTable = (ARMS_LEVEL*)0x493660;
+static ARMS_LEVEL(&gArmsLevelTable)[14] = *(ARMS_LEVEL(*)[14])0x493660;
 static BULLET(&gBul)[BULLET_MAX] = *(BULLET(*)[BULLET_MAX])0x499C98;
 static BULLET_TABLE* gBulTbl = (BULLET_TABLE*)0x48F044;
 static NPCHAR(&gBoss)[BOSS_MAX] = *(NPCHAR(*)[BOSS_MAX])0x4BBA58;
@@ -1260,7 +1260,7 @@ static void (* const ChangeDramPan)(unsigned char pan, signed char track) = (voi
 static void (* const ChangeDramVolume)(long volume, signed char track) = (void(*)(long, signed char))0x41B4D0;
 static void (* const PlayDramObject)(unsigned char key, int mode, signed char track) = (void(*)(unsigned char, int, signed char))0x41B510;
 
-// These classes aren't implemented, as I, Kaitlyn, don't know how to implement them.
+// These classes aren't implemented, as I, Autumn, don't know how to implement them.
 // OrgData::OrgData - 0x41B600
 
 // OrgData::InitOrgData - 0x41B650
@@ -1828,3 +1828,23 @@ static void (* const ActBossChar_03_02)(NPCHAR* npc) = (void(*)(NPCHAR*))0x48009
 static void (* const ActBossChar_03_03)(NPCHAR* npc) = (void(*)(NPCHAR*))0x4802A0;
 static void (* const ActBossChar_03_04)(NPCHAR* npc) = (void(*)(NPCHAR*))0x480550;
 static void (* const ActBossChar_03_face)(NPCHAR* npc) = (void(*)(NPCHAR*))0x4808C0;
+// Freeware Functions
+const auto Freeware_memset = reinterpret_cast<void* (*)(void*, int, size_t)>(0x480D30);
+const auto Freeware_fclose = reinterpret_cast<int(*)(FILE*)>(0x480E1B);
+const auto Freeware_fread = reinterpret_cast<size_t(*)(void*, size_t, size_t, FILE*)>(0x480F55);
+const auto Freeware_fopen = reinterpret_cast<FILE * (*)(const char*, const char*)>(0x480FFD);
+const auto Freeware_sprintf = reinterpret_cast<int(*)(char*, const char*, ...)>(0x481010);
+const auto Freeware_strcmp = reinterpret_cast<int(*)(const char*, const char*)>(0x481070);
+const auto Freeware_strcpy = reinterpret_cast<char* (*)(char*, const char*)>(0x481100);
+const auto Freeware_strcat = reinterpret_cast<char* (*)(char*, const char*)>(0x481110);
+const auto Freeware_strlen = reinterpret_cast<size_t(*)(const char*)>(0x481200);
+const auto Freeware_free = reinterpret_cast<void(*)(void*)>(0x48128B);
+const auto Freeware_malloc = reinterpret_cast<void* (*)(size_t)>(0x4813A3);
+const auto Freeware_memcpy = reinterpret_cast<void* (*)(void*, const void*, size_t)>(0x4813C0);
+const auto Freeware_srand = reinterpret_cast<void(*)(unsigned)>(0x4816FD);
+const auto Freeware_rand = reinterpret_cast<int(*)(void)>(0x48170A);
+const auto Freeware_memcmp = reinterpret_cast<int(*)(const void*, const void*, size_t)>(0x481730);
+const auto Freeware_sscanf = reinterpret_cast<int(*)(const char*, const char*, ...)>(0x4817E8);
+const auto Freeware_fprintf = reinterpret_cast<int(*)(FILE*, const char*, ...)>(0x48181C);
+const auto Freeware_fwrite = reinterpret_cast<int(*)(void*, size_t, size_t, FILE*)>(0x481981);
+const auto Freeware_fseek = reinterpret_cast<int(*)(FILE*, int, int)>(0x481A5C);

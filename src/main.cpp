@@ -15,9 +15,11 @@
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
+#include "ExternalTables.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "PauseScreen.h"
+#include "Profile.h"
 #include "TextScript.h"
 #include "TileCollisionBoss.h"
 #include "TileCollisionBullet.h"
@@ -79,6 +81,14 @@ void InitMod_PauseScreen()
 	ModLoader_WriteJump((void*)0x40DD70, (void*)Call_Pause);
 }
 
+void InitMod_SaveData()
+{
+	ModLoader_WriteCall((void*)0x41D213, (void*)Replacement_SaveProfile_LastMemcpy_Call);
+	ModLoader_WriteCall((void*)0x41D22D, (void*)Replacement_SaveProfile_fwrite_Call);
+	ModLoader_WriteCall((void*)0x41D353, (void*)Replacement_LoadProfile_fclose_Call);
+	ModLoader_WriteCall((void*)0x41D508, (void*)Replacement_LoadProfile_ClearFade_Call);
+}
+
 void InitMod_GameUI()
 {
 	ModLoader_WriteCall((void*)0x410683, (void*)Replacement_PutMyChar_Call);
@@ -130,6 +140,12 @@ void InitMod(void)
 
 	if (setting_enable_ui)
 		InitMod_GameUI();
+
+	if (setting_enable_savedata_code)
+		InitMod_SaveData();
+
+	if (setting_enable_write_tables)
+		InitMod_CreateTables();
 
 	// debug testing hud
 	// ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);

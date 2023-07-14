@@ -5,7 +5,7 @@
 #include <string.h>
 #include <string>
 
-#include "LoadPixtone.h"
+#include "Frame.h"
 
 #include "cave_story.h"
 #include "main.h"

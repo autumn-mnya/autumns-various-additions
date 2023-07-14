@@ -1,0 +1,8 @@
+Autumns Various Additions is incompatible with the following ASM hacks:
+
+[ MyChar Hacks (When TSC MyChar is enabled)]
+-<PHY (When the MyChar code is enabled)
+
+[ TSC Command Hacks (When TSC Code is enabled)]
+-<TRM/<TRX (This is included in the custom TSC by default)
+-<RNJ (This is included in the custom TSC by default)

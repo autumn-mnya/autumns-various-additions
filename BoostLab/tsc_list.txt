@@ -35,8 +35,11 @@ TSC List revised by Jackalope and Lace
 Format:
 [command name, starts with <]	[number of arguments]	[parameter types, shown above]	[command name]	[command description] [1 if command ends event, 0 otherwise]	[1 if command clears textbox, 0 otherwise]	[1 if args are seperated, 0 otherwise]	[length of each parameter]
 
+Autumn's Various Additions version of Booster's Lab also includes other custom TSC commands from other DLLs / Assembly hacks.
+They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
+
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	91
+[BL_TSC]	107
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -121,10 +124,27 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <TAM	3	aaA-	Trade ArMs	Trade weapon W for weapon X and set max ammo to Y. Use 0000 to keep the same amount of ammo.	0	0	1	4	4	4	4
 <TRA	4	mexy	TRAnsport	Travel to map W, run event X, and move the PC to coordinates Y:Z.	1	0	1	4	4	4	4
 <TUR	0	----	Text UnRead?	Instantly display text. Use after a <MSG/2/3; works until another <MSG/2/3 or an <END.	0	0	1	4	4	4	4
-<UNI	1	#---	UNIverse?	Set character movement type. Use 0000 for normal, 0001 for zero-G and 0002 to disallow movement.	0	0	1	4	4	4	4
-<UNJ	2	#e--	UNiverse Jump	Jump to event X if movement is of type W (0000 for normal, 0001 for zero-G).	0	0	1	4	4	4	4
+<UNI	1	#---	UNIt	Set character movement type. Use 0000 for normal, 0001 for zero-G and 0002 to disallow movement.	0	0	1	4	4	4	4
+<UNJ	2	#e--	UNit Jump	Jump to event X if movement is of type W (0000 for normal, 0001 for zero-G).	0	0	1	4	4	4	4
 <WAI	1	.---	WAIt	Pause script for W ticks.	0	0	1	4	4	4	4
 <WAS	0	----	WAit until Standing	Pause script until character is on ground.	0	0	1	4	4	4	4
 <XX1	1	l---	XX1	Show the island falling in manner W. Use 0000 to have it crash and 0001 to have it stop midway.	0	0	1	4	4	4	4
 <YNJ	1	e---	Yes/No Jump	Prompt Yes/No; jump to event W if No is selected.	0	0	1	4	4	4	4
 <ZAM	0	----	Zero ArMs	Sets all weapon energy to zero.	0	0	1	4	4	4	4
+<FM2	4	.###	Focus on Me 2	Focus on the PC in W ticks (Use W > 0), with Mode X (Check TSC command txt), with Offset Y:Z.	0	0	1	4	4	4	4
+<FN2	2	N.--	Focus on Npc 2	Same as <FON but the players direction can effect the Camera.	0	0	1	4	4	4	4
+<FOC	3	.xy-	Focus On Coordinates	Focus on Coordinates X:Y in W ticks. Use W > 0.	0	0	1	4	4	4	4
+<LDR	2	#d--	Lock DiRection	Lock Direction when using <FM2 Camera (Check TSC command txt).	1	0	1	4	4	4	4
+<LSC	0	----	Load SCript	Load TSC script and run event 0 afterwards. Use $ at the end of the script name to mark the end of the text input.	0	0	1	4	4	4	4
+<ML-	1	#---	Max Life -	Decrease the current and maximum health by W.	0	0	1	4	4	4	4
+<RNJ	2	ee--	Random Number Jump	Jump to Random Event between W and X. Min to Max.	0	0	1	4	4	4	4
+<SWN	0	----	Set Window Name	Set the games Window Name in TSC. Use $ at the end of the window name to mark the end of the text input.	0	0	1	4	4	4	4
+<TRM	4	mexy	TRansport Momentum	Same as <TRA but keep X/Y momentum between transition.	1	0	1	4	4	4	4
+<TRX	2	me--	TRansport keep X:y	Same as <TRA but cut out the last 2 arguments and keep X/Y position between transition. Somewhat buggy (Check TSC command txt).	1	0	1	4	4	4	4
+<WCL	0	----	Write CaLl	Replace function call A with function call B (Check TSC command txt).	0	0	1	4	4	4	4
+<CEV	1	#---	Change fmod EVent	[FMOD DLL] Change FMod Event to group W. Use this before trying to play something that isn't in the default Music group.	0	0	1	4	4	4	4
+<CVP	0	----	Change fmod eVent Parameter	[FMOD DLL] Change FMod Event Parameter <EVP will modify. Use $ at the end of the parameter name to mark the end of the text input.	0	0	1	4	4	4	4
+<EVP	1	#---	fmod EVent Parameter	[FMOD DLL] Set FMod Event Parameter (Parameter name set by <CVP) to W.	0	0	1	4	4	4	4
+<PEV	0	----	Play fmod EVent	[FMOD DLL] Play FMod Event. Use $ at the end of the event name to mark the end of the text input.	0	0	1	4	4	4	4
+<SEV	1	#---	Stop fmod EVent	[FMOD DLL] Stop FMod Event in group W. Use 0 for the default Music group.	0	0	1	4	4	4	4
+<MIM	1	#---	MIMiga mask	[MIM ASM Hack] Move the MyChar spritesheet down by 32 pixels. Incompatible with player resize hacks. 	0	0	1	4	4	4	4

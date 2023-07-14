@@ -14,6 +14,7 @@
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
+#include "ExternalTables.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "PauseScreen.h"
@@ -31,6 +32,7 @@ bool setting_enable_mychar = true;
 bool setting_enable_ui = true;
 bool setting_enable_tilecollision = true;
 bool setting_enable_text_script_code = true;
+bool setting_enable_savedata_code = true;
 bool setting_enable_pause_screen = false;
 
 // For settings related things, this function will be used.
@@ -47,7 +49,9 @@ void InitMod_Settings()
 	setting_enable_ui = ModLoader_GetSettingBool("Enable Custom UI Code", true);
 	setting_enable_tilecollision = ModLoader_GetSettingBool("Enable Custom Tileset Code", true);
 	setting_enable_text_script_code = ModLoader_GetSettingBool("Enable Custom TSC Code", true);
+	setting_enable_savedata_code = ModLoader_GetSettingBool("Enable Custom Save Data Code", true);
 	setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
+	setting_enable_write_tables = ModLoader_GetSettingBool("Enable External Table Writing", false);
 
 	///////////////
 	// ASM Hacks //

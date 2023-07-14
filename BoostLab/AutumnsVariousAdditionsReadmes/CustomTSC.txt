@@ -1,0 +1,72 @@
+The "Autumns Various Additions" dll adds various new TSC commands into the game. They are explained better here!
+
+# TSC Commands #
+
+- <TRM - TRansport Momentum
+
+This TSC command is the same as <TRA, except you maintain your momentum when used. It was used in Autumn's mod "Bliss".
+Arguments: 4 [<TRMwwww:zzzz:xxxx:yyyy] [map:event:x:y]
+
+- <TRX - TRansport keep X:y
+This TSC command is the same as <TRA except is preserves the players X:Y position. You need to be closer to the center of the hitbox of whatever you're interacting with to get it to properly work, as this is somewhat buggy.
+Arguments: 2 [<TRMwwww:zzzz] [map:event]
+
+- <FM2 - Focus on Me 2
+
+This TSC command allows you to focus the camera on the player with a custom offset!
+The 2nd argument is a custom "mode" field. It is explained below.
+Arguments: 4 [<FM2wwww:zzzz:xxxx:yyyy] [wait:mode:x_offset:y_offset]
+
+########################################
+#            Modes for <FM2            #
+# 0 - X/Y offset are positive values   #
+# 1 - X offset is a negative value     #
+# 2 - Y offset is a negative value     #
+# 3 - Both offsets are negative values #
+########################################
+
+- <LDR - Lock DiRection
+Only when <FM2 has been used -- This can lock the players direction they're facing.
+Arguments: 2 [<LDRxxxx:yyyy] [mode:direction]
+
+######################################
+#          Modes for <LDR            #
+# 0 - Unlock the Camera              #
+# 1 - Lock the Camera in direction Y #
+######################################
+#        Directions for <LDR         #
+# 0 - Lock the Camera Leftwards      #
+# 1 - Lock the Camera Upwards        #
+# 2 - Lock the Camera Rightwards     #
+# 3 - Lock the Camera Downwards      #
+# 4 - Player Can't Impact Direction  #
+######################################
+
+- <LSC - Load SCript
+Load TSC Script and run event 0 afterwards. -- End the text string with a $ so the game knows to stop reading the text.
+Arguments: 1 [<LSCstring$] [string$]
+Example: <LSCPens1$
+( The above will load Pens1.tsc )
+
+- <FN2 - Focus on Npc 2
+Same as <FON, except the player can still effect the camera depending on where they're facing.
+Arguments: 2 [<FN2xxxx:yyyy] [npc:wait]
+
+- <FOC - Focus On Coordinates
+Focus the Camera at an X:Y position on the map.
+Arguments: 3 [<FOCwwww:xxxx:yyyy] [wait:x:y]
+
+- <RNJ - Random Number Jump
+Jump to a random event between W and Z.
+Arguments: 2 [<RNJwwww:zzzz] [event_min:event_max]
+
+- <SWN - Set Window Name
+Set the Window Name to a text string -- End the text string with a $ so the game knows to stop reading the text.
+Arguments: 1 [<SWNstring$] [string$]
+Example: <SWNCave Story ~ Doukutsu Monogatari$
+
+- <WCL - Write CaLl
+Write a function call at address A to address B -- 2 text strings back-to-back, both ending with a $. The function address is a *hex value*.
+Arguments: 2 [<WCLstring$cstring2$] [string$string2$]
+Example: <WCL423DE9$401000$
+( The above will replace <CSS with the "ClearArmsData" function )
