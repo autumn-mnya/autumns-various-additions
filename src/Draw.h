@@ -14,6 +14,7 @@ void Replacement_StageImageSurfaceCall(int x, int y, int s, BOOL b);
 void LoadTSC_Image(char* name);
 void Replacement_ModeOpening_SetFadeMask_Call();
 void Replacement_ModeTitle_InitStar_Call();
+void Replacement_LoadProfile_ClearFade_Call();
 void Replacement_InitializeGame_ClearArmsData_Call();
 void Replacement_ModeOpening_PutTextScript_Call();
 void Replacement_ModeAction_PutTextScript_Call();

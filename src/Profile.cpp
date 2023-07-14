@@ -59,13 +59,6 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 	strcpy(TSC_IMG_Folder, profile.imgFolder);
 }
 
-// 0x41D508
-void Replacement_LoadProfile_ClearFade_Call()
-{
-	// Continue as per usual
-	ClearFade();
-}
-
 /*
  -- SaveProfile memcpy
 

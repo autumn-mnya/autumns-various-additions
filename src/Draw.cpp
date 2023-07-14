@@ -84,6 +84,12 @@ void Replacement_ModeTitle_InitStar_Call()
 	ResetTSC_Image();
 }
 
+void Replacement_LoadProfile_ClearFade_Call()
+{
+	ResetTSC_Image();
+	ClearFade();
+}
+
 void Replacement_InitializeGame_ClearArmsData_Call()
 {
 	ClearArmsData();

@@ -85,7 +85,6 @@ void InitMod_SaveData()
 	ModLoader_WriteCall((void*)0x41D213, (void*)Replacement_SaveProfile_LastMemcpy_Call);
 	ModLoader_WriteCall((void*)0x41D22D, (void*)Replacement_SaveProfile_fwrite_Call);
 	ModLoader_WriteCall((void*)0x41D353, (void*)Replacement_LoadProfile_fclose_Call);
-	ModLoader_WriteCall((void*)0x41D508, (void*)Replacement_LoadProfile_ClearFade_Call);
 }
 
 void InitMod_GameUI()
@@ -97,6 +96,7 @@ void InitMod_TSCImage()
 {
 	ModLoader_WriteCall((void*)0x40F778, (void*)Replacement_ModeOpening_SetFadeMask_Call);
 	ModLoader_WriteCall((void*)0x40FD80, (void*)Replacement_ModeTitle_InitStar_Call);
+	ModLoader_WriteCall((void*)0x41D508, (void*)Replacement_LoadProfile_ClearFade_Call);
 	ModLoader_WriteCall((void*)0x41D576, (void*)Replacement_InitializeGame_ClearArmsData_Call);
 	ModLoader_WriteCall((void*)0x40F91F, (void*)Replacement_ModeOpening_PutTextScript_Call); // Mode Opening
 	ModLoader_WriteCall((void*)0x41086F, (void*)Replacement_ModeAction_PutTextScript_Call); // Mode Action
