@@ -477,13 +477,13 @@ struct DIRECTINPUTSTATUS
 
 // Mapping
 
-typedef struct MAP_DATA
+struct MAPDATA
 {
 	unsigned char* data;
-	unsigned char atrb[0x100];
+	unsigned char atrb[0x101];
 	short width;
 	short length;
-} MAP_DATA;
+};
 
 // Map Name
 
@@ -912,7 +912,7 @@ static CARET_TABLE* gCaretTable = (CARET_TABLE*)0x48F830;
 static FADE* gFade = (FADE*)0x49DB30;
 static FRAME* gFrame = (FRAME*)0x49E1C8;
 static ITEM* gItemData = (ITEM*)0x499B40;
-static MAP_DATA* gMap = (MAP_DATA*)0x49E480;
+static MAPDATA(&gMap) = *(MAPDATA(*))0x49E480;
 static MYCHAR* gMC = (MYCHAR*)0x49E638;
 static NPCHAR(&gNPC)[NPC_MAX] = *(NPCHAR(*)[512])0x4A6220;
 static NPC_TABLE** gNpcTable = (NPC_TABLE**)0x4BBA34;
@@ -1046,7 +1046,7 @@ static BOOL(* const MakeSurface_Resource)(const char *name, SurfaceID surf_no) =
 static BOOL(* const MakeSurface_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BAC0;
 static BOOL(* const ReloadBitmap_Resource)(const char* name, SurfaceID surf_no) = (BOOL(*)(const char*, SurfaceID))0x40BE10;
 static BOOL(* const ReloadBitmap_File)(const char* name, int surf_no) = (BOOL(*)(const char*, int))0x40BFD0;
-static BOOL(* const MakeSurface_Generic)(int bxsize, int bysize, int surf_no, BOOL bSystem) = (BOOL(*)(int, int, int, BOOL))0x40C1D0;
+static BOOL(* const MakeSurface_Generic)(int bxsize, int bysize, SurfaceID surf_no, BOOL bSystem) = (BOOL(*)(int, int, SurfaceID, BOOL))0x40C1D0;
 static void (* const BackupSurface)(SurfaceID surf_no, const RECT *rect) = (void(*)(SurfaceID, const RECT*))0x40C320;
 static void (* const PutBitmap3)(const RECT*, int, int, const RECT*, SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, SurfaceID))0x40C3C0;
 static void (* const PutBitmap4)(const RECT*, int, int, const RECT*, SurfaceID) = (void(*)(const RECT*, int, int, const RECT*, SurfaceID))0x40C5B0;

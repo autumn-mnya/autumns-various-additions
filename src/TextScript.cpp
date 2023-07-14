@@ -12,6 +12,7 @@
 
 #include "mod_loader.h"
 #include "mod_loader_hooks.h"
+#include "BKG.h"
 #include "cave_story.h"
 #include "Draw.h"
 #include "Entity.h"
@@ -228,6 +229,33 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 
 		GetTextScriptString(name);
 		LoadTSC_Image(name);
+	}
+	else if (strncmp(where + 1, "BKG", 3) == 0) // BacKGround
+	{
+		char bkPath[MAX_PATH];
+		gTS->p_read += 4;
+
+		memset(bkPath, 0, sizeof(bkPath));
+
+		GetTextScriptString(bkPath);
+		BKG_LoadBackground(bkPath);
+	}
+	else if (strncmp(where + 1, "BKR", 3) == 0) // BacKground Reset
+	{
+		BKG_ResetBackgrounds();
+		gTS->p_read += 4;
+	}
+	else if (strncmp(where + 1, "EBL", 3) == 0) // Enable Bkg Layer
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		bkList[z].isActive = true;
+		gTS->p_read += 8;
+	}
+	else if (strncmp(where + 1, "DBL", 3) == 0) // Disable Bkg Layer
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		bkList[z].isActive = false;
+		gTS->p_read += 8;
 	}
 	else
 		return 0;

@@ -32,6 +32,7 @@ bool setting_enable_ui = true;
 bool setting_enable_tilecollision = true;
 bool setting_enable_text_script_code = true;
 bool setting_enable_savedata_code = true;
+bool setting_enable_teleporter_bugfix = true;
 bool setting_enable_pause_screen = false;
 
 // For settings related things, this function will be used.
@@ -49,6 +50,7 @@ void InitMod_Settings()
 	setting_enable_tilecollision = ModLoader_GetSettingBool("Enable Custom Tileset Code", true);
 	setting_enable_text_script_code = ModLoader_GetSettingBool("Enable Custom TSC Code", true);
 	setting_enable_savedata_code = ModLoader_GetSettingBool("Enable Custom Save Data Code", true);
+	setting_enable_teleporter_bugfix = ModLoader_GetSettingBool("Enable Teleporter Transparency Fix", true);
 	setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
 
 	///////////////
@@ -131,6 +133,9 @@ void InitMod_Settings()
 	/////////////////
 
 	setting_show_img_on_top_flag = ModLoader_GetSettingInt("Show Image Above Textbox Flag", 6503);
+
+	setting_bkg_background_width = ModLoader_GetSettingInt("BKG Surface Width", 800);
+	setting_bkg_background_height = ModLoader_GetSettingInt("BKG Surface Height", 800);
 
 	/////////////////////
 	// Pause Menu Text //

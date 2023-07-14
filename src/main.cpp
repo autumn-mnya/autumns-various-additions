@@ -12,6 +12,7 @@
 #include "mod_loader.h"
 #include "cave_story.h"
 #include "ASMPatches.h"
+#include "BKG.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
@@ -28,6 +29,7 @@
 // Paths
 char gModulePath[MAX_PATH];
 char gDataPath[MAX_PATH];
+char gBkgPath[MAX_PATH];
 
 // Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
@@ -50,7 +52,7 @@ void InitMod_Entity()
 // Loads the new surface files (We can't go above 40, but we can use the unused ones. Except 3 and 4 as they are used in the netplay dll!)
 void InitMod_Sprites()
 {
-	ModLoader_WriteCall((void*)0x411546, (void*)Replacement_StageImageSurfaceCall);
+	ModLoader_WriteCall((void*)0x41143D, (void*)Replacement_StageImageSurfaceCall);
 }
 
 void InitMod_SFX()
@@ -102,6 +104,17 @@ void InitMod_TSCImage()
 	ModLoader_WriteCall((void*)0x41086F, (void*)Replacement_ModeAction_PutTextScript_Call); // Mode Action
 }
 
+void InitMod_TSCBkg()
+{
+	ModLoader_WriteCall((void*)0x40F871, (void*)Replacement_ModeOpening_PutBack_Call);
+	ModLoader_WriteCall((void*)0x40F8D1, (void*)Replacement_ModeOpening_PutFront_Call);
+	ModLoader_WriteCall((void*)0x410633, (void*)Replacement_ModeAction_PutBack_Call);
+	ModLoader_WriteCall((void*)0x4106C3, (void*)Replacement_ModeAction_PutFront_Call);
+	ModLoader_WriteCall((void*)0x420DAA, (void*)Replacement_TransferStage_InitBack_Call);
+	ModLoader_WriteCall((void*)0x420EB5, (void*)Replacement_TransferStage_ResetFlash_Call);
+	ModLoader_WriteCall((void*)0x411546, (void*)Replacement_LevelBackgroundCall);
+}
+
 void InitMod_ASMPatches()
 {
 	// Random ASM Patches that arent related to any of the other Init functions go here
@@ -147,6 +160,11 @@ void InitMod(void)
 	{
 		InitMod_TSC();
 		InitMod_TSCImage();
+		InitMod_TSCBkg();
+
+		// Get path of the Bkg folder
+		strcpy(gBkgPath, gDataPath);
+		strcat(gBkgPath, "\\bkg");
 	}
 
 	if (setting_enable_ui)
@@ -154,6 +172,10 @@ void InitMod(void)
 
 	if (setting_enable_savedata_code)
 		InitMod_SaveData();
+
+	// Fix Teleporter menu flicker
+	if (setting_enable_teleporter_bugfix)
+		ModLoader_WriteCall((void*)0x41DB16, (void*)PutBitmap4);
 
 	// debug testing hud
 	// ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);

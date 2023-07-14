@@ -88,12 +88,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ASMPatches.cpp" />
+    <ClCompile Include="src\BKG.cpp" />
     <ClCompile Include="src\Config.cpp" />
     <ClCompile Include="src\Draw.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\EntityLoad.cpp" />
     <ClCompile Include="src\EntityTable.cpp" />
     <ClCompile Include="src\Frame.cpp" />
+    <ClCompile Include="src\Generic.cpp" />
     <ClCompile Include="src\LoadPixtone.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\ModSettings.cpp" />
@@ -110,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ASMPatches.h" />
+    <ClInclude Include="src\BKG.h" />
     <ClInclude Include="src\cave_story.h" />
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\Draw.h" />
@@ -117,6 +120,7 @@
     <ClInclude Include="src\EntityLoad.h" />
     <ClInclude Include="src\EntityTable.h" />
     <ClInclude Include="src\Frame.h" />
+    <ClInclude Include="src\Generic.h" />
     <ClInclude Include="src\LoadPixtone.h" />
     <ClInclude Include="src\Main.h" />
     <ClInclude Include="src\ModSettings.h" />

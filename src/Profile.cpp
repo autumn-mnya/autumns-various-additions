@@ -25,6 +25,9 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	memset(&profile, 0, sizeof(profile)); // Reset this when doing the last memcpy
 	memcpy(profile.code, gAutumnProfileCode, sizeof(profile.code));
 	memcpy(profile.imgFolder, TSC_IMG_Folder, sizeof(profile.imgFolder));
+	memcpy(profile.saveBkName, backgroundName, sizeof(profile.saveBkName));
+	profile.saveBkType = backgroundType;
+	memcpy(profile.saveBkList, bkList, sizeof(profile.saveBkList));
 
 	// Write new save code after this
 }
@@ -50,6 +53,10 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 	{
 		memset(&profile, 0, sizeof(CustomProfileData));
 		Freeware_fread(&profile.imgFolder, ImgFolderSize, 1, fp);
+		Freeware_fread(&profile.saveBkName, MAX_PATH, 1, fp);
+		Freeware_fread(&profile.saveBkType, 4, 1, fp);
+		Freeware_fread(&profile.saveBkList, sizeof(SUBKG), 1, fp);
+		Freeware_memcpy(bkList, profile.saveBkList, sizeof(bkList));
 	}
 
 	// Close the file
@@ -57,10 +64,8 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 
 	// Set Custom Data here
 	strcpy(TSC_IMG_Folder, profile.imgFolder);
+
+	memset(backgroundName, 0, sizeof(backgroundName));
+	strcpy(backgroundName, profile.saveBkName);
+	backgroundType = profile.saveBkType;
 }
-
-/*
- -- SaveProfile memcpy
-
- -- LoadProfile ClearFade();
-*/

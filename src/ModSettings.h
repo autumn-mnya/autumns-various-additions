@@ -12,6 +12,7 @@ extern bool setting_enable_ui;
 extern bool setting_enable_tilecollision;
 extern bool setting_enable_text_script_code;
 extern bool setting_enable_savedata_code;
+extern bool setting_enable_teleporter_bugfix;
 extern bool setting_enable_pause_screen;
 
 void InitMod_Settings();

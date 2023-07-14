@@ -5,5 +5,6 @@
 
 extern char gModulePath[MAX_PATH];
 extern char gDataPath[MAX_PATH];
+extern char gBkgPath[MAX_PATH];
 
 void PlayerDeath();

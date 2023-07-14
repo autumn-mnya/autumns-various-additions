@@ -11,15 +11,20 @@
 #include "main.h"
 
 #include "mod_loader.h"
+#include "BKG.h"
 #include "cave_story.h"
 #include "Entity.h"
 #include "MyChar.h"
+#include "Profile.h"
 #include "TextScript.h"
 
 // Doesn't support widescreen
-RECT rcTSCImage = { 0, 0, 320, 240 };
+RECT rcTSCImage = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 
 int setting_show_img_on_top_flag = 6503;
+int setting_bkg_background_width = 800;
+int setting_bkg_background_height = 800;
+
 char TSC_IMG_Name[ImgNameSize];
 
 const char* const defaultFolderPath = "";
@@ -30,14 +35,19 @@ void ReplaceSurfaceID(const char* n, SurfaceID no)
 	MakeSurface_File(n, no);
 }
 
-void Replacement_StageImageSurfaceCall(int x, int y, int s, BOOL b)
+void Replacement_LevelBackgroundCall(int x, int y, SurfaceID s, BOOL b)
+{
+	MakeSurface_Generic(setting_bkg_background_width, setting_bkg_background_height, s, b);
+}
+
+void Replacement_StageImageSurfaceCall(const char* n, SurfaceID s)
 {
 	MakeSurface_File("Image\\0", SURFACE_ID_TSC_IMG);
 	MakeSurface_File("AutumnUI", SURFACE_ID_AUTUMN_HUD);
 	MakeSurface_File("Npc\\NpcAutumnObj", SURFACE_ID_AUTUMN_OBJECTS);
 	MakeSurface_File("Autumn", SURFACE_ID_AUTUMN_ITEMS);
 	MakeSurface_File("Npc\\NpcAutumnChar", SURFACE_ID_AUTUMN_CHARACTERS);
-	MakeSurface_Generic(427, 240, s, b);
+	MakeSurface_File(n, s);
 }
 
 void LoadTSC_Image(char* name)
@@ -68,6 +78,7 @@ void LoadTSC_Image(char* name)
 void ResetTSC_Image()
 {
 	memset(TSC_IMG_Folder, 0, sizeof(TSC_IMG_Folder));
+	BKG_ResetBackgrounds();
 	LoadTSC_Image("0");
 }
 
@@ -76,6 +87,7 @@ void Replacement_ModeOpening_SetFadeMask_Call()
 {
 	SetFadeMask();
 	ResetTSC_Image();
+	BKG_ResetBackgrounds();
 }
 
 void Replacement_ModeTitle_InitStar_Call()
@@ -86,6 +98,11 @@ void Replacement_ModeTitle_InitStar_Call()
 
 void Replacement_LoadProfile_ClearFade_Call()
 {
+	if (!(memcmp(bkList, profile.saveBkList, sizeof(bkList)) == 0))
+		BKG_ResetBackgrounds();
+	else
+		InitBack(profile.saveBkName, profile.saveBkType);
+
 	ResetTSC_Image();
 	ClearFade();
 }
@@ -94,6 +111,7 @@ void Replacement_InitializeGame_ClearArmsData_Call()
 {
 	ClearArmsData();
 	ResetTSC_Image();
+	BKG_ResetBackgrounds();
 }
 
 // Put <IMG on screen
