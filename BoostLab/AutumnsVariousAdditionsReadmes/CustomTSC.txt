@@ -25,6 +25,18 @@ Arguments: 4 [<FM2wwww:zzzz:xxxx:yyyy] [wait:mode:x_offset:y_offset]
 # 3 - Both offsets are negative values #
 ########################################
 
+- <FN2 - Focus on Npc 2
+Same as <FON, except the player can still effect the camera depending on where they're facing.
+Arguments: 2 [<FN2wwww:zzzz] [npc:wait]
+
+- <FNJ - Flag Not Jump
+Same as <FLJ, except it jumps to an event if the flag is NOT set.
+Arguments: 2 [<FNJwwww:zzzz] [flag:event]
+
+- <FOC - Focus On Coordinates
+Focus the Camera at an X:Y position on the map.
+Arguments: 3 [<FOCwwww:xxxx:yyyy] [wait:x:y]
+
 - <LDR - Lock DiRection
 Only when <FM2 has been used -- This can lock the players direction they're facing.
 Arguments: 2 [<LDRwwww:zzzz] [mode:direction]
@@ -48,17 +60,20 @@ Arguments: 1 [<LSCstring$] [string$]
 Example: <LSCPens1$
 ( The above will load Pens1.tsc )
 
-- <FN2 - Focus on Npc 2
-Same as <FON, except the player can still effect the camera depending on where they're facing.
-Arguments: 2 [<FN2wwww:zzzz] [npc:wait]
+- <IMF - IMage Folder
+Set a subfolder for <IMG to load from. Default folder is "data/Image" -- End the text string with a $ so the game knows to stop reading the text.
+[ IMPORTANT: Using "<IMF$" will disable loading from a subfolder ! ]
+[ IMPORTANT: Must be less than or equal to 48 characters in length! ]
+Arguments: 1 [<IMFstring$] [string$]
+Example: <IMFautumnhazel$
 
-- <FNJ - Flag Not Jump
-Same as <FLJ, except it jumps to an event if the flag is NOT set.
-Arguments: 2 [<FNJwwww:zzzz] [flag:event]
-
-- <FOC - Focus On Coordinates
-Focus the Camera at an X:Y position on the map.
-Arguments: 3 [<FOCwwww:xxxx:yyyy] [wait:x:y]
+- <IMG - IMaGe
+Load a 320x340 image onto the whole screen. Default folder is "data/Image" -- End the text string with a $ so the game knows to stop reading the text.
+[ IMPORTANT: Always have a 0.bmp available as the "0" <IMG is shown on screen at all times! ]
+[ IMPORTANT: Must be less than or equal to 50 characters in length! ]
+Arguments: 1 [<IMGstring$] [string$]
+Example: <IMGglyph$
+( You can set a flag to make the image appear *above* the textbox instead of behind it. The default is 6503, you can change this in the dll's settings.ini )
 
 - <RNJ - Random Number Jump
 Jump to a random event between W and Z.

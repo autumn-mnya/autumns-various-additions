@@ -15,9 +15,8 @@ static const struct
 	int slot;
 	const char* path;
 } gCustomPtpTable[] = {
-	// TODO - Possibly name these files
 	{161, "PixTone/161.pxt"},
-	{162, "PixTone/162.pxt"}, // ok so anything above 161 just gets.. skipped? it doesnt work .
+	{162, "PixTone/162.pxt"},
 	{163, "PixTone/163.pxt"},
 };
 
@@ -93,6 +92,6 @@ void LoadCustomPixtoneData()
 
 void Replacement_LoadGenericData_Pixtone_Sprintf(char* b, const char* f, int pt)
 {
-	sprintf(b, f, pt);
+	Freeware_sprintf(b, f, pt);
 	LoadCustomPixtoneData();
 }

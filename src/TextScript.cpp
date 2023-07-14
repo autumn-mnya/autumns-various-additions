@@ -13,6 +13,7 @@
 #include "mod_loader.h"
 #include "mod_loader_hooks.h"
 #include "cave_story.h"
+#include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "Frame.h"
@@ -21,6 +22,7 @@
 
 char CustomWindowName[MAX_PATH] = "";
 char CustomScriptName[0x20] = "";
+char TSC_IMG_Folder[ImgFolderSize];
 
 void SetCustomWindowTitle(char* window_name)
 {
@@ -196,6 +198,36 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 			JumpTextScript(z);
 		else
 			gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "IMF", 3) == 0) // IMage Folder
+	{
+		char path[ImgFolderSize];
+
+		gTS->p_read += 4;
+
+		memset(path, 0, sizeof(path));
+
+		GetTextScriptString(path);
+		
+		// I want it to reset the folder path if it == 0 .. but maybe we could have a third TSC command if that just . isnt possible lol
+		if (path[0] == 0)
+			memset(TSC_IMG_Folder, 0, sizeof(TSC_IMG_Folder));
+		else
+		{
+			memcpy(TSC_IMG_Folder, path, sizeof(TSC_IMG_Folder));
+			strcat(TSC_IMG_Folder, "\\");
+		}
+	}
+	else if (strncmp(where + 1, "IMG", 3) == 0) // IMaGe display
+	{
+		char name[ImgNameSize];
+
+		gTS->p_read += 4;
+
+		memset(name, 0, sizeof(name));
+
+		GetTextScriptString(name);
+		LoadTSC_Image(name);
 	}
 	else
 		return 0;

@@ -9,6 +9,7 @@
 
 #include "main.h"
 #include "cave_story.h"
+#include "TextScript.h"
 
 const char* const gAutumnProfileCode = "AutumnHazel";
 CustomProfileData profile;
@@ -23,6 +24,7 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 
 	memset(&profile, 0, sizeof(profile)); // Reset this when doing the last memcpy
 	memcpy(profile.code, gAutumnProfileCode, sizeof(profile.code));
+	memcpy(profile.imgFolder, TSC_IMG_Folder, sizeof(profile.imgFolder));
 
 	// Write new save code after this
 }
@@ -47,18 +49,19 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 	if (memcmp(profile.code, gAutumnProfileCode, 11) == 0)
 	{
 		memset(&profile, 0, sizeof(CustomProfileData));
-		Freeware_fread(&profile, sizeof(CustomProfileData), 1, fp);
+		Freeware_fread(&profile.imgFolder, ImgFolderSize, 1, fp);
 	}
 
 	// Close the file
 	Freeware_fclose(fp);
+
+	// Set Custom Data here
+	strcpy(TSC_IMG_Folder, profile.imgFolder);
 }
 
 // 0x41D508
 void Replacement_LoadProfile_ClearFade_Call()
 {
-	// Set Custom Data here
-
 	// Continue as per usual
 	ClearFade();
 }

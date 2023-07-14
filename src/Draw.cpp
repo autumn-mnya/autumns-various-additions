@@ -14,6 +14,15 @@
 #include "cave_story.h"
 #include "Entity.h"
 #include "MyChar.h"
+#include "TextScript.h"
+
+// Doesn't support widescreen
+RECT rcTSCImage = { 0, 0, 320, 240 };
+
+int setting_show_img_on_top_flag = 6503;
+char TSC_IMG_Name[ImgNameSize];
+
+const char* const defaultFolderPath = "";
 
 // Replace MakeSurfaceFile with another call
 void ReplaceSurfaceID(const char* n, SurfaceID no)
@@ -23,11 +32,90 @@ void ReplaceSurfaceID(const char* n, SurfaceID no)
 
 void Replacement_StageImageSurfaceCall(int x, int y, int s, BOOL b)
 {
+	MakeSurface_File("Image\\0", SURFACE_ID_TSC_IMG);
 	MakeSurface_File("AutumnUI", SURFACE_ID_AUTUMN_HUD);
 	MakeSurface_File("Npc\\NpcAutumnObj", SURFACE_ID_AUTUMN_OBJECTS);
 	MakeSurface_File("Autumn", SURFACE_ID_AUTUMN_ITEMS);
 	MakeSurface_File("Npc\\NpcAutumnChar", SURFACE_ID_AUTUMN_CHARACTERS);
 	MakeSurface_Generic(427, 240, s, b);
+}
+
+void LoadTSC_Image(char* name)
+{
+	char imgPath[MAX_PATH];
+
+	// Reset name before we copy it
+	memset(TSC_IMG_Name, 0, sizeof(TSC_IMG_Name));
+	strcpy(TSC_IMG_Name, name);
+
+	// Load TSC image
+	memset(imgPath, 0, sizeof(imgPath));
+	strcpy(imgPath, "Image\\");
+	
+	// Only use a subfolder is the path isnt null
+	if (strlen(TSC_IMG_Folder) != NULL)
+	{
+		strcat(imgPath, TSC_IMG_Folder);
+		strcat(imgPath, "\\");
+	}
+
+	strcat(imgPath, name);
+
+	ReleaseSurface(SURFACE_ID_TSC_IMG);
+	MakeSurface_File(imgPath, SURFACE_ID_TSC_IMG);
+}
+
+void ResetTSC_Image()
+{
+	memset(TSC_IMG_Folder, 0, sizeof(TSC_IMG_Folder));
+	LoadTSC_Image("0");
+}
+
+// <IMG resetting calls
+void Replacement_ModeOpening_SetFadeMask_Call()
+{
+	SetFadeMask();
+	ResetTSC_Image();
+}
+
+void Replacement_ModeTitle_InitStar_Call()
+{
+	InitStar();
+	ResetTSC_Image();
+}
+
+void Replacement_InitializeGame_ClearArmsData_Call()
+{
+	ClearArmsData();
+	ResetTSC_Image();
+}
+
+// Put <IMG on screen
+
+void Replacement_ModeOpening_PutTextScript_Call()
+{
+	// Show <IMG behind textbox when flag isnt set
+	if (!(GetNPCFlag(setting_show_img_on_top_flag)))
+		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
+
+	PutTextScript();
+
+	// Show <IMG infront of textbox when flag is set
+	if (GetNPCFlag(setting_show_img_on_top_flag))
+		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
+}
+
+void Replacement_ModeAction_PutTextScript_Call()
+{
+	// Show <IMG behind textbox when flag isnt set
+	if (!(GetNPCFlag(setting_show_img_on_top_flag)))
+		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
+
+	PutTextScript();
+
+	// Show <IMG infront of textbox when flag is set
+	if (GetNPCFlag(setting_show_img_on_top_flag))
+		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
 }
 
 void Replacement_Debug_PutMyLife(BOOL flash)

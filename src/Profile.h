@@ -3,10 +3,12 @@
 #include <Windows.h>
 
 #include "cave_story.h"
+#include "TextScript.h"
 
 typedef struct CustomProfileData
 {
 	char code[11];
+	char imgFolder[ImgFolderSize];
 } CustomProfileData;
 
 void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t size);

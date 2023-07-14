@@ -126,6 +126,12 @@ void InitMod_Settings()
 	// Ice Tile
 	setting_ice_particles = ModLoader_GetSettingBool("Ice Block Particle Effects", true);
 
+	/////////////////
+	// Text Script //
+	/////////////////
+
+	setting_show_img_on_top_flag = ModLoader_GetSettingInt("Show Image Above Textbox Flag", 6503);
+
 	/////////////////////
 	// Pause Menu Text //
 	/////////////////////

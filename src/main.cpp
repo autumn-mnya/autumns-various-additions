@@ -93,6 +93,15 @@ void InitMod_GameUI()
 	ModLoader_WriteCall((void*)0x410683, (void*)Replacement_PutMyChar_Call);
 }
 
+void InitMod_TSCImage()
+{
+	ModLoader_WriteCall((void*)0x40F778, (void*)Replacement_ModeOpening_SetFadeMask_Call);
+	ModLoader_WriteCall((void*)0x40FD80, (void*)Replacement_ModeTitle_InitStar_Call);
+	ModLoader_WriteCall((void*)0x41D576, (void*)Replacement_InitializeGame_ClearArmsData_Call);
+	ModLoader_WriteCall((void*)0x40F91F, (void*)Replacement_ModeOpening_PutTextScript_Call); // Mode Opening
+	ModLoader_WriteCall((void*)0x41086F, (void*)Replacement_ModeAction_PutTextScript_Call); // Mode Action
+}
+
 void InitMod_ASMPatches()
 {
 	// Random ASM Patches that arent related to any of the other Init functions go here
@@ -135,7 +144,10 @@ void InitMod(void)
 		InitMod_PauseScreen();
 
 	if (setting_enable_text_script_code)
+	{
 		InitMod_TSC();
+		InitMod_TSCImage();
+	}
 
 	if (setting_enable_ui)
 		InitMod_GameUI();
