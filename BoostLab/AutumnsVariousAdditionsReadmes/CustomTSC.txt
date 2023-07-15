@@ -12,7 +12,7 @@ Arguments: 1 [<BKDwwww] [layer]
 
 - <BKG - BacKGround
 Load Background txt file from data/bkg. -- End the text string with a $ so the game knows to stop reading the text.
-Arguments: 1 [<BKGstring$] [string$]
+Arguments: 1 [<BKGstring$] [background$]
 Example: <BKGbkMoon$
 ( The above will load bkMoon.txt )
 
@@ -96,6 +96,18 @@ Arguments: 1 [<COEwwww] [variable]
 Jump to event Y if the player has X amount of collectables or more in variable W. There are 5 collectable variables. 0 is the first one, and 4 is the last one. Any higher and it'll just effect 0.
 Arguments: 3 [<COJwwww:xxxx:yyyy] [variable:value:event]
 
+- <CSF - Change Surface File
+Change surface ID (string) to load image name (string), meaning you can load whatever image you want in place of another. Use npcSurfaceList.txt included in Booster's Lab as a reference. DO NOT GO ABOVE 40.
+Arguments: 2 [<CSFstring$string2$] [id_string$filename_string$]
+Example: <CSF28$bkFog$
+( The above will replace Surface ID 28 (Level Background) with image "bkFog" )
+
+- <CTS - Change TileSet
+Load new tileset instead of the current one. Do not include "Prt" in your filename for the command!
+Arguments: 1 [<CTSstring$] [tileset$]
+Example: <CTSOside$
+( The above will load PrtOside with pxa file Oside.pxa )
+
 - <FM2 - Focus on Me 2
 
 This TSC command allows you to focus the camera on the player with a custom offset!
@@ -141,7 +153,7 @@ Arguments: 2 [<LDRwwww:zzzz] [mode:direction]
 
 - <LSC - Load SCript
 Load TSC Script and run event 0 afterwards. -- End the text string with a $ so the game knows to stop reading the text.
-Arguments: 1 [<LSCstring$] [string$]
+Arguments: 1 [<LSCstring$] [script$]
 Example: <LSCPens1$
 ( The above will load Pens1.tsc )
 
@@ -149,14 +161,14 @@ Example: <LSCPens1$
 Set a subfolder for <IMG to load from. Default folder is "data/Image" -- End the text string with a $ so the game knows to stop reading the text.
 [ IMPORTANT: Using "<IMF$" will disable loading from a subfolder ! ]
 [ IMPORTANT: Must be less than or equal to 48 characters in length! ]
-Arguments: 1 [<IMFstring$] [string$]
+Arguments: 1 [<IMFstring$] [directory$]
 Example: <IMFautumnhazel$
 
 - <IMG - IMaGe
 Load a 320x340 image onto the whole screen. Default folder is "data/Image" -- End the text string with a $ so the game knows to stop reading the text.
 [ IMPORTANT: Always have a 0.bmp available as the "0" <IMG is shown on screen at all times! ]
 [ IMPORTANT: Must be less than or equal to 50 characters in length! ]
-Arguments: 1 [<IMGstring$] [string$]
+Arguments: 1 [<IMGstring$] [image$]
 Example: <IMGglyph$
 ( You can set a flag to make the image appear *above* the textbox instead of behind it. The default is 6503, you can change this in the dll's settings.ini )
 
@@ -170,7 +182,7 @@ Arguments: 2 [<SNJwwww:zzzz] [skipflag:event]
 
 - <SWN - Set Window Name
 Set the Window Name to a text string -- End the text string with a $ so the game knows to stop reading the text.
-Arguments: 1 [<SWNstring$] [string$]
+Arguments: 1 [<SWNstring$] [window_name$]
 Example: <SWNCave Story ~ Doukutsu Monogatari$
 
 - <TRM - TRansport Momentum
@@ -184,6 +196,6 @@ Arguments: 2 [<TRMwwww:zzzz] [map:event]
 
 - <WCL - Write CaLl
 Write a function call at address A to address B -- 2 text strings back-to-back, both ending with a $. The function address is a *hex value*.
-Arguments: 2 [<WCLstring$cstring2$] [string$string2$]
+Arguments: 2 [<WCLstring$cstring2$] [address_a_string$address_b_string$]
 Example: <WCL423DE9$401000$
 ( The above will replace <CSS with the "ClearArmsData" function )

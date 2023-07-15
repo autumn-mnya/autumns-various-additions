@@ -40,7 +40,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	128
+[BL_TSC]	130
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -144,6 +144,8 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <COD	1	#---	COllectable Disable	Disables the display of collectable variable W.	0	0	1	4	4	4	4	
 <COE	1	#---	COllectable Enable	Enables the display of collectable variable W.	0	0	1	4	4	4	4	
 <COJ	3	##e-	COllectable Jump	Jump to event Y if the player has X amount of collectables or more in variable W.	0	0	1	4	4	4	4
+<CSF	0	----	Change Surface File	Change surface ID string to load image string. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	0	1	4	4	4	4
+<CTS	0	----	Change TileSet	Change tileset loaded. Use $ at the end of the tileset name to mark the end of the text input. Do not include "Prt".	0	0	1	4	4	4	4
 <FM2	4	.###	Focus on Me 2	Focus on the PC in W ticks (Use W > 0), with Mode X (Check TSC command txt), with Offset Y:Z.	0	0	1	4	4	4	4
 <FN2	2	N.--	Focus on Npc 2	Same as <FON but the players direction can effect the Camera.	0	0	1	4	4	4	4
 <FNJ	2	Fe--	Flag Not Jump	Opposite of <FLJ. Jump to event X if flag W is not set.	0	0	1	4	4	4	4
