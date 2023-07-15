@@ -12,7 +12,8 @@ typedef struct CustomProfileData
 	char imgFolder[ImgFolderSize];
 	char saveBkName[MAX_PATH];
 	int saveBkType;
-	SUBKG saveBkList[0x400];
+	int saveBkCount;
+	SUBKG saveBkList[BKGCount];
 } CustomProfileData;
 
 extern CustomProfileData profile;

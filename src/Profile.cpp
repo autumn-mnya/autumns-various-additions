@@ -8,7 +8,9 @@
 #include "Profile.h"
 
 #include "main.h"
+#include "BKG.h"
 #include "cave_story.h"
+#include "File.h"
 #include "TextScript.h"
 
 const char* const gAutumnProfileCode = "AutumnHazel";
@@ -27,6 +29,7 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	memcpy(profile.imgFolder, TSC_IMG_Folder, sizeof(profile.imgFolder));
 	memcpy(profile.saveBkName, backgroundName, sizeof(profile.saveBkName));
 	profile.saveBkType = backgroundType;
+	profile.saveBkCount = numBks;
 	memcpy(profile.saveBkList, bkList, sizeof(profile.saveBkList));
 
 	// Write new save code after this
@@ -37,7 +40,7 @@ void Replacement_SaveProfile_fwrite_Call(void* buf, size_t eleS, size_t eleC, FI
 {
 	Freeware_fwrite(buf, eleS, eleC, fp);
 
-	// Write the whole
+	// Write the whole struct
 	Freeware_fwrite(&profile, sizeof(CustomProfileData), 1, fp);
 }
 
@@ -46,6 +49,7 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 {
 	// Set this up if needed
 	LoadProfileFp = fp;
+	int i = 0;
 
 	Freeware_fread(profile.code, 11, 1, fp);
 
@@ -54,9 +58,35 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		memset(&profile, 0, sizeof(CustomProfileData));
 		Freeware_fread(&profile.imgFolder, ImgFolderSize, 1, fp);
 		Freeware_fread(&profile.saveBkName, MAX_PATH, 1, fp);
-		Freeware_fread(&profile.saveBkType, 4, 1, fp);
-		Freeware_fread(&profile.saveBkList, sizeof(SUBKG), 1, fp);
-		Freeware_memcpy(bkList, profile.saveBkList, sizeof(bkList));
+		profile.saveBkType = Freeware_ReadBE32(fp);
+		profile.saveBkCount = Freeware_ReadBE32(fp);
+		for (i = 0; i < BKGCount; ++i)
+		{
+			profile.saveBkList[i].isActive = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].bmX = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].bmY = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].bmW = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].bmH = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].repX = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].repY = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].xDist = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].yDist = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].type = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].xm = Freeware_ReadBE64(fp);
+			profile.saveBkList[i].ym = Freeware_ReadBE64(fp);
+			profile.saveBkList[i].xCount = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].yCount = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].spriteNum = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].animFrame = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].animSpeed = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].counter = Freeware_ReadBE32(fp);
+			profile.saveBkList[i].x = Freeware_ReadBE64(fp);
+			profile.saveBkList[i].y = Freeware_ReadBE64(fp);
+			profile.saveBkList[i].bkgXval = Freeware_ReadBE64(fp);
+			profile.saveBkList[i].bkgYval = Freeware_ReadBE64(fp);
+		}
+
+		Freeware_memcpy(bkList, profile.saveBkList, sizeof(bkList)); // set bklist
 	}
 
 	// Close the file
@@ -68,4 +98,5 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 	memset(backgroundName, 0, sizeof(backgroundName));
 	strcpy(backgroundName, profile.saveBkName);
 	backgroundType = profile.saveBkType;
+	numBks = profile.saveBkCount;
 }

@@ -10,8 +10,9 @@
 #include "cave_story.h"
 #include "main.h"
 #include "Generic.h"
+#include "Profile.h"
 
-SUBKG bkList[0x400] = {};
+SUBKG bkList[BKGCount] = {};
 int numBks = 0;
 
 char backgroundName[MAX_PATH];
@@ -328,12 +329,23 @@ void Replacement_TransferStage_InitBack_Call(const char* n, int t)
 	strcpy(backgroundName, n);
 	backgroundType = t;
 
-	InitBack(n, t);
+	if (numBks != 0)
+	{
+		for (int i = 0; i < numBks; ++i)
+		{
+			BKG_SetBackground(numBks, bkList[i].bmX, bkList[i].bmY, bkList[i].bmW, bkList[i].bmH, bkList[i].repX, bkList[i].repY, bkList[i].xDist, bkList[i].yDist, bkList[i].type, bkList[i].xm, bkList[i].ym, bkList[i].spriteNum, bkList[i].animSpeed, bkList[i].x, bkList[i].y);
+		}
+	}
+	else
+		InitBack(n, t);
 }
 
 // reset bkg backgrounds on stage transition
 void Replacement_TransferStage_ResetFlash_Call()
 {
 	ResetFlash();
-	BKG_ResetBackgrounds();
+	if (!(memcmp(bkList, profile.saveBkList, sizeof(bkList)) == 0))
+		memset(profile.saveBkList, 0, sizeof(profile.saveBkList)); // reset profile list
+	else
+		BKG_ResetBackgrounds();
 }

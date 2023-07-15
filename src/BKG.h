@@ -1,5 +1,7 @@
 #pragma once
 
+#define BKGCount 0x400
+
 typedef struct SUBKG
 {
 	bool isActive;		//Sub Background is in use
@@ -26,7 +28,7 @@ typedef struct SUBKG
 	double bkgYval = 0;
 }SUBKG;
 
-extern SUBKG bkList[0x400];
+extern SUBKG bkList[BKGCount];
 extern int numBks;
 
 extern char backgroundName[MAX_PATH];
