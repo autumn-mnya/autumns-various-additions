@@ -2,6 +2,7 @@
 
 #define BKGCount 0x400
 #define bkgTxTSize 0x30
+
 typedef struct SUBKG
 {
 	bool isActive;		//Sub Background is in use
@@ -32,16 +33,14 @@ extern SUBKG bkList[BKGCount];
 extern int numBks;
 extern char bkgTxT_Global[bkgTxTSize];
 
-extern char backgroundName[MAX_PATH];
-extern int backgroundType;
-
+void Replacement_InitBack_ReloadBitmap_File_Call(const char* fName);
 void BKG_ResetBackgrounds();
 void BKG_SetBackground(int i, int b1, int b2, int b3, int b4, int r1, int r2, int d1, int d2, int t, double m1, double m2, int f, int s, double o1, double o2);
+void BKG_SetParameter(int w, int x, int y);
 void BKG_LoadBackground(char* file);
 void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg);
 void Replacement_ModeOpening_PutBack_Call(int frame_x, int frame_y);
 void Replacement_ModeOpening_PutFront_Call(int frame_x, int frame_y);
 void Replacement_ModeAction_PutBack_Call(int frame_x, int frame_y);
 void Replacement_ModeAction_PutFront_Call(int frame_x, int frame_y);
-void Replacement_TransferStage_InitBack_Call(const char* n, int t);
 void Replacement_TransferStage_ResetFlash_Call();

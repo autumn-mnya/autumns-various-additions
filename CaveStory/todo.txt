@@ -1,9 +1,14 @@
 # MyChar #
 
-[-] Health Drain/Regen on flag set
+[x] Health Drain/Regen on flag set
 
 # TSC #
 [x] BKG (Bionicobot Version)
 [-] CO+/CO-/COJ (Autumn Collectables hack)
-[-] BUY/SEL (+ money npc?)
+[x] BUY/SEL
+	-Added money npc
+	-Added settings to enable money + Disable exp drops
+	-Added TSC commands
+	-Need to add tsc command docs!
 [-] SRP/RSP (Periwinkle Respawning hack)
+[x] Change Surface file

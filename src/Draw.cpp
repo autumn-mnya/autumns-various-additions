@@ -13,6 +13,7 @@
 #include "mod_loader.h"
 #include "BKG.h"
 #include "cave_story.h"
+#include "Collectables.h"
 #include "Entity.h"
 #include "MyChar.h"
 #include "Profile.h"
@@ -22,8 +23,6 @@
 RECT rcTSCImage = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 
 int setting_show_img_on_top_flag = 6503;
-int setting_bkg_background_width = 800;
-int setting_bkg_background_height = 800;
 
 char TSC_IMG_Name[ImgNameSize];
 
@@ -35,9 +34,10 @@ void ReplaceSurfaceID(const char* n, SurfaceID no)
 	MakeSurface_File(n, no);
 }
 
-void Replacement_LevelBackgroundCall(int x, int y, SurfaceID s, BOOL b)
+void SwapSurfaces(const char* n, int no)
 {
-	MakeSurface_Generic(setting_bkg_background_width, setting_bkg_background_height, s, b);
+	ReleaseSurface(no);
+	MakeSurface_File(n, no);
 }
 
 void Replacement_StageImageSurfaceCall(const char* n, SurfaceID s)
@@ -84,6 +84,7 @@ void ResetTSC_Image()
 // <IMG resetting calls
 void Replacement_ModeOpening_SetFadeMask_Call()
 {
+	InitCollectablesEnabled();
 	SetFadeMask();
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();
@@ -91,6 +92,7 @@ void Replacement_ModeOpening_SetFadeMask_Call()
 
 void Replacement_ModeTitle_InitStar_Call()
 {
+	InitCollectablesEnabled();
 	InitStar();
 	ResetTSC_Image();
 }
@@ -109,6 +111,7 @@ void Replacement_LoadProfile_ClearFade_Call()
 
 void Replacement_InitializeGame_ClearArmsData_Call()
 {
+	InitCollectablesEnabled();
 	ClearArmsData();
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();

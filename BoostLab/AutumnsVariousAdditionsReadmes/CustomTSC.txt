@@ -2,14 +2,99 @@ The "Autumns Various Additions" dll adds various new TSC commands into the game.
 
 # TSC Commands #
 
-- <TRM - TRansport Momentum
+- <BKE - BacKGround Enable
+Enable <BKG layer W. Layer 0 is the first <BKG layer. -- Doesn't do anything if <BKG wasn't used!
+Arguments: 1 [<BKEwwww] [layer]
 
-This TSC command is the same as <TRA, except you maintain your momentum when used. It was used in Autumn's mod "Bliss".
-Arguments: 4 [<TRMwwww:zzzz:xxxx:yyyy] [map:event:x:y]
+- <BKD - BacKGround Disable
+Disable <BKG layer W. Layer 0 is the first <BKG layer. -- Doesn't do anything if <BKG wasn't used!
+Arguments: 1 [<BKDwwww] [layer]
 
-- <TRX - TRansport keep X:y
-This TSC command is the same as <TRA except is preserves the players X:Y position. You need to be closer to the center of the hitbox of whatever you're interacting with to get it to properly work, as this is somewhat buggy.
-Arguments: 2 [<TRMwwww:zzzz] [map:event]
+- <BKG - BacKGround
+Load Background txt file from data/bkg. -- End the text string with a $ so the game knows to stop reading the text.
+Arguments: 1 [<BKGstring$] [string$]
+Example: <BKGbkMoon$
+( The above will load bkMoon.txt )
+
+# BKG Readme #
+
+<BKG is a massive hack that can change how you create backgrounds in Cave Story.
+
+It's incredibly complex though, as it has many moving parts. I'll try to explain most of them here!
+
+<BKG loads a txt file from the "data/bkg" folder. This txt file contains the name of the background you want to display, and all of the layers you want your background to have.
+You can see the "CustomTSC_BKG_Format" and "CustomTSC_BKG_Example" txt files for both an example of a <BKG txt file, and also the format of understanding which values do what.
+
+Read "CustomTSC_BKG_Explanation.txt" for more info on <BKG itself.
+
+- <BKP - BacKGround Parameter
+Set parameter X for layer W to value Y. Layer 0 is the first <BKG layer.
+Arguments: 3 [<BKPwwww:xxxx:yyyy] [layer:parameter:value]
+Example <BKP0000:0008:0008
+
+#############################################################################
+#                            Parameters for <BKP                            #
+# 0 - Bitmap X Offset
+# 1 - Bitmap Y Offset
+# 2 - Bitmap Width
+# 3 - Bitmap Height
+# 4 - Repeat X
+# 5 - Repeat Y
+# 6 - Repeat Gap X
+# 7 - Repeat Gap Y
+# 8 - Type
+# 9 - Horizontal Scroll Speed (divided by 10 because decimals, 0001 = 0.1!)
+# 10 - Vertical Scroll Speed (divided by 10 because decimals, 0001 = 0.1!)
+# 11 - Sprite Number
+# 12 - Animation Speed
+# 13 - Map X Offset (amount of tiles, not pixels)
+# 14 - Map Y Offset (amount of tiles, not pixels)
+#                                                                           #
+#############################################################################
+
+- <BKR - BacKground Reset
+Disables <BKG. This will keep the <BKG background file though. <BKG will auto reset on <TRA as well!!
+Arguments: 0
+
+- <BUY - BUY jump
+[This TSC command is only useful when the money code is enabled in settings.ini.]
+This command will jump to event X if the player doesn't have W money. Otherwise, it will continue the current event and remove W money.
+Arguments: 2 [<BUYwwww:xxxx] [money:event]
+
+- <BY2 - BuY jump 2
+[This TSC command is only useful when the money code is enabled in settings.ini.]
+This command will jump to event X if the player has W money, and will remove X money as well. Otherwise, it will continue the current event.
+Arguments: 2 [BY2wwww:xxxx] [money:event]
+
+- <SEL - SELl (Add money)
+[This TSC command is only useful when the money code is enabled in settings.ini.]
+This command will add money W to the players money amount.
+Arguments: 1 [<SELwwww] [money]
+
+- <SL= - SeLl = (Set money)
+[This TSC command is only useful when the money code is enabled in settings.ini.]
+This command will set the players money amount to W.
+Arguments: 1 [<SL=wwww] [money]
+
+- <CO+ - COllectables + (Add Collectable)
+Add collectables amount X to collectable variable W. There are 5 collectable variables. 0 is the first one, and 4 is the last one. Any higher and it'll just effect 0.
+Arguments: 2 [<CO+wwww:xxxx] [variable:value]
+
+- <CO- - COllectables - (Subtract Collectable)
+Subtract collectables amount X from collectable variable W. There are 5 collectable variables. 0 is the first one, and 4 is the last one. Any higher and it'll just effect 0.
+Arguments: 2 [<CO-wwww:xxxx] [variable:value]
+
+- <COD - COllectable Disable (Disable Collectable Displaying)
+Disables collectable variable W from displaying on screen. There are 5 collectable variables. 0 is the first one, and 4 is the last one. Any higher and it'll just effect 0.
+Arguments: 1 [<CODwwww] [variable]
+
+- <COE - COllectable Enable (Enable Collectable Displaying)
+Enables collectable variable W from displaying on screen. There are 5 collectable variables. 0 is the first one, and 4 is the last one. Any higher and it'll just effect 0.
+Arguments: 1 [<COEwwww] [variable]
+
+- <COJ - COllectable Jump (Jump to event when player has collectables)
+Jump to event Y if the player has X amount of collectables or more in variable W. There are 5 collectable variables. 0 is the first one, and 4 is the last one. Any higher and it'll just effect 0.
+Arguments: 3 [<COJwwww:xxxx:yyyy] [variable:value:event]
 
 - <FM2 - Focus on Me 2
 
@@ -87,6 +172,15 @@ Arguments: 2 [<SNJwwww:zzzz] [skipflag:event]
 Set the Window Name to a text string -- End the text string with a $ so the game knows to stop reading the text.
 Arguments: 1 [<SWNstring$] [string$]
 Example: <SWNCave Story ~ Doukutsu Monogatari$
+
+- <TRM - TRansport Momentum
+
+This TSC command is the same as <TRA, except you maintain your momentum when used. It was used in Autumn's mod "Bliss".
+Arguments: 4 [<TRMwwww:zzzz:xxxx:yyyy] [map:event:x:y]
+
+- <TRX - TRansport keep X:y
+This TSC command is the same as <TRA except is preserves the players X:Y position. You need to be closer to the center of the hitbox of whatever you're interacting with to get it to properly work, as this is somewhat buggy.
+Arguments: 2 [<TRMwwww:zzzz] [map:event]
 
 - <WCL - Write CaLl
 Write a function call at address A to address B -- 2 text strings back-to-back, both ending with a $. The function address is a *hex value*.

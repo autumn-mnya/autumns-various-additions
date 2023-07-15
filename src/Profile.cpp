@@ -10,6 +10,7 @@
 #include "main.h"
 #include "BKG.h"
 #include "cave_story.h"
+#include "Collectables.h"
 #include "TextScript.h"
 
 const char* const gAutumnProfileCode = "AutumnMnyaHazel";
@@ -28,6 +29,13 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	memcpy(profile.code, gAutumnProfileCode, sizeof(profile.code));
 	memcpy(profile.imgFolder, TSC_IMG_Folder, sizeof(profile.imgFolder));
 	memcpy(profile.bkgTxT, bkgTxT_Global, sizeof(profile.bkgTxT));
+	profile.playerMoney = playerMoney;
+	memcpy(&profile.pCollectables, &gCollectables, sizeof(COLLECTABLES));
+	profile.enable_collect_a = enable_collectables_a;
+	profile.enable_collect_b = enable_collectables_b;
+	profile.enable_collect_c = enable_collectables_c;
+	profile.enable_collect_d = enable_collectables_d;
+	profile.enable_collect_e = enable_collectables_e;
 
 	// Write new save code after this
 }
@@ -55,6 +63,13 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		memset(&profile, 0, sizeof(CustomProfileData));
 		Freeware_fread(&profile.imgFolder, ImgFolderSize, 1, fp);
 		Freeware_fread(&profile.bkgTxT, bkgTxTSize, 1, fp);
+		Freeware_fread(&profile.playerMoney, 4, 1, fp);
+		Freeware_fread(&profile.pCollectables, sizeof(COLLECTABLES), 1, fp);
+		Freeware_fread(&profile.enable_collect_a, 4, 1, fp);
+		Freeware_fread(&profile.enable_collect_b, 4, 1, fp);
+		Freeware_fread(&profile.enable_collect_c, 4, 1, fp);
+		Freeware_fread(&profile.enable_collect_d, 4, 1, fp);
+		Freeware_fread(&profile.enable_collect_e, 4, 1, fp);
 	}
 
 	// Close the file
@@ -63,11 +78,11 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 	// Set Custom Data here
 	strcpy(TSC_IMG_Folder, profile.imgFolder);
 	strcpy(bkgTxT_Global, profile.bkgTxT);
-
-	memset(backgroundName, 0, sizeof(backgroundName));
-	/*
-	strcpy(backgroundName, profile.saveBkName);
-	backgroundType = profile.saveBkType;
-	numBks = profile.saveBkCount;
-	*/
+	playerMoney = profile.playerMoney;
+	memcpy(&gCollectables, &profile.pCollectables, sizeof(COLLECTABLES)); // write collectables
+	enable_collectables_a = profile.enable_collect_a; // the enabler in question
+	enable_collectables_b = profile.enable_collect_b;
+	enable_collectables_c = profile.enable_collect_c;
+	enable_collectables_d = profile.enable_collect_d;
+	enable_collectables_e = profile.enable_collect_e;
 }

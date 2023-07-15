@@ -13,11 +13,13 @@
 #include "cave_story.h"
 #include "ASMPatches.h"
 #include "BKG.h"
+#include "Collectables.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
+#include "MycParam.h"
 #include "PauseScreen.h"
 #include "Profile.h"
 #include "TextScript.h"
@@ -31,6 +33,12 @@ char gModulePath[MAX_PATH];
 char gDataPath[MAX_PATH];
 char gBkgPath[MAX_PATH];
 
+bool init_collectables_a_enabled = false;
+bool init_collectables_b_enabled = false;
+bool init_collectables_c_enabled = false;
+bool init_collectables_d_enabled = false;
+bool init_collectables_e_enabled = false;
+
 // Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
 {
@@ -40,6 +48,15 @@ void PlayerDeath()
 	StartTextScript(40);
 }
 
+void InitMod_CollectablesEnabled()
+{
+	init_collectables_a_enabled = enable_collectables_a;
+	init_collectables_b_enabled = enable_collectables_b;
+	init_collectables_c_enabled = enable_collectables_c;
+	init_collectables_d_enabled = enable_collectables_d;
+	init_collectables_e_enabled = enable_collectables_e;
+}
+
 // Inits anything relating to entities. The main thing are the 3 ModLoader_WriteJump's -- These replace every function that uses the Npc Table, and instead we also insert our new table!
 void InitMod_Entity()
 {
@@ -47,6 +64,12 @@ void InitMod_Entity()
 	ModLoader_WriteJump((void*)0x46FA00, (void*)Replacement_ActNpChar);
 	ModLoader_WriteJump((void*)0x46FAB0, (void*)Replacement_ChangeNpCharByEvent);
 	ModLoader_WriteJump((void*)0x46FD10, (void*)Replacement_ChangeCheckableNpCharByEvent);
+	// This only gets replaced if TSC is loaded
+	if (setting_enable_text_script_code && setting_enable_money_code && setting_money_disable_enemy_money_drops == false)
+	{
+		ModLoader_WriteJump((void*)0x419030, (void*)Replacement_HitMyCharNpChar);
+		ModLoader_WriteJump((void*)0x46F2B0, (void*)Replacement_SetExpObjects);
+	}
 }
 
 // Loads the new surface files (We can't go above 40, but we can use the unused ones. Except 3 and 4 as they are used in the netplay dll!)
@@ -93,6 +116,7 @@ void InitMod_SaveData()
 void InitMod_GameUI()
 {
 	ModLoader_WriteCall((void*)0x410683, (void*)Replacement_PutMyChar_Call);
+	ModLoader_WriteCall((void*)0x410856, (void*)Replacement_PutActiveArmsList_Call);
 }
 
 void InitMod_TSCImage()
@@ -107,19 +131,27 @@ void InitMod_TSCImage()
 
 void InitMod_TSCBkg()
 {
+	ModLoader_WriteCall((void*)0x402339, (void*)Replacement_InitBack_ReloadBitmap_File_Call); // Release Surface + MakeSurface_File instead of reloading bitmap
 	ModLoader_WriteCall((void*)0x40F871, (void*)Replacement_ModeOpening_PutBack_Call);
 	ModLoader_WriteCall((void*)0x40F8D1, (void*)Replacement_ModeOpening_PutFront_Call);
 	ModLoader_WriteCall((void*)0x410633, (void*)Replacement_ModeAction_PutBack_Call);
 	ModLoader_WriteCall((void*)0x4106C3, (void*)Replacement_ModeAction_PutFront_Call);
-	// ModLoader_WriteCall((void*)0x420DAA, (void*)Replacement_TransferStage_InitBack_Call);
 	ModLoader_WriteCall((void*)0x420EB5, (void*)Replacement_TransferStage_ResetFlash_Call);
-	ModLoader_WriteCall((void*)0x411546, (void*)Replacement_LevelBackgroundCall);
 	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
 }
 
 void InitMod_ASMPatches()
 {
 	// Random ASM Patches that arent related to any of the other Init functions go here
+}
+
+void InitCollectablesEnabled()
+{
+	enable_collectables_a = init_collectables_a_enabled;
+	enable_collectables_b = init_collectables_b_enabled;
+	enable_collectables_c = init_collectables_c_enabled;
+	enable_collectables_d = init_collectables_d_enabled;
+	enable_collectables_e = init_collectables_e_enabled;
 }
 
 // Init the whole mod
@@ -163,6 +195,7 @@ void InitMod(void)
 		InitMod_TSC();
 		InitMod_TSCImage();
 		InitMod_TSCBkg();
+		InitMod_CollectablesEnabled();
 
 		// Get path of the Bkg folder
 		strcpy(gBkgPath, gDataPath);

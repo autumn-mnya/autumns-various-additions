@@ -463,3 +463,4 @@
 #456	Match	Offset	Player Match (Offset)	0:0:0:0	Read Custom Entities txt file.	Custom:Mechanics ;
 #457	CamOffset	Trigger	Camera Offset Trigger	0:0:0:0	Read Custom Entities txt file.	Custom:Mechanics ;
 #458	CamCoord	Trigger	Camera Target Trigger (X:Y)	0:0:0:0	Read Custom Entities txt file.	Custom:Mechanics ;
+#459	Money	Entity	Money Entity	2176:0:2208:32	Read Custom Entities txt file.	;

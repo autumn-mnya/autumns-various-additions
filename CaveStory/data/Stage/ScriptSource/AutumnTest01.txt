@@ -27,3 +27,12 @@
 
 #0505
 <LDR0000:0000<FM20016:0000:0000:0000<END
+
+#2000
+<SWNfore$<END
+
+#2001
+<CTSOside$<END
+
+#2002
+<CSDcollab\\autumn$0028$bkFog$<END

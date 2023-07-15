@@ -9,8 +9,10 @@
 
 #include "cave_story.h"
 #include "main.h"
+#include "Collectables.h"
 #include "Entity.h"
 #include "EntityTable.h"
+#include "TextScript.h"
 
 // This file loads certain things relating to entities, but does not hold entity code itself.
 
@@ -174,4 +176,201 @@ void Replacement_ChangeCheckableNpCharByEvent(int code_event, int code_char, int
 				gpEntityFuncTbl[code_char - 361](&gNPC[n]);
 		}
 	}
+}
+
+void SetNormalExp(int x, int y, int exp)
+{
+	int n;
+	int sub_exp;
+
+	n = 0x100;
+	while (exp)
+	{
+		while (n < NPC_MAX && gNPC[n].cond)
+			++n;
+
+		if (n == NPC_MAX)
+			break;
+
+		memset(&gNPC[n], 0, sizeof(NPCHAR));
+
+		if (exp >= 20)
+		{
+			exp -= 20;
+			sub_exp = 20;
+		}
+		else if (exp >= 5)
+		{
+			exp -= 5;
+			sub_exp = 5;
+		}
+		else if (exp >= 1)
+		{
+			exp -= 1;
+			sub_exp = 1;
+		}
+
+		gNPC[n].cond |= 0x80;
+		gNPC[n].direct = 0;
+		gNPC[n].code_char = 1;
+		gNPC[n].x = x;
+		gNPC[n].y = y;
+		gNPC[n].bits = (*gNpcTable)[gNPC[n].code_char].bits;
+		gNPC[n].exp = sub_exp;
+
+		SetUniqueParameter(&gNPC[n]);
+	}
+}
+
+void SetMoneyObjects(int x, int y, int exp)
+{
+	int n;
+	int sub_exp;
+
+	n = 0x100;
+	while (exp)
+	{
+		while (n < NPC_MAX && gNPC[n].cond)
+			++n;
+
+		if (n == NPC_MAX)
+			break;
+
+		memset(&gNPC[n], 0, sizeof(NPCHAR));
+
+		if (exp >= 20)
+		{
+			exp -= 20;
+			sub_exp = 20;
+		}
+		else if (exp >= 5)
+		{
+			exp -= 5;
+			sub_exp = 5;
+		}
+		else if (exp >= 1)
+		{
+			exp -= 1;
+			sub_exp = 1;
+		}
+
+		gNPC[n].cond |= 0x80;
+		gNPC[n].direct = 0;
+		gNPC[n].code_char = 459;
+		gNPC[n].x = x;
+		gNPC[n].y = y;
+		gNPC[n].bits = (*gNpcTable)[gNPC[n].code_char].bits;
+		gNPC[n].exp = sub_exp;
+
+		SetUniqueParameter(&gNPC[n]);
+	}
+}
+
+void Replacement_SetExpObjects(int x, int y, int exp)
+{
+	// For now !!!! this will change
+	if (setting_money_disable_exp_drops == false)
+	{
+		SetNormalExp(x, y, exp);
+		SetMoneyObjects(x, y, exp / 2);
+	}
+	else
+		SetMoneyObjects(x, y, exp);
+}
+
+void Replacement_HitMyCharNpChar(void)
+{
+	int i;
+	int hit = 0;
+
+	if (!(gMC->cond & 0x80) || gMC->cond & 2)
+		return;
+
+	for (i = 0; i < NPC_MAX; ++i)
+	{
+		if (!(gNPC[i].cond & 0x80))
+			continue;
+
+		hit = 0;
+
+		if (gNPC[i].bits & NPC_SOLID_SOFT)
+		{
+			hit = JudgeHitMyCharNPC(&gNPC[i]);
+			gMC->flag |= hit;
+		}
+		else if (gNPC[i].bits & NPC_SOLID_HARD)
+		{
+			hit = JudgeHitMyCharNPC4(&gNPC[i]);
+			gMC->flag |= hit;
+		}
+		else
+		{
+			hit = JudgeHitMyCharNPC3(&gNPC[i]);
+		}
+
+		// Special NPCs (pickups)
+		if (hit != 0 && gNPC[i].code_char == 1)
+		{
+			PlaySoundObject(14, SOUND_MODE_PLAY);
+			AddExpMyChar(gNPC[i].exp);
+			gNPC[i].cond = 0;
+		}
+
+		if (hit != 0 && gNPC[i].code_char == 86)
+		{
+			PlaySoundObject(42, SOUND_MODE_PLAY);
+			AddBulletMyChar(gNPC[i].code_event, gNPC[i].exp);
+			gNPC[i].cond = 0;
+		}
+
+		if (hit != 0 && gNPC[i].code_char == 87)
+		{
+			PlaySoundObject(20, SOUND_MODE_PLAY);
+			AddLifeMyChar(gNPC[i].exp);
+			gNPC[i].cond = 0;
+		}
+
+		if (hit != 0 && gNPC[i].code_char == 459)
+		{
+			PlaySoundObject(14, SOUND_MODE_PLAY);
+			AddMoney(gNPC[i].exp);
+			gNPC[i].cond = 0;
+		}
+
+		// Run event on contact
+		if (!(g_GameFlags & 4) && hit != 0 && gNPC[i].bits & NPC_EVENT_WHEN_TOUCHED)
+			StartTextScript(gNPC[i].code_event);
+
+		// NPC damage
+		if (g_GameFlags & 2 && !(gNPC[i].bits & NPC_INTERACTABLE))
+		{
+			if (gNPC[i].bits & NPC_REAR_AND_TOP_DONT_HURT)
+			{
+				if (hit & 4 && gNPC[i].xm < 0)
+					DamageMyChar(gNPC[i].damage);
+				if (hit & 1 && gNPC[i].xm > 0)
+					DamageMyChar(gNPC[i].damage);
+				if (hit & 8 && gNPC[i].ym < 0)
+					DamageMyChar(gNPC[i].damage);
+				if (hit & 2 && gNPC[i].ym > 0)
+					DamageMyChar(gNPC[i].damage);
+			}
+			else if (hit != 0 && gNPC[i].damage && !(g_GameFlags & 4))
+			{
+				DamageMyChar(gNPC[i].damage);
+			}
+		}
+
+		// Interaction
+		if (!(g_GameFlags & 4) && hit != 0 && gMC->cond & 1 && gNPC[i].bits & NPC_INTERACTABLE)
+		{
+			StartTextScript(gNPC[i].code_event);
+			gMC->xm = 0;
+			gMC->ques = FALSE;
+		}
+	}
+
+	// Create question mark when NPC hasn't been interacted with
+	if (gMC->ques)
+		SetCaret(gMC->x, gMC->y, CARET_QUESTION_MARK, DIR_LEFT);
 }

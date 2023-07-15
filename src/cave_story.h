@@ -904,6 +904,7 @@ typedef void (*NPCFUNCTION)(NPCHAR*);
 
 static ARMS* gArmsData = (ARMS*)0x499BC8;
 static ARMS_LEVEL(&gArmsLevelTable)[14] = *(ARMS_LEVEL(*)[14])0x493660;
+static BACK* gBack = (BACK*)0x499C74;
 static BULLET(&gBul)[BULLET_MAX] = *(BULLET(*)[BULLET_MAX])0x499C98;
 static BULLET_TABLE(&gBulTbl)[46] = *(BULLET_TABLE(*)[46])0x48F044;
 static NPCHAR(&gBoss)[BOSS_MAX] = *(NPCHAR(*)[BOSS_MAX])0x4BBA58;

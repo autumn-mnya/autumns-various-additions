@@ -14,12 +14,21 @@
 #include "mod_loader_hooks.h"
 #include "BKG.h"
 #include "cave_story.h"
+#include "Collectables.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "Frame.h"
 #include "MyChar.h"
 #include "MycParam.h"
+
+bool setting_enable_money_code = false;
+bool setting_money_disable_enemy_money_drops = false;
+bool setting_money_disable_exp_drops = false;
+
+int setting_money_hud_x = 8;
+int setting_money_hud_y = 48;
+int setting_money_hud_x_number_offset = 16;
 
 char CustomWindowName[MAX_PATH] = "";
 char CustomScriptName[0x20] = "";
@@ -239,21 +248,173 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		GetTextScriptString(bkPath);
 		BKG_LoadBackground(bkPath);
 	}
+	else if (strncmp(where + 1, "BKP", 3) == 0) // BacKground Parameter
+	{
+		w = GetTextScriptNo(gTS->p_read + 4);
+		x = GetTextScriptNo(gTS->p_read + 9);
+		y = GetTextScriptNo(gTS->p_read + 14);
+
+		BKG_SetParameter(w, x, y); // Set parameter X for layer W to value Y
+		gTS->p_read += 18;
+	}
 	else if (strncmp(where + 1, "BKR", 3) == 0) // BacKground Reset
 	{
 		BKG_ResetBackgrounds();
 		gTS->p_read += 4;
 	}
-	else if (strncmp(where + 1, "EBL", 3) == 0) // Enable Bkg Layer
+	else if (strncmp(where + 1, "BKE", 3) == 0) // BacKground Enable
 	{
 		z = GetTextScriptNo(gTS->p_read + 4);
 		bkList[z].isActive = true;
 		gTS->p_read += 8;
 	}
-	else if (strncmp(where + 1, "DBL", 3) == 0) // Disable Bkg Layer
+	else if (strncmp(where + 1, "BKD", 3) == 0) // BacKground Disable
 	{
 		z = GetTextScriptNo(gTS->p_read + 4);
 		bkList[z].isActive = false;
+		gTS->p_read += 8;
+	}
+	else if (strncmp(where + 1, "BUY", 3) == 0) // BUY something (with money enabled)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		if (playerMoney < x) // if player money is less than X, jump event
+			JumpTextScript(y);
+		else
+		{
+			playerMoney -= x;
+			gTS->p_read += 13;
+		}
+	}
+	else if (strncmp(where + 1, "BY2", 3) == 0) // BuY something 2 (with money enabled)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		if (playerMoney >= x) // if player money is greater than or equal to X, jump event
+		{
+			playerMoney -= x;
+			JumpTextScript(y);
+		}
+		else
+			gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "SEL", 3) == 0) // SELl (Add money when money is enabled)
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		playerMoney += z;
+		gTS->p_read += 8;
+	}
+	else if (strncmp(where + 1, "SL=", 3) == 0) // SeLl = (Set money to Z when money is enabled)
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		playerMoney = z;
+		gTS->p_read += 8;
+	}
+	else if (strncmp(where + 1, "CSF", 3) == 0) // Change Surface Folder
+	{
+		char surfaceId[0x30];
+		char surfacePath[0x30];
+		gTS->p_read += 4;
+
+		memset(surfaceId, 0, sizeof(surfaceId));
+		memset(surfacePath, 0, sizeof(surfacePath));
+
+		GetTextScriptString(surfaceId);
+		GetTextScriptString(surfacePath);
+
+		SwapSurfaces(surfacePath, atoi(surfaceId));
+	}
+	else if (strncmp(where + 1, "CTS", 3) == 0)
+	{
+		// Get path
+		char path[MAX_PATH];
+		char path_dir[20];
+		char parts[32];
+		gTS->p_read += 4;
+
+		memset(path, 0, sizeof(path));
+		memset(path_dir, 0, sizeof(path_dir));
+		memset(parts, 0, sizeof(parts));
+
+		GetTextScriptString(parts); // the tileset we want to load
+
+		strcpy(path_dir, "Stage");
+
+		// Load tileset
+		sprintf(path, "%s\\Prt%s", path_dir, parts);
+		ReleaseSurface(SURFACE_ID_LEVEL_TILESET); // release
+		MakeSurface_File(path, SURFACE_ID_LEVEL_TILESET); // make surface!
+
+		sprintf(path, "%s\\%s.pxa", path_dir, parts);
+		LoadAttributeData(path);
+	}
+	else if (strncmp(where + 1, "CO+", 3) == 0) // Collectable Jump
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		AddCollectables(x, y);
+
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "CO-", 3) == 0) // Collectable Jump
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		RemoveCollectables(x, y);
+
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "COJ", 3) == 0) // Collectable Jump
+	{
+		int collectable;
+
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		z = GetTextScriptNo(gTS->p_read + 14);
+
+		switch (x)
+		{
+			default:
+			case 0:
+				collectable = gCollectables.numA;
+				break;
+
+			case 1:
+				collectable = gCollectables.numB;
+				break;
+
+			case 2:
+				collectable = gCollectables.numC;
+				break;
+
+			case 3:
+				collectable = gCollectables.numD;
+				break;
+
+			case 4:
+				collectable = gCollectables.numE;
+				break;
+		}
+
+		if (collectable >= y)
+			JumpTextScript(z);
+		else
+			gTS->p_read += 18;
+	}
+	else if (strncmp(where + 1, "COE", 3) == 0) // COllectable Enable
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		EnableCollectable(z);
+		gTS->p_read += 8;
+	}
+	else if (strncmp(where + 1, "COD", 3) == 0) // COllectable Disable
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		DisableCollectable(z);
 		gTS->p_read += 8;
 	}
 	else

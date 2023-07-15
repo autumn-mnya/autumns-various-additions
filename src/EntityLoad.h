@@ -19,3 +19,5 @@ BOOL LoadCustomEvent(const char* path_event, int npc_count);
 void Replacement_ActNpChar(void);
 void Replacement_ChangeNpCharByEvent(int code_event, int code_char, int dir);
 void Replacement_ChangeCheckableNpCharByEvent(int code_event, int code_char, int dir);
+void Replacement_HitMyCharNpChar(void);
+void Replacement_SetExpObjects(int x, int y, int exp);

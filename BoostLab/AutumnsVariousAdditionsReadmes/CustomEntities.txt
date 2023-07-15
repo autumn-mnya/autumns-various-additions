@@ -220,3 +220,6 @@ Custom Values available:
 A - X coordinate to target.
 B - Y coordinate to target.
 C - How many frames it takes for the camera to move. (Default is 16)
+
+#459 - Money Entity
+Drops from enemies when the TSC money code is enabled.

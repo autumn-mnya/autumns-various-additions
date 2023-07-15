@@ -7,13 +7,11 @@
 
 
 extern int setting_show_img_on_top_flag;
-extern int setting_bkg_background_width;
-extern int setting_bkg_background_height;
 
 extern char TSC_IMG_Name[ImgNameSize];
 
 void ReplaceSurfaceID(const char* n, SurfaceID no);
-void Replacement_LevelBackgroundCall(int x, int y, SurfaceID s, BOOL b);
+void SwapSurfaces(const char* n, int no);
 void Replacement_StageImageSurfaceCall(const char* n, SurfaceID s);
 void LoadTSC_Image(char* name);
 void Replacement_ModeOpening_SetFadeMask_Call();

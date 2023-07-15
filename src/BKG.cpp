@@ -16,8 +16,12 @@ SUBKG bkList[BKGCount] = {};
 int numBks = 0;
 char bkgTxT_Global[bkgTxTSize];
 
-char backgroundName[MAX_PATH];
-int backgroundType = 0;
+// 0x402339
+void Replacement_InitBack_ReloadBitmap_File_Call(const char* fName)
+{
+	ReleaseSurface(0x1C);
+	MakeSurface_File(fName, 0x1C);
+}
 
 void BKG_ResetBackgrounds()
 {
@@ -49,7 +53,7 @@ void BKG_SetBackground(int i, int b1, int b2, int b3, int b4, int r1, int r2, in
 	bkList[i].counter = 0;
 	bkList[i].x = o1;// - r1 * b3 / 2;
 	bkList[i].y = o2;// -r2 * b4 / 2;
-	if (bkList[i].type & 1024)
+	if (bkList[i].type & 1024) // If type is 1024, background x/y position is random between 0 and x/y respectively, animation speed is random between (animation speed, and animation speed * 2), animation counter is random between 0 and animation speed, and starting animation frame as random between 0 and amount of frames.
 	{
 		bkList[i].x = Random(0, bkList[i].x);
 		bkList[i].y = Random(0, bkList[i].y);
@@ -59,6 +63,90 @@ void BKG_SetBackground(int i, int b1, int b2, int b3, int b4, int r1, int r2, in
 	}
 	bkList[i].bkgXval = 0;
 	bkList[i].bkgYval = 0;
+}
+
+// Used for <BKP
+// Set parameter X for layer W to value Y
+void BKG_SetParameter(int w, int x, int y)
+{
+	switch (x)
+	{
+		// Bitmap X offset
+		default:
+		case 0:
+			bkList[w].bmX = y;
+			break;
+
+		// Bitmap Y offset
+		case 1:
+			bkList[w].bmY = y;
+			break;
+
+		// Bitmap width
+		case 2:
+			bkList[w].bmW = y;
+			break;
+
+		// Bitmap height
+		case 3:
+			bkList[w].bmH = y;
+			break;
+
+		// Number of times repeated width-wise
+		case 4:
+			bkList[w].repX = y;
+			break;
+
+		// Number of times repeated height-wise
+		case 5:
+			bkList[w].repY = y;
+			break;
+
+		// Horizontal distance between each repeated section
+		case 6:
+			bkList[w].xDist = y;
+			break;
+
+		// Vertical distance between each repeated section
+		case 7:
+			bkList[w].yDist = y;
+			break;
+
+		// Scroll type
+		case 8:
+			bkList[w].type = y;
+			break;
+
+		// Horizontal scroll Speed
+		case 9:
+			bkList[w].xm = y / 10;
+			break;
+
+		// Vertical scroll speed
+			bkList[w].ym = y / 10;
+		case 10:
+			break;
+
+		// Number of frames
+		case 11:
+			bkList[w].spriteNum = y;
+			break;
+
+		// Animation Speed
+		case 12:
+			bkList[w].animSpeed = y;
+			break;
+
+		// X offset
+		case 13:
+			bkList[w].x = y * 0x10;
+			break;
+
+		// Y offset
+		case 14:
+			bkList[w].y = y * 0x10;
+			break;
+	}
 }
 
 void BKG_LoadBackground(char* file)
@@ -90,13 +178,6 @@ void BKG_LoadBackground(char* file)
 	fgets(line, sizeof(line), fptr);
 	sscanf(line, "%s", backFi);
 	InitBack(backFi, 0);
-
-	// set backgroundName and backgroundType for save file
-	/*
-	memset(backgroundName, 0, sizeof(backgroundName));
-	strcpy(backgroundName, backFi);
-	backgroundType = 0;
-	*/
 
 	for (int i = 0; fgets(line, sizeof(line), fptr); i = i)
 	{
@@ -180,7 +261,9 @@ void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg)
 {
 	for (int i = 0; i < numBks; i++)
 	{
-		if (bkList[i].isActive) {
+		if (bkList[i].isActive)
+		{
+			// Set RECT
 			int x1 = bkList[i].bmX + (bkList[i].bmW * bkList[i].animFrame);
 			int y1 = bkList[i].bmY;
 			int x2 = x1 + bkList[i].bmW;
@@ -188,97 +271,123 @@ void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg)
 
 			RECT tRec = { x1, y1, x2, y2 };
 
-			if (bkList[i].spriteNum > 1) {
+			if (bkList[i].spriteNum > 1) // Animated Background frames if sprite number is greater than 1
+			{
 				if (++bkList[i].counter > bkList[i].animSpeed)
 				{
 					if (++bkList[i].animFrame >= bkList[i].spriteNum)
 					{
 						bkList[i].animFrame = 0;
 					}
+
 					bkList[i].counter = 0;
 				}
 			}
 
+			// Set repeat X/Y
 			int repX = bkList[i].repX;
 			int repY = bkList[i].repY;
 
-			if (repX == 1) {
+			if (repX == 1) // If repeat X is 1, then the hozizontal distance between repeated backgrounds is set to 0.
+			{
 				bkList[i].xDist = 0;
 			}
 
+			// Create type bit
 			int bitm = bkList[i].type;
 
-			if (bitm & 4)
+			if (bitm & 4) // If we have type 4, then the background will scroll horizontally.
 			{
 				bkList[i].bkgXval -= bkList[i].xm;
+
 				if (bkList[i].bkgXval + bkList[i].x + (bkList[i].bmW + bkList[i].xDist) * bkList[i].repX < 0)
 				{
 					bkList[i].bkgXval = bkList[i].bkgXval + (bkList[i].bmW + bkList[i].xDist) + WINDOW_WIDTH;
-					if (bitm & 128) {
+
+					if (bitm & 128) // If we have bit 128, then add random amount of speed to the Y direction, minimum being (0 subtracted by animation speed), maximum being animation speed.
+					{
 						bkList[i].bkgYval += Random(0 - bkList[i].animSpeed, bkList[i].animSpeed);
 					}
 				}
+
 				if (bkList[i].bkgXval + bkList[i].x > WINDOW_WIDTH)
 				{
 					bkList[i].bkgXval = bkList[i].bkgXval - WINDOW_WIDTH;
-					if (bitm & 128) {
+
+					if (bitm & 128) // If we have bit 128, then add random amount of speed to the Y direction, minimum being (0 subtracted by animation speed), maximum being animation speed.
+					{
 						bkList[i].bkgYval += Random(0 - bkList[i].animSpeed, bkList[i].animSpeed);
 					}
 				}
 			}
-			if (bitm & 8)
+
+			if (bitm & 8) // If we have type 8, then the background will scroll vertically.
 			{
 				bkList[i].bkgYval -= bkList[i].ym;
+
 				if (bkList[i].bkgYval + bkList[i].y < -(bkList[i].bmH + bkList[i].yDist) * bkList[i].repY)
 				{
 					bkList[i].bkgYval = bkList[i].bkgYval + (bkList[i].bmH + bkList[i].yDist) * bkList[i].repY;
-					if (bitm & 64) {
+
+					if (bitm & 64) // If we have bit 64, then add random amount of speed to the X direction, minimum being (0 subtracted by animation speed), maximum being animation speed.
+					{
 						bkList[i].bkgXval += Random(0 - bkList[i].animSpeed, bkList[i].animSpeed);
 					}
 				}
+
 				if (bkList[i].bkgYval + bkList[i].y > (bkList[i].bmH + bkList[i].yDist) * bkList[i].repY)
 				{
 					bkList[i].bkgYval = bkList[i].bkgYval - (bkList[i].bmH + bkList[i].yDist) * bkList[i].repY;
-					if (bitm & 64) {
+
+					if (bitm & 64) // If we have bit 64, then add random amount of speed to the X direction, minimum being (0 subtracted by animation speed), maximum being animation speed.
+					{
 						bkList[i].bkgXval += Random(0 - bkList[i].animSpeed, bkList[i].animSpeed);
 					}
 				}
 			}
 
+			// Create yOff value
 			double yOff = bkList[i].bkgYval;
 
-			if (bitm & 16)
+			if (bitm & 16) // If we have bit 16, then the background aligns with gWaterY
 			{
 				yOff += (gWaterY - CS_camera_y_pos) * 0x200;
 			}
 
-			if (bkList[i].y != 0) {
+			if (bkList[i].y != 0) // If the backgrounds Y does NOT equal 0, then move
+			{
 				yOff += (bkList[i].y);  //for map snapping
 			}
 
-			if (bitm & 2)
+			if (bitm & 2) // If we have bit 2, then move the background vertically with the players camera
 			{
 				yOff -= CS_camera_y_pos / 0x200 * bkList[i].ym;
 			}
-			if (bitm & 512) {
+
+			if (bitm & 512) // If we have bit 512, lock the background to the X axis at all times
+			{
 				yOff -= CS_camera_y_pos / 0x200;
 			}
 
+			// Turn yOff into an int?
 			yOff = (int)yOff;
 
 			for (int y = 0; y < repY && yOff < gMap.length * 16; y++)
 			{
 				double xOff = bkList[i].bkgXval;
 
-				if (bkList[i].x != 0) {
+				if (bkList[i].x != 0)
+				{
 					xOff += (bkList[i].x);
 				}
 
-				if (bitm & 1)
+				if (bitm & 1) // If we have bit flag 1, move the background horizontally with the players camera
 				{
 					xOff -= CS_camera_x_pos / 0x200 * bkList[i].xm;
 				}
-				if (bitm & 256) {
+
+				if (bitm & 256) // If we have bit 256, lock the background to the Y axis at all times
+				{
 					xOff -= CS_camera_x_pos / 0x200;
 				}
 
@@ -287,7 +396,9 @@ void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg)
 				for (int x = 0; x < repX && xOff < gMap.width * 16; x++)
 				{
 					int xDo = xOff, yDo = yOff;
-					if ((bitm & 32 && forg) || (!(bitm & 32) && !forg)) {
+
+					if ((bitm & 32 && forg) || (!(bitm & 32) && !forg))
+					{
 						if (i == 0)
 						{
 							PutBitmap4(&grcGame, xDo, yDo, &tRec, SURFACE_ID_LEVEL_BACKGROUND);
@@ -331,22 +442,10 @@ void Replacement_ModeAction_PutFront_Call(int frame_x, int frame_y)
 	PutFront(frame_x, frame_y);
 }
 
-void Replacement_TransferStage_InitBack_Call(const char* n, int t)
-{
-	/*
-	memset(backgroundName, 0, sizeof(backgroundName));
-	strcpy(backgroundName, n);
-	backgroundType = t;
-	*/
-
-	InitBack(n, t);
-}
-
 // reset bkg backgrounds on stage transition
 void Replacement_TransferStage_ResetFlash_Call()
 {
 	ResetFlash();
-
 
 	if (isLoadingSave == false)
 		BKG_ResetBackgrounds();

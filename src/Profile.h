@@ -4,6 +4,7 @@
 
 #include "BKG.h"
 #include "cave_story.h"
+#include "Collectables.h"
 #include "TextScript.h"
 
 #define ProfileCodeSize 16
@@ -15,6 +16,13 @@ typedef struct CustomProfileData
 	char code[ProfileCodeSize];
 	char imgFolder[ImgFolderSize];
 	char bkgTxT[bkgTxTSize];
+	int playerMoney;
+	COLLECTABLES pCollectables;
+	int enable_collect_a;
+	int enable_collect_b;
+	int enable_collect_c;
+	int enable_collect_d;
+	int enable_collect_e;
 } CustomProfileData;
 
 extern CustomProfileData profile;

@@ -11,11 +11,13 @@
 #include "mod_loader.h"
 #include "cave_story.h"
 #include "ASMPatches.h"
+#include "Collectables.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
+#include "MycParam.h"
 #include "PauseScreen.h"
 #include "TextScript.h"
 #include "TileCollisionBoss.h"
@@ -117,6 +119,24 @@ void InitMod_Settings()
 
 	setting_running_speed = ModLoader_GetSettingInt("Max Running Speed", 1218);
 
+	// Life Drain / Regen when flag is set
+
+	setting_enable_life_drain = ModLoader_GetSettingBool("Life Drain when Flag is set", false);
+	setting_enable_life_regen = ModLoader_GetSettingBool("Life Regen when Flag is set", false);
+
+	// Flags for Life Drain/Regen
+
+	setting_life_drain_flag = ModLoader_GetSettingInt("Life Drain Flag", 6504);
+	setting_life_regen_flag = ModLoader_GetSettingInt("Life Regen Flag", 6505);
+
+	// Wait timer for Life Drain/Regen
+	setting_life_drain_wait = ModLoader_GetSettingInt("Life Drain Wait", 60);
+	setting_life_regen_wait = ModLoader_GetSettingInt("Life Regen Wait", 120);
+
+	// Amount of Life to Drain/Regen
+	setting_life_drain_amount = ModLoader_GetSettingInt("Life Drain Amount", 1);
+	setting_life_regen_amount = ModLoader_GetSettingInt("Life Regen Amount", 1);
+
 	////////////////////
 	// Tile Collision //
 	////////////////////
@@ -133,9 +153,41 @@ void InitMod_Settings()
 	/////////////////
 
 	setting_show_img_on_top_flag = ModLoader_GetSettingInt("Show Image Above Textbox Flag", 6503);
+	setting_enable_money_code = ModLoader_GetSettingBool("Enable Money Code", false);
+	// Disable Money from Entities
+	setting_money_disable_enemy_money_drops = ModLoader_GetSettingBool("Disable Money from Entities", false);
+	// Disable EXP from Entities (when money is enabled)
+	setting_money_disable_exp_drops = ModLoader_GetSettingBool("Disable EXP with Money", false);
 
-	setting_bkg_background_width = ModLoader_GetSettingInt("BKG Surface Width", 800);
-	setting_bkg_background_height = ModLoader_GetSettingInt("BKG Surface Height", 800);
+	// Money Hud position
+	setting_money_hud_x = ModLoader_GetSettingInt("Money Hud X", 8);
+	setting_money_hud_y = ModLoader_GetSettingInt("Money Hud Y", 48);
+	// How offset the numbers are compared to the money icon
+	setting_money_hud_x_number_offset = ModLoader_GetSettingInt("Money Hud X Number Offset", 16);
+
+	// Collectables
+
+	enable_collectables_a = ModLoader_GetSettingBool("Enable Collectables UI A", false);
+	enable_collectables_b = ModLoader_GetSettingBool("Enable Collectables UI B", false);
+	enable_collectables_c = ModLoader_GetSettingBool("Enable Collectables UI C", false);
+	enable_collectables_d = ModLoader_GetSettingBool("Enable Collectables UI D", false);
+	enable_collectables_e = ModLoader_GetSettingBool("Enable Collectables UI E", false);
+
+	collectables_a_x_pos = ModLoader_GetSettingInt("Collectables A (X Position)", 8);
+	collectables_a_y_pos = ModLoader_GetSettingInt("Collectables A (Y Position)", 56);
+	collectables_a_x_offset = ModLoader_GetSettingInt("Collectables A (X Number Offset)", 0);
+	collectables_b_x_pos = ModLoader_GetSettingInt("Collectables B (X Position)", 8);
+	collectables_b_y_pos = ModLoader_GetSettingInt("Collectables B (Y Position)", 64);
+	collectables_b_x_offset = ModLoader_GetSettingInt("Collectables B (X Number Offset)", 0);
+	collectables_c_x_pos = ModLoader_GetSettingInt("Collectables C (X Position)", 8);
+	collectables_c_y_pos = ModLoader_GetSettingInt("Collectables C (Y Position)", 72);
+	collectables_c_x_offset = ModLoader_GetSettingInt("Collectables C (X Number Offset)", 0);
+	collectables_d_x_pos = ModLoader_GetSettingInt("Collectables D (X Position)", 8);
+	collectables_d_y_pos = ModLoader_GetSettingInt("Collectables D (Y Position)", 80);
+	collectables_d_x_offset = ModLoader_GetSettingInt("Collectables D (X Number Offset)", 0);
+	collectables_e_x_pos = ModLoader_GetSettingInt("Collectables E (X Position)", 8);
+	collectables_e_y_pos = ModLoader_GetSettingInt("Collectables E (Y Position)", 88);
+	collectables_e_x_offset = ModLoader_GetSettingInt("Collectables E (X Number Offset)", 0);
 
 	/////////////////////
 	// Pause Menu Text //

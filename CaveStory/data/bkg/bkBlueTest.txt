@@ -1,0 +1,48 @@
+bkBlueTest
+128 // Black image covers whole screen
+0
+64
+64
+320 // Screen width
+240 // Screen height
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+64
+0
+64
+64
+128 // if the Repeat X/Y is set to the same as the sprite size, it'll loop correctly.
+128
+0
+0
+12
+2.0
+2.0
+0
+0
+0
+0
+
+0
+0
+64
+64
+64
+64
+0
+0
+3
+0.9
+0.9
+0
+0
+0.0
+0.0
