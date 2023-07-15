@@ -78,7 +78,6 @@ void LoadTSC_Image(char* name)
 void ResetTSC_Image()
 {
 	memset(TSC_IMG_Folder, 0, sizeof(TSC_IMG_Folder));
-	BKG_ResetBackgrounds();
 	LoadTSC_Image("0");
 }
 
@@ -98,10 +97,11 @@ void Replacement_ModeTitle_InitStar_Call()
 
 void Replacement_LoadProfile_ClearFade_Call()
 {
-	if (!(memcmp(bkList, profile.saveBkList, sizeof(bkList)) == 0))
+	// this needs to NOT reset if we're loading
+	if (isLoadingSave == false)
 		BKG_ResetBackgrounds();
 	else
-		InitBack(profile.saveBkName, profile.saveBkType);
+		isLoadingSave = false;
 
 	ResetTSC_Image();
 	ClearFade();
@@ -112,6 +112,7 @@ void Replacement_InitializeGame_ClearArmsData_Call()
 	ClearArmsData();
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();
+	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
 }
 
 // Put <IMG on screen

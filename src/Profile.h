@@ -6,14 +6,15 @@
 #include "cave_story.h"
 #include "TextScript.h"
 
+#define ProfileCodeSize 16
+extern bool isLoadingSave;
+
+// struct padding exists ! make sure these all get evenly divided by four..
 typedef struct CustomProfileData
 {
-	char code[11];
+	char code[ProfileCodeSize];
 	char imgFolder[ImgFolderSize];
-	char saveBkName[MAX_PATH];
-	int saveBkType;
-	int saveBkCount;
-	SUBKG saveBkList[BKGCount];
+	char bkgTxT[bkgTxTSize];
 } CustomProfileData;
 
 extern CustomProfileData profile;

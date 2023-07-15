@@ -87,6 +87,7 @@ void InitMod_SaveData()
 	ModLoader_WriteCall((void*)0x41D213, (void*)Replacement_SaveProfile_LastMemcpy_Call);
 	ModLoader_WriteCall((void*)0x41D22D, (void*)Replacement_SaveProfile_fwrite_Call);
 	ModLoader_WriteCall((void*)0x41D353, (void*)Replacement_LoadProfile_fclose_Call);
+	isLoadingSave = false;
 }
 
 void InitMod_GameUI()
@@ -110,9 +111,10 @@ void InitMod_TSCBkg()
 	ModLoader_WriteCall((void*)0x40F8D1, (void*)Replacement_ModeOpening_PutFront_Call);
 	ModLoader_WriteCall((void*)0x410633, (void*)Replacement_ModeAction_PutBack_Call);
 	ModLoader_WriteCall((void*)0x4106C3, (void*)Replacement_ModeAction_PutFront_Call);
-	ModLoader_WriteCall((void*)0x420DAA, (void*)Replacement_TransferStage_InitBack_Call);
+	// ModLoader_WriteCall((void*)0x420DAA, (void*)Replacement_TransferStage_InitBack_Call);
 	ModLoader_WriteCall((void*)0x420EB5, (void*)Replacement_TransferStage_ResetFlash_Call);
 	ModLoader_WriteCall((void*)0x411546, (void*)Replacement_LevelBackgroundCall);
+	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
 }
 
 void InitMod_ASMPatches()

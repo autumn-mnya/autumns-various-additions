@@ -6,7 +6,7 @@
 
 #include "mod_loader_hooks.h"
 
-#define ImgFolderSize 0x32
+#define ImgFolderSize 48
 #define ImgNameSize 0x32
 
 extern char TSC_IMG_Folder[ImgFolderSize];

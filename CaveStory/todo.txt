@@ -1,9 +1,9 @@
 # MyChar #
 
--Health Drain/Regen on flag set
+[-] Health Drain/Regen on flag set
 
 # TSC #
--BKG (Bionicobot Version)
--CO+/CO-/COJ (Autumn Collectables hack)
--BUY/SEL (+ money npc?)
--SRP/RSP (Periwinkle Respawning hack)
+[x] BKG (Bionicobot Version)
+[-] CO+/CO-/COJ (Autumn Collectables hack)
+[-] BUY/SEL (+ money npc?)
+[-] SRP/RSP (Periwinkle Respawning hack)

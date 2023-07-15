@@ -14,6 +14,7 @@
 
 SUBKG bkList[BKGCount] = {};
 int numBks = 0;
+char bkgTxT_Global[bkgTxTSize];
 
 char backgroundName[MAX_PATH];
 int backgroundType = 0;
@@ -23,6 +24,7 @@ void BKG_ResetBackgrounds()
 	numBks = 0;
 
 	memset(bkList, 0, sizeof(bkList));
+	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
 }
 
 void BKG_SetBackground(int i, int b1, int b2, int b3, int b4, int r1, int r2, int d1, int d2, int t, double m1, double m2, int f, int s, double o1, double o2)
@@ -63,7 +65,7 @@ void BKG_LoadBackground(char* file)
 {
 	FILE* fptr;
 	char path[MAX_PATH];
-	char pathtxt[50];
+	char pathtxt[bkgTxTSize];
 
 	// Get path
 	sprintf(path, "%s\\%s", gBkgPath, "");
@@ -73,8 +75,12 @@ void BKG_LoadBackground(char* file)
 	// Open file
 	fptr = fopen(path, "rb");
 
+	// only reset background if the bkgTxT_Global path != 0
+	if (bkgTxT_Global[0] == 0)
+		BKG_ResetBackgrounds();
 
-	BKG_ResetBackgrounds();
+	// This is for the save file
+	memcpy(bkgTxT_Global, file, sizeof(bkgTxT_Global));
 
 	int bkXOffset, bkYOffset, bkWidth, bkHeight, repeatX, repeatY, repeatGapX, repeatGapY, t, f, s;
 	double m1, m2, o1, o2;
@@ -86,9 +92,11 @@ void BKG_LoadBackground(char* file)
 	InitBack(backFi, 0);
 
 	// set backgroundName and backgroundType for save file
+	/*
 	memset(backgroundName, 0, sizeof(backgroundName));
 	strcpy(backgroundName, backFi);
 	backgroundType = 0;
+	*/
 
 	for (int i = 0; fgets(line, sizeof(line), fptr); i = i)
 	{
@@ -325,27 +333,26 @@ void Replacement_ModeAction_PutFront_Call(int frame_x, int frame_y)
 
 void Replacement_TransferStage_InitBack_Call(const char* n, int t)
 {
+	/*
 	memset(backgroundName, 0, sizeof(backgroundName));
 	strcpy(backgroundName, n);
 	backgroundType = t;
+	*/
 
-	if (numBks != 0)
-	{
-		for (int i = 0; i < numBks; ++i)
-		{
-			BKG_SetBackground(numBks, bkList[i].bmX, bkList[i].bmY, bkList[i].bmW, bkList[i].bmH, bkList[i].repX, bkList[i].repY, bkList[i].xDist, bkList[i].yDist, bkList[i].type, bkList[i].xm, bkList[i].ym, bkList[i].spriteNum, bkList[i].animSpeed, bkList[i].x, bkList[i].y);
-		}
-	}
-	else
-		InitBack(n, t);
+	InitBack(n, t);
 }
 
 // reset bkg backgrounds on stage transition
 void Replacement_TransferStage_ResetFlash_Call()
 {
 	ResetFlash();
-	if (!(memcmp(bkList, profile.saveBkList, sizeof(bkList)) == 0))
-		memset(profile.saveBkList, 0, sizeof(profile.saveBkList)); // reset profile list
-	else
+
+
+	if (isLoadingSave == false)
 		BKG_ResetBackgrounds();
+	else
+	{
+		if (!(bkgTxT_Global[0] == 0)) // if it doesnt == 0
+			BKG_LoadBackground(bkgTxT_Global);
+	}
 }

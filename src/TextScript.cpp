@@ -210,7 +210,6 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 
 		GetTextScriptString(path);
 		
-		// I want it to reset the folder path if it == 0 .. but maybe we could have a third TSC command if that just . isnt possible lol
 		if (path[0] == 0)
 			memset(TSC_IMG_Folder, 0, sizeof(TSC_IMG_Folder));
 		else
@@ -232,7 +231,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "BKG", 3) == 0) // BacKGround
 	{
-		char bkPath[MAX_PATH];
+		char bkPath[bkgTxTSize];
 		gTS->p_read += 4;
 
 		memset(bkPath, 0, sizeof(bkPath));
