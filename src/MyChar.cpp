@@ -9,7 +9,9 @@
 
 #include "main.h"
 #include "cave_story.h"
+#include "Collectables.h"
 #include "Entity.h"
+#include "TileCollisionMyChar.h"
 
 int current_jumps = 0;
 int onWall;
@@ -80,6 +82,127 @@ int custom_tgt_y = 0;
 
 bool is_direction_locked = false;
 int lock_direction = 0;
+
+void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
+{
+	Freeware_memset(dst, val, size);
+	InitMyCharPhysics();
+	InitCollectables();
+	InitMoney();
+}
+
+void SetPlayerPhysics(int x, int y)
+{
+	switch (x)
+	{
+		default:
+		case 0:
+			setting_physics_max_dash = y;
+			break;
+
+		case 1:
+			setting_physics_max_move = y;
+			break;
+
+		case 2:
+			setting_physics_gravity1 = y;
+			break;
+
+		case 3:
+			setting_physics_gravity2 = y;
+			break;
+
+		case 4:
+			setting_physics_dash1 = y;
+			break;
+
+		case 5:
+			setting_physics_dash2 = y;
+			break;
+
+		case 6:
+			setting_physics_resist = y;
+			break;
+
+		case 7:
+			setting_physics_jump = y;
+			break;
+
+		case 8:
+			setting_physics_water_max_dash = y;
+			break;
+
+		case 9:
+			setting_physics_water_max_move = y;
+			break;
+
+		case 10:
+			setting_physics_water_gravity1 = y;
+			break;
+
+		case 11:
+			setting_physics_water_gravity2 = y;
+			break;
+
+		case 12:
+			setting_physics_water_dash1 = y;
+			break;
+
+		case 13:
+			setting_physics_water_dash2 = y;
+			break;
+
+		case 14:
+			setting_physics_water_resist = y;
+			break;
+
+		case 15:
+			setting_physics_water_jump = y;
+			break;
+
+		// Custom DLL <PHY changes
+
+		// Wall jumps
+		case 16:
+			setting_walljump_horizontal_speed = y;
+			break;
+
+		case 17:
+			setting_walljump_jump_height = y;
+			break;
+
+		case 18:
+			setting_walljump_sliding_speed = y;
+			break;
+
+		case 19:
+			setting_walljump_water_horizontal_speed = y;
+			break;
+
+		case 20:
+			setting_walljump_water_jump_height = y;
+			break;
+
+		// Extra jumps
+		case 21:
+			setting_extrajump_jump_height = y;
+			break;
+
+		case 22:
+			setting_extrajump_water_jump_height = y;
+			break;
+
+		// Run button speed
+		case 23:
+			setting_running_speed = y;
+			break;
+
+		// bounce block speed
+		case 24:
+			setting_bounce_speed = y;
+			break;
+	}
+}
 
 void PutPlayersJumps(int fx, int fy)
 {

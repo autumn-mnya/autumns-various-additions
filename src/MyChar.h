@@ -38,7 +38,6 @@ extern bool setting_run_button_enabled;
 extern bool setting_run_button_flag_enabled;
 extern int setting_run_button_flag;
 
-
 extern int setting_physics_water_max_dash;
 extern int setting_physics_water_max_move;
 extern int setting_physics_water_gravity1;
@@ -79,6 +78,8 @@ extern int custom_tgt_y;
 extern bool is_direction_locked;
 extern int lock_direction;
 
+void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size);
+void SetPlayerPhysics(int x, int y);
 void Replacement_PutMyChar_Call(int fx, int fy);
 void Replacement_SetMyCharPosition_InitStar_Call();
 void setPlayerPhysics(BOOL bKey, Physics* physics);

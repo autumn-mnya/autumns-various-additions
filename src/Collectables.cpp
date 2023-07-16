@@ -16,7 +16,6 @@
 #include "Profile.h"
 #include "TextScript.h"
 
-int playerCollectables = 0;
 int playerMoney = 0;
 
 COLLECTABLES gCollectables;
@@ -46,7 +45,11 @@ int collectables_e_x_offset = 0;
 
 void InitCollectables()
 {
-	playerCollectables = 0;
+	memset(&gCollectables, 0, sizeof(COLLECTABLES));
+}
+
+void InitMoney()
+{
 	playerMoney = 0;
 }
 

@@ -41,10 +41,10 @@ extern int collectables_c_x_offset;
 extern int collectables_d_x_offset;
 extern int collectables_e_x_offset;
 
-extern int playerCollectables;
 extern int playerMoney;
 
 void InitCollectables();
+void InitMoney();
 void AddMoney(int x);
 void AddCollectables(int x, int y);
 void RemoveCollectables(int x, int y);

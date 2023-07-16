@@ -431,6 +431,20 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		DisableCollectable(z);
 		gTS->p_read += 8;
 	}
+	else if (strncmp(where + 1, "PHY", 3) == 0) // set PHYsics
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		SetPlayerPhysics(x, y);
+
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "IPH", 3) == 0) // Init PHysics
+	{
+		InitMyCharPhysics();
+		gTS->p_read += 4;
+	}
 	else
 		return 0;
 	

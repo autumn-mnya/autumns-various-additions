@@ -9,3 +9,4 @@ extern char gBkgPath[MAX_PATH];
 
 void PlayerDeath();
 void InitCollectablesEnabled();
+void InitMyCharPhysics();

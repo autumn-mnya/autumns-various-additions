@@ -54,7 +54,7 @@ Example <BKP0000:0008:0008
 
 - <BKR - BacKground Reset
 Disables <BKG. This will keep the <BKG background file though. <BKG will auto reset on <TRA as well!!
-Arguments: 0
+Arguments: 0 [<BKR]
 
 - <BUY - BUY jump
 [This TSC command is only useful when the money code is enabled in settings.ini.]
@@ -177,6 +177,43 @@ Load a 320x340 image onto the whole screen. Default folder is "data/Image" -- En
 Arguments: 1 [<IMGstring$] [image$]
 Example: <IMGglyph$
 ( You can set a flag to make the image appear *above* the textbox instead of behind it. The default is 6503, you can change this in the dll's settings.ini )
+
+- <IPH - Initialize PHysics
+Reset the physics for the player back to the ones set in settings.ini. Physics are auto-reset on new game.
+Arguments: 0 [<IPH]
+
+- <PHY - PHYsics
+Change physics of type W to value X. The chart for the different physics values you can change is below.
+Arguments: 2 [<PHYwwww:xxxx] [variable:value]
+
+##################################################
+#                  <PHY Variables                #
+# 0 - Max Walking Speed
+# 1 - Max Top Movement Speed
+# 2 - Gravity
+# 3 - Rising Gravity
+# 4 - Walking Acceleration
+# 5 - Air Control
+# 6 - Friction
+# 7 - Jump Momentum
+# 8 - Underwater Max Walking Speed
+# 9 - Underwater Max Top Movement Speed
+# 10 - Underwater Gravity
+# 11 - Underwater Rising Gravity
+# 12 - Underwater Walking Acceleration
+# 13 - Underwater Air Control
+# 14 - Underwater Friction
+# 15 - Underwater Jump Momentum
+# 16 - Walljumps Horizontal Speed // This and everything after is custom DLL physics
+# 17 - Walljumps Jump Momentum
+# 18 - Wallsliding Speed
+# 19 - Underwater Walljumps Horizontal Speed
+# 20 - Underwater Walljumps Jump Momentum
+# 21 - Extra Jump Momentum
+# 22 - Underwater Extra Jump Momentum
+# 23 - Max Running Speed // Run Button
+# 24 - Bouncy Block Speed // Tile Collision      #
+##################################################
 
 - <RNJ - Random Number Jump
 Jump to a random event between W and Z.

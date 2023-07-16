@@ -40,7 +40,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	130
+[BL_TSC]	133
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -153,10 +153,12 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <FOC	3	.xy-	Focus On Coordinates	Focus on Coordinates X:Y in W ticks. Use W > 0.	0	0	1	4	4	4	4
 <IMF	0	----	IMage Folder	Set a subfolder for <IMG to load from. Use $ at the end of the folder name to mark the end of the text input (Check TSC command txt for more).	0	0	1	4	4	4	4
 <IMG	0	----	IMaGe display	Show an image on screen. Use $ at the end of the image name to mark the end of the text input (Check TSC command txt for more).	0	0	1	4	4	4	4
+<IPH	0	----	Initialize PHysics	Resets the physics values for the player (<PHY) back to the ones set in settings.ini.	0	0	1	4	4	4	4
 <LDR	2	#d--	Lock DiRection	Lock Direction when using <FM2 Camera (Check TSC command txt).	1	0	1	4	4	4	4
 <LSC	0	----	Load SCript	Load TSC script and run event 0 afterwards. Use $ at the end of the script name to mark the end of the text input.	0	0	1	4	4	4	4
 <ML-	1	#---	Max Life -	Decrease the current and maximum health by W.	0	0	1	4	4	4	4
 <RNJ	2	ee--	Random Number Jump	Jump to Random Event between W and X. Min to Max.	0	0	1	4	4	4	4
+<PHY	2	##--	PHYsics set	Change physics of type W to value X.	0	0	1	4	4	4	4
 <SEL	1	#---	SELl (money+)	Increase amount of money by W.	0	0	1	4	4	4	4
 <SL=	1	#---	SeLl =	Set amount of money to W.	0	0	1	4	4	4	4
 <SNJ	2	Fe--	Skipflag Not Jump	Opposite of <SKJ. Jump to event X if skipflag W is not set.	0	0	1	4	4	4	4

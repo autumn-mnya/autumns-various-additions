@@ -39,6 +39,35 @@ bool init_collectables_c_enabled = false;
 bool init_collectables_d_enabled = false;
 bool init_collectables_e_enabled = false;
 
+
+
+// Init settings
+int init_physics_max_dash = 812;
+int init_physics_max_move = 1535;
+int init_physics_gravity1 = 80;
+int init_physics_gravity2 = 32;
+int init_physics_dash1 = 85;
+int init_physics_dash2 = 32;
+int init_physics_resist = 51;
+int init_physics_jump = 1280;
+int init_physics_water_max_dash = 406;
+int init_physics_water_max_move = 767;
+int init_physics_water_gravity1 = 40;
+int init_physics_water_gravity2 = 16;
+int init_physics_water_dash1 = 42;
+int init_physics_water_dash2 = 16;
+int init_physics_water_resist = 25;
+int init_physics_water_jump = 640;
+int init_walljump_horizontal_speed = 1000;
+int init_walljump_jump_height = 1113;
+int init_walljump_sliding_speed = 554; 
+int init_walljump_water_horizontal_speed = 300;
+int init_walljump_water_jump_height = 556;
+int init_extrajump_jump_height = 1280;
+int init_extrajump_water_jump_height = 640;
+int init_running_speed = 1218;
+int init_bounce_speed = 1535;
+
 // Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
 {
@@ -48,6 +77,7 @@ void PlayerDeath()
 	StartTextScript(40);
 }
 
+// This gets run to make sure we reset this on new game basically
 void InitMod_CollectablesEnabled()
 {
 	init_collectables_a_enabled = enable_collectables_a;
@@ -55,6 +85,36 @@ void InitMod_CollectablesEnabled()
 	init_collectables_c_enabled = enable_collectables_c;
 	init_collectables_d_enabled = enable_collectables_d;
 	init_collectables_e_enabled = enable_collectables_e;
+}
+
+// This gets run to make sure we reset this on new game basically
+void InitMod_PhysicsSettings()
+{
+	init_physics_max_dash = setting_physics_max_dash;
+	init_physics_max_move = setting_physics_max_move;
+	init_physics_gravity1 = setting_physics_gravity1;
+	init_physics_gravity2 = setting_physics_gravity2;
+	init_physics_dash1 = setting_physics_dash1;
+	init_physics_dash2 = setting_physics_dash2;
+	init_physics_resist = setting_physics_resist;
+	init_physics_jump = setting_physics_jump;
+	init_physics_water_max_dash = setting_physics_water_max_dash;
+	init_physics_water_max_move = setting_physics_water_max_move;
+	init_physics_water_gravity1 = setting_physics_water_gravity1;
+	init_physics_water_gravity2 = setting_physics_water_gravity2;
+	init_physics_water_dash1 = setting_physics_water_dash1;
+	init_physics_water_dash2 = setting_physics_water_dash2;
+	init_physics_water_resist = setting_physics_water_resist;
+	init_physics_water_jump = setting_physics_water_jump;
+	init_walljump_horizontal_speed = setting_walljump_horizontal_speed;
+	init_walljump_jump_height = setting_walljump_jump_height;
+	init_walljump_sliding_speed = setting_walljump_sliding_speed;
+	init_walljump_water_horizontal_speed = setting_walljump_water_horizontal_speed;
+	init_walljump_water_jump_height = setting_walljump_water_jump_height;
+	init_extrajump_jump_height = setting_extrajump_jump_height;
+	init_extrajump_water_jump_height = setting_extrajump_water_jump_height;
+	init_running_speed = setting_running_speed;
+	init_bounce_speed = setting_bounce_speed;
 }
 
 // Inits anything relating to entities. The main thing are the 3 ModLoader_WriteJump's -- These replace every function that uses the Npc Table, and instead we also insert our new table!
@@ -87,6 +147,7 @@ void InitMod_SFX()
 void InitMod_MyChar()
 {
 	ModLoader_WriteCall((void*)0x416B22, (void*)Replacement_SetMyCharPosition_InitStar_Call);
+	ModLoader_WriteCall((void*)0x414B5F, (void*)Replacement_InitMyChar_memset_Call); // for initmychar related things, we replace the memset call and do our own thing
 	InitMyCharPhysicsPatch();
 	InitCustomMyCharPatch();
 }
@@ -145,6 +206,7 @@ void InitMod_ASMPatches()
 	// Random ASM Patches that arent related to any of the other Init functions go here
 }
 
+// Change collectables back to the originals
 void InitCollectablesEnabled()
 {
 	enable_collectables_a = init_collectables_a_enabled;
@@ -152,6 +214,36 @@ void InitCollectablesEnabled()
 	enable_collectables_c = init_collectables_c_enabled;
 	enable_collectables_d = init_collectables_d_enabled;
 	enable_collectables_e = init_collectables_e_enabled;
+}
+
+// Change mychar physics back to their originals
+void InitMyCharPhysics()
+{
+	setting_physics_max_dash = init_physics_max_dash;
+	setting_physics_max_move = init_physics_max_move;
+	setting_physics_gravity1 = init_physics_gravity1;
+	setting_physics_gravity2 = init_physics_gravity2;
+	setting_physics_dash1 = init_physics_dash1;
+	setting_physics_dash2 = init_physics_dash2;
+	setting_physics_resist = init_physics_resist;
+	setting_physics_jump = init_physics_jump;
+	setting_physics_water_max_dash = init_physics_water_max_dash;
+	setting_physics_water_max_move = init_physics_water_max_move;
+	setting_physics_water_gravity1 = init_physics_water_gravity1;
+	setting_physics_water_gravity2 = init_physics_water_gravity2;
+	setting_physics_water_dash1 = init_physics_water_dash1;
+	setting_physics_water_dash2 = init_physics_water_dash2;
+	setting_physics_water_resist = init_physics_water_resist;
+	setting_physics_water_jump = init_physics_water_jump;
+	setting_walljump_horizontal_speed = init_walljump_horizontal_speed;
+	setting_walljump_jump_height = init_walljump_jump_height;
+	setting_walljump_sliding_speed = init_walljump_sliding_speed;
+	setting_walljump_water_horizontal_speed = init_walljump_water_horizontal_speed;
+	setting_walljump_water_jump_height = init_walljump_water_jump_height;
+	setting_extrajump_jump_height = init_extrajump_jump_height;
+	setting_extrajump_water_jump_height = init_extrajump_water_jump_height;
+	setting_running_speed = init_running_speed;
+	setting_bounce_speed = init_bounce_speed;
 }
 
 // Init the whole mod

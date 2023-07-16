@@ -97,27 +97,6 @@ void Replacement_ModeTitle_InitStar_Call()
 	ResetTSC_Image();
 }
 
-void Replacement_LoadProfile_ClearFade_Call()
-{
-	// this needs to NOT reset if we're loading
-	if (isLoadingSave == false)
-		BKG_ResetBackgrounds();
-	else
-		isLoadingSave = false;
-
-	ResetTSC_Image();
-	ClearFade();
-}
-
-void Replacement_InitializeGame_ClearArmsData_Call()
-{
-	InitCollectablesEnabled();
-	ClearArmsData();
-	ResetTSC_Image();
-	BKG_ResetBackgrounds();
-	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
-}
-
 // Put <IMG on screen
 
 void Replacement_ModeOpening_PutTextScript_Call()

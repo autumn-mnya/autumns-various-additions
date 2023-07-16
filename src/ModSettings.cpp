@@ -94,7 +94,7 @@ void InitMod_Settings()
 	setting_doublejump_flag = ModLoader_GetSettingInt("Double Jump Flag", 6501);
 
 	// Physics + Run button
-	setting_physics_ini_enabled = ModLoader_GetSettingBool("Physics in Settings.ini", false);
+	setting_physics_ini_enabled = ModLoader_GetSettingBool("Physics in Settings.ini", true);
 	setting_run_button_enabled = ModLoader_GetSettingBool("Enable Run Button", false);
 	setting_run_button_flag_enabled = ModLoader_GetSettingBool("Enable Run Button on Flag", false);
 	setting_run_button_flag = ModLoader_GetSettingInt("Run Button Flag", 6502);
