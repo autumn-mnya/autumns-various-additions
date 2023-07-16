@@ -187,7 +187,7 @@ Change physics of type W to value X. The chart for the different physics values 
 Arguments: 2 [<PHYwwww:xxxx] [variable:value]
 
 ##################################################
-#                  <PHY Variables                #
+#                 <PHY Variables                 #
 # 0 - Max Walking Speed
 # 1 - Max Top Movement Speed
 # 2 - Gravity
