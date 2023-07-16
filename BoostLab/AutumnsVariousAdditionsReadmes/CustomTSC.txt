@@ -157,12 +157,6 @@ Arguments: 2 [<LDRwwww:zzzz] [mode:direction]
 # 4 - Player Can't Impact Direction  #
 ######################################
 
-- <LSC - Load SCript
-Load TSC Script and run event 0 afterwards. -- End the text string with a $ so the game knows to stop reading the text.
-Arguments: 1 [<LSCstring$] [script$]
-Example: <LSCPens1$
-( The above will load Pens1.tsc )
-
 - <IMF - IMage Folder
 Set a subfolder for <IMG to load from. Default folder is "data/Image" -- End the text string with a $ so the game knows to stop reading the text.
 [ IMPORTANT: Using "<IMF$" will disable loading from a subfolder ! ]
@@ -181,6 +175,24 @@ Example: <IMGglyph$
 - <IPH - Initialize PHysics
 Reset the physics for the player back to the ones set in settings.ini. Physics are auto-reset on new game.
 Arguments: 0 [<IPH]
+
+- <LSC - Load SCript
+Load TSC Script and run event 0 afterwards. -- End the text string with a $ so the game knows to stop reading the text.
+Arguments: 1 [<LSCstring$] [script$]
+Example: <LSCPens1$
+( The above will load Pens1.tsc )
+
+- <MIM - MIMiga mask
+Move the spritesheet for the player down by W spritesets. Default is 32 pixels as quote is 16x16 with 2 layers of sprites. Note: This may not be compatible with player resize hacks.
+Arguments: 1 [<MIMwwww] [spriteset]
+
+- <ML- - Max Life -
+Subtract the players max health by W instead of increasing it.
+Arguments: 1 [<ML-wwww] [life]
+
+- <MS4 - MeSsage 4
+Open an invisible message box at the bottom of screen.
+Arguments: 0 [<MS4]
 
 - <PHY - PHYsics
 Change physics of type W to value X. The chart for the different physics values you can change is below.

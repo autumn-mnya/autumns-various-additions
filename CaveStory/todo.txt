@@ -15,3 +15,5 @@
 [x] PHY
 [x] CBK
 [x] VAR and all of its commands
+[x] Collectables X/Y position is customizable in save file
+[-] BLO command? (Boss expLOsion at npc?)

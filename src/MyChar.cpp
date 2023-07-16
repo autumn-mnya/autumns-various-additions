@@ -85,13 +85,21 @@ int custom_tgt_y = 0;
 bool is_direction_locked = false;
 int lock_direction = 0;
 
+int mim_num = 0;
+
+int mim_player_size_width = 16;
+int mim_player_size_height = 16;
+
 void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 {
 	Freeware_memset(dst, val, size);
 	InitMyCharPhysics();
 	InitCollectables();
+	InitCollectablesPositioning();
+	InitCollectablesEnabled();
 	InitMoney();
 	InitTSCVariables();
+	mim_num = 0;
 }
 
 void SetPlayerPhysics(int x, int y)
@@ -248,9 +256,21 @@ void PutPlayersJumps(int fx, int fy)
 		PutBitmap3(&grcGame, (gMC->x / 0x200) + (setting_jump_arrow_x_offset * jump_arrow_negative_x) - (fx / 0x200), (gMC->y / 0x200) + (setting_jump_arrow_y_offset * jump_arrow_negative_y) - (fy / 0x200), &rcJumpArrow, SURFACE_ID_AUTUMN_HUD);
 }
 
+// 0x415535
+void Replacement_PutMyChar_PutChar_Call(const RECT* r, int a, int b, const RECT* r2, SurfaceID s)
+{
+	RECT rect_player = gMC->rect;
+
+	rect_player.top += (mim_player_size_height * 2) * mim_num;
+	rect_player.bottom += (mim_player_size_height * 2) * mim_num;
+
+	PutBitmap3(r, a, b, &rect_player, s);
+}
+
 void Replacement_PutMyChar_Call(int fx, int fy)
 {
 	PutMyChar(fx, fy);
+
 	PutPlayersJumps(fx, fy);
 }
 

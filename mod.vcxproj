@@ -102,6 +102,7 @@
     <ClCompile Include="src\ModSettings.cpp" />
     <ClCompile Include="src\MyChar.cpp" />
     <ClCompile Include="src\MycParam.cpp" />
+    <ClCompile Include="src\NpcReplacements.cpp" />
     <ClCompile Include="src\PauseScreen.cpp" />
     <ClCompile Include="src\Profile.cpp" />
     <ClCompile Include="src\TextScript.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="src\ModSettings.h" />
     <ClInclude Include="src\MyChar.h" />
     <ClInclude Include="src\MycParam.h" />
+    <ClInclude Include="src\NpcReplacements.h" />
     <ClInclude Include="src\PauseScreen.h" />
     <ClInclude Include="src\Profile.h" />
     <ClInclude Include="src\TextScript.h" />

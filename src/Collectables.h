@@ -51,3 +51,5 @@ void RemoveCollectables(int x, int y);
 void SetCollectables(int x, int y);
 void EnableCollectable(int x);
 void DisableCollectable(int x);
+void SetCollectablePosition(int x, int y, bool isVertical);
+void SetCollectableXOffset(int x, int y);

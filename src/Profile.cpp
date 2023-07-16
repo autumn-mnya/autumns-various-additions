@@ -40,6 +40,22 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	profile.enable_collect_c = enable_collectables_c;
 	profile.enable_collect_d = enable_collectables_d;
 	profile.enable_collect_e = enable_collectables_e;
+	// Collectables Position
+	profile.collectables_a_x_pos = collectables_a_x_pos;
+	profile.collectables_a_y_pos = collectables_a_y_pos;
+	profile.collectables_a_x_offset = collectables_a_x_offset;
+	profile.collectables_b_x_pos = collectables_b_x_pos;
+	profile.collectables_b_y_pos = collectables_b_y_pos;
+	profile.collectables_b_x_offset = collectables_b_x_offset;
+	profile.collectables_c_x_pos = collectables_c_x_pos;
+	profile.collectables_c_y_pos = collectables_c_y_pos;
+	profile.collectables_c_x_offset = collectables_c_x_offset;
+	profile.collectables_d_x_pos = collectables_d_x_pos;
+	profile.collectables_d_y_pos = collectables_d_y_pos;
+	profile.collectables_d_x_offset = collectables_d_x_offset;
+	profile.collectables_e_x_pos = collectables_e_x_pos;
+	profile.collectables_e_y_pos = collectables_e_y_pos;
+	profile.collectables_e_x_offset = collectables_e_x_offset;
 	// <PHY
 	profile.phy_physics_max_dash = setting_physics_max_dash;
 	profile.phy_physics_max_move = setting_physics_max_move;
@@ -67,6 +83,7 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	profile.phy_running_speed = setting_running_speed;
 	profile.phy_bounce_speed = setting_bounce_speed;
 	memcpy(&profile.varData, varData, sizeof(varData));
+	profile.mim_num = mim_num;
 	// Write new save code after this
 }
 
@@ -101,6 +118,22 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		Freeware_fread(&profile.enable_collect_c, 4, 1, fp);
 		Freeware_fread(&profile.enable_collect_d, 4, 1, fp);
 		Freeware_fread(&profile.enable_collect_e, 4, 1, fp);
+		// read savefile collectable positions
+		Freeware_fread(&profile.collectables_a_x_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_a_y_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_a_x_offset, 4, 1, fp);
+		Freeware_fread(&profile.collectables_b_x_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_b_y_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_b_x_offset, 4, 1, fp);
+		Freeware_fread(&profile.collectables_c_x_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_c_y_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_c_x_offset, 4, 1, fp);
+		Freeware_fread(&profile.collectables_d_x_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_d_y_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_d_x_offset, 4, 1, fp);
+		Freeware_fread(&profile.collectables_e_x_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_e_y_pos, 4, 1, fp);
+		Freeware_fread(&profile.collectables_e_x_offset, 4, 1, fp);
 		// read savefile <PHY ints
 		Freeware_fread(&profile.phy_physics_max_dash, 4, 1, fp);
 		Freeware_fread(&profile.phy_physics_max_move, 4, 1, fp);
@@ -127,7 +160,10 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		Freeware_fread(&profile.phy_extrajump_water_jump_height, 4, 1, fp);
 		Freeware_fread(&profile.phy_running_speed, 4, 1, fp);
 		Freeware_fread(&profile.phy_bounce_speed, 4, 1, fp);
+		// read savefile <VAR data
 		Freeware_fread(&profile.varData, sizeof(profile.varData), 1, fp);
+		// read savefile <MIM value
+		Freeware_fread(&profile.mim_num, 4, 1, fp);
 	}
 
 	// Close the file
@@ -150,6 +186,22 @@ void SetProfileData()
 	enable_collectables_c = profile.enable_collect_c;
 	enable_collectables_d = profile.enable_collect_d;
 	enable_collectables_e = profile.enable_collect_e;
+	// set collectables position values
+	collectables_a_x_pos = profile.collectables_a_x_pos;
+	collectables_a_y_pos = profile.collectables_a_y_pos;
+	collectables_a_x_offset = profile.collectables_a_x_offset;
+	collectables_b_x_pos = profile.collectables_b_x_pos;
+	collectables_b_y_pos = profile.collectables_b_y_pos;
+	collectables_b_x_offset = profile.collectables_b_x_offset;
+	collectables_c_x_pos = profile.collectables_c_x_pos;
+	collectables_c_y_pos = profile.collectables_c_y_pos;
+	collectables_c_x_offset = profile.collectables_c_x_offset;
+	collectables_d_x_pos = profile.collectables_d_x_pos;
+	collectables_d_y_pos = profile.collectables_d_y_pos;
+	collectables_d_x_offset = profile.collectables_d_x_offset;
+	collectables_e_x_pos = profile.collectables_e_x_pos;
+	collectables_e_y_pos = profile.collectables_e_y_pos;
+	collectables_e_x_offset = profile.collectables_e_x_offset;
 	// set <PHY values to the save file ones
 	setting_physics_max_dash = profile.phy_physics_max_dash;
 	setting_physics_max_move = profile.phy_physics_max_move;
@@ -176,8 +228,10 @@ void SetProfileData()
 	setting_extrajump_water_jump_height = profile.phy_extrajump_water_jump_height;
 	setting_running_speed = profile.phy_running_speed;
 	setting_bounce_speed = profile.phy_bounce_speed;
-	// Set <VAR values
+	// set <VAR values
 	memcpy(&varData, profile.varData, sizeof(varData));
+	// set <MIM value
+	mim_num = profile.mim_num;
 }
 
 void Replacement_LoadProfile_ClearFade_Call()
@@ -196,7 +250,6 @@ void Replacement_LoadProfile_ClearFade_Call()
 
 void Replacement_InitializeGame_ClearArmsData_Call()
 {
-	InitCollectablesEnabled();
 	ClearArmsData();
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();

@@ -130,8 +130,8 @@ void InitMod_Settings()
 	setting_life_regen_flag = ModLoader_GetSettingInt("Life Regen Flag", 6505);
 
 	// Wait timer for Life Drain/Regen
-	setting_life_drain_wait = ModLoader_GetSettingInt("Life Drain Wait", 60);
-	setting_life_regen_wait = ModLoader_GetSettingInt("Life Regen Wait", 120);
+	setting_life_drain_wait = ModLoader_GetSettingInt("Life Drain Wait", 120);
+	setting_life_regen_wait = ModLoader_GetSettingInt("Life Regen Wait", 240);
 
 	// Amount of Life to Drain/Regen
 	setting_life_drain_amount = ModLoader_GetSettingInt("Life Drain Amount", 1);
@@ -151,6 +151,13 @@ void InitMod_Settings()
 	/////////////////
 	// Text Script //
 	/////////////////
+
+	// Ability to disable this
+	setting_enable_mim_mod = ModLoader_GetSettingBool("Enable <MIM Command", true);
+
+	// bigger playersize hacks maybe?
+	mim_player_size_width = ModLoader_GetSettingInt("<MIM Player Width", 16);
+	mim_player_size_height = ModLoader_GetSettingInt("<MIM Player Height", 16);
 
 	setting_show_img_on_top_flag = ModLoader_GetSettingInt("Show Image Above Textbox Flag", 6503);
 	setting_enable_money_code = ModLoader_GetSettingBool("Enable Money Code", false);

@@ -12,6 +12,7 @@
 #include "Collectables.h"
 #include "Entity.h"
 #include "ModSettings.h"
+#include "MyChar.h"
 #include "TextScript.h"
 #include "TextScriptVAR.h"
 
@@ -21,8 +22,8 @@ bool setting_enable_life_regen = false;
 int setting_life_drain_flag = 6504;
 int setting_life_regen_flag = 6505;
 
-int setting_life_drain_wait = 60;
-int setting_life_regen_wait = 120;
+int setting_life_drain_wait = 120;
+int setting_life_regen_wait = 240;
 
 int setting_life_drain_amount = 1;
 int setting_life_regen_amount = 1;

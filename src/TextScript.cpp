@@ -26,6 +26,7 @@
 bool setting_enable_money_code = false;
 bool setting_money_disable_enemy_money_drops = false;
 bool setting_money_disable_exp_drops = false;
+bool setting_enable_mim_mod = true;
 
 int setting_money_hud_x = 8;
 int setting_money_hud_y = 48;
@@ -119,6 +120,16 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		{
 			return enum_ESCRETURN_exit;
 		}
+	}
+	else if (strncmp(where + 1, "MS4", 3) == 0) // MeSsage box 4
+	{
+		ClearTextLine();
+		gTS->flags |= 0x01;
+		gTS->flags &= ~0x32;
+		if (gTS->flags & 0x40)
+			gTS->flags |= 0x10;
+		gTS->face = 0;
+		gTS->p_read += 4;
 	}
 	else if (strncmp(where + 1, "FN2", 3) == 0) // Focus on Npc 2 (FON but with index_x and index_y in use?)
 	{
@@ -456,6 +467,33 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		DisableCollectable(z);
 		gTS->p_read += 8;
 	}
+	else if (strncmp(where + 1, "CXP", 3) == 0) // Collectable X Position
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		SetCollectablePosition(x, y, false);
+
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "CYP", 3) == 0) // Collectable Y Position
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		SetCollectablePosition(x, y, true);
+
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "CXO", 3) == 0) // Collectable X Offset
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		SetCollectableXOffset(x, y);
+
+		gTS->p_read += 13;
+	}
 	else if (strncmp(where + 1, "PHY", 3) == 0) // set PHYsics
 	{
 		x = GetTextScriptNo(gTS->p_read + 4);
@@ -590,8 +628,33 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	return 1;
 }
 
+// Different hook for disabling <MIM command (as it is the most commonly used hack tbh)
+static int CustomTSC_MIM(MLHookCPURegisters* regs, void* ud)
+{
+	(void)ud;
+	int w, x, y, z;
+
+	char* where = TextScriptBuffer + gTS->p_read;
+	if (where[0] != '<')
+		return 0;
+	if (strncmp(where + 1, "MIM", 3) == 0) // MIMiga mask
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		mim_num = x;
+		gTS->p_read += 8;
+	}
+	else
+		return 0;
+
+	regs->eip = CSJ_tsc_done;
+	return 1;
+}
+
 void InitMod_TSC()
 {
 	ModLoader_WriteJump((void*)0x421900, (void*)Replacement_GetTextScriptNo);
 	ModLoader_AddStackableHook(CSH_tsc_start, CustomTextScriptCommands, (void*)0);
+
+	if (setting_enable_mim_mod)
+		ModLoader_AddStackableHook(CSH_tsc_start, CustomTSC_MIM, (void*)0);
 }

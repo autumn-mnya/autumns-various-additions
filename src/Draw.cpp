@@ -84,7 +84,6 @@ void ResetTSC_Image()
 // <IMG resetting calls
 void Replacement_ModeOpening_SetFadeMask_Call()
 {
-	InitCollectablesEnabled();
 	SetFadeMask();
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();
@@ -92,7 +91,6 @@ void Replacement_ModeOpening_SetFadeMask_Call()
 
 void Replacement_ModeTitle_InitStar_Call()
 {
-	InitCollectablesEnabled();
 	InitStar();
 	ResetTSC_Image();
 }

@@ -193,3 +193,72 @@ void DisableCollectable(int x)
 			break;
 	}
 }
+
+void SetCollectablePosition(int x, int y, bool isVertical)
+{
+	switch (x)
+	{
+		default:
+		case 0:
+			if (isVertical)
+				collectables_a_y_pos = y;
+			else
+				collectables_a_x_pos = y;
+			break;
+
+		case 1:
+			if (isVertical)
+				collectables_b_y_pos = y;
+			else
+				collectables_b_x_pos = y;
+			break;
+
+		case 2:
+			if (isVertical)
+				collectables_c_y_pos = y;
+			else
+				collectables_c_x_pos = y;
+			break;
+
+		case 3:
+			if (isVertical)
+				collectables_d_y_pos = y;
+			else
+				collectables_d_x_pos = y;
+			break;
+
+		case 4:
+			if (isVertical)
+				collectables_e_y_pos = y;
+			else
+				collectables_e_x_pos = y;
+			break;
+	}
+}
+
+void SetCollectableXOffset(int x, int y)
+{
+	switch (x)
+	{
+		default:
+		case 0:
+			collectables_a_x_offset = y;
+			break;
+
+		case 1:
+			collectables_b_x_offset = y;
+			break;
+
+		case 2:
+			collectables_c_x_offset = y;
+			break;
+
+		case 3:
+			collectables_d_x_offset = y;
+			break;
+
+		case 4:
+			collectables_e_x_offset = y;
+			break;
+	}
+}

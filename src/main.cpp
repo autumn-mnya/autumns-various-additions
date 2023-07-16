@@ -20,6 +20,7 @@
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "MycParam.h"
+#include "NpcReplacements.h"
 #include "PauseScreen.h"
 #include "Profile.h"
 #include "TextScript.h"
@@ -38,8 +39,6 @@ bool init_collectables_b_enabled = false;
 bool init_collectables_c_enabled = false;
 bool init_collectables_d_enabled = false;
 bool init_collectables_e_enabled = false;
-
-
 
 // Init settings
 int init_physics_max_dash = 812;
@@ -68,6 +67,22 @@ int init_extrajump_water_jump_height = 640;
 int init_running_speed = 1218;
 int init_bounce_speed = 1535;
 
+int init_collectables_a_x_pos = 8;
+int init_collectables_b_x_pos = 8;
+int init_collectables_c_x_pos = 8;
+int init_collectables_d_x_pos = 8;
+int init_collectables_e_x_pos = 8;
+int init_collectables_a_y_pos = 56;
+int init_collectables_b_y_pos = 64;
+int init_collectables_c_y_pos = 72;
+int init_collectables_d_y_pos = 80;
+int init_collectables_e_y_pos = 88;
+int init_collectables_a_x_offset = 0;
+int init_collectables_b_x_offset = 0;
+int init_collectables_c_x_offset = 0;
+int init_collectables_d_x_offset = 0;
+int init_collectables_e_x_offset = 0;
+
 // Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
 {
@@ -78,7 +93,7 @@ void PlayerDeath()
 }
 
 // This gets run to make sure we reset this on new game basically
-void InitMod_CollectablesEnabled()
+void InitMod_PreLaunch_CollectablesEnabled()
 {
 	init_collectables_a_enabled = enable_collectables_a;
 	init_collectables_b_enabled = enable_collectables_b;
@@ -88,7 +103,27 @@ void InitMod_CollectablesEnabled()
 }
 
 // This gets run to make sure we reset this on new game basically
-void InitMod_PhysicsSettings()
+void InitMod_PreLaunch_CollectablesPositioning()
+{
+	init_collectables_a_x_pos = collectables_a_x_pos;
+	init_collectables_b_x_pos = collectables_b_x_pos;
+	init_collectables_c_x_pos = collectables_c_x_pos;
+	init_collectables_d_x_pos = collectables_d_x_pos;
+	init_collectables_e_x_pos = collectables_e_x_pos;
+	init_collectables_a_y_pos = collectables_a_y_pos;
+	init_collectables_b_y_pos = collectables_b_y_pos;
+	init_collectables_c_y_pos = collectables_c_y_pos;
+	init_collectables_d_y_pos = collectables_d_y_pos;
+	init_collectables_e_y_pos = collectables_e_y_pos;
+	init_collectables_a_x_offset = collectables_a_x_offset;
+	init_collectables_b_x_offset = collectables_b_x_offset;
+	init_collectables_c_x_offset = collectables_c_x_offset;
+	init_collectables_d_x_offset = collectables_d_x_offset;
+	init_collectables_e_x_offset = collectables_e_x_offset;
+}
+
+// This gets run to make sure we reset this on new game basically
+void InitMod_PreLaunch_PhysicsSettings()
 {
 	init_physics_max_dash = setting_physics_max_dash;
 	init_physics_max_move = setting_physics_max_move;
@@ -125,11 +160,24 @@ void InitMod_Entity()
 	ModLoader_WriteJump((void*)0x46FAB0, (void*)Replacement_ChangeNpCharByEvent);
 	ModLoader_WriteJump((void*)0x46FD10, (void*)Replacement_ChangeCheckableNpCharByEvent);
 	// This only gets replaced if TSC is loaded
-	if (setting_enable_text_script_code && setting_enable_money_code && setting_money_disable_enemy_money_drops == false)
+	if (setting_enable_text_script_code)
 	{
-		ModLoader_WriteJump((void*)0x419030, (void*)Replacement_HitMyCharNpChar);
-		ModLoader_WriteJump((void*)0x46F2B0, (void*)Replacement_SetExpObjects);
+		if (setting_enable_money_code && setting_money_disable_enemy_money_drops == false)
+		{
+			ModLoader_WriteJump((void*)0x419030, (void*)Replacement_HitMyCharNpChar);
+			ModLoader_WriteJump((void*)0x46F2B0, (void*)Replacement_SetExpObjects);
+		}
+
+		// Replace NPCs when using <MIM
+		if (setting_enable_mim_mod)
+		{
+			ModLoader_WriteJump((void*)0x43CDE0, (void*)Replacement_ActNpc111);
+			ModLoader_WriteJump((void*)0x43D0A0, (void*)Replacement_ActNpc112);
+			ModLoader_WriteJump((void*)0x445660, (void*)Replacement_ActNpc150);
+		}
 	}
+
+	
 }
 
 // Loads the new surface files (We can't go above 40, but we can use the unused ones. Except 3 and 4 as they are used in the netplay dll!)
@@ -150,6 +198,10 @@ void InitMod_MyChar()
 	ModLoader_WriteCall((void*)0x414B5F, (void*)Replacement_InitMyChar_memset_Call); // for initmychar related things, we replace the memset call and do our own thing
 	InitMyCharPhysicsPatch();
 	InitCustomMyCharPatch();
+	if (setting_enable_text_script_code && setting_enable_mim_mod) // Only if TSC + <MIM is enabled
+		ModLoader_WriteCall((void*)0x415535, (void*)Replacement_PutMyChar_PutChar_Call);
+
+	InitMod_PreLaunch_PhysicsSettings(); // Init Settings
 }
 
 void InitMod_TileCollision()
@@ -214,6 +266,25 @@ void InitCollectablesEnabled()
 	enable_collectables_c = init_collectables_c_enabled;
 	enable_collectables_d = init_collectables_d_enabled;
 	enable_collectables_e = init_collectables_e_enabled;
+}
+
+void InitCollectablesPositioning()
+{
+	collectables_a_x_pos = init_collectables_a_x_pos;
+	collectables_b_x_pos = init_collectables_b_x_pos;
+	collectables_c_x_pos = init_collectables_c_x_pos;
+	collectables_d_x_pos = init_collectables_d_x_pos;
+	collectables_e_x_pos = init_collectables_e_x_pos;
+	collectables_a_y_pos = init_collectables_a_y_pos;
+	collectables_b_y_pos = init_collectables_b_y_pos;
+	collectables_c_y_pos = init_collectables_c_y_pos;
+	collectables_d_y_pos = init_collectables_d_y_pos;
+	collectables_e_y_pos = init_collectables_e_y_pos;
+	collectables_a_x_offset = init_collectables_a_x_offset;
+	collectables_b_x_offset = init_collectables_b_x_offset;
+	collectables_c_x_offset = init_collectables_c_x_offset;
+	collectables_d_x_offset = init_collectables_d_x_offset;
+	collectables_e_x_offset = init_collectables_e_x_offset;
 }
 
 // Change mychar physics back to their originals
@@ -287,7 +358,8 @@ void InitMod(void)
 		InitMod_TSC();
 		InitMod_TSCImage();
 		InitMod_TSCBkg();
-		InitMod_CollectablesEnabled();
+		InitMod_PreLaunch_CollectablesEnabled();
+		InitMod_PreLaunch_CollectablesPositioning();
 
 		// Get path of the Bkg folder
 		strcpy(gBkgPath, gDataPath);

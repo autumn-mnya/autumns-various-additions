@@ -25,6 +25,22 @@ typedef struct CustomProfileData
 	int enable_collect_c;
 	int enable_collect_d;
 	int enable_collect_e;
+	// Collectables Position / Offset
+	int collectables_a_x_pos;
+	int collectables_a_y_pos;
+	int collectables_a_x_offset;
+	int collectables_b_x_pos;
+	int collectables_b_y_pos;
+	int collectables_b_x_offset;
+	int collectables_c_x_pos;
+	int collectables_c_y_pos;
+	int collectables_c_x_offset;
+	int collectables_d_x_pos;
+	int collectables_d_y_pos;
+	int collectables_d_x_offset;
+	int collectables_e_x_pos;
+	int collectables_e_y_pos;
+	int collectables_e_x_offset;
 	// <PHY physics
 	int phy_physics_max_dash;
 	int phy_physics_max_move;
@@ -52,6 +68,7 @@ typedef struct CustomProfileData
 	int phy_running_speed;
 	int phy_bounce_speed;
 	int varData[TSC_VAR_MAX];
+	int mim_num;
 } CustomProfileData;
 
 extern CustomProfileData profile;

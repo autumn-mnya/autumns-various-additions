@@ -33,6 +33,3 @@
 
 #2001
 <CTSOside$<END
-
-#2002
-<CSDcollab\\autumn$0028$bkFog$<END
