@@ -14,4 +14,4 @@
 [x] Change Surface file
 [x] PHY
 [x] CBK
-[-] VAR and all of its commands
+[x] VAR and all of its commands
