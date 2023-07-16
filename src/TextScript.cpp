@@ -21,6 +21,7 @@
 #include "Frame.h"
 #include "MyChar.h"
 #include "MycParam.h"
+#include "TextScriptVAR.h"
 
 bool setting_enable_money_code = false;
 bool setting_money_disable_enemy_money_drops = false;
@@ -38,6 +39,30 @@ void SetCustomWindowTitle(char* window_name)
 {
 	sprintf(window_name, "%s", window_name);
 	SetWindowTextA(ghWnd, window_name);
+}
+
+// Get 4 digit number from TSC data
+int Replacement_GetTextScriptNo(int a)
+{
+	int b = 0;
+	char most_significant = gTS->data[a++];
+	if (most_significant == 'V') // Variables
+	{
+		int var = 0;
+		var += (gTS->data[a++] - '0') * 100;
+		var += (gTS->data[a++] - '0') * 10;
+		var += gTS->data[a] - '0';
+		b = GetVariable(var);
+	}
+	else // Default behaviour
+	{
+		b += (most_significant - '0') * 1000;
+		b += (gTS->data[a++] - '0') * 100;
+		b += (gTS->data[a++] - '0') * 10;
+		b += gTS->data[a] - '0';
+	}
+
+	return b;
 }
 
 // JakeV wrote this in "TSC Extended"
@@ -445,6 +470,119 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		InitMyCharPhysics();
 		gTS->p_read += 4;
 	}
+	else if (strncmp(where + 1, "VAR", 3) == 0) // VARiable (Set variable X to Y)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+
+		SetVariable(x, y);
+
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "VA+", 3) == 0) // VAriable + (Add number Y to variable X)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		SetVariable(x, GetVariable(x) + y);
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "VA-", 3) == 0) // VAriable - (Subtract number Y to variable X)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		SetVariable(x, GetVariable(x) - y);
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "VA*", 3) == 0) // VAriable * (Multiply number Y to variable X)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		SetVariable(x, GetVariable(x) * y);
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "VA/", 3) == 0) // VAriable / (Divide number Y to variable X)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		SetVariable(x, GetVariable(x) / y);
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "VAJ", 3) == 0) // VAriable Jump (Compares number W to Number X (not variables) using compare method Y. Jump to event Z if successful)
+	{
+		w = GetTextScriptNo(gTS->p_read + 4);
+		x = GetTextScriptNo(gTS->p_read + 9);
+		y = GetTextScriptNo(gTS->p_read + 14);
+		z = GetTextScriptNo(gTS->p_read + 19);
+
+		BOOL success = FALSE;
+
+		switch (y)
+		{
+			default:
+				success = FALSE;
+				break;
+
+			case 0:
+				success = w == x;
+				break;
+
+			case 1:
+				success = w != x;
+				break;
+
+			case 2:
+				success = w > x;
+				break;
+
+			case 3:
+				success = w < x;
+				break;
+
+			case 4:
+				success = w >= x;
+				break;
+
+			case 5:
+				success = w <= x;
+				break;
+		}
+
+		if (success)
+			JumpTextScript(z);
+		else
+			gTS->p_read += 23;
+	}
+	else if (strncmp(where + 1, "VAZ", 3) == 0) // VAriable Zero (Sets Y variables to 0, starting at X)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		for (int j = 0; j < y; ++j) {
+			SetVariable(x + j, 0);
+		}
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "VND", 3) == 0) // Variable raNDom (Generates a random # between X and Y, and puts the result in variable Z)
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		z = GetTextScriptNo(gTS->p_read + 14);
+		SetVariable(z, Random(x, y));
+		gTS->p_read += 18;
+	}
+	else if (strncmp(where + 1, "VIJ", 3) == 0) // Variable Increment Jump (Increments variable W, if W >= X, X is set to 0 and jumps to event Y)
+	{
+		w = GetTextScriptNo(gTS->p_read + 4);
+		x = GetTextScriptNo(gTS->p_read + 9);
+		y = GetTextScriptNo(gTS->p_read + 14);
+		SetVariable(w, GetVariable(w) + 1);
+		if (GetVariable(w) >= x)
+		{
+			SetVariable(w, 0);
+			JumpTextScript(y);
+		}
+		else
+			gTS->p_read += 18;
+	}
 	else
 		return 0;
 	
@@ -454,5 +592,6 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 
 void InitMod_TSC()
 {
+	ModLoader_WriteJump((void*)0x421900, (void*)Replacement_GetTextScriptNo);
 	ModLoader_AddStackableHook(CSH_tsc_start, CustomTextScriptCommands, (void*)0);
 }

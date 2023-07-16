@@ -237,6 +237,69 @@ Arguments: 4 [<TRMwwww:zzzz:xxxx:yyyy] [map:event:x:y]
 This TSC command is the same as <TRA except is preserves the players X:Y position. You need to be closer to the center of the hitbox of whatever you're interacting with to get it to properly work, as this is somewhat buggy.
 Arguments: 2 [<TRMwwww:zzzz] [map:event]
 
+#########################################################
+# Check CustomTSC_VAR.txt before these next commands !! #
+#              There are 300 variables total!           #
+
+
+- <VAR - VARiable set
+Set Variable W to value X. 
+Arguments: 2 [<VARwwww:xxxx] [variable:value]
+
+- <VA+ - VAriable + (Add)
+Add value X to variable W.
+Arguments: 2 [<VA+wwww:xxxx] [variable:value]
+
+- <VA- - VAriable - (Subtract)
+Subtract value X from variable W.
+Arguments: 2 [<VA-wwww:xxxx] [variable:value]
+
+- <VA* - VAriable * (Multiply)
+Multiply variable W by value X.
+Arguments: 2 [<VA*wwww:xxxx] [variable:value]
+
+- <VA/ - VAriable / (Divide)
+Divide variable W by value X.
+Arguments: 2 [<VA/wwww:xxxx] [variable:value]
+
+- <VAJ - VAriable Jump
+[ Note: The values for this command arent variables, but you can still use variables if you start off the values with a "V" as stated in CustomTSC_Var.txt)
+Compare value W with value X, using compare method Y. If the condition is true, jump to event Z.
+Arguments: 4 [<VAJwwww:xxxx:yyyy:zzzz] [valueA:valueB:condition:event]
+
+# Compare Methods: #
+
+0 - If W is equal to X, the condition is true. ( W == X )
+1 - If W is not equal to X, the condition is true. ( W != X )
+2 - If W is greater than X, the condition is true. ( W > X )
+3 - If W is less than X, the condition is true. ( W < X )
+4 - If W is greater than or equal to X, the condition is true. ( W >= X )
+5 - If W is less than or equal to X, the condition is true. ( W <= X )
+
+- <VAZ - VAriable Zero
+Set X amount of variables to 0, starting at variable W.
+Arguments: 2 [<VAZwwww:zzzz] [variable_start:amount]
+
+- <VND - Variable raNDom
+Generates a random number between W and X. Sets variable Y to the result number of that.
+Arguments: 3 [<VNDwwww:xxxx:yyyy] [number_min:number_max:variable]
+
+- <VIJ - Variable Increment Jump
+Increments variable W by 1. If W is greater than or equal to X, set variable W to 0 and jump to event Y.
+Arguments: 3 [<VIJwwww:xxxx:yyyy] [variable:value:event]
+
+#########################################################
+
+<VAR	2	##--	VARiable set	Set Variable W to X. (Check TSC command txt).	0	0	1	4	4	4	4
+<VA+	2	##--	VAriable +	Add value X to variable W. (Check TSC command txt).	0	0	1	4	4	4	4
+<VA-	2	##--	VAriable -	Subtract value X from variable W. (Check TSC command txt).	0	0	1	4	4	4	4
+<VA*	2	##--	VAriable *	Multiply variable W by value X. (Check TSC command txt).	0	0	1	4	4	4	4
+<VA/	2	##--	VAriable /	Divide variable W by value X. (Check TSC command txt).	0	0	1	4	4	4	4
+<VAJ	4	###e	VAriable Jump	Compare number W to number X (Not variables!!) using compare method Y. Jump to event Z if true (Check TSC command txt).	0	0	1	4	4	4	4
+<VAZ	2	##--	VAriable Zero	Set X amount of variables to 0, starting at variable W. (Check TSC command txt).	0	0	1	4	4	4	4
+<VND	3	##e-	Variable raNDom	Generates a random number between W and X. Sets variable Y to the result number (Check TSC command txt).	0	0	1	4	4	4	4
+<VIJ	3	##e-	Variable Increment Jump	Increments variable W by 1. If W is greater than or equal to X, set variable W to 0 and jump to event Y (Check TSC command txt).	0	0	1	4	4	4	4
+
 - <WCL - Write CaLl
 Write a function call at address A to address B -- 2 text strings back-to-back, both ending with a $. The function address is a *hex value*.
 Arguments: 2 [<WCLstring$cstring2$] [address_a_string$address_b_string$]

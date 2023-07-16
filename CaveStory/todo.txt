@@ -12,3 +12,6 @@
 	-Need to add tsc command docs!
 [-] SRP/RSP (Periwinkle Respawning hack)
 [x] Change Surface file
+[x] PHY
+[x] CBK
+[-] VAR and all of its commands

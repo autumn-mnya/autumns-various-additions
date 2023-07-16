@@ -25,6 +25,7 @@ N	npc (specific)
 n	npc type
 s	sound
 t	tile
+v	variable
 x	x coord
 y	y coord
 #	number
@@ -40,7 +41,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	133
+[BL_TSC]	142
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -154,7 +155,7 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <IMF	0	----	IMage Folder	Set a subfolder for <IMG to load from. Use $ at the end of the folder name to mark the end of the text input (Check TSC command txt for more).	0	0	1	4	4	4	4
 <IMG	0	----	IMaGe display	Show an image on screen. Use $ at the end of the image name to mark the end of the text input (Check TSC command txt for more).	0	0	1	4	4	4	4
 <IPH	0	----	Initialize PHysics	Resets the physics values for the player (<PHY) back to the ones set in settings.ini.	0	0	1	4	4	4	4
-<LDR	2	#d--	Lock DiRection	Lock Direction when using <FM2 Camera (Check TSC command txt).	1	0	1	4	4	4	4
+<LDR	2	#d--	Lock DiRection	Lock Direction when using <FM2 Camera (Check TSC command txt).	0	0	1	4	4	4	4
 <LSC	0	----	Load SCript	Load TSC script and run event 0 afterwards. Use $ at the end of the script name to mark the end of the text input.	0	0	1	4	4	4	4
 <ML-	1	#---	Max Life -	Decrease the current and maximum health by W.	0	0	1	4	4	4	4
 <RNJ	2	ee--	Random Number Jump	Jump to Random Event between W and X. Min to Max.	0	0	1	4	4	4	4
@@ -165,6 +166,15 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <SWN	0	----	Set Window Name	Set the games Window Name in TSC. Use $ at the end of the window name to mark the end of the text input.	0	0	1	4	4	4	4
 <TRM	4	mexy	TRansport Momentum	Same as <TRA but keep X/Y momentum between transition.	1	0	1	4	4	4	4
 <TRX	2	me--	TRansport keep X:y	Same as <TRA but cut out the last 2 arguments and keep X/Y position between transition. Somewhat buggy (Check TSC command txt).	1	0	1	4	4	4	4
+<VAR	2	v#--	VARiable set	Set Variable W to X. (Check TSC command txt).	0	0	1	4	4	4	4
+<VA+	2	v#--	VAriable +	Add value X to variable W. (Check TSC command txt).	0	0	1	4	4	4	4
+<VA-	2	v#--	VAriable -	Subtract value X from variable W. (Check TSC command txt).	0	0	1	4	4	4	4
+<VA*	2	v#--	VAriable *	Multiply variable W by value X. (Check TSC command txt).	0	0	1	4	4	4	4
+<VA/	2	v#--	VAriable /	Divide variable W by value X. (Check TSC command txt).	0	0	1	4	4	4	4
+<VAJ	4	###e	VAriable Jump	Compare number W to number X (Not variables!!) using compare method Y. Jump to event Z if true (Check TSC command txt).	0	0	1	4	4	4	4
+<VAZ	2	vv--	VAriable Zero	Set X amount of variables to 0, starting at variable W. (Check TSC command txt).	0	0	1	4	4	4	4
+<VND	3	##v-	Variable raNDom	Generates a random number between W and X. Sets variable Y to the result number (Check TSC command txt).	0	0	1	4	4	4	4
+<VIJ	3	v#e-	Variable Increment Jump	Increments variable W by 1. If W is greater than or equal to X, set variable W to 0 and jump to event Y (Check TSC command txt).	0	0	1	4	4	4	4
 <WCL	0	----	Write CaLl	Replace function call A with function call B (Check TSC command txt).	0	0	1	4	4	4	4
 <CEV	1	#---	Change fmod EVent	[FMOD DLL] Change FMod Event to group W. Use this before trying to play something that isn't in the default Music group.	0	0	1	4	4	4	4
 <CVP	0	----	Change fmod eVent Parameter	[FMOD DLL] Change FMod Event Parameter <EVP will modify. Use $ at the end of the parameter name to mark the end of the text input.	0	0	1	4	4	4	4

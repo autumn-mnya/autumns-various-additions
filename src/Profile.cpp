@@ -66,7 +66,7 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	profile.phy_extrajump_water_jump_height = setting_extrajump_water_jump_height;
 	profile.phy_running_speed = setting_running_speed;
 	profile.phy_bounce_speed = setting_bounce_speed;
-
+	memcpy(&profile.varData, varData, sizeof(varData));
 	// Write new save code after this
 }
 
@@ -127,6 +127,7 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		Freeware_fread(&profile.phy_extrajump_water_jump_height, 4, 1, fp);
 		Freeware_fread(&profile.phy_running_speed, 4, 1, fp);
 		Freeware_fread(&profile.phy_bounce_speed, 4, 1, fp);
+		Freeware_fread(&profile.varData, sizeof(profile.varData), 1, fp);
 	}
 
 	// Close the file
@@ -175,6 +176,8 @@ void SetProfileData()
 	setting_extrajump_water_jump_height = profile.phy_extrajump_water_jump_height;
 	setting_running_speed = profile.phy_running_speed;
 	setting_bounce_speed = profile.phy_bounce_speed;
+	// Set <VAR values
+	memcpy(&varData, profile.varData, sizeof(varData));
 }
 
 void Replacement_LoadProfile_ClearFade_Call()

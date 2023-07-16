@@ -11,6 +11,8 @@
 #include "cave_story.h"
 #include "Collectables.h"
 #include "Entity.h"
+#include "TextScript.h"
+#include "TextScriptVAR.h"
 #include "TileCollisionMyChar.h"
 
 int current_jumps = 0;
@@ -89,6 +91,7 @@ void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 	InitMyCharPhysics();
 	InitCollectables();
 	InitMoney();
+	InitTSCVariables();
 }
 
 void SetPlayerPhysics(int x, int y)

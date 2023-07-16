@@ -6,6 +6,7 @@
 #include "cave_story.h"
 #include "Collectables.h"
 #include "TextScript.h"
+#include "TextScriptVAR.h"
 
 #define ProfileCodeSize 16
 extern bool isLoadingSave;
@@ -50,6 +51,7 @@ typedef struct CustomProfileData
 	int phy_extrajump_water_jump_height;
 	int phy_running_speed;
 	int phy_bounce_speed;
+	int varData[TSC_VAR_MAX];
 } CustomProfileData;
 
 extern CustomProfileData profile;

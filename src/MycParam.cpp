@@ -13,6 +13,7 @@
 #include "Entity.h"
 #include "ModSettings.h"
 #include "TextScript.h"
+#include "TextScriptVAR.h"
 
 bool setting_enable_life_drain = false;
 bool setting_enable_life_regen = false;

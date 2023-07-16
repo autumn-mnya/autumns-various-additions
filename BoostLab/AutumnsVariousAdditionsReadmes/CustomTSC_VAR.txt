@@ -1,0 +1,73 @@
+"<VAR", or the "Variable TSC hack", is a very advanced tsc hack. You can do some pretty cool stuff with it, but first you need to understand how it works!
+
+Variables are basically just numbers that you have control over. You have variables 0000-0300 in total. Anything above that won't work!
+
+For example, "Variable 0" is just a number, but using some of the commands listed in "CustomTSC.txt", you can do some pretty neat things!
+
+Firstly, "<VA+wwww:xxxx" for example will add "X" to variable "W". Let's say the variable is "0", just for reference -- and we're adding "47" to it. Now Variable 0 is set to 47!
+
+Now, you can also use this variable elsewhere outside of the variable commands as well! Any tsc command that uses a number should be able to read your variables, if you begin the number with a "V".
+
+Example: <ML+V000 will add whatever "Variable 0" is, to the players max life. Since we set it to 47 in that example, <ML+V000 will add 47 max life to the player.
+
+Now, there's another thing too. When you're using <VA+, <VA-, <VA*, <VA/, or <VIJ, you not only can add just a random number to your own variables, but you can also mess around with certain values inside the game as well!
+
+For example, <VA+0501:4000 will add 4000 to the players X position.
+The chart of "value hooks" is below. Have fun with the variable commands!
+
+# Variable Value linking (For <VA+, <VA-, <VA*, <VA/, and <VIJ) #
+
+# Note: There is almost 0 reason to edit 90% of this, I just figured I'd add many many values while it was on my mind. Enjoy.
+
+0501 - Players X position
+0502 - Players Y position
+0503 - Players X momentum
+0504 - Players Y momentum
+0505 - Players Health
+0506 - Players Max Health
+0507 - Players Air
+0508 - Players Condition
+0509 - Players Equipment
+0510 - Players Unit
+0511 - Players Booster Fuel
+0512 - Players Direction
+0513 - Players Selected Weapon
+0514 - Players Selected Item
+0515 - Current Map Number
+0516 - Current Song Number
+0517 - Collectables A
+0518 - Collectables B
+0519 - Collectables C
+0520 - Collectables D
+0521 - Collectables E
+0522 - Money
+0523 - Max Walking Speed (Physics)
+0524 - Max Top Movement Speed (Physics)
+0525 - Gravity (Physics)
+0526 - Rising Gravity (Physics)
+0527 - Walking Acceleration (Physics)
+0528 - Air Control (Physics)
+0529 - Friction (Physics)
+0530 - Jump Momentum (Physics)
+0531 - Underwater Max Walking Speed (Physics)
+0532 - Underwater Max Top Movement Speed (Physics)
+0533 - Underwater Gravity (Physics)
+0534 - Underwater Rising Gravity (Physics)
+0535 - Underwater Walking Acceleration (Physics)
+0536 - Underwater Air Control (Physics)
+0537 - Underwater Friction (Physics)
+0538 - Underwater Jump Momentum (Physics)
+0539 - Walljumps Horizontal Speed (Physics)
+0540 - Walljumps Jump Momentum (Physics)
+0541 - Wallsliding Speed (Physics)
+0542 - Underwater Walljumps Horizontal Speed (Physics)
+0543 - Underwater Walljumps Jump Momentum (Physics)
+0544 - Extra Jump Momentum (Physics)
+0545 - Underwater Extra Jump Momentum (Physics)
+0546 - Max Running Speed (Physics)
+0547 - Bouncy Block Speed (Physics)
+0548 - Current Air Jumps
+0549 - Number of <BKG backgrounds loaded
+0550 - Camera Locked Direction (<LDR)
+0551 - Map Width
+0552 - Map Height
