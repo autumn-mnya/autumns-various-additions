@@ -1,3 +1,5 @@
 Credits:
-joexyz - entity search code
-brayconn - cpxe code
+bionicobot - <BKG code
+brayconn - cpxe code (in dll + editor)
+jakev - TSC Extended commands
+periwinkle - npc.tbl merging script + various patches for the dll

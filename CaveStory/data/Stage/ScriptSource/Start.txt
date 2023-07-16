@@ -122,3 +122,12 @@ I HATE FLAG 901<NOD<END
 
 #2001
 <CSS<END
+
+#2002
+<CBKbkBlue$1$<END
+
+#2003
+<CBKbkFog$7$<END
+
+#2004
+<CBKbkBlack$4$<END

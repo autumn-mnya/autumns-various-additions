@@ -28,7 +28,7 @@ You can see the "CustomTSC_BKG_Format" and "CustomTSC_BKG_Example" txt files for
 Read "CustomTSC_BKG_Explanation.txt" for more info on <BKG itself.
 
 - <BKP - BacKGround Parameter
-Set parameter X for layer W to value Y. Layer 0 is the first <BKG layer.
+Set <BKG parameter X for layer W to value Y. Layer 0 is the first <BKG layer.
 Arguments: 3 [<BKPwwww:xxxx:yyyy] [layer:parameter:value]
 Example <BKP0000:0008:0008
 
@@ -95,6 +95,12 @@ Arguments: 1 [<COEwwww] [variable]
 - <COJ - COllectable Jump (Jump to event when player has collectables)
 Jump to event Y if the player has X amount of collectables or more in variable W. There are 5 collectable variables. 0 is the first one, and 4 is the last one. Any higher and it'll just effect 0.
 Arguments: 3 [<COJwwww:xxxx:yyyy] [variable:value:event]
+
+- <CBK - Change BacKground (Vanilla)
+Change the current stage background (NOT <BKG) to name A with type B. Both are string inputs, but the 2nd must be a valid background number.
+Arguments: 2 [<CBKstring$string2$] [bk_name$bk_id$]
+Example: <CBKbkMoon$6$
+( The above will load "bkMoon" with background type "6" )
 
 - <CSF - Change Surface File
 Change surface ID (string) to load image name (string), meaning you can load whatever image you want in place of another. Use npcSurfaceList.txt included in Booster's Lab as a reference. DO NOT GO ABOVE 40.

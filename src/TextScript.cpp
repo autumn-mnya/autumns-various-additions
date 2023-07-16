@@ -326,7 +326,21 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 
 		SwapSurfaces(surfacePath, atoi(surfaceId));
 	}
-	else if (strncmp(where + 1, "CTS", 3) == 0)
+	else if (strncmp(where + 1, "CBK", 3) == 0) // Change BacKground (Vanilla)
+	{
+		char back[32];
+		char id[32];
+		gTS->p_read += 4;
+
+		memset(back, 0, sizeof(back));
+		memset(id, 0, sizeof(id));
+
+		GetTextScriptString(back); // the background image
+		GetTextScriptString(id); // the background type
+
+		InitBack(back, atoi(id));
+	}
+	else if (strncmp(where + 1, "CTS", 3) == 0) // Change TileSet
 	{
 		// Get path
 		char path[MAX_PATH];

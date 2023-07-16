@@ -135,10 +135,11 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <BKD	1	#---	BacKground Disable	Disable <BKG layer W. Doesn't do anything if <BKG wasn't used.	0	0	1	4	4	4	4
 <BKE	1	#---	BacKground Enable	Enable <BKG layer W. Doesn't do anything if <BKG wasn't used.	0	0	1	4	4	4	4
 <BKG	0	----	BacKGround	(Check TSC command txt!!) Load Background txt file from data/bkg. Use $ at the end of the name to mark the end of the text input.	0	0	1	4	4	4	4
-<BKP	3	###-	BacKground Parameter	Set parameter X for layer W to value Y.	0	0	1	4	4	4	4
+<BKP	3	###-	BacKground Parameter	Set <BKG parameter X for layer W to value Y.	0	0	1	4	4	4	4
 <BKR	0	----	BacKground Reset	Disables <BKG. This will keep the <BKG background file though. <BKG will auto reset on <TRA as well.	0	0	1	4	4	4	4
 <BUY	2	#e--	BUY jump	Jump to event X if player doesn't have W amount of money. Continue and remove W money otherwise.	0	0	1	4	4	4	4
 <BY2	2	#e--	BuY jump 2	Jump to event X if player has W amount of money or more, and remove W amount of money. Continue otherwise.	0	0	1	4	4	4	4
+<CBK	0	----	Change BacKground	Change vanilla background to image A with type B. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	0	1	4	4	4	4
 <CO+	2	##--	COllectables +	Add collectables amount X to collectable variable W. (Check TSC command txt)	0	0	1	4	4	4	4
 <CO-	2	##--	COllectables -	Subtract collectables amount X from collectable variable W. (Check TSC command txt)	0	0	1	4	4	4	4
 <COD	1	#---	COllectable Disable	Disables the display of collectable variable W.	0	0	1	4	4	4	4	
