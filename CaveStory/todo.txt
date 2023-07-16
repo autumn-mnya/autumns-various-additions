@@ -4,7 +4,7 @@
 
 # TSC #
 [x] BKG (Bionicobot Version)
-[-] CO+/CO-/COJ (Autumn Collectables hack)
+[x] CO+/CO-/COJ (Autumn Collectables hack)
 [x] BUY/SEL
 	-Added money npc
 	-Added settings to enable money + Disable exp drops
