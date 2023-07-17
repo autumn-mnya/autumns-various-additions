@@ -12,6 +12,7 @@
 #include "mod_loader.h"
 #include "cave_story.h"
 #include "ASMPatches.h"
+#include "ASMLoader.h"
 #include "BKG.h"
 #include "Collectables.h"
 #include "Draw.h"
@@ -32,6 +33,7 @@
 // Paths
 char gModulePath[MAX_PATH];
 char gDataPath[MAX_PATH];
+char gPatchesPath[MAX_PATH];
 char gBkgPath[MAX_PATH];
 
 bool init_collectables_a_enabled = false;
@@ -251,6 +253,10 @@ void InitMod_TSCBkg()
 	ModLoader_WriteCall((void*)0x4106C3, (void*)Replacement_ModeAction_PutFront_Call);
 	ModLoader_WriteCall((void*)0x420EB5, (void*)Replacement_TransferStage_ResetFlash_Call);
 	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
+
+	// Get path of the Bkg folder
+	strcpy(gBkgPath, gDataPath);
+	strcat(gBkgPath, "\\bkg");
 }
 
 void InitMod_ASMPatches()
@@ -361,9 +367,12 @@ void InitMod(void)
 		InitMod_PreLaunch_CollectablesEnabled();
 		InitMod_PreLaunch_CollectablesPositioning();
 
-		// Get path of the Bkg folder
-		strcpy(gBkgPath, gDataPath);
-		strcat(gBkgPath, "\\bkg");
+		// Get path of the patches folder if asm loader is enabled
+		if (setting_enable_asm_loader)
+		{
+			strcpy(gPatchesPath, gDataPath);
+			strcat(gPatchesPath, "\\patches");
+		}
 	}
 
 	if (setting_enable_ui)

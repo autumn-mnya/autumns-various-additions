@@ -6,6 +6,12 @@
 #include <string.h>
 #include <string>
 
+#include <iostream>
+#include <cstdio>
+#include <vector>
+
+#define MAX_LINE_LENGTH 256
+
 #include "ASMPatches.h"
 
 #include "mod_loader.h"

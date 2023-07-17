@@ -11,6 +11,7 @@
 #include "mod_loader.h"
 #include "cave_story.h"
 #include "ASMPatches.h"
+#include "ASMLoader.h"
 #include "Collectables.h"
 #include "Draw.h"
 #include "Entity.h"
@@ -51,6 +52,7 @@ void InitMod_Settings()
 	setting_enable_ui = ModLoader_GetSettingBool("Enable Custom UI Code", true);
 	setting_enable_tilecollision = ModLoader_GetSettingBool("Enable Custom Tileset Code", true);
 	setting_enable_text_script_code = ModLoader_GetSettingBool("Enable Custom TSC Code", true);
+	setting_enable_asm_loader = ModLoader_GetSettingBool("Enable Custom Hex Patch Loader", true);
 	setting_enable_savedata_code = ModLoader_GetSettingBool("Enable Custom Save Data Code", true);
 	setting_enable_teleporter_bugfix = ModLoader_GetSettingBool("Enable Teleporter Transparency Fix", true);
 	setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
@@ -154,6 +156,9 @@ void InitMod_Settings()
 
 	// Ability to disable this
 	setting_enable_mim_mod = ModLoader_GetSettingBool("Enable <MIM Command", true);
+
+	// Disables the encryption the game uses for TSC.
+	setting_disable_tsc_encryption = ModLoader_GetSettingBool("Disable TSC Encryption", false);
 
 	// bigger playersize hacks maybe?
 	mim_player_size_width = ModLoader_GetSettingInt("<MIM Player Width", 16);

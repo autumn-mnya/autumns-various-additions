@@ -187,3 +187,16 @@ you win<NOD<CLO<END
 <KEY<MS4 this wont work <NOD<END
 
 #2032
+
+#3000
+<PATinventoryevent$<END
+#3001
+<UPT<END
+#3002
+<PATmultisave$<END
+
+#3003
+<EQ+0001<EQ-0032<END
+
+#3004
+<PATdoublejump$<END

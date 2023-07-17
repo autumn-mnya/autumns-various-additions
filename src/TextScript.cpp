@@ -12,6 +12,7 @@
 
 #include "mod_loader.h"
 #include "mod_loader_hooks.h"
+#include "ASMLoader.h"
 #include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
@@ -27,6 +28,7 @@ bool setting_enable_money_code = false;
 bool setting_money_disable_enemy_money_drops = false;
 bool setting_money_disable_exp_drops = false;
 bool setting_enable_mim_mod = true;
+bool setting_disable_tsc_encryption = false;
 
 int setting_money_hud_x = 8;
 int setting_money_hud_y = 48;
@@ -621,6 +623,22 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		else
 			gTS->p_read += 18;
 	}
+	else if (strncmp(where + 1, "PAT", 3) == 0) // PATch load
+	{
+		char patch[MAX_PATH];
+		gTS->p_read += 4;
+
+		memset(patch, 0, sizeof(patch));
+
+		GetTextScriptString(patch); // the background image
+
+		ApplyPatches(patch);
+	}
+	else if (strncmp(where + 1, "UPT", 3) == 0) // UnPaTch
+	{
+		UnpatchMemory();
+		gTS->p_read += 4;
+	}
 	else
 		return 0;
 	
@@ -650,6 +668,12 @@ static int CustomTSC_MIM(MLHookCPURegisters* regs, void* ud)
 	return 1;
 }
 
+// If you want to disable this for some reason, we just set this to be an empty function..
+void Replacement_EncryptionBinaryData2(unsigned char* pData, long size)
+{
+
+}
+
 void InitMod_TSC()
 {
 	ModLoader_WriteJump((void*)0x421900, (void*)Replacement_GetTextScriptNo);
@@ -657,4 +681,7 @@ void InitMod_TSC()
 
 	if (setting_enable_mim_mod)
 		ModLoader_AddStackableHook(CSH_tsc_start, CustomTSC_MIM, (void*)0);
+
+	if (setting_disable_tsc_encryption)
+		ModLoader_WriteJump((void*)0x4215C0, (void*)Replacement_EncryptionBinaryData2);
 }

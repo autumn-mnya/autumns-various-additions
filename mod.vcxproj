@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ASMLoader.cpp" />
     <ClCompile Include="src\ASMPatches.cpp" />
     <ClCompile Include="src\BKG.cpp" />
     <ClCompile Include="src\Collectables.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="src\\mod_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ASMLoader.h" />
     <ClInclude Include="src\ASMPatches.h" />
     <ClInclude Include="src\BKG.h" />
     <ClInclude Include="src\cave_story.h" />
