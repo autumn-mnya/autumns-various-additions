@@ -10,6 +10,8 @@
 #include "cave_story.h"
 #include "main.h"
 
+bool setting_disable_window_rect_saving = true;
+
 BOOL IsKeyDataFile(const char* name)
 {
 	char path[MAX_PATH];
@@ -39,5 +41,11 @@ BOOL IsKeyBKGFile(const char* name)
 		return FALSE;
 
 	fclose(fp);
+	return TRUE;
+}
+
+// I honestly hate saving the window rect. Let's keep it disabled by default!
+BOOL Replacement_SaveWindowRect(HWND hWnd, const char* filename)
+{
 	return TRUE;
 }

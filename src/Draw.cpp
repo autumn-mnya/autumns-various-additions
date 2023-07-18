@@ -95,36 +95,3 @@ void Replacement_ModeTitle_InitStar_Call()
 	InitStar();
 	ResetTSC_Image();
 }
-
-void Replacement_Debug_PutMyLife(BOOL flash)
-{
-	RECT rcCase = { 0, 40, 232, 48 };
-	RECT rcLife = { 0, 24, 232, 32 };
-	RECT rcBr = { 0, 32, 232, 40 };
-
-	if (flash == TRUE && gMC->shock / 2 % 2)
-		return;
-
-	if (gMC->lifeBr < gMC->life)
-		gMC->lifeBr = gMC->life;
-
-	if (gMC->lifeBr > gMC->life)
-	{
-		if (++gMC->lifeBr_count > 30)
-			--gMC->lifeBr;
-	}
-	else
-	{
-		gMC->lifeBr_count = 0;
-	}
-
-	// Draw bar
-	rcCase.right = 64;
-	rcLife.right = ((gMC->life * 40) / gMC->max_life) - 1;
-	rcBr.right = ((gMC->lifeBr * 40) / gMC->max_life) - 1;
-
-	PutBitmap3(&grcGame, 16, 40, &rcCase, SURFACE_ID_TEXT_BOX);
-	PutBitmap3(&grcGame, 40, 40, &rcBr, SURFACE_ID_TEXT_BOX);
-	PutBitmap3(&grcGame, 40, 40, &rcLife, SURFACE_ID_TEXT_BOX);
-	PutNumber4(8, 40, gMC->lifeBr, FALSE);
-}

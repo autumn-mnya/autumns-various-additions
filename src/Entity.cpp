@@ -14,6 +14,8 @@
 #include "Frame.h"
 #include "MyChar.h"
 
+#include "Profile.h"
+
 // Currently contains every single custom entity's code!! Add new ones here basically, its the same process as CSE2 except you add the functions into the Entity.h file, and add them to
 // the list in EntityTable.cpp.
 
@@ -7869,4 +7871,26 @@ void ActEntity459(NPCHAR* npc)
 	if (npc->count1 > 400)
 		if (npc->count1 / 2 % 2)
 			npc->rect = rcNo;
+}
+
+// Load-Save-Event Controller
+void ActEntity460(NPCHAR* npc)
+{
+	RECT rect = { 0, 0, 16, 16 };
+
+	if (npc->act_no == 0)
+	{
+		npc->act_no = 1;
+
+		if (npc->direct == 2)
+			npc->y += 16 * 0x200;
+	}
+
+	if (isLoadingSave)
+	{
+		npc->cond = 0;
+		StartTextScript(npc->code_event);
+	}
+
+	npc->rect = rect;
 }

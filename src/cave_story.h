@@ -282,14 +282,14 @@ typedef struct BOSSLIFE	// Not the original struct name
 // Config
 typedef struct ConfigData
 {
-	char magic_string[0x20];
+	char proof[0x20];
 	char font_name[0x40];
-	unsigned long directional_keys;
-	unsigned long jump_shoot_keys;
-	unsigned long jump_shoot_keys_2;
-	unsigned long window_size;
-	unsigned long gamepad_enabled;
-	unsigned long gamepad_buttons[8];
+	long move_button_mode;
+	long attack_button_mode;
+	long ok_button_mode;
+	long display_mode;
+	BOOL bJoystick;
+	long joystick_button[8];
 } ConfigData;
 
 // Bullet
@@ -1038,7 +1038,7 @@ static int (* const RotationArms)(void) = (int(*)(void))0x4020E0;
 static int (* const RotationArmsRev)(void) = (int(*)(void))0x402190;
 static void (* const ChangeToFirstArms)(void) = (void(*)(void))0x402240;
 // Background functions
-static void (* const InitBack)(const char* background_filename, int background_type) = (void(*)(const char*, int))0x402270;
+static BOOL (* const InitBack)(const char* background_filename, int background_type) = (BOOL(*)(const char*, int))0x402270;
 static void (* const ActBack)(void) = (void (*)(void))0x402370;
 static void (* const PutBack)(int x_pos, int y_pos) = (void(*)(int, int))0x4023D0;
 static void (* const PutFront)(int x_pos, int y_pos) = (void(*)(int, int))0x402830;

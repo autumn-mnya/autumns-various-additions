@@ -67,14 +67,23 @@ typedef struct CustomProfileData
 	int phy_extrajump_water_jump_height;
 	int phy_running_speed;
 	int phy_bounce_speed;
+	// <VAR
 	int varData[TSC_VAR_MAX];
+	// <MIM
 	int mim_num;
+	// Booster Fuel
+	int booster_08_fuel;
+	int booster_20_fuel;
+	// Collab Tables
+	char stage_tbl[StageTblMaxPath];
+	char npc_tbl[NpcTblMaxPath];
 } CustomProfileData;
 
 extern CustomProfileData profile;
 
 void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t size);
 void Replacement_SaveProfile_fwrite_Call(void* buf, size_t eleS, size_t eleC, FILE* fp);
+void Replacement_LoadProfile_InitMyChar_Call();
 void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z);
 void Replacement_LoadProfile_fclose_Call(FILE* fp);
 void Replacement_LoadProfile_ClearFade_Call();

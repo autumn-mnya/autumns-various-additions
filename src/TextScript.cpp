@@ -12,6 +12,7 @@
 
 #include "mod_loader.h"
 #include "mod_loader_hooks.h"
+#include "ModSettings.h"
 #include "ASMLoader.h"
 #include "BKG.h"
 #include "cave_story.h"
@@ -25,21 +26,31 @@
 #include "MycParam.h"
 #include "Profile.h"
 #include "Respawn.h"
+#include "Stage.h"
 #include "TextScriptVAR.h"
 
+// Booleans
 bool setting_enable_money_code = false;
 bool setting_money_disable_enemy_money_drops = false;
 bool setting_money_disable_exp_drops = false;
 bool setting_enable_mim_mod = true;
 bool setting_disable_tsc_encryption = false;
 
+// Money HUD
 int setting_money_hud_x = 8;
 int setting_money_hud_y = 48;
 int setting_money_hud_x_number_offset = 16;
 
-char CustomWindowName[MAX_PATH] = "";
-char CustomScriptName[0x20] = "";
+// Booster Fuel
+int booster_08_fuel = 50;
+int booster_20_fuel = 50;
+
+// Text for different things
 char TSC_IMG_Folder[ImgFolderSize];
+
+// Stage/Npc table paths
+char stageTblPath[StageTblMaxPath];
+char npcTblPath[NpcTblMaxPath];
 
 // We replace the <TRA transfer stage call so that we can set a respawn point
 // 0x422E09
@@ -244,6 +255,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "SWN", 3) == 0) // Set Window Name
 	{
+		char CustomWindowName[MAX_PATH];
 		gTS->p_read += 4;
 		memset(CustomWindowName, 0, sizeof(CustomWindowName));
 		GetTextScriptString(CustomWindowName);
@@ -257,6 +269,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "LSC", 3) == 0) // Load tsc SCript
 	{
+		char CustomScriptName[0x20] = "";
 		char path[MAX_PATH];
 		char path_dir[20];
 
@@ -710,6 +723,74 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		SetRespawnPoint(x, y);
 		gTS->p_read += 13;
 	}
+	else if (strncmp(where + 1, "AMC", 3) == 0) // ArMs Clear
+	{
+		ClearArmsData();
+		gTS->p_read += 4;
+	}
+	else if (strncmp(where + 1, "ITC", 3) == 0) // ITem Clear
+	{
+		ClearItemData();
+		gTS->p_read += 4;
+	}
+	else if (strncmp(where + 1, "BLO", 3) == 0) // BLOw up
+	{
+		w = GetTextScriptNo(gTS->p_read + 4);
+		BossExplosionAtNpc(w);
+		gTS->p_read += 8;
+	}
+	else if (strncmp(where + 1, "PS-", 3) == 0) // Portal Slot -
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		SubPermitStage(x);
+		gTS->p_read += 8;
+	}
+	else if (strncmp(where + 1, "PSC", 3) == 0) // Portal Slot Clear
+	{
+		ClearPermitStage();
+		gTS->p_read += 4;
+	}
+	else if (strncmp(where + 1, "BFS", 3) == 0) // Booster Fuel Set
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		switch (x)
+		{
+			default:
+			case 0:
+				booster_08_fuel = y;
+				break;
+
+			case 1:
+			case 2: // This makes more logical sense for some people I think?
+				booster_20_fuel = y;
+				break;
+
+			case 8:
+				booster_08_fuel = y;
+				break;
+		}
+		Mod_WriteBoosterFuel();
+		gTS->p_read += 13;
+	}
+	else if (strncmp(where + 1, "STT", 3) == 0) // STage Table
+	{
+		gTS->p_read += 4;
+
+		memset(stageTblPath, 0, sizeof(stageTblPath));
+
+		GetTextScriptString(stageTblPath);
+		LoadStageTable(stageTblPath);
+	}
+	else if (strncmp(where + 1, "NPT", 3) == 0) // NPc Table
+	{
+		gTS->p_read += 4;
+
+		memset(npcTblPath, 0, sizeof(npcTblPath));
+
+		GetTextScriptString(npcTblPath);
+		LoadCustomNpcTable(npcTblPath);
+	}
 	else
 		return 0;
 	
@@ -739,24 +820,48 @@ static int CustomTSC_MIM(MLHookCPURegisters* regs, void* ud)
 	return 1;
 }
 
+void ResetCollabPaths()
+{
+	memset(stageTblPath, 0, sizeof(stageTblPath));
+	memset(npcTblPath, 0, sizeof(npcTblPath));
+}
+
 // If you want to disable this for some reason, we just set this to be an empty function..
 void Replacement_EncryptionBinaryData2(unsigned char* pData, long size)
 {
 
 }
 
+void Mod_WriteBoosterFuel()
+{
+	ModLoader_WriteLong((void*)0x4157A7, booster_08_fuel); // Booster 0.8 Fuel
+	ModLoader_WriteLong((void*)0x4157BD, booster_20_fuel); // Booster 2.0 Fuel
+}
+
 void InitMod_TSC()
 {
+	// Collab Tables
+	ModLoader_WriteCall((void*)0x41D407, (void*)Replacement_LoadProfile_InitMyChar_Call);
+	// Respawning the player
 	ModLoader_WriteCall((void*)0x41D419, (void*)Replacement_LoadProfile_TransferStage_Call);
 	ModLoader_WriteCall((void*)0x41D59A, (void*)Replacement_InitializeGame_TransferStage_Call);
 	ModLoader_WriteCall((void*)0x40F770, (void*)Replacement_ModeOpening_SetFrameTargetMyChar_Call);
 	ModLoader_WriteCall((void*)0x422E09, (void*)Replacement_TextScript_TransferStage_Call);
+
+	// <VAR
 	ModLoader_WriteJump((void*)0x421900, (void*)Replacement_GetTextScriptNo);
+
+	// TSC commands
 	ModLoader_AddStackableHook(CSH_tsc_start, CustomTextScriptCommands, (void*)0);
 
+	// <MIM command
 	if (setting_enable_mim_mod)
 		ModLoader_AddStackableHook(CSH_tsc_start, CustomTSC_MIM, (void*)0);
 
 	if (setting_disable_tsc_encryption)
 		ModLoader_WriteJump((void*)0x4215C0, (void*)Replacement_EncryptionBinaryData2);
+
+	// Booster Fuel amounts (only when MyChar code is enabled)
+	if (setting_enable_mychar)
+		Mod_WriteBoosterFuel();
 }

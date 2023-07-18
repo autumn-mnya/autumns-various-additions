@@ -8,9 +8,14 @@
 #include "Game.h"
 
 #include "main.h"
+#include "mod_loader.h"
+#include "ModSettings.h"
 #include "cave_story.h"
 #include "Draw.h"
+#include "Profile.h"
 #include "Respawn.h"
+#include "Stage.h"
+#include "TextScript.h"
 
 // Set Respawn
 // 0x40F770
@@ -37,6 +42,16 @@ void Replacement_ModeOpening_PutTextScript_Call()
 		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
 }
 
+// 0x410564
+void Replacement_ModeAction_ActValueView_Call()
+{
+	// turn off isLoadingSave if it is active
+	if (isLoadingSave == true)
+		isLoadingSave = false;
+
+	ActValueView();
+}
+
 void Replacement_ModeAction_PutTextScript_Call()
 {
 	// Show <IMG behind textbox when flag isnt set
@@ -51,4 +66,11 @@ void Replacement_ModeAction_PutTextScript_Call()
 	// Show <IMG infront of textbox when flag is set
 	if (GetNPCFlag(setting_show_img_on_top_flag))
 		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
+}
+
+// 0x40F67C
+void Replacement_Game_InitTextScript2_Call()
+{
+	LoadStageTable(NULL);
+	InitTextScript2();
 }

@@ -2,6 +2,26 @@ The "Autumns Various Additions" dll adds various new TSC commands into the game.
 
 # TSC Commands #
 
+- <AMC - ArMs Clear
+Removes all of the weapons in the players inventory.
+Arguments: 0 [<AMC]
+
+- <ITC - ITem Clear
+Removes all of the items in the players inventory.
+Arguments: 0 [<ITC]
+
+- <BFS - Booster Fuel Set
+Sets the players booster fuel of type W to value X.
+Arguments: 2 [<BFSwwww:xxxx] [type:fuel]
+
+###############################
+#       Types for <BFS        #
+# 0 - Booster 0.8             #
+# 1 - Booster 2.0             #
+# 2 - Booster 2.0 (Duplicate) #
+# 8 - Booster 0.8 (Duplicate) #
+###############################
+
 - <BKE - BacKGround Enable
 Enable <BKG layer W. Layer 0 is the first <BKG layer. -- Doesn't do anything if <BKG wasn't used!
 Arguments: 1 [<BKEwwww] [layer]
@@ -55,6 +75,10 @@ Example <BKP0000:0008:0008
 - <BKR - BacKground Reset
 Disables <BKG. This will keep the <BKG background file though. <BKG will auto reset on <TRA as well!!
 Arguments: 0 [<BKR]
+
+- <BLO - BLOw up
+Displays a boss explosion flash effect at entity with the assigned event number. There can only be 1 on screen!!
+Arguments: 1 [<BLOwwww] [entity_event]
 
 - <BUY - BUY jump
 [This TSC command is only useful when the money code is enabled in settings.ini.]
@@ -172,10 +196,6 @@ Arguments: 1 [<IMGstring$] [image$]
 Example: <IMGglyph$
 ( You can set a flag to make the image appear *above* the textbox instead of behind it. The default is 6503, you can change this in the dll's settings.ini )
 
-- <IPH - Initialize PHysics
-Reset the physics for the player back to the ones set in settings.ini. Physics are auto-reset on new game.
-Arguments: 0 [<IPH]
-
 - <LSC - Load SCript
 Load TSC Script and run event 0 afterwards. -- End the text string with a $ so the game knows to stop reading the text.
 Arguments: 1 [<LSCstring$] [script$]
@@ -219,9 +239,21 @@ Arguments: 4 [<TRMwwww:zzzz:xxxx:yyyy] [map:event:x:y]
 Unloads and unpatches all hex patches applies via <PAT.
 Arguments: 0 [<UPT]
 
+- <IPH - Initialize PHysics
+Reset the physics for the player back to the ones set in settings.ini. Physics are auto-reset on new game.
+Arguments: 0 [<IPH]
+
 - <PHY - PHYsics
 Change physics of type W to value X. The chart for the different physics values you can change is below.
 Arguments: 2 [<PHYwwww:xxxx] [variable:value]
+
+- <PS- - Portal Slot - (Remove)
+Remove teleporter slot W.
+Arguments: 1 [<PS-wwww] [slot]
+
+- <PSC - Portal Slot Clear
+Remove all teleporter slots that have been added.
+Arguments: 0 [<PSC]
 
 ##################################################
 #                 <PHY Variables                 #

@@ -98,6 +98,7 @@
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\EntityLoad.cpp" />
     <ClCompile Include="src\EntityTable.cpp" />
+    <ClCompile Include="src\File.cpp" />
     <ClCompile Include="src\Frame.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Generic.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\EntityLoad.h" />
     <ClInclude Include="src\EntityTable.h" />
+    <ClInclude Include="src\File.h" />
     <ClInclude Include="src\Frame.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Generic.h" />

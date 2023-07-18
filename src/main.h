@@ -12,3 +12,4 @@ void PlayerDeath();
 void InitCollectablesEnabled();
 void InitCollectablesPositioning();
 void InitMyCharPhysics();
+void InitMyCharBoostFuel();

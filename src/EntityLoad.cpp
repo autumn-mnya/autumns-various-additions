@@ -7,6 +7,7 @@
 
 #include "EntityLoad.h"
 
+#include "ModSettings.h"
 #include "cave_story.h"
 #include "main.h"
 #include "Collectables.h"
@@ -16,12 +17,16 @@
 
 // This file loads certain things relating to entities, but does not hold entity code itself.
 
+bool setting_enable_collab_npc_table = false;
+
 CNPCHAR gCustomNPC[NPC_MAX];
 
 const char* const gPassPixEve = "PXE";
 const char* const gPassCustomPixEve = "AUT";
 
 const char* const cpxeFileName = "cpxe";
+
+const char* const gDefaultNpcTableName = "npc.tbl";
 
 BOOL LoadCustomEvent(const char* path_event, int npc_count)
 {
@@ -373,4 +378,40 @@ void Replacement_HitMyCharNpChar(void)
 	// Create question mark when NPC hasn't been interacted with
 	if (gMC->ques)
 		SetCaret(gMC->x, gMC->y, CARET_QUESTION_MARK, DIR_LEFT);
+}
+
+// Custom Functions
+
+void BossExplosionAtNpc(int event)
+{
+	int n;
+
+	for (n = 0; n < NPC_MAX; ++n)
+	{
+		if ((gNPC[n].cond & 0x80) && gNPC[n].code_event == event)
+		{
+			SetFlash(gNPC[n].x, gNPC[n].y, FLASH_MODE_EXPLOSION);
+		}
+	}
+}
+
+// Collab
+
+void LoadCustomNpcTable(const char* name)
+{
+	char path[MAX_PATH];
+
+	// Try to load npc.tbl
+	if (name != NULL)
+	{
+		if (setting_collab_enabled == true)
+			sprintf(path, "%s\\%s\\%s%s", gDataPath, setting_collab_name, name, ".npc.tbl");
+		else
+			sprintf(path, "%s\\%s%s", gDataPath, name, ".npc.tbl");
+	}
+	else
+		sprintf(path, "%s\\%s", gDataPath, gDefaultNpcTableName);
+
+	ReleaseNpcTable();
+	LoadNpcTable(path);
 }

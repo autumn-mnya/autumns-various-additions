@@ -13,13 +13,16 @@
 #include "ASMPatches.h"
 #include "ASMLoader.h"
 #include "Collectables.h"
+#include "Config.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
+#include "Generic.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "MycParam.h"
 #include "PauseScreen.h"
+#include "Stage.h"
 #include "TextScript.h"
 #include "TileCollisionBoss.h"
 #include "TileCollisionBullet.h"
@@ -38,6 +41,9 @@ bool setting_enable_savedata_code = true;
 bool setting_enable_teleporter_bugfix = true;
 bool setting_enable_pause_screen = false;
 
+bool setting_collab_enabled = false;
+const char* setting_collab_name = "null";
+
 // For settings related things, this function will be used.
 void InitMod_Settings()
 {
@@ -55,6 +61,8 @@ void InitMod_Settings()
 	setting_enable_asm_loader = ModLoader_GetSettingBool("Enable Custom Hex Patch Loader", true);
 	setting_enable_savedata_code = ModLoader_GetSettingBool("Enable Custom Save Data Code", true);
 	setting_enable_teleporter_bugfix = ModLoader_GetSettingBool("Enable Teleporter Transparency Fix", true);
+	setting_disable_window_rect_saving = ModLoader_GetSettingBool("Disable window.rect Saving", true);
+	setting_enable_default_config_options = ModLoader_GetSettingBool("Autumn's Default Config Options", true);
 	setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
 
 	///////////////
@@ -120,6 +128,10 @@ void InitMod_Settings()
 	setting_physics_water_resist = ModLoader_GetSettingInt("Underwater Friction", 25);
 
 	setting_running_speed = ModLoader_GetSettingInt("Max Running Speed", 1218);
+
+	// Booster Fuel
+	booster_08_fuel = ModLoader_GetSettingInt("Booster 0.8 Fuel", 50);
+	booster_20_fuel = ModLoader_GetSettingInt("Booster 2.0 Fuel", 50);
 
 	// Life Drain / Regen when flag is set
 
@@ -228,4 +240,14 @@ void InitMod_Settings()
 	setting_pausetext_no = ModLoader_GetSettingString("No Text", "No");
 	setting_pausetext_are_you_sure = ModLoader_GetSettingString("Confirm Text", "Are you sure?");
 	setting_pausetext_unsaved_progress = ModLoader_GetSettingString("Progress Text", "Unsaved progress will be lost!");
+
+	////////////////////
+	// Major Settings //
+	////////////////////
+
+	setting_external_stage_tbl_support = ModLoader_GetSettingBool("Enable External Stage.tbl Files", false);
+	setting_enable_collab_npc_table = ModLoader_GetSettingBool("Enable Custom NPC Table Loading", false);
+
+	setting_collab_enabled = ModLoader_GetSettingBool("Collab Mode", false);
+	setting_collab_name = ModLoader_GetSettingString("Collab Name", "null");
 }

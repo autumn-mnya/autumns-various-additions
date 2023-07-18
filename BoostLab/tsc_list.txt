@@ -41,7 +41,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	150
+[BL_TSC]	156
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -133,18 +133,21 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <XX1	1	l---	XX1	Show the island falling in manner W. Use 0000 to have it crash and 0001 to have it stop midway.	0	0	1	4	4	4	4
 <YNJ	1	e---	Yes/No Jump	Prompt Yes/No; jump to event W if No is selected.	0	0	1	4	4	4	4
 <ZAM	0	----	Zero ArMs	Sets all weapon energy to zero.	0	0	1	4	4	4	4
+<AMC	0	----	ArMs Clear	Removes all of the weapons from the players inventory.	0	0	1	4	4	4	4
+<BFS	2	##--	Booster Fuel Set	Sets booster type W's fuel to value X (Check TSC command txt).	0	0	1	4	4	4	4
 <BKD	1	#---	BacKground Disable	Disable <BKG layer W. Doesn't do anything if <BKG wasn't used.	0	0	1	4	4	4	4
 <BKE	1	#---	BacKground Enable	Enable <BKG layer W. Doesn't do anything if <BKG wasn't used.	0	0	1	4	4	4	4
 <BKG	0	----	BacKGround	(Check TSC command txt!!) Load Background txt file from data/bkg. Use $ at the end of the name to mark the end of the text input.	0	1	1	4	4	4	4
 <BKP	3	###-	BacKground Parameter	Set <BKG parameter X for layer W to value Y.	0	0	1	4	4	4	4
 <BKR	0	----	BacKground Reset	Disables <BKG. This will keep the <BKG background file though. <BKG will auto reset on <TRA as well.	0	0	1	4	4	4	4
+<BLO	1	#---	BLow up	Displays a boss explosion flash effect at entity with event # W. There can only be 1 on screen.	0	0	1	4	4	4	4
 <BUY	2	#e--	BUY jump	Jump to event X if player doesn't have W amount of money. Continue and remove W money otherwise.	0	0	1	4	4	4	4
 <BY2	2	#e--	BuY jump 2	Jump to event X if player has W amount of money or more, and remove W amount of money. Continue otherwise.	0	0	1	4	4	4	4
 <CBK	0	----	Change BacKground	Change vanilla background to image A with type B. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	1	0	4	4	4	4
 <CO+	2	##--	COllectables +	Add collectables amount X to collectable variable W. (Check TSC command txt)	0	0	1	4	4	4	4
 <CO-	2	##--	COllectables -	Subtract collectables amount X from collectable variable W. (Check TSC command txt)	0	0	1	4	4	4	4
-<COD	1	#---	COllectable Disable	Disables the display of collectable variable W.	0	0	1	4	4	4	4	
-<COE	1	#---	COllectable Enable	Enables the display of collectable variable W.	0	0	1	4	4	4	4	
+<COD	1	#---	COllectable Disable	Disables the display of collectable variable W.	0	0	1	4	4	4	4
+<COE	1	#---	COllectable Enable	Enables the display of collectable variable W.	0	0	1	4	4	4	4
 <COJ	3	##e-	COllectable Jump	Jump to event Y if the player has X amount of collectables or more in variable W.	0	0	1	4	4	4	4
 <CSF	0	----	Change Surface File	Change surface ID string to load image string. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	1	0	4	4	4	4
 <CTS	0	----	Change TileSet	Change tileset loaded. Use $ at the end of the tileset name to mark the end of the text input. Do not include "Prt".	0	1	0	4	4	4	4
@@ -155,6 +158,7 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <IMF	0	----	IMage Folder	Set a subfolder for <IMG to load from. Use $ at the end of the folder name to mark the end of the text input (Check TSC command txt for more).	0	1	0	4	4	4	4
 <IMG	0	----	IMaGe display	Show an image on screen. Use $ at the end of the image name to mark the end of the text input (Check TSC command txt for more).	0	1	0	4	4	4	4
 <IPH	0	----	Initialize PHysics	Resets the physics values for the player (<PHY) back to the ones set in settings.ini.	0	0	1	4	4	4	4
+<ITC	0	----	ITem Clear	Removes all of the items from the players inventory.	0	0	1	4	4	4	4
 <LDR	2	#d--	Lock DiRection	Lock Direction when using <FM2 Camera (Check TSC command txt).	0	0	1	4	4	4	4
 <LSC	0	----	Load SCript	Load TSC script and run event 0 afterwards. Use $ at the end of the script name to mark the end of the text input.	0	1	0	4	4	4	4
 <MIM	1	#---	MIMiga mask	Move the MyChar spritesheet down by W spritesets. 	0	0	1	4	4	4	4
@@ -163,6 +167,8 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <RNJ	2	ee--	Random Number Jump	Jump to Random Event between W and X. Min to Max.	0	0	1	4	4	4	4
 <PAT	0	----	PATch load	Load hex patch from data/patches. Use $ at the end of the patch name to mark the end of the text input (Check TSC command txt).	0	1	0	4	4	4	4
 <PHY	2	##--	PHYsics set	Change physics of type W to value X.	0	0	1	4	4	4	4
+<PS-	1	#---	Portal Slot -	Remove teleporter slot W.	0	0	1	4	4	4	4
+<PSC	0	----	Portal Slot Clear	Removes all of the teleporter slots that have been added.	0	0	1	4	4	4	4
 <RSP	0	----	ReSPawn	Respawn the player (Check TSC command txt).	0	0	1	4	4	4	4
 <SEL	1	#---	SELl (money+)	Increase amount of money by W.	0	0	1	4	4	4	4
 <SL=	1	#---	SeLl =	Set amount of money to W.	0	0	1	4	4	4	4

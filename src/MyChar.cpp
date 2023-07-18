@@ -11,6 +11,9 @@
 #include "cave_story.h"
 #include "Collectables.h"
 #include "Entity.h"
+#include "EntityLoad.h"
+#include "Profile.h"
+#include "Stage.h"
 #include "TextScript.h"
 #include "TextScriptVAR.h"
 #include "TileCollisionMyChar.h"
@@ -99,6 +102,20 @@ void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 	InitCollectablesEnabled();
 	InitMoney();
 	InitTSCVariables();
+	InitMyCharBoostFuel();
+
+	if (setting_external_stage_tbl_support == true)
+	{
+		if (stageTblPath[0] == 0)
+			LoadStageTable(NULL); // load default stage.tbl when running InitMyChar
+	}
+
+	if (setting_enable_collab_npc_table == true)
+	{
+		if (npcTblPath[0] == 0)
+			LoadCustomNpcTable(NULL); // load default npc.tbl when running InitMyChar
+	}
+
 	mim_num = 0;
 }
 
@@ -446,7 +463,7 @@ void setPlayerPhysics(BOOL bKey, Physics *physics)
 	// Run button when the setting is set to true
 	if (setting_run_button_enabled)
 		ActMyChar_RunButton(bKey, physics);
-	
+
 	// Ice
 	int kLeft = (bKey && gKey & gKeyLeft) ? 1 : 0;
 	int kRight = (bKey && gKey & gKeyRight) ? 1 : 0;

@@ -223,3 +223,7 @@ C - How many frames it takes for the camera to move. (Default is 16)
 
 #459 - Money Entity
 Drops from enemies when the TSC money code is enabled.
+
+#460 - Load Save Event Controller
+When placed in a room, it will run the entities Event #, but ONLY if the game is loading a save.
+Basically, you can run an event on reloading a save by using this entity, placing it anywhere on the map. Where it is placed does not matter.

@@ -244,12 +244,12 @@ static int Callback_Resolution(OptionsMenu* parent_menu, size_t this_option, Cal
 	switch (action)
 	{
 		case ACTION_INIT:
-			parent_menu->options[this_option].value = conf->window_size;
-			parent_menu->options[this_option].value_string = strings[conf->window_size];
+			parent_menu->options[this_option].value = conf->display_mode;
+			parent_menu->options[this_option].value_string = strings[conf->display_mode];
 			break;
 
 		case ACTION_DEINIT:
-			conf->window_size = parent_menu->options[this_option].value;
+			conf->display_mode = parent_menu->options[this_option].value;
 			break;
 
 		case ACTION_OK:
@@ -292,12 +292,12 @@ static int Callback_ControllerEnabled(OptionsMenu* parent_menu, size_t this_opti
 	switch (action)
 	{
 	case ACTION_INIT:
-		parent_menu->options[this_option].value = conf->gamepad_enabled;
-		parent_menu->options[this_option].value_string = strings[conf->gamepad_enabled];
+		parent_menu->options[this_option].value = conf->bJoystick;
+		parent_menu->options[this_option].value_string = strings[conf->bJoystick];
 		break;
 
 	case ACTION_DEINIT:
-		conf->gamepad_enabled = parent_menu->options[this_option].value;
+		conf->bJoystick = parent_menu->options[this_option].value;
 		break;
 
 	case ACTION_OK:

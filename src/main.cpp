@@ -15,10 +15,12 @@
 #include "ASMLoader.h"
 #include "BKG.h"
 #include "Collectables.h"
+#include "Config.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "Game.h"
+#include "Generic.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "MycParam.h"
@@ -86,6 +88,10 @@ int init_collectables_b_x_offset = 0;
 int init_collectables_c_x_offset = 0;
 int init_collectables_d_x_offset = 0;
 int init_collectables_e_x_offset = 0;
+
+// Booster fuel
+int init_booster_08_fuel = 50;
+int init_booster_20_fuel = 50;
 
 // Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
@@ -156,6 +162,12 @@ void InitMod_PreLaunch_PhysicsSettings()
 	init_bounce_speed = setting_bounce_speed;
 }
 
+void InitMod_PreLaunch_BoosterFuel()
+{
+	init_booster_08_fuel = booster_08_fuel;
+	init_booster_20_fuel = booster_20_fuel;
+}
+
 // Inits anything relating to entities. The main thing are the 3 ModLoader_WriteJump's -- These replace every function that uses the Npc Table, and instead we also insert our new table!
 void InitMod_Entity()
 {
@@ -180,6 +192,9 @@ void InitMod_Entity()
 			ModLoader_WriteJump((void*)0x445660, (void*)Replacement_ActNpc150);
 		}
 	}
+
+	// This sets "isLoadingSave" to false after we're done loading, and after entities are loaded
+	ModLoader_WriteCall((void*)0x410564, (void*)Replacement_ModeAction_ActValueView_Call);
 }
 
 // Loads the new surface files (We can't go above 40, but we can use the unused ones. Except 3 and 4 as they are used in the netplay dll!)
@@ -234,6 +249,7 @@ void InitMod_GameUI()
 	ModLoader_WriteCall((void*)0x410856, (void*)Replacement_PutActiveArmsList_Call);
 }
 
+// Init TSC <IMG related calls
 void InitMod_TSCImage()
 {
 	ModLoader_WriteCall((void*)0x40F778, (void*)Replacement_ModeOpening_SetFadeMask_Call);
@@ -244,6 +260,7 @@ void InitMod_TSCImage()
 	ModLoader_WriteCall((void*)0x41086F, (void*)Replacement_ModeAction_PutTextScript_Call); // Mode Action
 }
 
+// Init TSC <BKG related calls
 void InitMod_TSCBkg()
 {
 	ModLoader_WriteCall((void*)0x402339, (void*)Replacement_InitBack_ReloadBitmap_File_Call); // Release Surface + MakeSurface_File instead of reloading bitmap
@@ -251,7 +268,8 @@ void InitMod_TSCBkg()
 	ModLoader_WriteCall((void*)0x40F8D1, (void*)Replacement_ModeOpening_PutFront_Call);
 	ModLoader_WriteCall((void*)0x410633, (void*)Replacement_ModeAction_PutBack_Call);
 	ModLoader_WriteCall((void*)0x4106C3, (void*)Replacement_ModeAction_PutFront_Call);
-	ModLoader_WriteCall((void*)0x420EB5, (void*)Replacement_TransferStage_ResetFlash_Call);
+	if (setting_external_stage_tbl_support == false) // Only replace this if stage.tbl support is disabled
+		ModLoader_WriteCall((void*)0x420EB5, (void*)Replacement_TransferStage_ResetFlash_Call);
 	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
 
 	// Get path of the Bkg folder
@@ -259,9 +277,25 @@ void InitMod_TSCBkg()
 	strcat(gBkgPath, "\\bkg");
 }
 
-void InitMod_ASMPatches()
+void InitMod_ExternalStageTable()
 {
-	// Random ASM Patches that arent related to any of the other Init functions go here
+	ModLoader_WriteCall((void*)0x40F67C, (void*)Replacement_Game_InitTextScript2_Call);
+	ModLoader_WriteJump((void*)0x420BE0, (void*)Replacement_TransferStage); // TransferStage replaced for stage.tbl changing
+}
+
+void InitMod_TeleporterMenuFix()
+{
+	ModLoader_WriteCall((void*)0x41DB16, (void*)PutBitmap4);
+}
+
+void InitMod_DisableWindowRect()
+{
+	ModLoader_WriteCall((void*)0x40F710, (void*)Replacement_SaveWindowRect);
+}
+
+void InitMod_AutumnConfigDefaults()
+{
+	ModLoader_WriteCall((void*)0x4124E0, (void*)Replacement_DefaultConfigData);
 }
 
 // Change collectables back to the originals
@@ -323,6 +357,13 @@ void InitMyCharPhysics()
 	setting_bounce_speed = init_bounce_speed;
 }
 
+void InitMyCharBoostFuel()
+{
+	booster_08_fuel = init_booster_08_fuel;
+	booster_20_fuel = init_booster_20_fuel;
+	Mod_WriteBoosterFuel();
+}
+
 // Init the whole mod
 void InitMod(void)
 {
@@ -366,6 +407,7 @@ void InitMod(void)
 		InitMod_TSCBkg();
 		InitMod_PreLaunch_CollectablesEnabled();
 		InitMod_PreLaunch_CollectablesPositioning();
+		InitMod_PreLaunch_BoosterFuel();
 
 		// Get path of the patches folder if asm loader is enabled
 		if (setting_enable_asm_loader)
@@ -373,6 +415,9 @@ void InitMod(void)
 			strcpy(gPatchesPath, gDataPath);
 			strcat(gPatchesPath, "\\patches");
 		}
+
+		if (setting_external_stage_tbl_support == true)
+			InitMod_ExternalStageTable();
 	}
 
 	if (setting_enable_ui)
@@ -383,12 +428,12 @@ void InitMod(void)
 
 	// Fix Teleporter menu flicker
 	if (setting_enable_teleporter_bugfix)
-		ModLoader_WriteCall((void*)0x41DB16, (void*)PutBitmap4);
+		InitMod_TeleporterMenuFix();
 
-	// debug testing hud
-	// ModLoader_WriteJump((void*)0x41A1D0, Replacement_Debug_PutMyLife);
+	// Disable window rect saving by default because tbh it REALLY annoys me for some reason??
+	if (setting_disable_window_rect_saving)
+		InitMod_DisableWindowRect();
 
-	/*
-	InitMod_ASMPatches();
-	*/
+	if (setting_enable_default_config_options)
+		InitMod_AutumnConfigDefaults();
 }

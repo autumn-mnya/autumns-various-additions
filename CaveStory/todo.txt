@@ -1,3 +1,6 @@
+# PixTone #
+[x] Re-write custom PixTone sounds to read all in a folder, and assign the IDs based on filename.
+
 # MyChar #
 
 [x] Health Drain/Regen on flag set
@@ -17,5 +20,5 @@
 [x] CBK
 [x] VAR and all of its commands
 [x] Collectables X/Y position is customizable in save file
-[-] BLO command? (Boss expLOsion at npc?)
-[x] Re-write custom PixTone sounds to read all in a folder, and assign the IDs based on filename.
+[x] BLO command? (Boss expLOsion at npc?)
+[x] ClearArmsData / ClearItemData commands
