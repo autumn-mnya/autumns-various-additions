@@ -29,26 +29,10 @@ char TSC_IMG_Name[ImgNameSize];
 
 const char* const defaultFolderPath = "";
 
-// Replace MakeSurfaceFile with another call
-void ReplaceSurfaceID(const char* n, SurfaceID no)
-{
-	MakeSurface_File(n, no);
-}
-
 void SwapSurfaces(const char* n, int no)
 {
 	ReleaseSurface(no);
 	MakeSurface_File(n, no);
-}
-
-void Replacement_StageImageSurfaceCall(const char* n, SurfaceID s)
-{
-	MakeSurface_File("Image\\0", SURFACE_ID_TSC_IMG);
-	MakeSurface_File("AutumnUI", SURFACE_ID_AUTUMN_HUD);
-	MakeSurface_File("Npc\\NpcAutumnObj", SURFACE_ID_AUTUMN_OBJECTS);
-	MakeSurface_File("Autumn", SURFACE_ID_AUTUMN_ITEMS);
-	MakeSurface_File("Npc\\NpcAutumnChar", SURFACE_ID_AUTUMN_CHARACTERS);
-	MakeSurface_File(n, s);
 }
 
 void LoadTSC_Image(char* name)

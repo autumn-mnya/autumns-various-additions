@@ -8,6 +8,7 @@
 #include "MyChar.h"
 
 #include "main.h"
+#include "ModSettings.h"
 #include "cave_story.h"
 #include "Collectables.h"
 #include "Entity.h"
@@ -103,6 +104,9 @@ void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 	InitMoney();
 	InitTSCVariables();
 	InitMyCharBoostFuel();
+
+	if (setting_enable_surfaces)
+		InitGameSurfaces();
 
 	if (setting_external_stage_tbl_support == true)
 	{

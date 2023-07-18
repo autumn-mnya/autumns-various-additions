@@ -13,3 +13,4 @@ void InitCollectablesEnabled();
 void InitCollectablesPositioning();
 void InitMyCharPhysics();
 void InitMyCharBoostFuel();
+void InitGameSurfaces();

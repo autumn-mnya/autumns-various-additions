@@ -21,6 +21,7 @@
 #include "EntityLoad.h"
 #include "Game.h"
 #include "Generic.h"
+#include "GenericLoad.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "MycParam.h"
@@ -28,6 +29,7 @@
 #include "PauseScreen.h"
 #include "Profile.h"
 #include "Stage.h"
+#include "SurfaceDefines.h"
 #include "TextScript.h"
 #include "TileCollisionBoss.h"
 #include "TileCollisionBullet.h"
@@ -92,6 +94,28 @@ int init_collectables_e_x_offset = 0;
 // Booster fuel
 int init_booster_08_fuel = 50;
 int init_booster_20_fuel = 50;
+
+// GenericLoad paths
+
+char init_surfaceName_0_Title[MaxSurfaceName] = "Title";
+char init_surfaceName_5_Image[MaxSurfaceName] = "Image\\0";
+char init_surfaceName_6_Fade[MaxSurfaceName] = "Fade";
+char init_surfaceName_8_ItemImage[MaxSurfaceName] = "ItemImage";
+char init_surfaceName_11_Arms[MaxSurfaceName] = "Arms";
+char init_surfaceName_12_ArmsImage[MaxSurfaceName] = "ArmsImage";
+char init_surfaceName_14_StageImage[MaxSurfaceName] = "StageImage";
+char init_surfaceName_15_Loading[MaxSurfaceName] = "Loading";
+char init_surfaceName_16_MyChar[MaxSurfaceName] = "MyChar";
+char init_surfaceName_17_Bullet[MaxSurfaceName] = "Bullet";
+char init_surfaceName_19_Caret[MaxSurfaceName] = "Caret";
+char init_surfaceName_20_NpcSym[MaxSurfaceName] = "Npc\\NpcSym";
+char init_surfaceName_23_NpcRegu[MaxSurfaceName] = "Npc\\NpcRegu";
+char init_surfaceName_24_AutumnUI[MaxSurfaceName] = "AutumnUI";
+char init_surfaceName_25_AutumnObjects[MaxSurfaceName] = "Npc\\NpcAutumnObj";
+char init_surfaceName_26_TextBox[MaxSurfaceName] = "TextBox";
+char init_surfaceName_27_Face[MaxSurfaceName] = "Face";
+char init_surfaceName_38_AutumnItems[MaxSurfaceName] = "Autumn";
+char init_surfaceName_39_AutumnCharacters[MaxSurfaceName] = "Npc\\NpcAutumnChar";
 
 // Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
@@ -168,6 +192,29 @@ void InitMod_PreLaunch_BoosterFuel()
 	init_booster_20_fuel = booster_20_fuel;
 }
 
+void InitMod_PreLaunch_GenericLoad()
+{
+	strcpy(init_surfaceName_0_Title, surfaceName_0_Title);
+	strcpy(init_surfaceName_5_Image, surfaceName_5_Image);
+	strcpy(init_surfaceName_6_Fade, surfaceName_6_Fade);
+	strcpy(init_surfaceName_8_ItemImage, surfaceName_8_ItemImage);
+	strcpy(init_surfaceName_11_Arms, surfaceName_11_Arms);
+	strcpy(init_surfaceName_12_ArmsImage, surfaceName_12_ArmsImage);
+	strcpy(init_surfaceName_14_StageImage, surfaceName_14_StageImage);
+	strcpy(init_surfaceName_15_Loading, surfaceName_15_Loading);
+	strcpy(init_surfaceName_16_MyChar, surfaceName_16_MyChar);
+	strcpy(init_surfaceName_17_Bullet, surfaceName_17_Bullet);
+	strcpy(init_surfaceName_19_Caret, surfaceName_19_Caret);
+	strcpy(init_surfaceName_20_NpcSym, surfaceName_20_NpcSym);
+	strcpy(init_surfaceName_23_NpcRegu, surfaceName_23_NpcRegu);
+	strcpy(init_surfaceName_24_AutumnUI, surfaceName_24_AutumnUI);
+	strcpy(init_surfaceName_25_AutumnObjects, surfaceName_25_AutumnObjects);
+	strcpy(init_surfaceName_26_TextBox, surfaceName_26_TextBox);
+	strcpy(init_surfaceName_27_Face, surfaceName_27_Face);
+	strcpy(init_surfaceName_38_AutumnItems, surfaceName_38_AutumnItems);
+	strcpy(init_surfaceName_39_AutumnCharacters, surfaceName_39_AutumnCharacters);
+}
+
 // Inits anything relating to entities. The main thing are the 3 ModLoader_WriteJump's -- These replace every function that uses the Npc Table, and instead we also insert our new table!
 void InitMod_Entity()
 {
@@ -200,7 +247,8 @@ void InitMod_Entity()
 // Loads the new surface files (We can't go above 40, but we can use the unused ones. Except 3 and 4 as they are used in the netplay dll!)
 void InitMod_Sprites()
 {
-	ModLoader_WriteCall((void*)0x41143D, (void*)Replacement_StageImageSurfaceCall);
+	Replacement_LoadGenericData_Calls();
+	InitMod_PreLaunch_GenericLoad();
 }
 
 void InitMod_SFX()
@@ -362,6 +410,29 @@ void InitMyCharBoostFuel()
 	booster_08_fuel = init_booster_08_fuel;
 	booster_20_fuel = init_booster_20_fuel;
 	Mod_WriteBoosterFuel();
+}
+
+void InitGameSurfaces()
+{
+	strcpy(surfaceName_0_Title, init_surfaceName_0_Title);
+	strcpy(surfaceName_5_Image, init_surfaceName_5_Image);
+	strcpy(surfaceName_6_Fade, init_surfaceName_6_Fade);
+	strcpy(surfaceName_8_ItemImage, init_surfaceName_8_ItemImage);
+	strcpy(surfaceName_11_Arms, init_surfaceName_11_Arms);
+	strcpy(surfaceName_12_ArmsImage, init_surfaceName_12_ArmsImage);
+	strcpy(surfaceName_14_StageImage, init_surfaceName_14_StageImage);
+	strcpy(surfaceName_15_Loading, init_surfaceName_15_Loading);
+	strcpy(surfaceName_16_MyChar, init_surfaceName_16_MyChar);
+	strcpy(surfaceName_17_Bullet, init_surfaceName_17_Bullet);
+	strcpy(surfaceName_19_Caret, init_surfaceName_19_Caret);
+	strcpy(surfaceName_20_NpcSym, init_surfaceName_20_NpcSym);
+	strcpy(surfaceName_23_NpcRegu, init_surfaceName_23_NpcRegu);
+	strcpy(surfaceName_24_AutumnUI, init_surfaceName_24_AutumnUI);
+	strcpy(surfaceName_25_AutumnObjects, init_surfaceName_25_AutumnObjects);
+	strcpy(surfaceName_26_TextBox, init_surfaceName_26_TextBox);
+	strcpy(surfaceName_27_Face, init_surfaceName_27_Face);
+	strcpy(surfaceName_38_AutumnItems, init_surfaceName_38_AutumnItems);
+	strcpy(surfaceName_39_AutumnCharacters, init_surfaceName_39_AutumnCharacters);
 }
 
 // Init the whole mod

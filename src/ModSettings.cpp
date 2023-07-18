@@ -18,11 +18,13 @@
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "Generic.h"
+#include "GenericLoad.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "MycParam.h"
 #include "PauseScreen.h"
 #include "Stage.h"
+#include "SurfaceDefines.h"
 #include "TextScript.h"
 #include "TileCollisionBoss.h"
 #include "TileCollisionBullet.h"
@@ -68,6 +70,51 @@ void InitMod_Settings()
 	///////////////
 	// ASM Hacks //
 	///////////////
+
+	///////////////////
+	// Surface Names //
+	///////////////////
+
+	const char* settings_surfaceName_0_Title = ModLoader_GetSettingString("Default Title Surface Filename", "Title");
+	const char* settings_surfaceName_5_Image = ModLoader_GetSettingString("Default <IMG Surface Filename", "Image\\0");
+	const char* settings_surfaceName_6_Fade = ModLoader_GetSettingString("Default Fade Surface Filename", "Fade");
+	const char* settings_surfaceName_8_ItemImage = ModLoader_GetSettingString("Default ItemImage Surface Filename", "ItemImage");
+	const char* settings_surfaceName_11_Arms = ModLoader_GetSettingString("Default Arms Surface Filename", "Arms");
+	const char* settings_surfaceName_12_ArmsImage = ModLoader_GetSettingString("Default ArmsImage Surface Filename", "ArmsImage");
+	const char* settings_surfaceName_14_StageImage = ModLoader_GetSettingString("Default StageImage Surface Filename", "StageImage");
+	const char* settings_surfaceName_15_Loading = ModLoader_GetSettingString("Default Loading Surface Filename", "Loading");
+	const char* settings_surfaceName_16_MyChar = ModLoader_GetSettingString("Default MyChar Surface Filename", "MyChar");
+	const char* settings_surfaceName_17_Bullet = ModLoader_GetSettingString("Default Bullet Surface Filename", "Bullet");
+	const char* settings_surfaceName_19_Caret = ModLoader_GetSettingString("Default Caret Surface Filename", "Caret");
+	const char* settings_surfaceName_20_NpcSym = ModLoader_GetSettingString("Default NpcSym Surface Filename", "Npc\\NpcSym");
+	const char* settings_surfaceName_23_NpcRegu = ModLoader_GetSettingString("Default NpcRegu Surface Filename", "Npc\\NpcRegu");
+	const char* settings_surfaceName_24_AutumnUI = ModLoader_GetSettingString("Default Autumn UI Surface Filename", "AutumnUI");
+	const char* settings_surfaceName_25_AutumnObjects = ModLoader_GetSettingString("Default Autumn Objects Surface Filename", "Npc\\NpcAutumnObj");
+	const char* settings_surfaceName_26_TextBox = ModLoader_GetSettingString("Default TextBox Surface Filename", "TextBox");
+	const char* settings_surfaceName_27_Face = ModLoader_GetSettingString("Default Face Surface Filename", "Face");
+	const char* settings_surfaceName_38_AutumnItems = ModLoader_GetSettingString("Default Autumn Items Surface Filename", "Autumn");
+	const char* settings_surfaceName_39_AutumnCharacters = ModLoader_GetSettingString("Default Autumn Characters Surface Filename", "Npc\\NpcAutumnChar");
+
+	// This is funny.
+	strcpy(surfaceName_0_Title, settings_surfaceName_0_Title);
+	strcpy(surfaceName_5_Image, settings_surfaceName_5_Image);
+	strcpy(surfaceName_6_Fade, settings_surfaceName_6_Fade);
+	strcpy(surfaceName_8_ItemImage, settings_surfaceName_8_ItemImage);
+	strcpy(surfaceName_11_Arms, settings_surfaceName_11_Arms);
+	strcpy(surfaceName_12_ArmsImage, settings_surfaceName_12_ArmsImage);
+	strcpy(surfaceName_14_StageImage, settings_surfaceName_14_StageImage);
+	strcpy(surfaceName_15_Loading, settings_surfaceName_15_Loading);
+	strcpy(surfaceName_16_MyChar, settings_surfaceName_16_MyChar);
+	strcpy(surfaceName_17_Bullet, settings_surfaceName_17_Bullet);
+	strcpy(surfaceName_19_Caret, settings_surfaceName_19_Caret);
+	strcpy(surfaceName_20_NpcSym, settings_surfaceName_20_NpcSym);
+	strcpy(surfaceName_23_NpcRegu, settings_surfaceName_23_NpcRegu);
+	strcpy(surfaceName_24_AutumnUI, settings_surfaceName_24_AutumnUI);
+	strcpy(surfaceName_25_AutumnObjects, settings_surfaceName_25_AutumnObjects);
+	strcpy(surfaceName_26_TextBox, settings_surfaceName_26_TextBox);
+	strcpy(surfaceName_27_Face, settings_surfaceName_27_Face);
+	strcpy(surfaceName_38_AutumnItems, settings_surfaceName_38_AutumnItems);
+	strcpy(surfaceName_39_AutumnCharacters, settings_surfaceName_39_AutumnCharacters);
 
 	////////////
 	// MyChar //
