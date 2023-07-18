@@ -166,19 +166,21 @@ void InitMod_Settings()
 
 	setting_show_img_on_top_flag = ModLoader_GetSettingInt("Show Image Above Textbox Flag", 6503);
 	setting_enable_money_code = ModLoader_GetSettingBool("Enable Money Code", false);
+
 	// Disable Money from Entities
 	setting_money_disable_enemy_money_drops = ModLoader_GetSettingBool("Disable Money from Entities", false);
+
 	// Disable EXP from Entities (when money is enabled)
 	setting_money_disable_exp_drops = ModLoader_GetSettingBool("Disable EXP with Money", false);
 
 	// Money Hud position
 	setting_money_hud_x = ModLoader_GetSettingInt("Money Hud X", 8);
 	setting_money_hud_y = ModLoader_GetSettingInt("Money Hud Y", 48);
+
 	// How offset the numbers are compared to the money icon
 	setting_money_hud_x_number_offset = ModLoader_GetSettingInt("Money Hud X Number Offset", 16);
 
 	// Collectables
-
 	enable_collectables_a = ModLoader_GetSettingBool("Enable Collectables UI A", false);
 	enable_collectables_b = ModLoader_GetSettingBool("Enable Collectables UI B", false);
 	enable_collectables_c = ModLoader_GetSettingBool("Enable Collectables UI C", false);

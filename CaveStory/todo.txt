@@ -9,11 +9,13 @@
 	-Added money npc
 	-Added settings to enable money + Disable exp drops
 	-Added TSC commands
-	-Need to add tsc command docs!
-[-] SRP/RSP (Periwinkle Respawning hack)
+	-Done!
+[x] SRP/RSP (Periwinkle Respawning hack)
+	-Done!
 [x] Change Surface file
 [x] PHY
 [x] CBK
 [x] VAR and all of its commands
 [x] Collectables X/Y position is customizable in save file
 [-] BLO command? (Boss expLOsion at npc?)
+[x] Re-write custom PixTone sounds to read all in a folder, and assign the IDs based on filename.

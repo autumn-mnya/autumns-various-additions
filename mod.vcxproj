@@ -58,6 +58,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -74,6 +75,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -97,6 +99,7 @@
     <ClCompile Include="src\EntityLoad.cpp" />
     <ClCompile Include="src\EntityTable.cpp" />
     <ClCompile Include="src\Frame.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Generic.cpp" />
     <ClCompile Include="src\LoadPixtone.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -106,6 +109,8 @@
     <ClCompile Include="src\NpcReplacements.cpp" />
     <ClCompile Include="src\PauseScreen.cpp" />
     <ClCompile Include="src\Profile.cpp" />
+    <ClCompile Include="src\Respawn.cpp" />
+    <ClCompile Include="src\Stage.cpp" />
     <ClCompile Include="src\TextScript.cpp" />
     <ClCompile Include="src\TextScriptVAR.cpp" />
     <ClCompile Include="src\TileCollisionBoss.cpp" />
@@ -126,6 +131,7 @@
     <ClInclude Include="src\EntityLoad.h" />
     <ClInclude Include="src\EntityTable.h" />
     <ClInclude Include="src\Frame.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Generic.h" />
     <ClInclude Include="src\LoadPixtone.h" />
     <ClInclude Include="src\Main.h" />
@@ -135,6 +141,8 @@
     <ClInclude Include="src\NpcReplacements.h" />
     <ClInclude Include="src\PauseScreen.h" />
     <ClInclude Include="src\Profile.h" />
+    <ClInclude Include="src\Respawn.h" />
+    <ClInclude Include="src\Stage.h" />
     <ClInclude Include="src\TextScript.h" />
     <ClInclude Include="src\TextScriptVAR.h" />
     <ClInclude Include="src\TileCollisionBoss.h" />

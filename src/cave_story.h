@@ -785,6 +785,83 @@ typedef struct PROFILEDATA
 	unsigned char flags[1000];
 } PROFILEDATA;
 
+// Organya
+
+struct ORGANYATRACK
+{
+	unsigned short freq;
+	unsigned char wave_no;
+	unsigned char pipi;
+	unsigned short note_num;
+};
+
+struct ORGANYADATA
+{
+	unsigned short wait;
+	unsigned char line;
+	unsigned char dot;
+	long repeat_x;
+	long end_x;
+	ORGANYATRACK tdata[16];
+};
+
+struct NOTELIST
+{
+	NOTELIST* from;
+	NOTELIST* to;
+	long x;
+	unsigned char length;
+	unsigned char y;
+	unsigned char volume;
+	unsigned char pan;
+};
+
+struct TRACKDATA
+{
+	unsigned short freq;
+	unsigned short wave_no;
+	signed char pipi;
+	NOTELIST* note_p;
+	NOTELIST* note_list;
+};
+
+struct MUSICINFO
+{
+	unsigned short wait;
+	unsigned char line;
+	unsigned char dot;
+	unsigned short alloc_note;
+	long repeat_x;
+	long end_x;
+	TRACKDATA tdata[16];
+};
+
+typedef struct OrgData
+{
+	MUSICINFO info;
+	char track;
+	char mute[16];
+	unsigned char def_pan;
+	unsigned char def_volume;
+
+	OrgData();
+	void InitOrgData();
+	void GetMusicInfo(MUSICINFO* mi);
+	BOOL SetMusicInfo(MUSICINFO* mi, unsigned long flag);
+	BOOL NoteAlloc(unsigned short note_num);
+	void ReleaseNote(void);
+	void PlayData(void);
+	void SetPlayPointer(long x);
+	BOOL InitMusicData(const char* path);
+} ORGDATA;
+
+struct OCTWAVE
+{
+	short wave_size;
+	short oct_par;
+	short oct_size;
+};
+
 // Sound
 
 enum SoundEffectNames
@@ -924,10 +1001,17 @@ static TEXT_SCRIPT* gTS = (TEXT_SCRIPT*)0x4A59D0;
 static int* gNumberTextScript = (int*)0x4A5B34;
 static VALUEVIEW* gVV = (VALUEVIEW*)0x4A5F98;
 static signed char* gMapping = (signed char*)0x49E5B8;
-static unsigned char* gFlagNPC = (unsigned char*)0x49DDA0;
+static auto& gFlagNPC = *reinterpret_cast<unsigned char(*)[1000]>(0x49DDA0);
+static auto& gSkipFlag = *reinterpret_cast<unsigned char(*)[8]>(0x49DD98);
 
 // Npc Function Table
 static NPCFUNCTION* gpNpcFuncTbl = (NPCFUNCTION*)0x498548;
+
+static LPDIRECTSOUND& lpDS = *reinterpret_cast<LPDIRECTSOUND*>(0x4A57E8);
+
+static int& Volume = *reinterpret_cast<int*>(0x4937A4);
+static BOOL& bFadeout = *reinterpret_cast<BOOL*>(0x4A4E10);
+static ORGDATA& org_data = *reinterpret_cast<ORGDATA*>(0x4A4E18);
 
 ///////////////
 // Functions //
@@ -1265,34 +1349,6 @@ static void (* const ChangeDramFrequency)(unsigned char key, signed char track) 
 static void (* const ChangeDramPan)(unsigned char pan, signed char track) = (void(*)(unsigned char, signed char))0x41B440;
 static void (* const ChangeDramVolume)(long volume, signed char track) = (void(*)(long, signed char))0x41B4D0;
 static void (* const PlayDramObject)(unsigned char key, int mode, signed char track) = (void(*)(unsigned char, int, signed char))0x41B510;
-
-// These classes aren't implemented, as I, Autumn, don't know how to implement them.
-// OrgData::OrgData - 0x41B600
-
-// OrgData::InitOrgData - 0x41B650
-
-// OrgData::SetMusicInfo - 0x41B730
-
-// OrgData::NoteAlloc - 0x41B890
-
-// OrgData::ReleaseNote - 0x41BA70
-
-// OrgData::InitMusicData - 0x41BAD0
-
-// OrgData::GetMusicInfo - 0x41C0B0
-
-// InitMMTimer - 0x41C180
-
-// StartTimer - 0x41C1E0
-
-// TimerProc - 0x41C230
-
-// QuitMMTimer - 0x41C250
-
-// OrgData::PlayData - 0x41C2B0
-
-// OrgData::SetPlayerPointer - 0x41C630
-
 static BOOL (* const StartOrganya)(LPDIRECTSOUND lpDS, const char *path_wave) = (BOOL(*)(LPDIRECTSOUND, const char*))0x41C6C0;
 static void (* const LoadOrganya)(const char*) = (void(*)(const char*))0x41C6F0;
 static void (* const SetOrganyaPosition)(int) = (void(*)(int))0x41C730;

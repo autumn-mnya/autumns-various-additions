@@ -13,6 +13,7 @@
 #include "Collectables.h"
 #include "Draw.h"
 #include "MyChar.h"
+#include "Respawn.h"
 #include "TextScript.h"
 #include "TileCollisionMyChar.h"
 
@@ -94,6 +95,13 @@ void Replacement_SaveProfile_fwrite_Call(void* buf, size_t eleS, size_t eleC, FI
 
 	// Write the whole struct
 	Freeware_fwrite(&profile, sizeof(CustomProfileData), 1, fp);
+}
+
+// 0x41D419
+void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z)
+{
+	bSetRespawn = TRUE;
+	TransferStage(w, x, y, z);
 }
 
 // 0x41D353 
@@ -237,6 +245,7 @@ void SetProfileData()
 void Replacement_LoadProfile_ClearFade_Call()
 {
 	SetProfileData(); // Set profile data
+	Stage_SetRespawn(); // Set respawn point (this should actually work now?)
 
 	// this needs to NOT reset if we're loading
 	if (isLoadingSave == false)
@@ -246,6 +255,13 @@ void Replacement_LoadProfile_ClearFade_Call()
 
 	ResetTSC_Image();
 	ClearFade();
+}
+
+// 0x41D59A
+void Replacement_InitializeGame_TransferStage_Call(int w, int x, int y, int z)
+{
+	bSetRespawn = TRUE;
+	TransferStage(w, x, y, z);
 }
 
 void Replacement_InitializeGame_ClearArmsData_Call()

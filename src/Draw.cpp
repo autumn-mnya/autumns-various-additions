@@ -15,6 +15,7 @@
 #include "cave_story.h"
 #include "Collectables.h"
 #include "Entity.h"
+#include "Game.h"
 #include "MyChar.h"
 #include "Profile.h"
 #include "TextScript.h"
@@ -93,34 +94,6 @@ void Replacement_ModeTitle_InitStar_Call()
 {
 	InitStar();
 	ResetTSC_Image();
-}
-
-// Put <IMG on screen
-
-void Replacement_ModeOpening_PutTextScript_Call()
-{
-	// Show <IMG behind textbox when flag isnt set
-	if (!(GetNPCFlag(setting_show_img_on_top_flag)))
-		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
-
-	PutTextScript();
-
-	// Show <IMG infront of textbox when flag is set
-	if (GetNPCFlag(setting_show_img_on_top_flag))
-		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
-}
-
-void Replacement_ModeAction_PutTextScript_Call()
-{
-	// Show <IMG behind textbox when flag isnt set
-	if (!(GetNPCFlag(setting_show_img_on_top_flag)))
-		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
-
-	PutTextScript();
-
-	// Show <IMG infront of textbox when flag is set
-	if (GetNPCFlag(setting_show_img_on_top_flag))
-		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
 }
 
 void Replacement_Debug_PutMyLife(BOOL flash)

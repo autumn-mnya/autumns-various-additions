@@ -441,17 +441,3 @@ void Replacement_ModeAction_PutFront_Call(int frame_x, int frame_y)
 	BKG_RenderBackgrounds(frame_x, frame_y, true);
 	PutFront(frame_x, frame_y);
 }
-
-// reset bkg backgrounds on stage transition
-void Replacement_TransferStage_ResetFlash_Call()
-{
-	ResetFlash();
-
-	if (isLoadingSave == false)
-		BKG_ResetBackgrounds();
-	else
-	{
-		if (!(bkgTxT_Global[0] == 0)) // if it doesnt == 0
-			BKG_LoadBackground(bkgTxT_Global);
-	}
-}

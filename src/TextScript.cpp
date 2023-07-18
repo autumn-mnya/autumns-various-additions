@@ -20,8 +20,11 @@
 #include "Entity.h"
 #include "EntityLoad.h"
 #include "Frame.h"
+#include "Game.h"
 #include "MyChar.h"
 #include "MycParam.h"
+#include "Profile.h"
+#include "Respawn.h"
 #include "TextScriptVAR.h"
 
 bool setting_enable_money_code = false;
@@ -37,6 +40,14 @@ int setting_money_hud_x_number_offset = 16;
 char CustomWindowName[MAX_PATH] = "";
 char CustomScriptName[0x20] = "";
 char TSC_IMG_Folder[ImgFolderSize];
+
+// We replace the <TRA transfer stage call so that we can set a respawn point
+// 0x422E09
+void Replacement_TextScript_TransferStage_Call(int w, int x, int y, int z)
+{
+	bSetRespawn = TRUE;
+	TransferStage(w, x, y, z);
+}
 
 void SetCustomWindowTitle(char* window_name)
 {
@@ -91,7 +102,20 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	char* where = TextScriptBuffer + gTS->p_read;
 	if (where[0] != '<')
 		return 0;
-	if (strncmp(where + 1, "TRM", 3) == 0) //TRansport Momentum
+	if (strncmp(where + 1, "TA2", 3) == 0) //TrAnsport 2 (No Respawn)
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		w = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS->p_read + 14);
+		y = GetTextScriptNo(gTS->p_read + 19);
+
+		bSetRespawn = FALSE;
+		if (!TransferStage(z, w, x, y))
+		{
+			return enum_ESCRETURN_exit;
+		}
+	}
+	else if (strncmp(where + 1, "TRM", 3) == 0) //TRansport Momentum
 	{
 		z = GetTextScriptNo(gTS->p_read + 4);
 		w = GetTextScriptNo(gTS->p_read + 9);
@@ -101,6 +125,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		int xm = gMC->xm;
 		int ym = gMC->ym;
 
+		bSetRespawn = TRUE;
 		if (!TransferStage(z, w, x, y))
 		{
 			return enum_ESCRETURN_exit;
@@ -110,7 +135,27 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		gMC->xm = xm;
 		gMC->ym = ym;
 	}
-	if (strncmp(where + 1, "TRX", 3) == 0) //TRansport keep X:Y (buggy)
+	else if (strncmp(where + 1, "TM2", 3) == 0) //Transport Momentum 2 (No Respawn)
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		w = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS->p_read + 14);
+		y = GetTextScriptNo(gTS->p_read + 19);
+
+		int xm = gMC->xm;
+		int ym = gMC->ym;
+
+		bSetRespawn = FALSE; // Do NOT set a respawn point
+		if (!TransferStage(z, w, x, y))
+		{
+			return enum_ESCRETURN_exit;
+		}
+
+		// Restore player velocity
+		gMC->xm = xm;
+		gMC->ym = ym;
+	}
+	else if (strncmp(where + 1, "TRX", 3) == 0) //TRansport keep X:Y (buggy)
 	{
 		z = GetTextScriptNo(gTS->p_read + 4);
 		w = GetTextScriptNo(gTS->p_read + 9);
@@ -118,6 +163,21 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		int trx_x = gMC->x / 0x200 / 0x10;
 		int trx_y = gMC->y / 0x200 / 0x10;
 
+		bSetRespawn = TRUE;
+		if (!TransferStage(z, w, trx_x, trx_y))
+		{
+			return enum_ESCRETURN_exit;
+		}
+	}
+	else if (strncmp(where + 1, "TX2", 3) == 0) //Transport keep X:Y (buggy, No Respawn)
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		w = GetTextScriptNo(gTS->p_read + 9);
+
+		int trx_x = gMC->x / 0x200 / 0x10;
+		int trx_y = gMC->y / 0x200 / 0x10;
+
+		bSetRespawn = FALSE; // Do NOT set a respawn point
 		if (!TransferStage(z, w, trx_x, trx_y))
 		{
 			return enum_ESCRETURN_exit;
@@ -639,6 +699,17 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		UnpatchMemory();
 		gTS->p_read += 4;
 	}
+	else if (strncmp(where + 1, "RSP", 3) == 0) // ReSPawn
+	{
+		RespawnPlayer();
+	}
+	else if (strncmp(where + 1, "SRP", 3) == 0) // Set ResPawn
+	{
+		x = GetTextScriptNo(gTS->p_read + 4);
+		y = GetTextScriptNo(gTS->p_read + 9);
+		SetRespawnPoint(x, y);
+		gTS->p_read += 13;
+	}
 	else
 		return 0;
 	
@@ -676,6 +747,10 @@ void Replacement_EncryptionBinaryData2(unsigned char* pData, long size)
 
 void InitMod_TSC()
 {
+	ModLoader_WriteCall((void*)0x41D419, (void*)Replacement_LoadProfile_TransferStage_Call);
+	ModLoader_WriteCall((void*)0x41D59A, (void*)Replacement_InitializeGame_TransferStage_Call);
+	ModLoader_WriteCall((void*)0x40F770, (void*)Replacement_ModeOpening_SetFrameTargetMyChar_Call);
+	ModLoader_WriteCall((void*)0x422E09, (void*)Replacement_TextScript_TransferStage_Call);
 	ModLoader_WriteJump((void*)0x421900, (void*)Replacement_GetTextScriptNo);
 	ModLoader_AddStackableHook(CSH_tsc_start, CustomTextScriptCommands, (void*)0);
 

@@ -72,6 +72,20 @@ Event B<NOD<CLO<END
 <FLJ5005:0805<FL+5005
 <COE0004<END
 
+#0706
+<CO+0000:0001<END
+
+#0707
+<FLJ1233:0708<FL+1233
+<KEY<MSG
+When you talk to me after
+respawning, you shouldnt see
+something special.<NOD<CLO<END
+
+#0708
+<KEY<MSG
+uh oh<NOD<END
+
 #0801
 <FL-5001
 <COD0000<END
@@ -200,3 +214,15 @@ you win<NOD<CLO<END
 
 #3004
 <PATdoublejump$<END
+
+#4000
+<RSP<END
+
+#4001
+<SRP0010:0008<END
+
+#4002
+<TRA0097:0000:0020:0010<END
+
+#4003
+<TM20097:0000:0040:0000<END

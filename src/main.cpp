@@ -18,12 +18,14 @@
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
+#include "Game.h"
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "MycParam.h"
 #include "NpcReplacements.h"
 #include "PauseScreen.h"
 #include "Profile.h"
+#include "Stage.h"
 #include "TextScript.h"
 #include "TileCollisionBoss.h"
 #include "TileCollisionBullet.h"
@@ -178,8 +180,6 @@ void InitMod_Entity()
 			ModLoader_WriteJump((void*)0x445660, (void*)Replacement_ActNpc150);
 		}
 	}
-
-	
 }
 
 // Loads the new surface files (We can't go above 40, but we can use the unused ones. Except 3 and 4 as they are used in the netplay dll!)

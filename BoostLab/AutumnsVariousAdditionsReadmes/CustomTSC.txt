@@ -201,6 +201,20 @@ Example: <PATexample$
 ( The above will load example.txt ! It's just like a normal boosters lab hex patch -- you can have multiple in the same txt )
 ( You can also apply multiple, but you can't unapply multiple. )
 
+- <RSP - ReSPawn player
+Respawn the player, similar to loading a save file. This is automatically set on using <TRA, <TRM, TRX, or loading a save file.
+This will save the players current flags from <FL+, current collectables if the collectables exist, among other things.
+This basically mostly works the same as <LDP, but doesnt actually save the game. Useful for harder mods or mods that are more platforming focused.
+Arguments: 0 [<RSP]
+
+- <SRP - Set ResPawn point
+Set the players respawn point at coordinates X:Y.
+Arguments: 2 [<SRPxxxx:yyyy] [x:y]
+
+- <TA2 - TrAnsport 2
+This TSC command is the same as <TRA, except it will not set a respawn point.
+Arguments: 4 [<TRMwwww:zzzz:xxxx:yyyy] [map:event:x:y]
+
 - <UPT - UnPaTch
 Unloads and unpatches all hex patches applies via <PAT.
 Arguments: 0 [<UPT]
@@ -252,13 +266,14 @@ Arguments: 1 [<SWNstring$] [window_name$]
 Example: <SWNCave Story ~ Doukutsu Monogatari$
 
 - <TRM - TRansport Momentum
-
 This TSC command is the same as <TRA, except you maintain your momentum when used. It was used in Autumn's mod "Bliss".
 Arguments: 4 [<TRMwwww:zzzz:xxxx:yyyy] [map:event:x:y]
+Note: <TM2 also exists, and will not set a respawn point as defined in the <SRP/<RSP part of this text file.
 
 - <TRX - TRansport keep X:y
 This TSC command is the same as <TRA except is preserves the players X:Y position. You need to be closer to the center of the hitbox of whatever you're interacting with to get it to properly work, as this is somewhat buggy.
 Arguments: 2 [<TRMwwww:zzzz] [map:event]
+Note: <TX2 also exists, and will not set a respawn point as defined in the <SRP/<RSP part of this text file.
 
 #########################################################
 # Check CustomTSC_VAR.txt before these next commands !! #

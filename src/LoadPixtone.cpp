@@ -5,19 +5,19 @@
 #include <string.h>
 #include <string>
 
+#include <iostream>
+#include <filesystem>
+
 #include "LoadPixtone.h"
 
 #include "cave_story.h"
 #include "main.h"
 
-static const struct
+// Structure to hold the ID and file path of each sound effect
+struct CustomPtpData
 {
-	int slot;
-	const char* path;
-} gCustomPtpTable[] = {
-	{161, "PixTone/161.pxt"},
-	{162, "PixTone/162.pxt"},
-	{163, "PixTone/163.pxt"},
+    int id;
+    std::string path;
 };
 
 // Decompiled from PTone103.exe
@@ -68,24 +68,40 @@ static BOOL LoadPixToneFile(const char* filename, PIXTONEPARAMETER* pixtone_para
 
 void LoadCustomPixtoneData()
 {
-	int pt_size;
+	char path[MAX_PATH];
+	sprintf(path, "%s\\%s", gDataPath, "PixTone");
 
-	pt_size = 0;
+	std::vector<CustomPtpData> customPtpData;  // Vector to hold the ID and file path
 
-	for (unsigned int i = 0; i < sizeof(gCustomPtpTable) / sizeof(gCustomPtpTable[0]); ++i)
+	int pt_size = 0;
+
+	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
-		char path[MAX_PATH];
-		sprintf(path, "%s/%s", gDataPath, gCustomPtpTable[i].path);
+		if (entry.is_regular_file())
+		{
+			// Extract the filename and extension
+			std::string filePath = entry.path().string();
+			std::string filename = entry.path().filename().string();
 
+			// Determine the ID based on the filename
+			int id = std::stoi(filename.substr(0, filename.find('.')));
+
+			// Store the ID and file path in the vector
+			customPtpData.push_back({ id, filePath });
+		}
+	}
+
+	for (const auto& customData : customPtpData)
+	{
 		PIXTONEPARAMETER pixtone_parameters[4];
 
-		if (LoadPixToneFile(path, pixtone_parameters))
+		if (LoadPixToneFile(customData.path.c_str(), pixtone_parameters))
 		{
 			int ptp_num = 0;
 			while (pixtone_parameters[ptp_num].use && ptp_num < 4)
 				++ptp_num;
 
-			pt_size += MakePixToneObject(pixtone_parameters, ptp_num, gCustomPtpTable[i].slot);
+			pt_size += MakePixToneObject(pixtone_parameters, ptp_num, customData.id);
 		}
 	}
 }

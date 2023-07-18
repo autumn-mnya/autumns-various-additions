@@ -75,7 +75,9 @@ extern CustomProfileData profile;
 
 void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t size);
 void Replacement_SaveProfile_fwrite_Call(void* buf, size_t eleS, size_t eleC, FILE* fp);
+void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z);
 void Replacement_LoadProfile_fclose_Call(FILE* fp);
 void Replacement_LoadProfile_ClearFade_Call();
 void Replacement_LoadProfile_ClearFade_Call();
+void Replacement_InitializeGame_TransferStage_Call(int w, int x, int y, int z);
 void Replacement_InitializeGame_ClearArmsData_Call();

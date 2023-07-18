@@ -43,4 +43,3 @@ void Replacement_ModeOpening_PutBack_Call(int frame_x, int frame_y);
 void Replacement_ModeOpening_PutFront_Call(int frame_x, int frame_y);
 void Replacement_ModeAction_PutBack_Call(int frame_x, int frame_y);
 void Replacement_ModeAction_PutFront_Call(int frame_x, int frame_y);
-void Replacement_TransferStage_ResetFlash_Call();
