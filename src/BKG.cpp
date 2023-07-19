@@ -8,6 +8,7 @@
 #include "BKG.h"
 
 #include "cave_story.h"
+#include "ModSettings.h"
 #include "main.h"
 #include "Generic.h"
 #include "Profile.h"
@@ -156,8 +157,15 @@ void BKG_LoadBackground(char* file)
 	char pathtxt[bkgTxTSize];
 
 	// Get path
-	sprintf(path, "%s\\%s", gBkgPath, "");
-	sprintf(pathtxt, "%s.txt", file);
+
+	// Note for autumn: Collab BKGs should start with "Difficulty_Authorname" i think?
+	// They go in CollabName/bkg/
+	if (setting_collab_enabled == true)
+		sprintf(path, "%s\\%s\\%s", gDataPath, setting_collab_name, "bkg");
+	else
+		sprintf(path, "%s", gBkgPath);
+
+	sprintf(pathtxt, "\\%s.txt", file);
 	strcat(path, pathtxt);
 
 	// Open file

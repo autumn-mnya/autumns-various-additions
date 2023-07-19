@@ -14,11 +14,13 @@
 #include "Draw.h"
 #include "EntityLoad.h"
 #include "GenericLoad.h"
+#include "LoadPixtone.h"
 #include "MyChar.h"
 #include "Respawn.h"
 #include "Stage.h"
 #include "SurfaceDefines.h"
 #include "TextScript.h"
+#include "TextScriptCollabLoad.h"
 #include "TileCollisionMyChar.h"
 
 const char* const gAutumnProfileCode = "AutumnMnyaHazel";
@@ -114,6 +116,11 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	memcpy(profile.surfaceName_27_Face, surfaceName_27_Face, sizeof(profile.surfaceName_27_Face));
 	memcpy(profile.surfaceName_38_AutumnItems, surfaceName_38_AutumnItems, sizeof(profile.surfaceName_38_AutumnItems));
 	memcpy(profile.surfaceName_39_AutumnCharacters, surfaceName_39_AutumnCharacters, sizeof(profile.surfaceName_39_AutumnCharacters));
+	// Set Head.tsc/ArmsItem.tsc data
+	memcpy(profile.armsitem_tsc, CustomArmsItemTSCLocation, sizeof(profile.armsitem_tsc));
+	memcpy(profile.head_tsc, CustomHeadTSCLocation, sizeof(profile.head_tsc));
+	// PixTone folder
+	memcpy(profile.pixtoneFolder, global_pixtoneFolder, sizeof(profile.pixtoneFolder));
 	// Write new save code after this
 }
 
@@ -131,24 +138,11 @@ void Replacement_LoadProfile_InitMyChar_Call()
 {
 	InitMyChar();
 	LoadCustomGenericData(); // Load custom surfaces
-}
 
-// 0x41D419
-void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z)
-{
-	if (setting_external_stage_tbl_support)
-	{
-		if (!(stageTblPath[0] == 0))
-			LoadStageTable(stageTblPath);
-	}
-	if (setting_enable_collab_npc_table)
-	{
-		if (!(npcTblPath[0] == 0))
-			LoadCustomNpcTable(npcTblPath);
-	}
-
-	bSetRespawn = TRUE;
-	TransferStage(w, x, y, z);
+	if (strcmp(default_pixtoneFolder, global_pixtoneFolder) == 0)
+		LoadUserCustomPixtoneData(NULL);
+	else
+		LoadUserCustomPixtoneData(global_pixtoneFolder);
 }
 
 // 0x41D353 
@@ -244,6 +238,11 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		Freeware_fread(&profile.surfaceName_27_Face, MaxSurfaceName, 1, fp);
 		Freeware_fread(&profile.surfaceName_38_AutumnItems, MaxSurfaceName, 1, fp);
 		Freeware_fread(&profile.surfaceName_39_AutumnCharacters, MaxSurfaceName, 1, fp);
+		// read savefile Head.tsc/ArmsItem.tsc names
+		Freeware_fread(&profile.armsitem_tsc, CustomTscMaxPath, 1, fp);
+		Freeware_fread(&profile.head_tsc, CustomTscMaxPath, 1, fp);
+		// read savefile PixTone path
+		Freeware_fread(&profile.pixtoneFolder, MaxPixTonePath, 1, fp);
 	}
 
 	// Close the file
@@ -278,6 +277,13 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		strcpy(surfaceName_27_Face, profile.surfaceName_27_Face);
 		strcpy(surfaceName_38_AutumnItems, profile.surfaceName_38_AutumnItems);
 		strcpy(surfaceName_39_AutumnCharacters, profile.surfaceName_39_AutumnCharacters);
+
+		// Head.tsc / ArmsItem.tsc
+		strcpy(CustomArmsItemTSCLocation, profile.armsitem_tsc);
+		strcpy(CustomHeadTSCLocation, profile.head_tsc);
+
+		// PixTone path
+		strcpy(global_pixtoneFolder, profile.pixtoneFolder);
 	}
 }
 
@@ -348,6 +354,24 @@ void SetProfileData()
 	}
 }
 
+// 0x41D419
+void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z)
+{
+	if (setting_external_stage_tbl_support)
+	{
+		if (!(stageTblPath[0] == 0))
+			LoadStageTable(stageTblPath);
+	}
+	if (setting_enable_collab_npc_table)
+	{
+		if (!(npcTblPath[0] == 0))
+			LoadCustomNpcTable(npcTblPath);
+	}
+
+	bSetRespawn = TRUE;
+	TransferStage(w, x, y, z);
+}
+
 void Replacement_LoadProfile_ClearFade_Call()
 {
 	SetProfileData(); // Set profile data
@@ -371,6 +395,8 @@ void Replacement_InitializeGame_TransferStage_Call(int w, int x, int y, int z)
 void Replacement_InitializeGame_ClearArmsData_Call()
 {
 	ResetCustomGenericData(); // Reload Surfaces that were changed if they dont match default surface names
+	Reset_CustomScriptNames(); // Reset custom script names on new game
+	Reset_PixToneFolder(); // reset pixtone folder
 	ResetCollabPaths();
 	ClearArmsData();
 	ResetTSC_Image();

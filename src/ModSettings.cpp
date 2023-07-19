@@ -26,6 +26,7 @@
 #include "Stage.h"
 #include "SurfaceDefines.h"
 #include "TextScript.h"
+#include "TextScriptCollabLoad.h"
 #include "TileCollisionBoss.h"
 #include "TileCollisionBullet.h"
 #include "TileCollisionEntity.h"
@@ -294,6 +295,12 @@ void InitMod_Settings()
 
 	setting_external_stage_tbl_support = ModLoader_GetSettingBool("Enable External Stage.tbl Files", false);
 	setting_enable_collab_npc_table = ModLoader_GetSettingBool("Enable Custom NPC Table Loading", false);
+
+	setting_enable_custom_armsitem_location = ModLoader_GetSettingBool("Enable Custom ArmsItem.tsc Locations", false); // <ASC - Armsitem SCript
+	setting_enable_custom_head_location = ModLoader_GetSettingBool("Enable Custom Head.tsc Locations", false); // HSC - Head SCript
+
+	defaultArmsItemTSCName = ModLoader_GetSettingString("Default ArmsItem.tsc name", "ArmsItem");
+	defaultHeadTSCName = ModLoader_GetSettingString("Default Head.tsc name", "Head");
 
 	setting_collab_enabled = ModLoader_GetSettingBool("Collab Mode", false);
 	setting_collab_name = ModLoader_GetSettingString("Collab Name", "null");

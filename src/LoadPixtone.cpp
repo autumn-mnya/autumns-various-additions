@@ -12,6 +12,16 @@
 
 #include "cave_story.h"
 #include "main.h"
+#include "ModSettings.h"
+
+char default_pixtoneFolder[MaxPixTonePath] = "PixTone";
+char global_pixtoneFolder[MaxPixTonePath] = "PixTone";
+
+void Reset_PixToneFolder()
+{
+	strcpy(global_pixtoneFolder, default_pixtoneFolder);
+	LoadUserCustomPixtoneData(NULL);
+}
 
 // Structure to hold the ID and file path of each sound effect
 struct CustomPtpData
@@ -110,4 +120,58 @@ void Replacement_LoadGenericData_Pixtone_Sprintf(char* b, const char* f, int pt)
 {
 	Freeware_sprintf(b, f, pt);
 	LoadCustomPixtoneData();
+}
+
+void LoadUserCustomPixtoneData(const char* folder)
+{
+	char path[MAX_PATH];
+
+	if (setting_collab_enabled == true)
+	{
+		if (folder != NULL)
+			sprintf(path, "%s\\%s\\%s", gDataPath, setting_collab_name, folder);
+		else
+			sprintf(path, "%s\\%s", gDataPath, default_pixtoneFolder);
+	}
+	else
+	{
+		if (folder != NULL)
+			sprintf(path, "%s\\%s", gDataPath, folder);
+		else
+			sprintf(path, "%s\\%s", gDataPath, default_pixtoneFolder);
+	}
+
+	std::vector<CustomPtpData> customPtpData;  // Vector to hold the ID and file path
+
+	int pt_size = 0;
+
+	for (const auto& entry : std::filesystem::directory_iterator(path))
+	{
+		if (entry.is_regular_file())
+		{
+			// Extract the filename and extension
+			std::string filePath = entry.path().string();
+			std::string filename = entry.path().filename().string();
+
+			// Determine the ID based on the filename
+			int id = std::stoi(filename.substr(0, filename.find('.')));
+
+			// Store the ID and file path in the vector
+			customPtpData.push_back({ id, filePath });
+		}
+	}
+
+	for (const auto& customData : customPtpData)
+	{
+		PIXTONEPARAMETER pixtone_parameters[4];
+
+		if (LoadPixToneFile(customData.path.c_str(), pixtone_parameters))
+		{
+			int ptp_num = 0;
+			while (pixtone_parameters[ptp_num].use && ptp_num < 4)
+				++ptp_num;
+
+			pt_size += MakePixToneObject(pixtone_parameters, ptp_num, customData.id);
+		}
+	}
 }

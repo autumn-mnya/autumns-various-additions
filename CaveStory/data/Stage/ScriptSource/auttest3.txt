@@ -6,3 +6,12 @@
 
 #0200
 <CSF16$MyChar2$<END
+
+#0201
+<MSG<HSCHead2$<END
+
+#0202
+<END
+
+#0203
+<MSG<HSCHead$<END

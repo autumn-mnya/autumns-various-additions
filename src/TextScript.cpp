@@ -23,12 +23,14 @@
 #include "Frame.h"
 #include "Game.h"
 #include "GenericLoad.h"
+#include "LoadPixtone.h"
 #include "MyChar.h"
 #include "MycParam.h"
 #include "Profile.h"
 #include "Respawn.h"
 #include "Stage.h"
 #include "SurfaceDefines.h"
+#include "TextScriptCollabLoad.h"
 #include "TextScriptVAR.h"
 
 // Booleans
@@ -843,24 +845,40 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	{
 		x = GetTextScriptNo(gTS->p_read + 4);
 		y = GetTextScriptNo(gTS->p_read + 9);
+		z = GetTextScriptNo(gTS->p_read + 14);
 		switch (x)
 		{
 			default:
 			case 0:
-				booster_08_fuel = y;
+				if (z == 0)
+					booster_08_fuel = y;
+				else if (z == 1)
+					booster_08_fuel += y;
+				else if (z == 2)
+					booster_08_fuel -= y;
 				break;
 
 			case 1:
 			case 2: // This makes more logical sense for some people I think?
-				booster_20_fuel = y;
+				if (z == 0)
+					booster_20_fuel = y;
+				else if (z == 1)
+					booster_20_fuel += y;
+				else if (z == 2)
+					booster_20_fuel -= y;
 				break;
 
 			case 8:
-				booster_08_fuel = y;
+				if (z == 0)
+					booster_08_fuel = y;
+				else if (z == 1)
+					booster_08_fuel += y;
+				else if (z == 2)
+					booster_08_fuel -= y;
 				break;
 		}
 		Mod_WriteBoosterFuel();
-		gTS->p_read += 13;
+		gTS->p_read += 18;
 	}
 	else if (strncmp(where + 1, "STT", 3) == 0) // STage Table
 	{
@@ -879,6 +897,32 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 
 		GetTextScriptString(npcTblPath);
 		LoadCustomNpcTable(npcTblPath);
+	}
+	else if (strncmp(where + 1, "HSC", 3) == 0) // Head SCript
+	{
+		char fullPath[MAX_PATH];
+		char headPath[CustomTscMaxPath];
+		gTS->p_read += 4;
+		memset(headPath, 0, sizeof(headPath));
+		GetTextScriptString(headPath);
+		strcpy(CustomHeadTSCLocation, headPath);
+	}
+	else if (strncmp(where + 1, "ASC", 3) == 0) // Armsitem SCript
+	{
+		char invPath[CustomTscMaxPath];
+		gTS->p_read += 4;
+		memset(invPath, 0, sizeof(invPath));
+		GetTextScriptString(invPath);
+		strcpy(CustomArmsItemTSCLocation, invPath);
+	}
+	else if (strncmp(where + 1, "PXT", 3) == 0) // PiXTone folder
+	{
+		char pixtoneFolder[MaxPixTonePath];
+		gTS->p_read += 4;
+		memset(pixtoneFolder, 0, sizeof(pixtoneFolder));
+		GetTextScriptString(pixtoneFolder);
+		strcpy(global_pixtoneFolder, pixtoneFolder);
+		LoadUserCustomPixtoneData(global_pixtoneFolder); // change this to be the global version
 	}
 	else
 		return 0;
@@ -931,6 +975,8 @@ void InitMod_TSC()
 {
 	// Collab Tables
 	ModLoader_WriteCall((void*)0x41D407, (void*)Replacement_LoadProfile_InitMyChar_Call);
+	// Script Replacements (Head.tsc / ArmsItem.tsc)
+	InitMod_ScriptReplacements();
 	// Respawning the player
 	ModLoader_WriteCall((void*)0x41D419, (void*)Replacement_LoadProfile_TransferStage_Call);
 	ModLoader_WriteCall((void*)0x41D59A, (void*)Replacement_InitializeGame_TransferStage_Call);

@@ -22,13 +22,20 @@
 [x] Collectables X/Y position is customizable in save file
 [x] BLO command? (Boss expLOsion at npc?)
 [x] ClearArmsData / ClearItemData commands
-[-] <STT/NPT
-	-Documentation on them
-[-] <CSF saved to the save file and loaded with LoadProfile? This could help with the collab..
+[x] <STT/NPT
+	-Documentation on them finished
+[x] <CSF saved to the save file and loaded with LoadProfile? This could help with the collab..
 	-Surfaces are now loaded based on settings.ini strings
 	-Surfaces can be saved and loaded!
-	-Make it functional with collab folder
-[-] TSC command to load a different Head.tsc / ArmsItem.tsc would be very useful
+	-Surfaces can be loaded from a collab folder!
+[x] TSC command to load a different Head.tsc / ArmsItem.tsc would be very useful
+[x] <BFS re-do (https://discord.com/channels/312733374831788034/312733374831788034/1131117251647512596)
+
+# Collab Stuff #
+[x] <BKG files go into collab related folders
+[-] <PAT patches go into collab related folders
+[-] <IMF also changes to a collab folder?
+[-] Custom Sound Effects can load from custom folders *THIS NEEDS TO BE CHECKED FOR MEMORY LEAKAGE*
 	
 # Other #
 [-] Load organya files from folder and also allow the folder to be changed (collab mod)

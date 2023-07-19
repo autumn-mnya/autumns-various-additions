@@ -115,6 +115,7 @@
     <ClCompile Include="src\Stage.cpp" />
     <ClCompile Include="src\SurfaceDefines.cpp" />
     <ClCompile Include="src\TextScript.cpp" />
+    <ClCompile Include="src\TextScriptCollabLoad.cpp" />
     <ClCompile Include="src\TextScriptVAR.cpp" />
     <ClCompile Include="src\TileCollisionBoss.cpp" />
     <ClCompile Include="src\TileCollisionBullet.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="src\Stage.h" />
     <ClInclude Include="src\SurfaceDefines.h" />
     <ClInclude Include="src\TextScript.h" />
+    <ClInclude Include="src\TextScriptCollabLoad.h" />
     <ClInclude Include="src\TextScriptVAR.h" />
     <ClInclude Include="src\TileCollisionBoss.h" />
     <ClInclude Include="src\TileCollisionBullet.h" />

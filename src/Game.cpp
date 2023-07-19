@@ -13,10 +13,12 @@
 #include "cave_story.h"
 #include "Draw.h"
 #include "GenericLoad.h"
+#include "LoadPixtone.h"
 #include "Profile.h"
 #include "Respawn.h"
 #include "Stage.h"
 #include "TextScript.h"
+#include "TextScriptCollabLoad.h"
 
 // Set Respawn
 // 0x40F770
@@ -43,11 +45,13 @@ void Replacement_ModeOpening_PutTextScript_Call()
 		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
 }
 
-// <IMG resetting calls
+// <IMG resetting calls among others
 void Replacement_ModeOpening_SetFadeMask_Call()
 {
 	SetFadeMask();
-	ResetCustomGenericData(); // This freezes the game for a while.. we may need to find a better approach.
+	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in settings.ini
+	Reset_CustomScriptNames(); // Reset custom script names in the opening
+	// Reset_PixToneFolder(); // reset pixtone folder
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();
 }
@@ -55,6 +59,9 @@ void Replacement_ModeOpening_SetFadeMask_Call()
 void Replacement_ModeTitle_InitStar_Call()
 {
 	InitStar();
+	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in settings.ini
+	Reset_CustomScriptNames(); // Reset custom script names on the title
+	// Reset_PixToneFolder(); // reset pixtone folder
 	ResetTSC_Image();
 }
 

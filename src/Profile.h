@@ -5,8 +5,11 @@
 #include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
+#include "LoadPixtone.h"
+#include "Profile.h"
 #include "SurfaceDefines.h"
 #include "TextScript.h"
+#include "TextScriptCollabLoad.h"
 #include "TextScriptVAR.h"
 
 #define ProfileCodeSize 16
@@ -97,6 +100,11 @@ typedef struct CustomProfileData
 	char surfaceName_27_Face[MaxSurfaceName];
 	char surfaceName_38_AutumnItems[MaxSurfaceName];
 	char surfaceName_39_AutumnCharacters[MaxSurfaceName];
+	// Head.tsc / ArmsItem.tsc
+	char armsitem_tsc[CustomTscMaxPath];
+	char head_tsc[CustomTscMaxPath];
+	// PixTone folder path
+	char pixtoneFolder[MaxPixTonePath];
 } CustomProfileData;
 
 extern CustomProfileData profile;
@@ -104,8 +112,8 @@ extern CustomProfileData profile;
 void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t size);
 void Replacement_SaveProfile_fwrite_Call(void* buf, size_t eleS, size_t eleC, FILE* fp);
 void Replacement_LoadProfile_InitMyChar_Call();
-void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z);
 void Replacement_LoadProfile_fclose_Call(FILE* fp);
+void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z);
 void Replacement_LoadProfile_ClearFade_Call();
 void Replacement_LoadProfile_ClearFade_Call();
 void Replacement_InitializeGame_TransferStage_Call(int w, int x, int y, int z);

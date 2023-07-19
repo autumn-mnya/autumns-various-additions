@@ -129,6 +129,4 @@ void Replacement_PutActiveArmsList_Call()
 
 	if (setting_enable_life_regen == true && GetNPCFlag(setting_life_regen_flag))
 		PlayerLifeRegen();
-
-	PutNumber4(8, 192, gMC->boost_cnt, FALSE);
 }

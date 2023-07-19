@@ -11,8 +11,8 @@ Removes all of the items in the players inventory.
 Arguments: 0 [<ITC]
 
 - <BFS - Booster Fuel Set
-Sets the players booster fuel of type W to value X.
-Arguments: 2 [<BFSwwww:xxxx] [type:fuel]
+Change booster type W's fuel to X with mode Y.
+Arguments: 2 [<BFSwwww:xxxx:yyyy] [type:fuel:mode]
 
 ###############################
 #       Types for <BFS        #
@@ -20,6 +20,13 @@ Arguments: 2 [<BFSwwww:xxxx] [type:fuel]
 # 1 - Booster 2.0             #
 # 2 - Booster 2.0 (Duplicate) #
 # 8 - Booster 0.8 (Duplicate) #
+###############################
+
+###############################
+#       Modes for <BFS        #
+# 0 - Set Booster fuel to X   #
+# 1 - Add X Booster fuel      #
+# 2 - Subtract X Booster fuel #
 ###############################
 
 - <BKE - BacKGround Enable
