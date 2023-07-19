@@ -26,7 +26,9 @@
 	-Documentation on them
 [-] <CSF saved to the save file and loaded with LoadProfile? This could help with the collab..
 	-Surfaces are now loaded based on settings.ini strings
-	-Need to save them to the profile and load them, as well as have a function for Loading the GenericData safely.
+	-Surfaces can be saved and loaded!
+	-Make it functional with collab folder
+[-] TSC command to load a different Head.tsc / ArmsItem.tsc would be very useful
 	
 # Other #
 [-] Load organya files from folder and also allow the folder to be changed (collab mod)

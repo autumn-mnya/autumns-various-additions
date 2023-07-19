@@ -22,11 +22,13 @@
 #include "EntityLoad.h"
 #include "Frame.h"
 #include "Game.h"
+#include "GenericLoad.h"
 #include "MyChar.h"
 #include "MycParam.h"
 #include "Profile.h"
 #include "Respawn.h"
 #include "Stage.h"
+#include "SurfaceDefines.h"
 #include "TextScriptVAR.h"
 
 // Booleans
@@ -423,19 +425,106 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		playerMoney = z;
 		gTS->p_read += 8;
 	}
-	else if (strncmp(where + 1, "CSF", 3) == 0) // Change Surface Folder
+	else if (strncmp(where + 1, "CSF", 3) == 0) // Change Surface File (This command needs a rewrite!)
 	{
 		char surfaceId[0x30];
-		char surfacePath[0x30];
 		gTS->p_read += 4;
 
 		memset(surfaceId, 0, sizeof(surfaceId));
-		memset(surfacePath, 0, sizeof(surfacePath));
-
+		
 		GetTextScriptString(surfaceId);
-		GetTextScriptString(surfacePath);
 
-		SwapSurfaces(surfacePath, atoi(surfaceId));
+		switch (atoi(surfaceId))
+		{
+			default:
+				printf("Invalid Surface ID");
+				break; // don't do anything if the ID was invalid
+			case 0:
+				memset(surfaceName_0_Title, 0, sizeof(surfaceName_0_Title));
+				GetTextScriptString(surfaceName_0_Title);
+				SwapSurfaces(surfaceName_0_Title, SURFACE_ID_TITLE);
+				break;
+			case 6:
+				memset(surfaceName_6_Fade, 0, sizeof(surfaceName_6_Fade));
+				GetTextScriptString(surfaceName_6_Fade);
+				SwapSurfaces(surfaceName_6_Fade, SURFACE_ID_FADE);
+				break;
+			case 8:
+				memset(surfaceName_8_ItemImage, 0, sizeof(surfaceName_8_ItemImage));
+				GetTextScriptString(surfaceName_8_ItemImage);
+				SwapSurfaces(surfaceName_8_ItemImage, SURFACE_ID_ITEM_IMAGE);
+				break;
+			case 11:
+				memset(surfaceName_11_Arms, 0, sizeof(surfaceName_11_Arms));
+				GetTextScriptString(surfaceName_11_Arms);
+				SwapSurfaces(surfaceName_11_Arms, SURFACE_ID_ARMS);
+				break;
+			case 12:
+				memset(surfaceName_12_ArmsImage, 0, sizeof(surfaceName_12_ArmsImage));
+				GetTextScriptString(surfaceName_12_ArmsImage);
+				SwapSurfaces(surfaceName_12_ArmsImage, SURFACE_ID_ARMS_IMAGE);
+				break;
+			case 14:
+				memset(surfaceName_14_StageImage, 0, sizeof(surfaceName_14_StageImage));
+				GetTextScriptString(surfaceName_14_StageImage);
+				SwapSurfaces(surfaceName_14_StageImage, SURFACE_ID_STAGE_ITEM);
+				break;
+			case 16:
+				memset(surfaceName_16_MyChar, 0, sizeof(surfaceName_16_MyChar));
+				GetTextScriptString(surfaceName_16_MyChar);
+				SwapSurfaces(surfaceName_16_MyChar, SURFACE_ID_MY_CHAR);
+				break;
+			case 17:
+				memset(surfaceName_17_Bullet, 0, sizeof(surfaceName_17_Bullet));
+				GetTextScriptString(surfaceName_17_Bullet);
+				SwapSurfaces(surfaceName_17_Bullet, SURFACE_ID_BULLET);
+				break;
+			case 19:
+				memset(surfaceName_19_Caret, 0, sizeof(surfaceName_19_Caret));
+				GetTextScriptString(surfaceName_19_Caret);
+				SwapSurfaces(surfaceName_19_Caret, SURFACE_ID_CARET);
+				break;
+			case 20:
+				memset(surfaceName_20_NpcSym, 0, sizeof(surfaceName_20_NpcSym));
+				GetTextScriptString(surfaceName_20_NpcSym);
+				SwapSurfaces(surfaceName_20_NpcSym, SURFACE_ID_NPC_SYM);
+				break;
+			case 23:
+				memset(surfaceName_23_NpcRegu, 0, sizeof(surfaceName_23_NpcRegu));
+				GetTextScriptString(surfaceName_23_NpcRegu);
+				SwapSurfaces(surfaceName_23_NpcRegu, SURFACE_ID_NPC_REGU);
+				break;
+			case 24:
+				memset(surfaceName_24_AutumnUI, 0, sizeof(surfaceName_24_AutumnUI));
+				GetTextScriptString(surfaceName_24_AutumnUI);
+				SwapSurfaces(surfaceName_24_AutumnUI, SURFACE_ID_AUTUMN_HUD);
+				break;
+			case 25:
+				memset(surfaceName_25_AutumnObjects, 0, sizeof(surfaceName_25_AutumnObjects));
+				GetTextScriptString(surfaceName_25_AutumnObjects);
+				SwapSurfaces(surfaceName_25_AutumnObjects, SURFACE_ID_AUTUMN_OBJECTS);
+				break;
+			case 26:
+				memset(surfaceName_26_TextBox, 0, sizeof(surfaceName_26_TextBox));
+				GetTextScriptString(surfaceName_26_TextBox);
+				SwapSurfaces(surfaceName_26_TextBox, SURFACE_ID_TEXT_BOX);
+				break;
+			case 27:
+				memset(surfaceName_27_Face, 0, sizeof(surfaceName_27_Face));
+				GetTextScriptString(surfaceName_27_Face);
+				SwapSurfaces(surfaceName_27_Face, SURFACE_ID_FACE);
+				break;
+			case 38:
+				memset(surfaceName_38_AutumnItems, 0, sizeof(surfaceName_38_AutumnItems));
+				GetTextScriptString(surfaceName_38_AutumnItems);
+				SwapSurfaces(surfaceName_38_AutumnItems, SURFACE_ID_AUTUMN_ITEMS);
+				break;
+			case 39:
+				memset(surfaceName_39_AutumnCharacters, 0, sizeof(surfaceName_39_AutumnCharacters));
+				GetTextScriptString(surfaceName_39_AutumnCharacters);
+				SwapSurfaces(surfaceName_39_AutumnCharacters, SURFACE_ID_AUTUMN_CHARACTERS);
+				break;
+		}
 	}
 	else if (strncmp(where + 1, "CBK", 3) == 0) // Change BacKground (Vanilla)
 	{

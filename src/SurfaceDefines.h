@@ -4,7 +4,7 @@
 
 #include "cave_story.h"
 
-#define MaxSurfaceName 120
+#define MaxSurfaceName 256
 
 extern char surfaceName_0_Title[MaxSurfaceName];
 extern char surfaceName_5_Image[MaxSurfaceName];

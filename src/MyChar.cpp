@@ -105,9 +105,6 @@ void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 	InitTSCVariables();
 	InitMyCharBoostFuel();
 
-	if (setting_enable_surfaces)
-		InitGameSurfaces();
-
 	if (setting_external_stage_tbl_support == true)
 	{
 		if (stageTblPath[0] == 0)

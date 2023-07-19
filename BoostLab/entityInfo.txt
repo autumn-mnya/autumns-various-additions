@@ -4,7 +4,6 @@
 //		Noxid (most of entities 0-180 & some more)
 //		Carrotlord (rects for entities 180+)
 //     Bombchu Link (updated and refreshed framarects.)
-//		Autumn Hazel (New Entities, Trans Rights !!!!!!!!)
 #0	 	 	Null 	0:0:0:0	<nothing> 	General:Tool CE:General ;
 #1	Weapn	energy	EXP	0:32:32:64	Weapon energy 	CE:General ;
 #2	Enemy	Behem	Behemoth 	0:0:64:48	Enemy - Behemoth 	CE:Egg1 Tileset:Eggs1 Enemy:Ground ;
@@ -464,5 +463,5 @@
 #456	Match	Offset	Player Match (Offset)	0:0:0:0	Read Custom Entities txt file.	Custom:Mechanics ;
 #457	CamOffset	Trigger	Camera Offset Trigger	0:0:0:0	Read Custom Entities txt file.	Custom:Mechanics ;
 #458	CamCoord	Trigger	Camera Target Trigger (X:Y)	0:0:0:0	Read Custom Entities txt file.	Custom:Mechanics ;
-#459	Money	Entity	Money Entity	2176:0:2208:32	Read Custom Entities txt file.	Custom:Mechanics	;
-#460	LoadSave	Controller	Load Save Event Controller	0:0:0:0	Read Custom Entities txt file.	Custom:Mechanics	;
+#459	Money	Entity	Money Entity	2176:0:2208:32	Read Custom Entities txt file.	Custom:Mechanics ;
+#460	LoadSave	Controller	Load Save Event Controller	0:0:0:0	Read Custom Entities txt file.	Custom:Mechanics ;

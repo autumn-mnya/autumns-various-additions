@@ -6,6 +6,9 @@
 
 void Replacement_ModeOpening_SetFrameTargetMyChar_Call(int x);
 void Replacement_ModeOpening_PutTextScript_Call();
+void Replacement_ModeOpening_SetFadeMask_Call();
+void Replacement_ModeTitle_InitStar_Call();
+void Replacement_ModeAction_InitMyChar_Call();
 void Replacement_ModeAction_ActValueView_Call();
 void Replacement_ModeAction_PutTextScript_Call();
 void Replacement_Game_InitTextScript2_Call();

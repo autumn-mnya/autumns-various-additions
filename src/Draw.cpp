@@ -11,13 +11,16 @@
 #include "main.h"
 
 #include "mod_loader.h"
+#include "ModSettings.h"
 #include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
 #include "Entity.h"
 #include "Game.h"
+#include "GenericLoad.h"
 #include "MyChar.h"
 #include "Profile.h"
+#include "SurfaceDefines.h"
 #include "TextScript.h"
 
 // Doesn't support widescreen
@@ -29,10 +32,18 @@ char TSC_IMG_Name[ImgNameSize];
 
 const char* const defaultFolderPath = "";
 
+// I need this to work with collab name
 void SwapSurfaces(const char* n, int no)
 {
+	char CollabPath[MAX_PATH];
 	ReleaseSurface(no);
-	MakeSurface_File(n, no);
+	if (setting_collab_enabled == true)
+	{
+		sprintf(CollabPath, "%s\\%s", setting_collab_name, n);
+		MakeSurface_File(CollabPath, no); // "CollabName/filepath"
+	}
+	else
+		MakeSurface_File(n, no);
 }
 
 void LoadTSC_Image(char* name)
@@ -58,24 +69,11 @@ void LoadTSC_Image(char* name)
 
 	ReleaseSurface(SURFACE_ID_TSC_IMG);
 	MakeSurface_File(imgPath, SURFACE_ID_TSC_IMG);
+	strcpy(surfaceName_5_Image, imgPath);
 }
 
 void ResetTSC_Image()
 {
 	memset(TSC_IMG_Folder, 0, sizeof(TSC_IMG_Folder));
 	LoadTSC_Image("0");
-}
-
-// <IMG resetting calls
-void Replacement_ModeOpening_SetFadeMask_Call()
-{
-	SetFadeMask();
-	ResetTSC_Image();
-	BKG_ResetBackgrounds();
-}
-
-void Replacement_ModeTitle_InitStar_Call()
-{
-	InitStar();
-	ResetTSC_Image();
 }

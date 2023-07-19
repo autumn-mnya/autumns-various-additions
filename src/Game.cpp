@@ -12,6 +12,7 @@
 #include "ModSettings.h"
 #include "cave_story.h"
 #include "Draw.h"
+#include "GenericLoad.h"
 #include "Profile.h"
 #include "Respawn.h"
 #include "Stage.h"
@@ -40,6 +41,29 @@ void Replacement_ModeOpening_PutTextScript_Call()
 	// Show <IMG infront of textbox when flag is set
 	if (GetNPCFlag(setting_show_img_on_top_flag))
 		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
+}
+
+// <IMG resetting calls
+void Replacement_ModeOpening_SetFadeMask_Call()
+{
+	SetFadeMask();
+	ResetCustomGenericData(); // This freezes the game for a while.. we may need to find a better approach.
+	ResetTSC_Image();
+	BKG_ResetBackgrounds();
+}
+
+void Replacement_ModeTitle_InitStar_Call()
+{
+	InitStar();
+	ResetTSC_Image();
+}
+
+// 0x41043B
+void Replacement_ModeAction_InitMyChar_Call() // Use this to load generic data
+{
+	InitGameSurfaces(); // init
+	LoadCustomGenericData(); // load
+	InitMyChar();
 }
 
 // 0x410564

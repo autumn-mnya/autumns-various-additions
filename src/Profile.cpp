@@ -13,9 +13,11 @@
 #include "Collectables.h"
 #include "Draw.h"
 #include "EntityLoad.h"
+#include "GenericLoad.h"
 #include "MyChar.h"
 #include "Respawn.h"
 #include "Stage.h"
+#include "SurfaceDefines.h"
 #include "TextScript.h"
 #include "TileCollisionMyChar.h"
 
@@ -89,8 +91,29 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	profile.mim_num = mim_num;
 	profile.booster_08_fuel = booster_08_fuel;
 	profile.booster_20_fuel = booster_20_fuel;
+	// Set Collab Tables
 	memcpy(profile.stage_tbl, stageTblPath, sizeof(profile.stage_tbl));
 	memcpy(profile.npc_tbl, npcTblPath, sizeof(profile.npc_tbl));
+	// Set <CSF surfaces
+	memcpy(profile.surfaceName_0_Title, surfaceName_0_Title, sizeof(profile.surfaceName_0_Title));
+	memcpy(profile.surfaceName_5_Image, surfaceName_5_Image, sizeof(profile.surfaceName_5_Image));
+	memcpy(profile.surfaceName_6_Fade, surfaceName_6_Fade, sizeof(profile.surfaceName_6_Fade));
+	memcpy(profile.surfaceName_8_ItemImage, surfaceName_8_ItemImage, sizeof(profile.surfaceName_8_ItemImage));
+	memcpy(profile.surfaceName_11_Arms, surfaceName_11_Arms, sizeof(profile.surfaceName_11_Arms));
+	memcpy(profile.surfaceName_12_ArmsImage, surfaceName_12_ArmsImage, sizeof(profile.surfaceName_12_ArmsImage));
+	memcpy(profile.surfaceName_14_StageImage, surfaceName_14_StageImage, sizeof(profile.surfaceName_14_StageImage));
+	// Skip Loading
+	memcpy(profile.surfaceName_16_MyChar, surfaceName_16_MyChar, sizeof(profile.surfaceName_16_MyChar));
+	memcpy(profile.surfaceName_17_Bullet, surfaceName_17_Bullet, sizeof(profile.surfaceName_17_Bullet));
+	memcpy(profile.surfaceName_19_Caret, surfaceName_19_Caret, sizeof(profile.surfaceName_19_Caret));
+	memcpy(profile.surfaceName_20_NpcSym, surfaceName_20_NpcSym, sizeof(profile.surfaceName_20_NpcSym));
+	memcpy(profile.surfaceName_23_NpcRegu, surfaceName_23_NpcRegu, sizeof(profile.surfaceName_23_NpcRegu));
+	memcpy(profile.surfaceName_24_AutumnUI, surfaceName_24_AutumnUI, sizeof(profile.surfaceName_24_AutumnUI));
+	memcpy(profile.surfaceName_25_AutumnObjects, surfaceName_25_AutumnObjects, sizeof(profile.surfaceName_25_AutumnObjects));
+	memcpy(profile.surfaceName_26_TextBox, surfaceName_26_TextBox, sizeof(profile.surfaceName_26_TextBox));
+	memcpy(profile.surfaceName_27_Face, surfaceName_27_Face, sizeof(profile.surfaceName_27_Face));
+	memcpy(profile.surfaceName_38_AutumnItems, surfaceName_38_AutumnItems, sizeof(profile.surfaceName_38_AutumnItems));
+	memcpy(profile.surfaceName_39_AutumnCharacters, surfaceName_39_AutumnCharacters, sizeof(profile.surfaceName_39_AutumnCharacters));
 	// Write new save code after this
 }
 
@@ -107,6 +130,7 @@ void Replacement_SaveProfile_fwrite_Call(void* buf, size_t eleS, size_t eleC, FI
 void Replacement_LoadProfile_InitMyChar_Call()
 {
 	InitMyChar();
+	LoadCustomGenericData(); // Load custom surfaces
 }
 
 // 0x41D419
@@ -201,6 +225,25 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		// read savefile collab tables
 		Freeware_fread(&profile.stage_tbl, StageTblMaxPath, 1, fp);
 		Freeware_fread(&profile.npc_tbl, NpcTblMaxPath, 1, fp);
+		// read savefile <CSF names
+		Freeware_fread(&profile.surfaceName_0_Title, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_5_Image, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_6_Fade, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_8_ItemImage, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_11_Arms, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_12_ArmsImage, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_14_StageImage, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_16_MyChar, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_17_Bullet, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_19_Caret, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_20_NpcSym, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_23_NpcRegu, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_24_AutumnUI, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_25_AutumnObjects, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_26_TextBox, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_27_Face, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_38_AutumnItems, MaxSurfaceName, 1, fp);
+		Freeware_fread(&profile.surfaceName_39_AutumnCharacters, MaxSurfaceName, 1, fp);
 	}
 
 	// Close the file
@@ -215,6 +258,26 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		// Collab Tables
 		strcpy(stageTblPath, profile.stage_tbl);
 		strcpy(npcTblPath, profile.npc_tbl);
+
+		// <CSF surface names
+		strcpy(surfaceName_0_Title, profile.surfaceName_0_Title);
+		strcpy(surfaceName_5_Image, profile.surfaceName_5_Image);
+		strcpy(surfaceName_6_Fade, profile.surfaceName_6_Fade);
+		strcpy(surfaceName_8_ItemImage, profile.surfaceName_8_ItemImage);
+		strcpy(surfaceName_11_Arms, profile.surfaceName_11_Arms);
+		strcpy(surfaceName_12_ArmsImage, profile.surfaceName_12_ArmsImage);
+		strcpy(surfaceName_14_StageImage, profile.surfaceName_14_StageImage);
+		strcpy(surfaceName_16_MyChar, profile.surfaceName_16_MyChar);
+		strcpy(surfaceName_17_Bullet, profile.surfaceName_17_Bullet);
+		strcpy(surfaceName_19_Caret, profile.surfaceName_19_Caret);
+		strcpy(surfaceName_20_NpcSym, profile.surfaceName_20_NpcSym);
+		strcpy(surfaceName_23_NpcRegu, profile.surfaceName_23_NpcRegu);
+		strcpy(surfaceName_24_AutumnUI, profile.surfaceName_24_AutumnUI);
+		strcpy(surfaceName_25_AutumnObjects, profile.surfaceName_25_AutumnObjects);
+		strcpy(surfaceName_26_TextBox, profile.surfaceName_26_TextBox);
+		strcpy(surfaceName_27_Face, profile.surfaceName_27_Face);
+		strcpy(surfaceName_38_AutumnItems, profile.surfaceName_38_AutumnItems);
+		strcpy(surfaceName_39_AutumnCharacters, profile.surfaceName_39_AutumnCharacters);
 	}
 }
 
@@ -307,6 +370,7 @@ void Replacement_InitializeGame_TransferStage_Call(int w, int x, int y, int z)
 
 void Replacement_InitializeGame_ClearArmsData_Call()
 {
+	ResetCustomGenericData(); // Reload Surfaces that were changed if they dont match default surface names
 	ResetCollabPaths();
 	ClearArmsData();
 	ResetTSC_Image();

@@ -249,6 +249,7 @@ void InitMod_Sprites()
 {
 	Replacement_LoadGenericData_Calls();
 	InitMod_PreLaunch_GenericLoad();
+	ModLoader_WriteCall((void*)0x41043B, (void*)Replacement_ModeAction_InitMyChar_Call); // run generic load function in InitMyChar
 }
 
 void InitMod_SFX()

@@ -14,5 +14,3 @@ extern char TSC_IMG_Name[ImgNameSize];
 void SwapSurfaces(const char* n, int no);
 void LoadTSC_Image(char* name);
 void ResetTSC_Image();
-void Replacement_ModeOpening_SetFadeMask_Call();
-void Replacement_ModeTitle_InitStar_Call();

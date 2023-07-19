@@ -5,6 +5,7 @@
 #include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
+#include "SurfaceDefines.h"
 #include "TextScript.h"
 #include "TextScriptVAR.h"
 
@@ -77,6 +78,25 @@ typedef struct CustomProfileData
 	// Collab Tables
 	char stage_tbl[StageTblMaxPath];
 	char npc_tbl[NpcTblMaxPath];
+	// Surface Names
+	char surfaceName_0_Title[MaxSurfaceName];
+	char surfaceName_5_Image[MaxSurfaceName];
+	char surfaceName_6_Fade[MaxSurfaceName];
+	char surfaceName_8_ItemImage[MaxSurfaceName];
+	char surfaceName_11_Arms[MaxSurfaceName];
+	char surfaceName_12_ArmsImage[MaxSurfaceName];
+	char surfaceName_14_StageImage[MaxSurfaceName];
+	char surfaceName_16_MyChar[MaxSurfaceName];
+	char surfaceName_17_Bullet[MaxSurfaceName];
+	char surfaceName_19_Caret[MaxSurfaceName];
+	char surfaceName_20_NpcSym[MaxSurfaceName];
+	char surfaceName_23_NpcRegu[MaxSurfaceName];
+	char surfaceName_24_AutumnUI[MaxSurfaceName];
+	char surfaceName_25_AutumnObjects[MaxSurfaceName];
+	char surfaceName_26_TextBox[MaxSurfaceName];
+	char surfaceName_27_Face[MaxSurfaceName];
+	char surfaceName_38_AutumnItems[MaxSurfaceName];
+	char surfaceName_39_AutumnCharacters[MaxSurfaceName];
 } CustomProfileData;
 
 extern CustomProfileData profile;
