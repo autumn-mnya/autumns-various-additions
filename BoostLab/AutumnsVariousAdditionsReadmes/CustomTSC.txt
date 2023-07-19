@@ -249,6 +249,17 @@ Example: <PATexample$
 ( The above will load example.txt ! It's just like a normal boosters lab hex patch -- you can have multiple in the same txt )
 ( You can also apply multiple, but you can't unapply multiple. )
 
+- <PXT - PiXTone load
+Load folder with sound effects from the /data/ folder. -- End the text string with a $ so the game knows to stop reading the text.
+Arguments: 1 [<PXTstring$] [folder$]
+Example: <PXTpixtone2$
+( The above will load the data/pixtone2/ folder and load any pxt sounds found in there !)
+Note: <PXT0$ will load the default folder.
+
+- <RSF - Reset SurFaces
+Reset all surfaces to their defaults in settings.ini. Useful if you want to reset after using <CSF.
+Arguments: 0 [<RSF]
+
 - <RSP - ReSPawn player
 Respawn the player, similar to loading a save file. This is automatically set on using <TRA, <TRM, TRX, or loading a save file.
 This will save the players current flags from <FL+, current collectables if the collectables exist, among other things.

@@ -30,6 +30,10 @@
 	-Surfaces can be loaded from a collab folder!
 [x] TSC command to load a different Head.tsc / ArmsItem.tsc would be very useful
 [x] <BFS re-do (https://discord.com/channels/312733374831788034/312733374831788034/1131117251647512596)
+[-] Reset TSC Commands
+	-<RST (Reset Stage Table)
+	-<RNT (Reset Npc Table)
+	-<RSF (Reset SurFaces) [x]
 
 # Collab Stuff #
 [x] <BKG files go into collab related folders
