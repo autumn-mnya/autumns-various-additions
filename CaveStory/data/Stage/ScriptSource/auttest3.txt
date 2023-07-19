@@ -15,3 +15,9 @@
 
 #0203
 <MSG<HSCHead$<END
+
+#0204
+<PXTPixTone2$<END
+
+#0205
+<PXTPixTone$<END

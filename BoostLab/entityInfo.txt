@@ -4,6 +4,7 @@
 //		Noxid (most of entities 0-180 & some more)
 //		Carrotlord (rects for entities 180+)
 //     Bombchu Link (updated and refreshed framarects.)
+//		Autumn Hazel (New Entities, Trans Rights !!!!!!!)
 #0	 	 	Null 	0:0:0:0	<nothing> 	General:Tool CE:General ;
 #1	Weapn	energy	EXP	0:32:32:64	Weapon energy 	CE:General ;
 #2	Enemy	Behem	Behemoth 	0:0:64:48	Enemy - Behemoth 	CE:Egg1 Tileset:Eggs1 Enemy:Ground ;

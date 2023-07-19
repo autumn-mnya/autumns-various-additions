@@ -48,6 +48,7 @@ void SwapSurfaces(const char* n, int no)
 
 void LoadTSC_Image(char* name)
 {
+	char collabimgPath[MAX_PATH];
 	char imgPath[MAX_PATH];
 
 	// Reset name before we copy it
@@ -67,8 +68,15 @@ void LoadTSC_Image(char* name)
 
 	strcat(imgPath, name);
 
+	if (setting_collab_enabled == true)
+		sprintf(collabimgPath, "%s\\%s", setting_collab_name, imgPath);
+
 	ReleaseSurface(SURFACE_ID_TSC_IMG);
-	MakeSurface_File(imgPath, SURFACE_ID_TSC_IMG);
+	if (setting_collab_enabled == true)
+		MakeSurface_File(collabimgPath, SURFACE_ID_TSC_IMG);
+	else
+		MakeSurface_File(imgPath, SURFACE_ID_TSC_IMG);
+
 	strcpy(surfaceName_5_Image, imgPath);
 }
 

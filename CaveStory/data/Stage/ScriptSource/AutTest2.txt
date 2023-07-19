@@ -238,3 +238,6 @@ you win<NOD<CLO<END
 
 #5002
 <NPTautumn$<END
+
+#5500
+<EQ+0032<ML+0047<END

@@ -33,9 +33,9 @@
 
 # Collab Stuff #
 [x] <BKG files go into collab related folders
-[-] <PAT patches go into collab related folders
-[-] <IMF also changes to a collab folder?
-[-] Custom Sound Effects can load from custom folders *THIS NEEDS TO BE CHECKED FOR MEMORY LEAKAGE*
+[x] <PAT patches go into collab related folders
+[x] <IMF also changes to a collab folder?
+[x] Custom Sound Effects can load from custom folders *THIS NEEDS TO BE CHECKED FOR MEMORY LEAKAGE*
 	
 # Other #
 [-] Load organya files from folder and also allow the folder to be changed (collab mod)
