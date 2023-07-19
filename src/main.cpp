@@ -342,6 +342,11 @@ void InitMod_DisableWindowRect()
 	ModLoader_WriteCall((void*)0x40F710, (void*)Replacement_SaveWindowRect);
 }
 
+void InitMod_DisableErrorLog()
+{
+	ModLoader_WriteJump((void*)0x410DE0, (void*)Replacement_ErrorLog);
+}
+
 void InitMod_AutumnConfigDefaults()
 {
 	ModLoader_WriteCall((void*)0x4124E0, (void*)Replacement_DefaultConfigData);
@@ -505,6 +510,10 @@ void InitMod(void)
 	// Disable window rect saving by default because tbh it REALLY annoys me for some reason??
 	if (setting_disable_window_rect_saving)
 		InitMod_DisableWindowRect();
+
+	// Disable error.log
+	if (setting_disable_errorlog_saving)
+		InitMod_DisableErrorLog();
 
 	if (setting_enable_default_config_options)
 		InitMod_AutumnConfigDefaults();

@@ -11,6 +11,7 @@
 #include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
+#include "CollabFlag.h"
 #include "Draw.h"
 #include "EntityLoad.h"
 #include "GenericLoad.h"
@@ -121,6 +122,9 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	memcpy(profile.head_tsc, CustomHeadTSCLocation, sizeof(profile.head_tsc));
 	// PixTone folder
 	memcpy(profile.pixtoneFolder, global_pixtoneFolder, sizeof(profile.pixtoneFolder));
+	// Collab Flags
+	profile.enable_collab_flags = enable_collab_flags;
+	memcpy(profile.collab_flags, gCollabFlag, sizeof(profile.collab_flags));
 	// Write new save code after this
 }
 
@@ -243,6 +247,9 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		Freeware_fread(&profile.head_tsc, CustomTscMaxPath, 1, fp);
 		// read savefile PixTone path
 		Freeware_fread(&profile.pixtoneFolder, MaxPixTonePath, 1, fp);
+		// read savefile Collab Flags
+		Freeware_fread(&profile.enable_collab_flags, 4, 1, fp);
+		Freeware_fread(profile.collab_flags, 1000, 1, fp);
 	}
 
 	// Close the file
@@ -351,6 +358,9 @@ void SetProfileData()
 		booster_08_fuel = profile.booster_08_fuel;
 		booster_20_fuel = profile.booster_20_fuel;
 		Mod_WriteBoosterFuel();
+		// Collab Flags
+		enable_collab_flags = profile.enable_collab_flags;
+		memcpy(gCollabFlag, profile.collab_flags, sizeof(gCollabFlag));
 	}
 }
 

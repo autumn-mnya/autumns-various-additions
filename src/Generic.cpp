@@ -11,6 +11,7 @@
 #include "main.h"
 
 bool setting_disable_window_rect_saving = true;
+bool setting_disable_errorlog_saving = false;
 
 BOOL IsKeyDataFile(const char* name)
 {
@@ -46,6 +47,12 @@ BOOL IsKeyBKGFile(const char* name)
 
 // I honestly hate saving the window rect. Let's keep it disabled by default!
 BOOL Replacement_SaveWindowRect(HWND hWnd, const char* filename)
+{
+	return TRUE;
+}
+
+// Disable error.log option
+BOOL Replacement_ErrorLog(const char* string, int value)
 {
 	return TRUE;
 }

@@ -15,6 +15,8 @@ extern bool setting_enable_savedata_code;
 extern bool setting_enable_teleporter_bugfix;
 extern bool setting_enable_pause_screen;
 
+extern bool setting_enable_swapping_pixtone;
+
 extern bool setting_collab_enabled;
 extern const char* setting_collab_name;
 

@@ -105,6 +105,9 @@ typedef struct CustomProfileData
 	char head_tsc[CustomTscMaxPath];
 	// PixTone folder path
 	char pixtoneFolder[MaxPixTonePath];
+	// Collab Flags
+	int enable_collab_flags;
+	unsigned char collab_flags[1000];
 } CustomProfileData;
 
 extern CustomProfileData profile;

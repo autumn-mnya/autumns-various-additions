@@ -17,6 +17,7 @@
 #include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
+#include "CollabFlag.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
@@ -932,6 +933,21 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		ResetCustomGenericData();
 		gTS->p_read += 4;
 	}
+	else if (strncmp(where + 1, "CFE", 3) == 0) // Collab Flag Enable
+	{
+		enable_collab_flags = 1;
+		gTS->p_read += 4;
+	}
+	else if (strncmp(where + 1, "CFD", 3) == 0) // Collab Flag Disable
+	{
+		enable_collab_flags = 0;
+		gTS->p_read += 4;
+	}
+	else if (strncmp(where + 1, "ICF", 3) == 0) // Init Collab Flag
+	{
+		InitCollabFlags();
+		gTS->p_read += 4;
+	}
 	else
 		return 0;
 	
@@ -985,6 +1001,8 @@ void InitMod_TSC()
 	ModLoader_WriteCall((void*)0x41D407, (void*)Replacement_LoadProfile_InitMyChar_Call);
 	// Script Replacements (Head.tsc / ArmsItem.tsc)
 	InitMod_ScriptReplacements();
+	// Collab Flags loading
+	InitMod_CollabFlagLoading();
 	// Respawning the player
 	ModLoader_WriteCall((void*)0x41D419, (void*)Replacement_LoadProfile_TransferStage_Call);
 	ModLoader_WriteCall((void*)0x41D59A, (void*)Replacement_InitializeGame_TransferStage_Call);

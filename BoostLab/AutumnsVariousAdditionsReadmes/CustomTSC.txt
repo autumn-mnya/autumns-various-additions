@@ -12,7 +12,7 @@ Arguments: 0 [<ITC]
 
 - <BFS - Booster Fuel Set
 Change booster type W's fuel to X with mode Y.
-Arguments: 2 [<BFSwwww:xxxx:yyyy] [type:fuel:mode]
+Arguments: 3 [<BFSwwww:xxxx:yyyy] [type:fuel:mode]
 
 ###############################
 #       Types for <BFS        #
@@ -414,3 +414,17 @@ Write a function call at address A to address B -- 2 text strings back-to-back, 
 Arguments: 2 [<WCLstring$cstring2$] [address_a_string$address_b_string$]
 Example: <WCL423DE9$401000$
 ( The above will replace <CSS with the "ClearArmsData" function )
+
+# Collab Specific #
+
+- <CFE - Collab Flag Enable
+Enable the usage of the Collab Flag array instead of the normal flag array.
+Arguments: 0 [<CFE]
+
+- <CFD - Collab Flag Disable
+Disable the usage of the Collab Flag array.
+Arguments: 0 [<CFD]
+
+- <ICF - Init Collab Flags
+Reset Collab Flag array back to default settings.
+Arguments: 0 [<ICF]

@@ -40,6 +40,11 @@
 [x] <PAT patches go into collab related folders
 [x] <IMF also changes to a collab folder?
 [x] Custom Sound Effects can load from custom folders *THIS NEEDS TO BE CHECKED FOR MEMORY LEAKAGE*
+[x] Collab Flags implemented, nyaa~
+[-] InitCustomData* command
+	-We don't want to reset *everything*, only specific things. This has to be made manually, basically.
+	-InitMyChar clone gets run, InitBoostfuel, InitCollectablesPositioning, InitCollectablesEnabled, InitTSCVariables
+[-] <ML= command to set the players life to a value instead of adding/subtracting
 	
 # Other #
 [-] Load organya files from folder and also allow the folder to be changed (collab mod)

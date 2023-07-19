@@ -21,3 +21,23 @@
 
 #0205
 <PXTPixTone$<END
+
+#0301
+<FLJ0300:0302
+<KEY<MSG<FAC0001
+Hi! You don't have those
+fancy collab flags enabled..<NOD
+Do you..<NOD<CLO<END
+
+#0302
+<KEY<MSG<FAC0003
+Yeah! Collab Flags!<NOD<CLO<END
+
+#0303
+<CFE<FL+0300<END
+
+#0304
+<CFD<END
+
+#0305
+<ICF<END
