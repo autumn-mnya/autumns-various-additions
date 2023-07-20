@@ -7,6 +7,7 @@
 #include <string>
 
 #include "Main.h"
+#include "ModSettings.h"
 
 #include "mod_loader.h"
 #include "cave_story.h"
@@ -45,10 +46,12 @@ bool setting_enable_savedata_code = true;
 bool setting_enable_teleporter_bugfix = true;
 bool setting_enable_pause_screen = false;
 
-bool setting_enable_swapping_pixtone = false;
+bool setting_enable_reset_pixtone_on_reset = false;
+bool setting_enable_reset_stagetbl_on_reset = false;
+bool setting_enable_reset_npctbl_on_reset = false;
 
 bool setting_collab_enabled = false;
-const char* setting_collab_name = "null";
+char setting_collab_name[CollabNameMaxPath] = "null";
 
 // For settings related things, this function will be used.
 void InitMod_Settings()
@@ -71,10 +74,6 @@ void InitMod_Settings()
 	setting_disable_errorlog_saving = ModLoader_GetSettingBool("Disable error.log Saving", false);
 	setting_enable_default_config_options = ModLoader_GetSettingBool("Autumn's Default Config Options", true);
 	setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
-
-	///////////////
-	// ASM Hacks //
-	///////////////
 
 	///////////////////
 	// Surface Names //
@@ -307,6 +306,10 @@ void InitMod_Settings()
 	defaultHeadTSCName = ModLoader_GetSettingString("Default Head.tsc name", "Head");
 
 	setting_collab_enabled = ModLoader_GetSettingBool("Collab Mode", false);
-	setting_collab_name = ModLoader_GetSettingString("Collab Name", "null");
+	const char* settings_collab_name = ModLoader_GetSettingString("Collab Name", "null");
+	strcpy(setting_collab_name, settings_collab_name);
 	setting_enable_collab_flags = ModLoader_GetSettingBool("Collab Flags", false);
+	setting_enable_reset_pixtone_on_reset = ModLoader_GetSettingBool("Enable PixTone Reloading on Reset", false);
+	setting_enable_reset_stagetbl_on_reset = ModLoader_GetSettingBool("Enable stage.tbl Reloading on Reset", false);
+	setting_enable_reset_npctbl_on_reset = ModLoader_GetSettingBool("Enable npc.tbl Reloading on Reset", false);
 }

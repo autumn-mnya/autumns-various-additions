@@ -6,6 +6,7 @@
 #include <dinput.h>
 #include <dsound.h>
 #include <Windows.h>
+#include <stdio.h>
 
 #define WINDOW_WIDTH 320
 #define WINDOW_HEIGHT 240
@@ -883,6 +884,10 @@ enum SoundEffectNames
 	// To be continued
 };
 
+static LPDIRECTSOUND& lpDS = *reinterpret_cast<LPDIRECTSOUND*>(0x4A57E8);
+static LPDIRECTSOUNDBUFFER& lpPRIMARYBUFFER = *reinterpret_cast<LPDIRECTSOUNDBUFFER*>(0x4A57EC);
+static auto& lpSECONDARYBUFFER = *reinterpret_cast<LPDIRECTSOUNDBUFFER(*)[160]>(0x4A5568);
+
 enum SoundMode
 {
 	SOUND_MODE_PLAY_LOOP = -1,
@@ -1006,8 +1011,6 @@ static auto& gSkipFlag = *reinterpret_cast<unsigned char(*)[8]>(0x49DD98);
 
 // Npc Function Table
 static NPCFUNCTION* gpNpcFuncTbl = (NPCFUNCTION*)0x498548;
-
-static LPDIRECTSOUND& lpDS = *reinterpret_cast<LPDIRECTSOUND*>(0x4A57E8);
 
 static int& Volume = *reinterpret_cast<int*>(0x4937A4);
 static BOOL& bFadeout = *reinterpret_cast<BOOL*>(0x4A4E10);

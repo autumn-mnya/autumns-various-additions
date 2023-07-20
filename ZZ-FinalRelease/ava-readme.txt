@@ -2,19 +2,18 @@
 
 Autumn's Various Additions is a dll featuring many, many new features into Cave Story.
 
-A rundown of the features are as follows:
+Please read all of the readmes in the Autumnal Lab download, as there is too much to put here.
 
-# NEW ENTITIES #
+I will probably update this eventually.
 
-There are new entities in this dll! You can read about them in the Autumnal Lab's Custom Entities txt file.
+# MERGING YOUR NPC.TBL FILES #
 
-If you wish to use them, I would advise copying over the "ava-npc.tbl" and replacing your npc.tbl file. This means replacing any stats applied in the Booster's Lab "Edit npc.tbl" window though, obviously.
-Currently I have no way around this ^, but I am looking into it :3, i just want to go ahead and get a pre-release version out there first ..
+Periwinkle made a helpful python script that will let you merge your old npc.tbl with this new one, which will let you have all of the new npcs in your npc table.
 
-# NEW MOVEMENT #
+Open the python script, and follow the instructions.
+Drag your npc.tbl, and then the "ava-npc.tbl".
+You're going to want to pick Option 2, as that merges them together.
 
-In the settings.ini file for this mod, you can enable new movement styles in the options! This includes adding a wall jump, a permanent double jump, and a run button into your mod!
+You'll need to do this in the future if I add new entities!
 
-# Credits #
-
-Brayconn / Periwinkle - Lots of code help
+Name your new npc.tbl, and save. (Example: Input "new-npc.tbl" to create a file called "new-npc.tbl".

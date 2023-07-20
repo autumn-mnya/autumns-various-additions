@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\ASMLoader.cpp" />
+    <ClCompile Include="src\ASMPatches.cpp" />
+    <ClCompile Include="src\BKG.cpp" />
+    <ClCompile Include="src\CollabFlag.cpp" />
+    <ClCompile Include="src\Collectables.cpp" />
+    <ClCompile Include="src\Config.cpp" />
+    <ClCompile Include="src\Draw.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\EntityLoad.cpp" />
+    <ClCompile Include="src\EntityTable.cpp" />
+    <ClCompile Include="src\File.cpp" />
+    <ClCompile Include="src\Frame.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Generic.cpp" />
+    <ClCompile Include="src\GenericLoad.cpp" />
+    <ClCompile Include="src\LoadPixtone.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\ModSettings.cpp" />
+    <ClCompile Include="src\MyChar.cpp" />
+    <ClCompile Include="src\MycParam.cpp" />
+    <ClCompile Include="src\NpcReplacements.cpp" />
+    <ClCompile Include="src\PauseScreen.cpp" />
+    <ClCompile Include="src\Profile.cpp" />
+    <ClCompile Include="src\Respawn.cpp" />
+    <ClCompile Include="src\Stage.cpp" />
+    <ClCompile Include="src\SurfaceDefines.cpp" />
+    <ClCompile Include="src\TextScript.cpp" />
+    <ClCompile Include="src\TextScriptCollabLoad.cpp" />
+    <ClCompile Include="src\TextScriptVAR.cpp" />
+    <ClCompile Include="src\TileCollisionBoss.cpp" />
+    <ClCompile Include="src\TileCollisionBullet.cpp" />
+    <ClCompile Include="src\TileCollisionMyChar.cpp" />
+    <ClCompile Include="src\TileCollisionEntity.cpp" />
+    <ClCompile Include="src\\mod_loader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ASMLoader.h" />
+    <ClInclude Include="src\ASMPatches.h" />
+    <ClInclude Include="src\BKG.h" />
+    <ClInclude Include="src\cave_story.h" />
+    <ClInclude Include="src\CollabFlag.h" />
+    <ClInclude Include="src\Collectables.h" />
+    <ClInclude Include="src\Config.h" />
+    <ClInclude Include="src\Draw.h" />
+    <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\EntityLoad.h" />
+    <ClInclude Include="src\EntityTable.h" />
+    <ClInclude Include="src\File.h" />
+    <ClInclude Include="src\Frame.h" />
+    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Generic.h" />
+    <ClInclude Include="src\GenericLoad.h" />
+    <ClInclude Include="src\LoadPixtone.h" />
+    <ClInclude Include="src\Main.h" />
+    <ClInclude Include="src\ModSettings.h" />
+    <ClInclude Include="src\MyChar.h" />
+    <ClInclude Include="src\MycParam.h" />
+    <ClInclude Include="src\NpcReplacements.h" />
+    <ClInclude Include="src\PauseScreen.h" />
+    <ClInclude Include="src\Profile.h" />
+    <ClInclude Include="src\Respawn.h" />
+    <ClInclude Include="src\Stage.h" />
+    <ClInclude Include="src\SurfaceDefines.h" />
+    <ClInclude Include="src\TextScript.h" />
+    <ClInclude Include="src\TextScriptCollabLoad.h" />
+    <ClInclude Include="src\TextScriptVAR.h" />
+    <ClInclude Include="src\TileCollisionBoss.h" />
+    <ClInclude Include="src\TileCollisionBullet.h" />
+    <ClInclude Include="src\TileCollisionMyChar.h" />
+    <ClInclude Include="src\TileCollisionEntity.h" />
+    <ClInclude Include="src\\mod_loader.h" />
+    <ClInclude Include="src\\mod_loader_hooks.h" />
+  </ItemGroup>
+</Project>

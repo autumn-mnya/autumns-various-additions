@@ -7376,7 +7376,7 @@ void ActEntity453(NPCHAR* npc)
 				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
 				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
 			{
-				PlaySoundObject(161, SOUND_MODE_PLAY);
+				PlaySoundObject(8, SOUND_MODE_PLAY);
 				gMC->ym += -0x5FF;
 				npc->act_no = 1;
 			}
@@ -7446,7 +7446,7 @@ void ActEntity454(NPCHAR* npc)
 				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
 				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
 			{
-				PlaySoundObject(161, SOUND_MODE_PLAY);
+				PlaySoundObject(8, SOUND_MODE_PLAY);
 				gMC->xm = -start_x_momentum;
 				gMC->ym = -start_y_momentum;
 				npc->act_no = 1;
@@ -7520,7 +7520,7 @@ void ActEntity455(NPCHAR* npc)
 				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
 				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
 			{
-				PlaySoundObject(161, SOUND_MODE_PLAY);
+				PlaySoundObject(8, SOUND_MODE_PLAY);
 				gMC->xm = start_x_momentum;
 				gMC->ym = -start_y_momentum;
 				npc->act_no = 1;

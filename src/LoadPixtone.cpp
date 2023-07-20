@@ -111,6 +111,9 @@ void LoadCustomPixtoneData()
 			while (pixtone_parameters[ptp_num].use && ptp_num < 4)
 				++ptp_num;
 
+			if (lpSECONDARYBUFFER[customData.id] != NULL)
+				lpSECONDARYBUFFER[customData.id]->Release();
+
 			pt_size += MakePixToneObject(pixtone_parameters, ptp_num, customData.id);
 		}
 	}
@@ -126,7 +129,7 @@ void LoadUserCustomPixtoneData(const char* folder)
 {
 	char path[MAX_PATH];
 
-	if (setting_collab_enabled == true)
+	if (setting_collab_enabled == true) // If a collab is enabled we go into the CollabName folder first
 	{
 		if (folder != NULL)
 			sprintf(path, "%s\\%s\\%s", gDataPath, setting_collab_name, folder);
@@ -170,6 +173,9 @@ void LoadUserCustomPixtoneData(const char* folder)
 			int ptp_num = 0;
 			while (pixtone_parameters[ptp_num].use && ptp_num < 4)
 				++ptp_num;
+
+			if (lpSECONDARYBUFFER[customData.id] != NULL)
+				lpSECONDARYBUFFER[customData.id]->Release();
 
 			pt_size += MakePixToneObject(pixtone_parameters, ptp_num, customData.id);
 		}

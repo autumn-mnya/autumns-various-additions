@@ -901,7 +901,6 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "HSC", 3) == 0) // Head SCript
 	{
-		char fullPath[MAX_PATH];
 		char headPath[CustomTscMaxPath];
 		gTS->p_read += 4;
 		memset(headPath, 0, sizeof(headPath));
@@ -946,6 +945,24 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	else if (strncmp(where + 1, "ICF", 3) == 0) // Init Collab Flag
 	{
 		InitCollabFlags();
+		gTS->p_read += 4;
+	}
+	else if (strncmp(where + 1, "ICD", 3) == 0) // Init Collab Data
+	{
+		InitMyCollabData();
+		gTS->p_read += 4;
+	}
+	else if (strncmp(where + 1, "CLN", 3) == 0) // CoLlab Name
+	{
+		char collabName[CollabNameMaxPath];
+		gTS->p_read += 4;
+		memset(collabName, 0, sizeof(collabName));
+		GetTextScriptString(collabName);
+		strcpy(setting_collab_name, collabName);
+	}
+	else if (strncmp(where + 1, "ICN", 3) == 0) // Init Collab Name
+	{
+		InitCollabName();
 		gTS->p_read += 4;
 	}
 	else

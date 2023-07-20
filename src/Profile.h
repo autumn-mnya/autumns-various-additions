@@ -6,6 +6,7 @@
 #include "cave_story.h"
 #include "Collectables.h"
 #include "LoadPixtone.h"
+#include "ModSettings.h"
 #include "Profile.h"
 #include "SurfaceDefines.h"
 #include "TextScript.h"
@@ -108,6 +109,8 @@ typedef struct CustomProfileData
 	// Collab Flags
 	int enable_collab_flags;
 	unsigned char collab_flags[1000];
+	// Collab Name
+	char CollabName[CollabNameMaxPath];
 } CustomProfileData;
 
 extern CustomProfileData profile;

@@ -120,6 +120,37 @@ void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 	mim_num = 0;
 }
 
+// Doesn't use built-in MyChar data
+void InitMyChar_Original(void)
+{
+	Freeware_memset(&gMC, 0, sizeof(MYCHAR));
+	gMC->cond = 0x80;
+	gMC->direct = 2;
+
+	gMC->view.back = 8 * 0x200;
+	gMC->view.top = 8 * 0x200;
+	gMC->view.front = 8 * 0x200;
+	gMC->view.bottom = 8 * 0x200;
+
+	gMC->hit.back = 5 * 0x200;
+	gMC->hit.top = 8 * 0x200;
+	gMC->hit.front = 5 * 0x200;
+	gMC->hit.bottom = 8 * 0x200;
+
+	gMC->life = 3;
+	gMC->max_life = 3;
+	gMC->unit = 0;
+}
+
+void InitMyCollabData()
+{
+	InitMyChar_Original();
+	InitCollectablesPositioning();
+	InitCollectablesEnabled();
+	InitTSCVariables();
+	InitMyCharBoostFuel();
+}
+
 void SetPlayerPhysics(int x, int y)
 {
 	switch (x)

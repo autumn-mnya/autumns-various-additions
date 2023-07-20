@@ -83,6 +83,7 @@ extern int mim_player_size_width;
 extern int mim_player_size_height;
 
 void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size);
+void InitMyCollabData();
 void SetPlayerPhysics(int x, int y);
 void Replacement_PutMyChar_PutChar_Call(const RECT* r, int a, int b, const RECT* r2, SurfaceID s);
 void Replacement_PutMyChar_Call(int fx, int fy);

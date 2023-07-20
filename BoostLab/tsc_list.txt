@@ -41,7 +41,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	165
+[BL_TSC]	168
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -144,31 +144,31 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <BLO	1	#---	BLow up	Displays a boss explosion flash effect at entity with event # W. There can only be 1 on screen.	0	0	1	4	4	4	4
 <BUY	2	#e--	BUY jump	Jump to event X if player doesn't have W amount of money. Continue and remove W money otherwise.	0	0	1	4	4	4	4
 <BY2	2	#e--	BuY jump 2	Jump to event X if player has W amount of money or more, and remove W amount of money. Continue otherwise.	0	0	1	4	4	4	4
-<CBK	0	----	Change BacKground	Change vanilla background to image A with type B. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	1	0	4	4	4	4
+<CBK	0	----	Change BacKground	Change vanilla background to image A with type B. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	0	0	4	4	4	4
 <CO+	2	##--	COllectables +	Add collectables amount X to collectable variable W. (Check TSC command txt)	0	0	1	4	4	4	4
 <CO-	2	##--	COllectables -	Subtract collectables amount X from collectable variable W. (Check TSC command txt)	0	0	1	4	4	4	4
 <COD	1	#---	COllectable Disable	Disables the display of collectable variable W.	0	0	1	4	4	4	4
 <COE	1	#---	COllectable Enable	Enables the display of collectable variable W.	0	0	1	4	4	4	4
 <COJ	3	##e-	COllectable Jump	Jump to event Y if the player has X amount of collectables or more in variable W.	0	0	1	4	4	4	4
-<CSF	0	----	Change Surface File	Change surface ID string to load image string. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	1	0	4	4	4	4
-<CTS	0	----	Change TileSet	Change tileset loaded. Use $ at the end of the tileset name to mark the end of the text input. Do not include "Prt".	0	1	0	4	4	4	4
+<CSF	0	----	Change Surface File	Change surface ID string to load image string. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	0	0	4	4	4	4
+<CTS	0	----	Change TileSet	Change tileset loaded. Use $ at the end of the tileset name to mark the end of the text input. Do not include "Prt".	0	0	0	4	4	4	4
 <FM2	4	.###	Focus on Me 2	Focus on the PC in W ticks (Use W > 0), with Mode X (Check TSC command txt), with Offset Y:Z.	0	0	1	4	4	4	4
 <FN2	2	N.--	Focus on Npc 2	Same as <FON but the players direction can effect the Camera.	0	0	1	4	4	4	4
 <FNJ	2	Fe--	Flag Not Jump	Opposite of <FLJ. Jump to event X if flag W is not set.	0	0	1	4	4	4	4
 <FOC	3	.xy-	Focus On Coordinates	Focus on Coordinates X:Y in W ticks. Use W > 0.	0	0	1	4	4	4	4
 <HSC	0	----	Head SCript	Load new Head tsc file from the data folder. Use $ at the end of the name to mark the end of the text input.	0	0	1	4	4	4	4
-<IMF	0	----	IMage Folder	Set a subfolder for <IMG to load from. Use $ at the end of the folder name to mark the end of the text input (Check TSC command txt for more).	0	1	0	4	4	4	4
-<IMG	0	----	IMaGe display	Show an image on screen. Use $ at the end of the image name to mark the end of the text input (Check TSC command txt for more).	0	1	0	4	4	4	4
+<IMF	0	----	IMage Folder	Set a subfolder for <IMG to load from. Use $ at the end of the folder name to mark the end of the text input (Check TSC command txt for more).	0	0	0	4	4	4	4
+<IMG	0	----	IMaGe display	Show an image on screen. Use $ at the end of the image name to mark the end of the text input (Check TSC command txt for more).	0	0	0	4	4	4	4
 <IPH	0	----	Initialize PHysics	Resets the physics values for the player (<PHY) back to the ones set in settings.ini.	0	0	1	4	4	4	4
 <ITC	0	----	ITem Clear	Removes all of the items from the players inventory.	0	0	1	4	4	4	4
 <LDR	2	#d--	Lock DiRection	Lock Direction when using <FM2 Camera (Check TSC command txt).	0	0	1	4	4	4	4
-<LSC	0	----	Load SCript	Load TSC script and run event 0 afterwards. Use $ at the end of the script name to mark the end of the text input.	0	1	0	4	4	4	4
+<LSC	0	----	Load SCript	Load TSC script and run event 0 afterwards. Use $ at the end of the script name to mark the end of the text input.	0	0	0	4	4	4	4
 <MIM	1	#---	MIMiga mask	Move the MyChar spritesheet down by W spritesets. 	0	0	1	4	4	4	4
 <ML-	1	#---	Max Life -	Decrease the current and maximum health by W.	0	0	1	4	4	4	4
 <MS4	0	----	MeSsage 4	Open an invisible message box at the bottom of screen.	0	1	1	4	4	4	4
 <NPT	0	----	NPc Table	Load npc.tbl file from the data folder. Use $ at the end of the name to mark the end of the text input.	0	0	1	4	4	4	4
 <RNJ	2	ee--	Random Number Jump	Jump to Random Event between W and X. Min to Max.	0	0	1	4	4	4	4
-<PAT	0	----	PATch load	Load hex patch from data/patches. Use $ at the end of the patch name to mark the end of the text input (Check TSC command txt).	0	1	0	4	4	4	4
+<PAT	0	----	PATch load	Load hex patch from data/patches. Use $ at the end of the patch name to mark the end of the text input (Check TSC command txt).	0	0	0	4	4	4	4
 <PHY	2	##--	PHYsics set	Change physics of type W to value X.	0	0	1	4	4	4	4
 <PS-	1	#---	Portal Slot -	Remove teleporter slot W.	0	0	1	4	4	4	4
 <PSC	0	----	Portal Slot Clear	Removes all of the teleporter slots that have been added.	0	0	1	4	4	4	4
@@ -180,13 +180,13 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <SNJ	2	Fe--	Skipflag Not Jump	Opposite of <SKJ. Jump to event X if skipflag W is not set.	0	0	1	4	4	4	4
 <SRP	2	xy--	Set Respawn Point	Sets a respawn point at coordinates X:Y (Check TSC command txt).	0	0	1	4	4	4	4
 <STT	0	----	STage Table	Load stage.tbl file from the data folder. Use $ at the end of the name to mark the end of the text input.	0	0	1	4	4	4	4
-<SWN	0	----	Set Window Name	Set the games Window Name in TSC. Use $ at the end of the window name to mark the end of the text input.	0	1	0	4	4	4	4
+<SWN	0	----	Set Window Name	Set the games Window Name in TSC. Use $ at the end of the window name to mark the end of the text input.	0	0	0	4	4	4	4
 <TA2	4	mexy	TrAnsport 2	Same as <TRA but respawn point (<SRP/<RSP) does not get set.	1	0	1	4	4	4	4
 <TM2	4	mexy	Transport Momentum 2	Same as <TRM but respawn point (<SRP/<RSP) does not get set.	1	0	1	4	4	4	4
 <TRM	4	mexy	TRansport Momentum	Same as <TRA but keep X/Y momentum between transition.	1	0	1	4	4	4	4
 <TRX	2	me--	TRansport keep X:y	Same as <TRA but cut out the last 2 arguments and keep X/Y position between transition. Somewhat buggy (Check TSC command txt).	1	0	1	4	4	4	4
 <TX2	4	mexy	Transport X:y 2	Same as <TRX but respawn point (<SRP/<RSP) does not get set.	1	0	1	4	4	4	4
-<UPT	0	----	UnPaTch	Unload all hex patches from data/patches. (Check TSC command txt).	0	1	0	4	4	4	4
+<UPT	0	----	UnPaTch	Unload all hex patches from data/patches. (Check TSC command txt).	0	0	0	4	4	4	4
 <VAR	2	v#--	VARiable set	Set Variable W to X. (Check TSC command txt).	0	0	1	4	4	4	4
 <VA+	2	v#--	VAriable +	Add value X to variable W. (Check TSC command txt).	0	0	1	4	4	4	4
 <VA-	2	v#--	VAriable -	Subtract value X from variable W. (Check TSC command txt).	0	0	1	4	4	4	4
@@ -199,11 +199,14 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <WCL	0	----	Write CaLl	Replace function call A with function call B (Check TSC command txt).	0	0	1	4	4	4	4
 <CFE	0	----	Collab Flags Enable	[COLLAB MODE] Enable the Collab Flag array (Check TSC command txt).	0	0	1	4	4	4	4
 <CFD	0	----	Collab Flags Disable	[COLLAB MODE] Disable the Collab Flag array (Check TSC command txt).	0	0	1	4	4	4	4
+<CLN	0	----	CoLlab Name	[COLLAB MODE] Set the Collab Name. Use $ at the end of the name to mark the end of the text input.	0	0	0	4	4	4	4
+<ICD	0	----	Initialize Collab Data	[COLLAB MODE] Reset certain structs in the game (Check TSC command txt).	0	0	1	4	4	4	4
 <ICF	0	----	Initialize Collab Flags	[COLLAB MODE] Reset the Collab Flag array (Check TSC command txt).	0	0	1	4	4	4	4
+<ICN	0	----	Initialize Collab Name	[COLLAB MODE] Reset the Collab Name to the one found in settings.ini (Check TSC command txt).	0	0	1	4	4	4	4
 <CEV	1	#---	Change fmod EVent	[FMOD DLL] Change FMod Event to group W. Use this before trying to play something that isn't in the default Music group.	0	0	1	4	4	4	4
-<CVP	0	----	Change fmod eVent Parameter	[FMOD DLL] Change FMod Event Parameter <EVP will modify. Use $ at the end of the parameter name to mark the end of the text input.	0	1	0	4	4	4	4
+<CVP	0	----	Change fmod eVent Parameter	[FMOD DLL] Change FMod Event Parameter <EVP will modify. Use $ at the end of the parameter name to mark the end of the text input.	0	0	0	4	4	4	4
 <EVP	1	#---	fmod EVent Parameter	[FMOD DLL] Set FMod Event Parameter (Parameter name set by <CVP) to W.	0	0	1	4	4	4	4
-<PEV	0	----	Play fmod EVent	[FMOD DLL] Play FMod Event. Use $ at the end of the event name to mark the end of the text input.	0	1	0	4	4	4	4
+<PEV	0	----	Play fmod EVent	[FMOD DLL] Play FMod Event. Use $ at the end of the event name to mark the end of the text input.	0	0	0	4	4	4	4
 <SEV	1	#---	Stop fmod EVent	[FMOD DLL] Stop FMod Event in group W. Use 0 for the default Music group.	0	0	1	4	4	4	4
 <CML	4	Lxyt	Change Map Layer	[LAYERS MOD] Change the tile on layer W at coordinates X:Y to type Z. Produces smoke.	0	0	1	4	4	4	4
 <SML	2	Lxy-	Shift Map Layer	LAYERS MOD] Subtract 1 from the tile type on layer W at coordinates X:Y. Does not create smoke.	0	0	1	4	4	4	4

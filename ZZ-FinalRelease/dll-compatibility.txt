@@ -1,0 +1,4 @@
+This DLL is NOT compatible with Graphics Enhancement in any form!
+You won't be able to get widescreen.
+
+If you wish to use 60fps, download periwinkles dll from here: https://cdn.discordapp.com/attachments/312733438153326593/1086479652626899024/60fps.zip

@@ -17,7 +17,7 @@
 <MSG<HSCHead$<END
 
 #0204
-<PXTPixTone2$<END
+<PXT0$<END
 
 #0205
 <PXTPixTone$<END

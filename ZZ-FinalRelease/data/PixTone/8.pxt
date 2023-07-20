@@ -1,24 +1,24 @@
 use  :1
-size :8000
-main_model   :5
-main_freq    :9.40
-main_top     :10
-main_offset  :15
-pitch_model  :4
-pitch_freq   :0.50
-pitch_top    :16
-pitch_offset :106
-volume_model :4
+size :1000
+main_model   :4
+main_freq    :14.30
+main_top     :37
+main_offset  :0
+pitch_model  :2
+pitch_freq   :1.00
+pitch_top    :78
+pitch_offset :10
+volume_model :0
 volume_freq  :0.00
-volume_top   :50
+volume_top   :63
 volume_offset:0
-initialY:63
-ax      :0
+initialY:0
+ax      :28
 ay      :63
-bx      :96
-by      :17
-cx      :255
-cy      :0
+bx      :53
+by      :31
+cx      :210
+cy      :31
 
 use  :0
 size :22050
@@ -86,7 +86,7 @@ by      :63
 cx      :255
 cy      :63
 
-{1,8000,5,9.40,10,15,4,0.50,16,106,4,0.00,50,0,63,0,63,96,17,255,0},
+{1,1000,4,14.30,37,0,2,1.00,78,10,0,0.00,63,0,0,28,63,53,31,210,31},
 {0,22050,0,440.00,32,0,0,0.00,32,0,0,0.00,32,0,63,64,63,128,63,255,63},
 {0,22050,0,440.00,32,0,0,0.00,32,0,0,0.00,32,0,63,64,63,128,63,255,63},
 {0,22050,0,440.00,32,0,0,0.00,32,0,0,0.00,32,0,63,64,63,128,63,255,63},
@@ -94,10 +94,10 @@ cy      :63
 -> {0,0.00,0,0,0,0.00,0,0,0,0.00,0,0,0,0.00,0,0},
 -> {255,0,255,0,255,0,255,0},
 
-pitch2_model :4
-pitch2_freq  :0.50
-pitch2_top   :16
-pitch2_offset:106
+pitch2_model :2
+pitch2_freq  :1.00
+pitch2_top   :78
+pitch2_offset:10
 dx      :255
 dy      :0
 

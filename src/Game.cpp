@@ -12,6 +12,7 @@
 #include "ModSettings.h"
 #include "cave_story.h"
 #include "Draw.h"
+#include "EntityLoad.h"
 #include "GenericLoad.h"
 #include "LoadPixtone.h"
 #include "Profile.h"
@@ -51,7 +52,12 @@ void Replacement_ModeOpening_SetFadeMask_Call()
 	SetFadeMask();
 	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in settings.ini
 	Reset_CustomScriptNames(); // Reset custom script names in the opening
-	// Reset_PixToneFolder(); // reset pixtone folder
+	if (setting_enable_reset_pixtone_on_reset)
+		Reset_PixToneFolder(); // reset pixtone folder
+	if (setting_external_stage_tbl_support && setting_enable_reset_stagetbl_on_reset)
+		LoadStageTable(NULL); // reset stage table on modeopening
+	if (setting_enable_collab_npc_table && setting_enable_reset_npctbl_on_reset)
+		LoadCustomNpcTable(NULL); // reset npc table on modeopening
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();
 }
@@ -61,7 +67,8 @@ void Replacement_ModeTitle_InitStar_Call()
 	InitStar();
 	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in settings.ini
 	Reset_CustomScriptNames(); // Reset custom script names on the title
-	// Reset_PixToneFolder(); // reset pixtone folder
+	if (setting_enable_reset_pixtone_on_reset)
+		Reset_PixToneFolder(); // reset pixtone folder
 	ResetTSC_Image();
 }
 

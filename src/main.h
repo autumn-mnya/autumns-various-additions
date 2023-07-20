@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include "cave_story.h"
 
+#include "ModSettings.h"
 #include "SurfaceDefines.h"
 
 extern char gModulePath[MAX_PATH];
@@ -30,9 +31,12 @@ extern char init_surfaceName_27_Face[MaxSurfaceName];
 extern char init_surfaceName_38_AutumnItems[MaxSurfaceName];
 extern char init_surfaceName_39_AutumnCharacters[MaxSurfaceName];
 
+extern char init_collab_name[CollabNameMaxPath];
+
 void PlayerDeath();
 void InitCollectablesEnabled();
 void InitCollectablesPositioning();
 void InitMyCharPhysics();
 void InitMyCharBoostFuel();
 void InitGameSurfaces();
+void InitCollabName();

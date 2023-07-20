@@ -4,6 +4,8 @@
 
 #include "cave_story.h"
 
+#define CollabNameMaxPath 256
+
 extern bool setting_enable_surfaces;
 extern bool setting_enable_sound_effect_code;
 extern bool setting_enable_entity;
@@ -15,9 +17,11 @@ extern bool setting_enable_savedata_code;
 extern bool setting_enable_teleporter_bugfix;
 extern bool setting_enable_pause_screen;
 
-extern bool setting_enable_swapping_pixtone;
+extern bool setting_enable_reset_pixtone_on_reset;
+extern bool setting_enable_reset_stagetbl_on_reset;
+extern bool setting_enable_reset_npctbl_on_reset;
 
 extern bool setting_collab_enabled;
-extern const char* setting_collab_name;
+extern char setting_collab_name[CollabNameMaxPath];
 
 void InitMod_Settings();

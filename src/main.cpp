@@ -117,6 +117,9 @@ char init_surfaceName_27_Face[MaxSurfaceName] = "Face";
 char init_surfaceName_38_AutumnItems[MaxSurfaceName] = "Autumn";
 char init_surfaceName_39_AutumnCharacters[MaxSurfaceName] = "Npc\\NpcAutumnChar";
 
+// Collab Name
+char init_collab_name[CollabNameMaxPath] = "null";
+
 // Function that kills the player (I don't have a place to put this at the moment)
 void PlayerDeath()
 {
@@ -213,6 +216,11 @@ void InitMod_PreLaunch_GenericLoad()
 	strcpy(init_surfaceName_27_Face, surfaceName_27_Face);
 	strcpy(init_surfaceName_38_AutumnItems, surfaceName_38_AutumnItems);
 	strcpy(init_surfaceName_39_AutumnCharacters, surfaceName_39_AutumnCharacters);
+}
+
+void InitMod_PreLaunch_CollabName()
+{
+	strcpy(init_collab_name, setting_collab_name);
 }
 
 // Inits anything relating to entities. The main thing are the 3 ModLoader_WriteJump's -- These replace every function that uses the Npc Table, and instead we also insert our new table!
@@ -441,6 +449,11 @@ void InitGameSurfaces()
 	strcpy(surfaceName_39_AutumnCharacters, init_surfaceName_39_AutumnCharacters);
 }
 
+void InitCollabName()
+{
+	strcpy(setting_collab_name, init_collab_name);
+}
+
 // Init the whole mod
 void InitMod(void)
 {
@@ -496,6 +509,9 @@ void InitMod(void)
 		if (setting_external_stage_tbl_support == true)
 			InitMod_ExternalStageTable();
 	}
+
+	if (setting_collab_enabled)
+		InitMod_PreLaunch_CollabName();
 
 	if (setting_enable_ui)
 		InitMod_GameUI();

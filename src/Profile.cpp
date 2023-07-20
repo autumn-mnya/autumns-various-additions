@@ -125,6 +125,8 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	// Collab Flags
 	profile.enable_collab_flags = enable_collab_flags;
 	memcpy(profile.collab_flags, gCollabFlag, sizeof(profile.collab_flags));
+	// Collab Name
+	memcpy(profile.CollabName, setting_collab_name, sizeof(profile.CollabName));
 	// Write new save code after this
 }
 
@@ -250,6 +252,8 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		// read savefile Collab Flags
 		Freeware_fread(&profile.enable_collab_flags, 4, 1, fp);
 		Freeware_fread(profile.collab_flags, 1000, 1, fp);
+		// read savefile Collab Name
+		Freeware_fread(&profile.CollabName, CollabNameMaxPath, 1, fp);
 	}
 
 	// Close the file
@@ -291,6 +295,9 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 
 		// PixTone path
 		strcpy(global_pixtoneFolder, profile.pixtoneFolder);
+
+		// Collab Name
+		strcpy(setting_collab_name, profile.CollabName);
 	}
 }
 
@@ -372,6 +379,7 @@ void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z)
 		if (!(stageTblPath[0] == 0))
 			LoadStageTable(stageTblPath);
 	}
+
 	if (setting_enable_collab_npc_table)
 	{
 		if (!(npcTblPath[0] == 0))
@@ -404,6 +412,7 @@ void Replacement_InitializeGame_TransferStage_Call(int w, int x, int y, int z)
 
 void Replacement_InitializeGame_ClearArmsData_Call()
 {
+	InitCollabName(); // Init collab name to the one found in settings.ini
 	ResetCustomGenericData(); // Reload Surfaces that were changed if they dont match default surface names
 	Reset_CustomScriptNames(); // Reset custom script names on new game
 	Reset_PixToneFolder(); // reset pixtone folder
