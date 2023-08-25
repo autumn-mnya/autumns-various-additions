@@ -2,6 +2,7 @@
 /.vs
 /Debug
 /Release
+/ZZ-FinalRelease
 mod.vcxproj.user
 autumns_various_additions.vcxproj.user
 *.exp
