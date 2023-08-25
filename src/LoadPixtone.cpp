@@ -20,7 +20,8 @@ char global_pixtoneFolder[MaxPixTonePath] = "PixTone";
 void Reset_PixToneFolder()
 {
 	strcpy(global_pixtoneFolder, default_pixtoneFolder);
-	LoadUserCustomPixtoneData(NULL);
+	if (setting_enable_sound_effect_code)
+		LoadUserCustomPixtoneData(NULL);
 }
 
 // Structure to hold the ID and file path of each sound effect

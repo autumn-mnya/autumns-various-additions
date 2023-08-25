@@ -922,10 +922,13 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		memset(pixtoneFolder, 0, sizeof(pixtoneFolder));
 		GetTextScriptString(pixtoneFolder);
 		strcpy(global_pixtoneFolder, pixtoneFolder);
-		if (strcmp(pixtoneFolder, "0") == 0) // if it's just "0" we load the default folder instead.
-			LoadUserCustomPixtoneData(NULL);
-		else
-			LoadUserCustomPixtoneData(global_pixtoneFolder);
+		if (setting_enable_sound_effect_code) // We only do this if the code is enabled
+		{
+			if (strcmp(pixtoneFolder, "0") == 0) // if it's just "0" we load the default folder instead.
+				LoadUserCustomPixtoneData(NULL);
+			else
+				LoadUserCustomPixtoneData(global_pixtoneFolder);
+		}
 	}
 	else if (strncmp(where + 1, "RSF", 3) == 0) // Reset SurFaces
 	{

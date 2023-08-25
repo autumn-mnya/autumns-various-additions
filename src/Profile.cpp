@@ -145,10 +145,14 @@ void Replacement_LoadProfile_InitMyChar_Call()
 	InitMyChar();
 	LoadCustomGenericData(); // Load custom surfaces
 
-	if (strcmp(default_pixtoneFolder, global_pixtoneFolder) == 0)
-		LoadUserCustomPixtoneData(NULL);
-	else
-		LoadUserCustomPixtoneData(global_pixtoneFolder);
+	// Load PixTone data
+	if (setting_enable_sound_effect_code)
+	{
+		if (strcmp(default_pixtoneFolder, global_pixtoneFolder) == 0)
+			LoadUserCustomPixtoneData(NULL);
+		else
+			LoadUserCustomPixtoneData(global_pixtoneFolder);
+	}
 }
 
 // 0x41D353 

@@ -1,0 +1,64 @@
+bkPathver8split
+0 // This layer starts at these coordinates on the spritesheet (X first, Y is the next value)
+0
+384 // This layer is this width (from the X coordinate)
+240 // This layer is this height (from the Y coordinate)
+400
+400
+0
+0
+1
+0.0625 // speed for this layer
+0.0625
+0
+0
+0.0
+0.0
+
+384
+0
+208
+240
+400
+400
+0
+0
+1
+0.125 // speed
+0.125
+0
+0
+0.0
+0.0
+
+592
+0
+176
+240
+400
+400
+0
+0
+1
+0.1666 // speed
+0.1666
+0
+0
+0.0
+0.0
+
+768
+0
+176
+240
+400
+400
+0
+0
+1
+0.5 // speed
+0.5
+0
+0
+0.0
+0.0
