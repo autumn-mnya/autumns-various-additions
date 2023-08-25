@@ -14,3 +14,4 @@ Note that anyone who plays mods using your dll should install the latest [vc_red
 ### Credits
 
 Brayconn - .cpxe file loading in editor and game
+Periwinkle - Many code changes and patches
