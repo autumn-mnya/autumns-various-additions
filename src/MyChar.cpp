@@ -608,6 +608,19 @@ void ActMyChar_WallJump(BOOL bKey)
 	}
 }
 
+void DoAirJump(int jump_height)
+{
+	int i = 0;
+
+	if (--current_jumps >= 0) // Only jump if we have more than 0 air jumps
+	{
+		gMC->ym = -jump_height;
+		PlaySoundObject(15, SOUND_MODE_PLAY);
+		for (i = 0; i < 4; ++i)
+			SetNpChar(4, gMC->x + (Random(-12, 12) * 0x200), gMC->y + (Random(-12, 12) * 0x200), Random(-341, 341), Random(-0x600, 0), 0, NULL, 0x100);
+	}
+}
+
 void ActMyChar_AirJumps(BOOL bKey)
 {
 	//Air jumps
@@ -618,18 +631,21 @@ void ActMyChar_AirJumps(BOOL bKey)
 	else
 		airjump_height = setting_extrajump_jump_height;
 
-	int i;
 	if (bKey)
 	{
-		if (gKeyTrg & gKeyJump && !(gMC->flag & 8) && gMC->boost_cnt == 0 && onWall == 0)
+		if (gKeyTrg & gKeyJump && !(gMC->flag & 8) && gMC->boost_cnt == 0)
 		{
-			if (--current_jumps >= 0)
+			// This code is awful and should be rewritten at some point i think ..
+			if (setting_walljumps_enabled == true) // If wall jumps are enabled
 			{
-				gMC->ym = -airjump_height;
-				PlaySoundObject(15, SOUND_MODE_PLAY);
-				for (i = 0; i < 4; ++i)
-					SetNpChar(4, gMC->x + (Random(-12, 12) * 0x200), gMC->y + (Random(-12, 12) * 0x200), Random(-341, 341), Random(-0x600, 0), 0, NULL, 0x100);
+				// If the walljump flag is set or if walljump flag is disabled
+				if ((setting_walljumps_flag_enabled == true && GetNPCFlag(setting_walljumps_flag) && onWall == 0) || (setting_walljumps_flag_enabled == false) && onWall == 0)
+					DoAirJump(airjump_height);
+				else if ((setting_walljumps_flag_enabled == true && (!(GetNPCFlag(setting_walljumps_flag))))) // If walljumps flag is true but the flag isnt set, dont check for onWall
+					DoAirJump(airjump_height);
 			}
+			else // If wall jumps are disabled, do the extra jumps with no extra checks.
+				DoAirJump(airjump_height);
 		}
 	}
 
