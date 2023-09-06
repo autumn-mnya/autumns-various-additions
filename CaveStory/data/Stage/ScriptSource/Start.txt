@@ -73,6 +73,17 @@ Flag 300 has been set.<NOD<CLO<END
 <KEY<MSG
 Flag 300 has not been set.<NOD<CLO<END
 
+#0880
+<PFJ0890<KEY<MSG
+There is no save file.<NOD<END
+
+#0890
+<KEY<MSG
+There is a save file!<NOD<END
+
+#0895
+<ML=0568<END
+
 #0900
 <KEY<MSG<TUR
 this should kill you<NOD<CLO<WAI0005<DIE<END

@@ -37,6 +37,15 @@ void RemoveMaxLifeMyChar(int val)
 	gMC->lifeBr = gMC->life;
 }
 
+void SetMaxLifeMyChar(int val)
+{
+	gMC->max_life = (short)val;
+	if (gMC->max_life > 232)
+		gMC->max_life = 232;
+	gMC->life = (short)val;
+	gMC->lifeBr = gMC->life;
+}
+
 void PutMyMoney()
 {
 	RECT rcDollarSign = { 8, 0, 16, 8 };

@@ -41,7 +41,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	168
+[BL_TSC]	170
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -165,10 +165,12 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <LSC	0	----	Load SCript	Load TSC script and run event 0 afterwards. Use $ at the end of the script name to mark the end of the text input.	0	0	0	4	4	4	4
 <MIM	1	#---	MIMiga mask	Move the MyChar spritesheet down by W spritesets. 	0	0	1	4	4	4	4
 <ML-	1	#---	Max Life -	Decrease the current and maximum health by W.	0	0	1	4	4	4	4
+<ML=	1	#---	Max Life =	Set the current and maximum health to W.	0	0	1	4	4	4	4
 <MS4	0	----	MeSsage 4	Open an invisible message box at the bottom of screen.	0	1	1	4	4	4	4
 <NPT	0	----	NPc Table	Load npc.tbl file from the data folder. Use $ at the end of the name to mark the end of the text input.	0	0	1	4	4	4	4
 <RNJ	2	ee--	Random Number Jump	Jump to Random Event between W and X. Min to Max.	0	0	1	4	4	4	4
 <PAT	0	----	PATch load	Load hex patch from data/patches. Use $ at the end of the patch name to mark the end of the text input (Check TSC command txt).	0	0	0	4	4	4	4
+<PFJ	1	e---	ProFile Jump	Jump to event W if a save file exists.	0	0	1	4	4	4	4
 <PHY	2	##--	PHYsics set	Change physics of type W to value X.	0	0	1	4	4	4	4
 <PS-	1	#---	Portal Slot -	Remove teleporter slot W.	0	0	1	4	4	4	4
 <PSC	0	----	Portal Slot Clear	Removes all of the teleporter slots that have been added.	0	0	1	4	4	4	4

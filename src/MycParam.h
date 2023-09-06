@@ -17,4 +17,5 @@ extern int setting_life_drain_amount;
 extern int setting_life_regen_amount;
 
 void RemoveMaxLifeMyChar(int val);
+void SetMaxLifeMyChar(int val);
 void Replacement_PutActiveArmsList_Call();

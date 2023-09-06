@@ -238,6 +238,10 @@ Arguments: 1 [<MIMwwww] [spriteset]
 Subtract the players max health by W instead of increasing it.
 Arguments: 1 [<ML-wwww] [life]
 
+- <ML= - Max Life =
+Set the players max health to W instead of increasing it.
+Arguments: 1 [<ML=wwww] [life]
+
 - <MS4 - MeSsage 4
 Open an invisible message box at the bottom of screen.
 Arguments: 0 [<MS4]
@@ -248,6 +252,10 @@ Arguments: 1 [<PATstring$] [patch$]
 Example: <PATexample$
 ( The above will load example.txt ! It's just like a normal boosters lab hex patch -- you can have multiple in the same txt )
 ( You can also apply multiple, but you can't unapply multiple. )
+
+- <PFJ - ProFile Jump
+Jump to event W if a save file exists, continue the current event if not.
+Arguments: 1 [<PFJwwww] [event]
 
 - <PXT - PiXTone load
 Load folder with sound effects from the /data/ folder. -- End the text string with a $ so the game knows to stop reading the text.

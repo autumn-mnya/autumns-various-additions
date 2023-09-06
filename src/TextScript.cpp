@@ -272,6 +272,12 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		RemoveMaxLifeMyChar(z);
 		gTS->p_read += 8;
 	}
+	else if (strncmp(where + 1, "ML=", 3) == 0) // Max Life =
+	{
+		z = GetTextScriptNo(gTS->p_read + 4);
+		SetMaxLifeMyChar(z);
+		gTS->p_read += 8;
+	}
 	else if (strncmp(where + 1, "LSC", 3) == 0) // Load tsc SCript
 	{
 		char CustomScriptName[0x20] = "";
@@ -967,6 +973,15 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	{
 		InitCollabName();
 		gTS->p_read += 4;
+	}
+	else if (strncmp(where + 1, "PFJ", 3) == 0) // ProFile Jump
+	{
+		w = GetTextScriptNo(gTS->p_read + 4);
+
+		if (IsProfile())
+			JumpTextScript(w);
+		else
+			gTS->p_read += 8;
 	}
 	else
 		return 0;
