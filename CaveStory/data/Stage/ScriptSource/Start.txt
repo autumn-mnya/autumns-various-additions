@@ -74,7 +74,7 @@ Flag 300 has been set.<NOD<CLO<END
 Flag 300 has not been set.<NOD<CLO<END
 
 #0880
-<PFJ0890<KEY<MSG
+<AM+0004:0001<PFJ0890<KEY<MSG
 There is no save file.<NOD<END
 
 #0890
