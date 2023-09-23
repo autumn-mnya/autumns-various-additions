@@ -16,6 +16,8 @@
 extern bool setting_enable_money_code;
 extern bool setting_money_disable_enemy_money_drops;
 extern bool setting_money_disable_exp_drops;
+extern bool setting_money_division;
+extern bool setting_exp_acts_as_money;
 extern bool setting_enable_mim_mod;
 extern bool setting_disable_tsc_encryption;
 // Money Hud

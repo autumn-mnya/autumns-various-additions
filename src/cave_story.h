@@ -8,8 +8,15 @@
 #include <Windows.h>
 #include <stdio.h>
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 240
+#define mag (*(int*)0x48F914)
+#define window_surface_width (*(int*)0x49D374)
+#define window_surface_height (*(int*)0x49D378)
+
+#define WINDOW_WIDTH (window_surface_width / mag)
+#define WINDOW_HEIGHT (window_surface_height / mag)
+
+#define WINDOW_WIDTH_OLD 320
+#define WINDOW_HEIGHT_OLD 240
 
 // Max amounts of X
 
@@ -19,8 +26,8 @@
 #define BULLET_MAX 0x40
 #define CARET_MAX 0x40
 #define MAX_STRIP ((240 / 16) + 1)
-#define FADE_WIDTH	(((WINDOW_WIDTH - 1) / 16) + 1)
-#define FADE_HEIGHT	(((WINDOW_HEIGHT - 1) / 16) + 1)
+#define FADE_WIDTH	(((WINDOW_WIDTH_OLD - 1) / 16) + 1)
+#define FADE_HEIGHT	(((WINDOW_HEIGHT_OLD - 1) / 16) + 1)
 #define PXM_BUFFER_SIZE 0x4B000
 #define NPC_MAX 0x200
 #define STAGE_MAX 8
@@ -68,7 +75,6 @@
 #define hMutex (*(HANDLE*)0x49E47C) // hMutex
 #define ghInstance (*(HINSTANCE*)0x49E44C) // ghInstance
 #define ghWnd (*(HWND*)0x49E458) //ghWnd
-#define mag (*(int*)0x48F914) // mag
 #define grcGame (*(RECT*)0x48F91C) // grcGame
 #define grcFull (*(RECT*)0x48F92C) // grcFull
 #define background_tile_width (*(int*)0x499C78)
@@ -76,8 +82,6 @@
 #define dword_499C8C (*(int*)0x499C8C)
 #define window_padding_h (*(int*)0x49CDA8)
 #define window_padding_w (*(int*)0x49CDAC)
-#define window_surface_width (*(int*)0x49D374)
-#define window_surface_height (*(int*)0x49D378)
 #define directdraw (*(IDirectDraw7**)0x49D37C)
 #define screen_primary_surface (*(IDirectDrawSurface7** const)0x49D380)
 #define screen_surface (*(IDirectDrawSurface7** const)0x49D384)

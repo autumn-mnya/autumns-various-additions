@@ -277,10 +277,18 @@ void Replacement_SetExpObjects(int x, int y, int exp)
 	if (setting_money_disable_exp_drops == false)
 	{
 		SetNormalExp(x, y, exp);
-		SetMoneyObjects(x, y, exp / 2);
+		if (setting_money_division)
+			SetMoneyObjects(x, y, exp / 2);
+		else
+			SetMoneyObjects(x, y, exp);
 	}
 	else
-		SetMoneyObjects(x, y, exp);
+	{
+		if (setting_money_division)
+			SetMoneyObjects(x, y, exp / 2);
+		else
+			SetMoneyObjects(x, y, exp);
+	}
 }
 
 void Replacement_HitMyCharNpChar(void)
@@ -318,6 +326,19 @@ void Replacement_HitMyCharNpChar(void)
 		{
 			PlaySoundObject(14, SOUND_MODE_PLAY);
 			AddExpMyChar(gNPC[i].exp);
+			if (setting_exp_acts_as_money)
+			{
+				if (setting_money_division)
+				{
+					if (gNPC[i].exp != 1)
+						AddMoney(gNPC[i].exp / 2);
+					else
+						AddMoney(gNPC[i].exp);
+				}
+					
+				else
+					AddMoney(gNPC[i].exp);
+			}
 			gNPC[i].cond = 0;
 		}
 

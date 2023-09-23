@@ -24,7 +24,7 @@
 #include "TextScript.h"
 
 // Doesn't support widescreen
-RECT rcTSCImage = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
+RECT rcTSCImage = { 0, 0, 1000, 1000 };
 
 int setting_show_img_on_top_flag = 6503;
 

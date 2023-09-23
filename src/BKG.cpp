@@ -310,7 +310,7 @@ void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg)
 
 				if (bkList[i].bkgXval + bkList[i].x + (bkList[i].bmW + bkList[i].xDist) * bkList[i].repX < 0)
 				{
-					bkList[i].bkgXval = bkList[i].bkgXval + (bkList[i].bmW + bkList[i].xDist) + WINDOW_WIDTH;
+					bkList[i].bkgXval = bkList[i].bkgXval + (bkList[i].bmW + bkList[i].xDist) + 427;
 
 					if (bitm & 128) // If we have bit 128, then add random amount of speed to the Y direction, minimum being (0 subtracted by animation speed), maximum being animation speed.
 					{
@@ -318,9 +318,9 @@ void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg)
 					}
 				}
 
-				if (bkList[i].bkgXval + bkList[i].x > WINDOW_WIDTH)
+				if (bkList[i].bkgXval + bkList[i].x > 427)
 				{
-					bkList[i].bkgXval = bkList[i].bkgXval - WINDOW_WIDTH;
+					bkList[i].bkgXval = bkList[i].bkgXval - 427;
 
 					if (bitm & 128) // If we have bit 128, then add random amount of speed to the Y direction, minimum being (0 subtracted by animation speed), maximum being animation speed.
 					{

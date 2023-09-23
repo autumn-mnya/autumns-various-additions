@@ -236,6 +236,12 @@ void InitMod_Settings()
 	// Disable EXP from Entities (when money is enabled)
 	setting_money_disable_exp_drops = ModLoader_GetSettingBool("Disable EXP with Money", false);
 
+	// If grabbing exp will also add money
+	setting_exp_acts_as_money = ModLoader_GetSettingBool("EXP also acts as Money", false);
+
+	// If the money grabbed should be (exp / 2)
+	setting_money_division = ModLoader_GetSettingBool("Money is divided by 2", true);
+
 	// Money Hud position
 	setting_money_hud_x = ModLoader_GetSettingInt("Money Hud X", 8);
 	setting_money_hud_y = ModLoader_GetSettingInt("Money Hud Y", 48);

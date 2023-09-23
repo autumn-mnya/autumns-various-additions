@@ -38,6 +38,8 @@
 bool setting_enable_money_code = false;
 bool setting_money_disable_enemy_money_drops = false;
 bool setting_money_disable_exp_drops = false;
+bool setting_money_division = true;
+bool setting_exp_acts_as_money = false;
 bool setting_enable_mim_mod = true;
 bool setting_disable_tsc_encryption = false;
 

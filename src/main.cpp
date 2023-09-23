@@ -233,10 +233,12 @@ void InitMod_Entity()
 	// This only gets replaced if TSC is loaded
 	if (setting_enable_text_script_code)
 	{
-		if (setting_enable_money_code && setting_money_disable_enemy_money_drops == false)
+		if (setting_enable_money_code == true)
 		{
 			ModLoader_WriteJump((void*)0x419030, (void*)Replacement_HitMyCharNpChar);
-			ModLoader_WriteJump((void*)0x46F2B0, (void*)Replacement_SetExpObjects);
+
+			if (setting_money_disable_enemy_money_drops == false)
+				ModLoader_WriteJump((void*)0x46F2B0, (void*)Replacement_SetExpObjects);
 		}
 
 		// Replace NPCs when using <MIM
