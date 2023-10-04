@@ -127,6 +127,25 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	memcpy(profile.collab_flags, gCollabFlag, sizeof(profile.collab_flags));
 	// Collab Name
 	memcpy(profile.CollabName, setting_collab_name, sizeof(profile.CollabName));
+	// Version 1.0.7
+	profile.phy_physics_boost20_accel_up = setting_physics_boost20_accel_up;
+	profile.phy_physics_boost20_accel_left = setting_physics_boost20_accel_left;
+	profile.phy_physics_boost20_accel_right = setting_physics_boost20_accel_right;
+	profile.phy_physics_boost20_accel_down = setting_physics_boost20_accel_down;
+	profile.phy_physics_boost20_accel_up_no_key = setting_physics_boost20_accel_up_no_key;
+
+	profile.phy_physics_boost08_accel_add = setting_physics_boost08_accel_add;
+	profile.phy_physics_boost08_accel_max_speed = setting_physics_boost08_accel_max_speed;
+
+	profile.phy_physics_max_speed_left = setting_physics_max_speed_left;
+	profile.phy_physics_max_speed_right = setting_physics_max_speed_right;
+	profile.phy_physics_max_speed_up = setting_physics_max_speed_up;
+	profile.phy_physics_max_speed_down = setting_physics_max_speed_down;
+
+	profile.phy_physics_water_max_speed_left = setting_physics_water_max_speed_left;
+	profile.phy_physics_water_max_speed_right = setting_physics_water_max_speed_right;
+	profile.phy_physics_water_max_speed_up = setting_physics_water_max_speed_up;
+	profile.phy_physics_water_max_speed_down = setting_physics_water_max_speed_down;
 	// Write new save code after this
 }
 
@@ -258,6 +277,22 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		Freeware_fread(profile.collab_flags, 1000, 1, fp);
 		// read savefile Collab Name
 		Freeware_fread(&profile.CollabName, CollabNameMaxPath, 1, fp);
+		// read version 1.0.7 physics
+		Freeware_fread(&profile.phy_physics_boost20_accel_up, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_boost20_accel_left, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_boost20_accel_right, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_boost20_accel_down, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_boost20_accel_up_no_key, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_boost08_accel_add, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_boost08_accel_max_speed, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_max_speed_left, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_max_speed_right, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_max_speed_up, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_max_speed_down, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_water_max_speed_left, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_water_max_speed_right, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_water_max_speed_up, 4, 1, fp);
+		Freeware_fread(&profile.phy_physics_water_max_speed_down, 4, 1, fp);
 	}
 
 	// Close the file
@@ -372,6 +407,23 @@ void SetProfileData()
 		// Collab Flags
 		enable_collab_flags = profile.enable_collab_flags;
 		memcpy(gCollabFlag, profile.collab_flags, sizeof(gCollabFlag));
+		// Version 1.0.7
+		setting_physics_boost20_accel_up = profile.phy_physics_boost20_accel_up;
+		setting_physics_boost20_accel_left = profile.phy_physics_boost20_accel_left;
+		setting_physics_boost20_accel_right = profile.phy_physics_boost20_accel_right;
+		setting_physics_boost20_accel_down = profile.phy_physics_boost20_accel_down;
+		setting_physics_boost20_accel_up_no_key = profile.phy_physics_boost20_accel_up_no_key;
+		setting_physics_boost08_accel_add = profile.phy_physics_boost08_accel_add;
+		setting_physics_boost08_accel_max_speed = profile.phy_physics_boost08_accel_max_speed;
+		setting_physics_max_speed_left = profile.phy_physics_max_speed_left;
+		setting_physics_max_speed_right = profile.phy_physics_max_speed_right;
+		setting_physics_max_speed_up = profile.phy_physics_max_speed_up;
+		setting_physics_max_speed_down = profile.phy_physics_max_speed_down;
+		setting_physics_water_max_speed_left = profile.phy_physics_water_max_speed_left;
+		setting_physics_water_max_speed_right = profile.phy_physics_water_max_speed_right;
+		setting_physics_water_max_speed_up = profile.phy_physics_water_max_speed_up;
+		setting_physics_water_max_speed_down = profile.phy_physics_water_max_speed_down;
+		Set_Version107_Physics();
 	}
 }
 

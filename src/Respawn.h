@@ -80,6 +80,9 @@ extern RESPAWN_PT gRespawnPoint; // Again with the "g" prefix
 extern BOOL bSetRespawn;
 extern BOOL PlayerIsRespawning;
 
+extern int setting_revive_hp;
+
 void SetRespawnPoint(int x, int y);
 BOOL RespawnPlayer(void);
 void Stage_SetRespawn();
+void RevivePlayer();

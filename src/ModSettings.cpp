@@ -25,6 +25,7 @@
 #include "MyChar.h"
 #include "MycParam.h"
 #include "PauseScreen.h"
+#include "Respawn.h"
 #include "Stage.h"
 #include "SurfaceDefines.h"
 #include "TextScript.h"
@@ -155,7 +156,6 @@ void InitMod_Settings()
 	setting_doublejump_flag = ModLoader_GetSettingInt("Double Jump Flag", 6501);
 
 	// Physics + Run button
-	setting_physics_ini_enabled = ModLoader_GetSettingBool("Physics in Settings.ini", true);
 	setting_run_button_enabled = ModLoader_GetSettingBool("Enable Run Button", false);
 	setting_run_button_flag_enabled = ModLoader_GetSettingBool("Enable Run Button on Flag", false);
 	setting_run_button_flag = ModLoader_GetSettingInt("Run Button Flag", 6502);
@@ -183,6 +183,28 @@ void InitMod_Settings()
 	// Booster Fuel
 	booster_08_fuel = ModLoader_GetSettingInt("Booster 0.8 Fuel", 50);
 	booster_20_fuel = ModLoader_GetSettingInt("Booster 2.0 Fuel", 50);
+
+	// Version 1.0.7 physics
+
+	// Booster 2.0 Acceleration -- Up and Left should be negative
+	setting_physics_boost20_accel_up = -ModLoader_GetSettingInt("Booster 2.0 Acceleration (Up)", 1535);
+	setting_physics_boost20_accel_left = -ModLoader_GetSettingInt("Booster 2.0 Acceleration (Left)", 1535);
+	setting_physics_boost20_accel_right = ModLoader_GetSettingInt("Booster 2.0 Acceleration (Right)", 1535);
+	setting_physics_boost20_accel_down = ModLoader_GetSettingInt("Booster 2.0 Acceleration (Down)", 1535);
+	setting_physics_boost20_accel_up_no_key = -ModLoader_GetSettingInt("Booster 2.0 Acceleration (Up, No Key)", 1535);
+
+	setting_physics_boost08_accel_add = ModLoader_GetSettingInt("Booster 0.8 Acceleration", 32);
+	setting_physics_boost08_accel_max_speed = -ModLoader_GetSettingInt("Booster 0.8 Acceleration (Max Speed)", 1024);
+
+	setting_physics_max_speed_left = -ModLoader_GetSettingInt("Player Max Speed (Left)", 1535);
+	setting_physics_max_speed_right = ModLoader_GetSettingInt("Player Max Speed (Right)", 1535);
+	setting_physics_max_speed_up = -ModLoader_GetSettingInt("Player Max Speed (Up)", 1535);
+	setting_physics_max_speed_down = ModLoader_GetSettingInt("Player Max Speed (Down)", 1535);
+
+	setting_physics_water_max_speed_left = -ModLoader_GetSettingInt("Underwater Player Max Speed (Left)", 767);
+	setting_physics_water_max_speed_right = ModLoader_GetSettingInt("Underwater Player Max Speed (Right)", 767);
+	setting_physics_water_max_speed_up = -ModLoader_GetSettingInt("Underwater Player Max Speed (Up)", 767);
+	setting_physics_water_max_speed_down = ModLoader_GetSettingInt("Underwater Player Max Speed (Down)", 767);
 
 	// Life Drain / Regen when flag is set
 
@@ -271,6 +293,9 @@ void InitMod_Settings()
 	collectables_e_x_pos = ModLoader_GetSettingInt("Collectables E (X Position)", 8);
 	collectables_e_y_pos = ModLoader_GetSettingInt("Collectables E (Y Position)", 88);
 	collectables_e_x_offset = ModLoader_GetSettingInt("Collectables E (X Number Offset)", 0);
+
+	// Revive HP
+	setting_revive_hp = ModLoader_GetSettingInt("<RVI (Revive) HP amount", 3);
 
 	/////////////////////
 	// Pause Menu Text //

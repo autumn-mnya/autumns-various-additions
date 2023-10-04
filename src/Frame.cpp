@@ -25,9 +25,9 @@ void SetFrameTargetNpCharWithMyCharIndex(int event, int wait)
 	if (i == NPC_MAX)
 		return;
 
-	gFrame->tgt_x = &gNPC[i].x + gMC->index_x;
-	gFrame->tgt_y = &gNPC[i].y + gMC->index_y;
-	gFrame->wait = wait;
+	gFrame.tgt_x = &gNPC[i].x + gMC.index_x;
+	gFrame.tgt_y = &gNPC[i].y + gMC.index_y;
+	gFrame.wait = wait;
 }
 
 // Focus on the player with an offset
@@ -56,9 +56,9 @@ void SetFrameTargetMyCharOffset(int wait, int mode, int offset_x, int offset_y)
 	}
 
 
-	gFrame->tgt_x = &custom_tgt_x;
-	gFrame->tgt_y = &custom_tgt_y;
-	gFrame->wait = wait;
+	gFrame.tgt_x = &custom_tgt_x;
+	gFrame.tgt_y = &custom_tgt_y;
+	gFrame.wait = wait;
 }
 
 // Focus on a coordinate
@@ -67,7 +67,7 @@ void SetFrameTargetCoordinate(int wait, int x, int y)
 	coordinate_focus_x = x;
 	coordinate_focus_y = y;
 
-	gFrame->tgt_x = &coordinate_focus_x;
-	gFrame->tgt_y = &coordinate_focus_y;
-	gFrame->wait = wait;
+	gFrame.tgt_x = &coordinate_focus_x;
+	gFrame.tgt_y = &coordinate_focus_y;
+	gFrame.wait = wait;
 }

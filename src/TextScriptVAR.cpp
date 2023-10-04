@@ -23,40 +23,40 @@ int GetVariable(int id)
     switch (id)
     {
         case 501:
-            return gMC->x;
+            return gMC.x;
 
         case 502:
-            return gMC->y;
+            return gMC.y;
 
         case 503:
-            return gMC->xm;
+            return gMC.xm;
 
         case 504:
-            return gMC->ym;
+            return gMC.ym;
 
         case 505:
-            return gMC->life;
+            return gMC.life;
 
         case 506:
-            return gMC->max_life;
+            return gMC.max_life;
 
         case 507:
-            return gMC->air;
+            return gMC.air;
 
         case 508:
-            return gMC->cond;
+            return gMC.cond;
 
         case 509:
-            return gMC->equip;
+            return gMC.equip;
 
         case 510:
-            return gMC->unit;
+            return gMC.unit;
 
         case 511:
-            return gMC->boost_cnt;
+            return gMC.boost_cnt;
 
         case 512:
-            return gMC->direct;
+            return gMC.direct;
 
         case 513:
             return gSelectedArms;
@@ -191,51 +191,51 @@ void SetVariable(int id, int value)
     switch (id)
     {
         case 501:
-            gMC->x = value;
+            gMC.x = value;
             break;
 
         case 502:
-            gMC->y = value;
+            gMC.y = value;
             break;
 
         case 503:
-            gMC->xm = value;
+            gMC.xm = value;
             break;
 
         case 504:
-            gMC->ym = value;
+            gMC.ym = value;
             break;
 
         case 505:
-            gMC->life = value;
+            gMC.life = value;
             break;
 
         case 506:
-            gMC->max_life = value;
+            gMC.max_life = value;
             break;
 
         case 507:
-            gMC->air = value;
+            gMC.air = value;
             break;
 
         case 508:
-            gMC->cond = value;
+            gMC.cond = value;
             break;
 
         case 509:
-            gMC->equip = value;
+            gMC.equip = value;
             break;
 
         case 510:
-            gMC->unit = value;
+            gMC.unit = value;
             break;
 
         case 511:
-            gMC->boost_cnt = value;
+            gMC.boost_cnt = value;
             break;
 
         case 512:
-            gMC->direct = value;
+            gMC.direct = value;
             break;
 
         case 513:

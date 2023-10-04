@@ -111,6 +111,25 @@ typedef struct CustomProfileData
 	unsigned char collab_flags[1000];
 	// Collab Name
 	char CollabName[CollabNameMaxPath];
+	// Version 1.0.7 Additions
+	int phy_physics_boost20_accel_up;
+	int phy_physics_boost20_accel_left;
+	int phy_physics_boost20_accel_right;
+	int phy_physics_boost20_accel_down;
+	int phy_physics_boost20_accel_up_no_key;
+
+	int phy_physics_boost08_accel_add;
+	int phy_physics_boost08_accel_max_speed;
+
+	int phy_physics_max_speed_left;
+	int phy_physics_max_speed_right;
+	int phy_physics_max_speed_up;
+	int phy_physics_max_speed_down;
+
+	int phy_physics_water_max_speed_left;
+	int phy_physics_water_max_speed_right;
+	int phy_physics_water_max_speed_up;
+	int phy_physics_water_max_speed_down;
 } CustomProfileData;
 
 extern CustomProfileData profile;

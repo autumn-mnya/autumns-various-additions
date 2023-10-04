@@ -30,20 +30,20 @@ int setting_life_regen_amount = 1;
 
 void RemoveMaxLifeMyChar(int val)
 {
-	gMC->max_life -= (short)val;
-	if (gMC->max_life > 232)
-		gMC->max_life = 232;
-	gMC->life -= (short)val;
-	gMC->lifeBr = gMC->life;
+	gMC.max_life -= (short)val;
+	if (gMC.max_life > 232)
+		gMC.max_life = 232;
+	gMC.life -= (short)val;
+	gMC.lifeBr = gMC.life;
 }
 
 void SetMaxLifeMyChar(int val)
 {
-	gMC->max_life = (short)val;
-	if (gMC->max_life > 232)
-		gMC->max_life = 232;
-	gMC->life = (short)val;
-	gMC->lifeBr = gMC->life;
+	gMC.max_life = (short)val;
+	if (gMC.max_life > 232)
+		gMC.max_life = 232;
+	gMC.life = (short)val;
+	gMC.lifeBr = gMC.life;
 }
 
 void PutMyMoney()
@@ -98,8 +98,8 @@ void PlayerLifeDrain()
 {
 	if (waitLifeDrain > setting_life_drain_wait)
 	{
-		if (gMC->life != 1)
-			gMC->life -= setting_life_drain_amount;
+		if (gMC.life > 0)
+			gMC.life -= setting_life_drain_amount;
 		else
 			PlayerDeath();
 
@@ -113,8 +113,8 @@ void PlayerLifeRegen()
 {
 	if (waitLifeRegen > setting_life_regen_wait)
 	{
-		if (gMC->life != gMC->max_life)
-			gMC->life += setting_life_regen_amount;
+		if (gMC.life != gMC.max_life)
+			gMC.life += setting_life_regen_amount;
 
 		waitLifeRegen = 0;
 	}

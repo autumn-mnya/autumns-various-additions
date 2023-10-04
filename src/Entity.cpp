@@ -19,7 +19,7 @@
 // Currently contains every single custom entity's code!! Add new ones here basically, its the same process as CSE2 except you add the functions into the Entity.h file, and add them to
 // the list in EntityTable.cpp.
 
-// Another note: Certain values use " -> "'s instead of " . "'s. gMC .x becomes gMC->x, for example. Most things like gMC and gFrame are in "cave_story.h" but i may have forgotten one or two.
+// Another note: Certain values use " -> "'s instead of " . "'s. gMC .x becomes gMC.x, for example. Most things like gMC and gFrame are in "cave_story.h" but i may have forgotten one or two.
 // If you need help using custom npc values, look at the Booster Refill npc as an example of the CustomNpcValues. It's pretty much a copy paste !!
 
 bool entity_IsWallboosting = false;
@@ -60,16 +60,16 @@ void ActEntity361(NPCHAR* npc)
 			npc->act_wait = 0;
 			npc->ani_no = 0;
 
-			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+				npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+				npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 			{
 				PlaySoundObject(22, SOUND_MODE_PLAY);
 				if (npc->direct != 2)
-					gMC->boost_cnt = boostfuelamount;
+					gMC.boost_cnt = boostfuelamount;
 				else
-					gMC->boost_cnt = 0;
+					gMC.boost_cnt = 0;
 
 				npc->act_no = 1;
 			}
@@ -133,13 +133,13 @@ void ActEntity362(NPCHAR* npc)
 	npc->bits |= NPC_EVENT_WHEN_TOUCHED;
 
 	// Trigger that moves in both Horizontal and Vertical directions
-	if (npc->x < gMC->x)
+	if (npc->x < gMC.x)
 		npc->x += lockon_trigger_speed;
 	else
 		npc->x -= lockon_trigger_speed;
 
 
-	if (npc->y < gMC->y)
+	if (npc->y < gMC.y)
 		npc->y += lockon_trigger_speed;
 	else
 		npc->y -= lockon_trigger_speed;
@@ -166,7 +166,7 @@ void ActEntity363(NPCHAR* npc)
 		case 1:
 			if (npc->direct == 0) // Horizontal Moving Trigger
 			{
-				if (npc->x < gMC->x)
+				if (npc->x < gMC.x)
 				{
 					npc->x += 0x5FF;
 				}
@@ -176,20 +176,20 @@ void ActEntity363(NPCHAR* npc)
 				}
 
 				// If the player is on one side, run one event. If on the other, run another event.
-				if (gMC->y > npc->y)
+				if (gMC.y > npc->y)
 					npc->code_event = npc->count1 + 10; // Add 10 to the event #
 				else
 					npc->code_event = npc->count1;
 			}
 			else // Vertical Moving Trigger
 			{
-				if (npc->y < gMC->y)
+				if (npc->y < gMC.y)
 					npc->y += 0x5FF;
 				else
 					npc->y -= 0x5FF;
 
 				// If the player is on one side, run one event. If on the other, run another event.
-				if (gMC->x < npc->x)
+				if (gMC.x < npc->x)
 					npc->code_event = npc->count1 + 10; // Add 10 to the event #
 				else
 					npc->code_event = npc->count1;
@@ -211,14 +211,14 @@ void ActEntity364(NPCHAR* npc)
 		case 0:
 			if (npc->direct == 2)
 			{
-				npc->x = gMC->x;
-				npc->y = gMC->y;
+				npc->x = gMC.x;
+				npc->y = gMC.y;
 				npc->act_no = 1;
 			}
 			else
 			{
-				npc->x = gMC->x;
-				npc->y = gMC->y;
+				npc->x = gMC.x;
+				npc->y = gMC.y;
 			}
 			break;
 
@@ -235,18 +235,18 @@ void ActEntity365(NPCHAR* npc)
 {
 	RECT rect = { 0, 0, 16, 16 };
 
-	if (npc->y < gMC->y)
+	if (npc->y < gMC.y)
 		npc->y += 0x5FF;
 	else
 		npc->y -= 0x5FF;
 
 	// If the player touches the Entities collision, bounce them backwards automatically.
-	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-		npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-		npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-		npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+	if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+		npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+		npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+		npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 	{
-		if (gMC->x < npc->x)
+		if (gMC.x < npc->x)
 			BackStepMyChar(2);
 		else
 			BackStepMyChar(0);
@@ -262,24 +262,24 @@ void ActEntity366(NPCHAR* npc)
 
 	if (npc->direct == 0)
 	{
-		if (npc->x < gMC->x)
+		if (npc->x < gMC.x)
 			npc->x += 0x5FF;
 		else
 			npc->x -= 0x5FF;
 	}
 	else
 	{
-		if (npc->y < gMC->y)
+		if (npc->y < gMC.y)
 			npc->y += 0x5FF;
 		else
 			npc->y -= 0x5FF;
 	}
 
 	// If the player touches the Entities collision, kill them immediately.
-	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-		npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-		npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-		npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+	if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+		npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+		npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+		npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 	{
 		PlayerDeath();
 		npc->cond = 0;
@@ -322,21 +322,21 @@ void ActEntity367(NPCHAR* npc)
 			npc->act_wait = 0;
 			npc->ani_no = 0;
 
-			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+				npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+				npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 			{
 				PlaySoundObject(22, SOUND_MODE_PLAY);
-				gMC->boost_cnt = amount;
+				gMC.boost_cnt = amount;
 				// Store the players Y value to make it appear normal
-				npc->count1 = gMC->y;
+				npc->count1 = gMC.y;
 
 				// Set direction of the Player to the same as the boost direction
 				if (npc->direct == 2)
-					gMC->direct = 2;
+					gMC.direct = 2;
 				else
-					gMC->direct = 0;
+					gMC.direct = 0;
 
 				npc->act_no = 1;
 			}
@@ -344,27 +344,27 @@ void ActEntity367(NPCHAR* npc)
 		case 1:
 			npc->ani_no = 1;
 
-			if (gMC->boost_cnt != 0)
+			if (gMC.boost_cnt != 0)
 			{
 				switch (npc->direct)
 				{
 					default:
-						gMC->boost_sw = 1;
-						gMC->ym = 0;
-						gMC->y = npc->count1;
-						gMC->xm = -0x5FF;
+						gMC.boost_sw = 1;
+						gMC.ym = 0;
+						gMC.y = npc->count1;
+						gMC.xm = -0x5FF;
 						break;
 
 					case 2:
-						gMC->boost_sw = 1;
-						gMC->ym = 0;
-						gMC->y = npc->count1;
-						gMC->xm = 0x5FF;
+						gMC.boost_sw = 1;
+						gMC.ym = 0;
+						gMC.y = npc->count1;
+						gMC.xm = 0x5FF;
 						break;
 
 				}
 
-				--gMC->boost_cnt;
+				--gMC.boost_cnt;
 			}
 
 
@@ -379,45 +379,45 @@ void ActEntity367(NPCHAR* npc)
 
 	if (npc->act_no != 0)
 	{
-		if (gMC->boost_sw == 1)
+		if (gMC.boost_sw == 1)
 		{
 			// Go up when going into a wall
-			if (gMC->flag & 5)
-				gMC->ym = -0x100;
+			if (gMC.flag & 5)
+				gMC.ym = -0x100;
 
 			// Move in direction facing
-			if (gMC->direct == 0)
-				gMC->xm -= 0x20;
-			if (gMC->direct == 2)
-				gMC->xm += 0x20;
+			if (gMC.direct == 0)
+				gMC.xm -= 0x20;
+			if (gMC.direct == 2)
+				gMC.xm += 0x20;
 
 			// Boost particles (and sound)
-			if (gMC->boost_cnt % 3 == 1)
+			if (gMC.boost_cnt % 3 == 1)
 			{
-				if (gMC->direct == 0)
-					SetCaret(gMC->x + (2 * 0x200), gMC->y + (2 * 0x200), CARET_EXHAUST, DIR_RIGHT);
-				if (gMC->direct == 2)
-					SetCaret(gMC->x - (2 * 0x200), gMC->y + (2 * 0x200), CARET_EXHAUST, DIR_LEFT);
+				if (gMC.direct == 0)
+					SetCaret(gMC.x + (2 * 0x200), gMC.y + (2 * 0x200), CARET_EXHAUST, DIR_RIGHT);
+				if (gMC.direct == 2)
+					SetCaret(gMC.x - (2 * 0x200), gMC.y + (2 * 0x200), CARET_EXHAUST, DIR_LEFT);
 
 				PlaySoundObject(113, SOUND_MODE_PLAY);
 			}
 		}
-		else if (gMC->boost_sw == 2)
+		else if (gMC.boost_sw == 2)
 		{
 			// Move upwards
-			gMC->ym -= 0x20;
+			gMC.ym -= 0x20;
 
 			// Boost particles (and sound)
-			if (gMC->boost_cnt % 3 == 1)
+			if (gMC.boost_cnt % 3 == 1)
 			{
-				SetCaret(gMC->x, gMC->y + (6 * 0x200), CARET_EXHAUST, DIR_DOWN);
+				SetCaret(gMC.x, gMC.y + (6 * 0x200), CARET_EXHAUST, DIR_DOWN);
 				PlaySoundObject(113, SOUND_MODE_PLAY);
 			}
 		}
-		else if (gMC->boost_sw == 3 && gMC->boost_cnt % 3 == 1)
+		else if (gMC.boost_sw == 3 && gMC.boost_cnt % 3 == 1)
 		{
 			// Boost particles (and sound)
-			SetCaret(gMC->x, gMC->y - (6 * 0x200), CARET_EXHAUST, DIR_UP);
+			SetCaret(gMC.x, gMC.y - (6 * 0x200), CARET_EXHAUST, DIR_UP);
 			PlaySoundObject(113, SOUND_MODE_PLAY);
 		}
 	}
@@ -464,13 +464,13 @@ void ActEntity368(NPCHAR* npc)
 		npc->act_wait = 0;
 		npc->ani_no = 0;
 
-		if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-			npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-			npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-			npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+		if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+			npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+			npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+			npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 		{
 			PlaySoundObject(22, SOUND_MODE_PLAY);
-			gMC->boost_cnt = amount;
+			gMC.boost_cnt = amount;
 
 			npc->act_no = 1;
 		}
@@ -478,24 +478,24 @@ void ActEntity368(NPCHAR* npc)
 	case 1:
 		npc->ani_no = 1;
 
-		if (gMC->boost_cnt != 0)
+		if (gMC.boost_cnt != 0)
 		{
 			switch (npc->direct)
 			{
 				default:
-					gMC->boost_sw = 2;
-					gMC->xm = 0;
-					gMC->ym = -0x5FF;
+					gMC.boost_sw = 2;
+					gMC.xm = 0;
+					gMC.ym = -0x5FF;
 					break;
 
 				case 2:
-					gMC->boost_sw = 3;
-					gMC->xm = 0;
-					gMC->ym = 0x5FF;
+					gMC.boost_sw = 3;
+					gMC.xm = 0;
+					gMC.ym = 0x5FF;
 					break;
 			}
 
-			--gMC->boost_cnt;
+			--gMC.boost_cnt;
 		}
 
 
@@ -510,45 +510,45 @@ void ActEntity368(NPCHAR* npc)
 
 	if (npc->act_no != 0)
 	{
-		if (gMC->boost_sw == 1)
+		if (gMC.boost_sw == 1)
 		{
 			// Go up when going into a wall
-			if (gMC->flag & 5)
-				gMC->ym = -0x100;
+			if (gMC.flag & 5)
+				gMC.ym = -0x100;
 
 			// Move in direction facing
-			if (gMC->direct == 0)
-				gMC->xm -= 0x20;
-			if (gMC->direct == 2)
-				gMC->xm += 0x20;
+			if (gMC.direct == 0)
+				gMC.xm -= 0x20;
+			if (gMC.direct == 2)
+				gMC.xm += 0x20;
 
 			// Boost particles (and sound)
-			if (gMC->boost_cnt % 3 == 1)
+			if (gMC.boost_cnt % 3 == 1)
 			{
-				if (gMC->direct == 0)
-					SetCaret(gMC->x + (2 * 0x200), gMC->y + (2 * 0x200), CARET_EXHAUST, DIR_RIGHT);
-				if (gMC->direct == 2)
-					SetCaret(gMC->x - (2 * 0x200), gMC->y + (2 * 0x200), CARET_EXHAUST, DIR_LEFT);
+				if (gMC.direct == 0)
+					SetCaret(gMC.x + (2 * 0x200), gMC.y + (2 * 0x200), CARET_EXHAUST, DIR_RIGHT);
+				if (gMC.direct == 2)
+					SetCaret(gMC.x - (2 * 0x200), gMC.y + (2 * 0x200), CARET_EXHAUST, DIR_LEFT);
 
 				PlaySoundObject(113, SOUND_MODE_PLAY);
 			}
 		}
-		else if (gMC->boost_sw == 2)
+		else if (gMC.boost_sw == 2)
 		{
 			// Move upwards
-			gMC->ym -= 0x20;
+			gMC.ym -= 0x20;
 
 			// Boost particles (and sound)
-			if (gMC->boost_cnt % 3 == 1)
+			if (gMC.boost_cnt % 3 == 1)
 			{
-				SetCaret(gMC->x, gMC->y + (6 * 0x200), CARET_EXHAUST, DIR_DOWN);
+				SetCaret(gMC.x, gMC.y + (6 * 0x200), CARET_EXHAUST, DIR_DOWN);
 				PlaySoundObject(113, SOUND_MODE_PLAY);
 			}
 		}
-		else if (gMC->boost_sw == 3 && gMC->boost_cnt % 3 == 1)
+		else if (gMC.boost_sw == 3 && gMC.boost_cnt % 3 == 1)
 		{
 			// Boost particles (and sound)
-			SetCaret(gMC->x, gMC->y - (6 * 0x200), CARET_EXHAUST, DIR_UP);
+			SetCaret(gMC.x, gMC.y - (6 * 0x200), CARET_EXHAUST, DIR_UP);
 			PlaySoundObject(113, SOUND_MODE_PLAY);
 		}
 	}
@@ -569,23 +569,23 @@ void ActEntity369(NPCHAR* npc)
 
 	if (npc->direct == 0)
 	{
-		if (npc->x < gMC->x)
+		if (npc->x < gMC.x)
 			npc->x += 0x5FF;
 		else
 			npc->x -= 0x5FF;
 	}
 	else
 	{
-		if (npc->y < gMC->y)
+		if (npc->y < gMC.y)
 			npc->y += 0x5FF;
 		else
 			npc->y -= 0x5FF;
 	}
 
-	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-		npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-		npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-		npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+	if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+		npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+		npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+		npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 	{
 		if (!(npc->bits & NPC_CUSTOM_FLAG))
 		{
@@ -663,9 +663,9 @@ void ActEntity370(NPCHAR* npc)
 			npc->act_no = 1;
 			// Fallthrough
 		case 1:
-			if (npc->act_wait >= 8 && npc->x - (96 * 0x200) < gMC->x && npc->x + (96 * 0x200) > gMC->x && npc->y - (32 * 0x200) < gMC->y && npc->y + (96 * 0x200) > gMC->y)
+			if (npc->act_wait >= 8 && npc->x - (96 * 0x200) < gMC.x && npc->x + (96 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (96 * 0x200) > gMC.y)
 			{
-				if (npc->x > gMC->x)
+				if (npc->x > gMC.x)
 					npc->direct = 0;
 				else
 					npc->direct = 2;
@@ -687,7 +687,7 @@ void ActEntity370(NPCHAR* npc)
 				npc->act_wait = 0;
 			}
 
-			if (npc->act_wait >= 8 && npc->x - (48 * 0x200) < gMC->x && npc->x + (48 * 0x200) > gMC->x && npc->y - (32 * 0x200) < gMC->y && npc->y + (160 * 0x200) > gMC->y)
+			if (npc->act_wait >= 8 && npc->x - (48 * 0x200) < gMC.x && npc->x + (48 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (160 * 0x200) > gMC.y)
 			{
 				npc->act_no = 2;
 				npc->ani_no = 0;
@@ -704,7 +704,7 @@ void ActEntity370(NPCHAR* npc)
 				npc->ym = 0x5FF;
 				PlaySoundObject(30, SOUND_MODE_PLAY);
 
-				if (npc->x > gMC->x)
+				if (npc->x > gMC.x)
 					npc->direct = 0;
 				else
 					npc->direct = 2;
@@ -725,7 +725,7 @@ void ActEntity370(NPCHAR* npc)
 			break;
 
 		case 4:
-			if (npc->x < gMC->x)
+			if (npc->x < gMC.x)
 				npc->direct = 2;
 			else
 				npc->direct = 0;
@@ -748,7 +748,7 @@ void ActEntity370(NPCHAR* npc)
 
 			if (npc->act_wait % 30 == 6)
 			{
-				deg = GetArktan(npc->x - gMC->x, npc->y - gMC->y);
+				deg = GetArktan(npc->x - gMC.x, npc->y - gMC.y);
 				deg += (unsigned char)Random(-6, 6);
 				ym = GetSin(deg) * 3;
 				xm = GetCos(deg) * 3;
@@ -834,28 +834,28 @@ void ActEntity371(NPCHAR* npc)
 	{
 		case 0:
 			if (npc->x - ((16 * x_radius) * 0x200)
-				< gMC->x && npc->x + ((16 * x_radius) * 0x200)
-				> gMC->x && npc->y - ((16 * y_radius) * 0x200)
-				< gMC->y && npc->y + ((16 * y_radius) * 0x200)
-				> gMC->y)
+				< gMC.x && npc->x + ((16 * x_radius) * 0x200)
+				> gMC.x && npc->y - ((16 * y_radius) * 0x200)
+				< gMC.y && npc->y + ((16 * y_radius) * 0x200)
+				> gMC.y)
 			{
-				gFrame->tgt_x = &npc->x;
-				gFrame->tgt_y = &npc->y;
+				gFrame.tgt_x = &npc->x;
+				gFrame.tgt_y = &npc->y;
 			}
 			else if (npc->x - ((16 * (x_radius + 1)) * 0x200)
-				< gMC->x && npc->x + ((16 * (x_radius + 1)) * 0x200)
-				> gMC->x && npc->y - ((16 * (y_radius + 1)) * 0x200)
-				< gMC->y && npc->y + ((16 * (y_radius + 1)) * 0x200)
-				> gMC->y)
+				< gMC.x && npc->x + ((16 * (x_radius + 1)) * 0x200)
+				> gMC.x && npc->y - ((16 * (y_radius + 1)) * 0x200)
+				< gMC.y && npc->y + ((16 * (y_radius + 1)) * 0x200)
+				> gMC.y)
 			{
-				gFrame->tgt_x = &gMC->tgt_x;
-				gFrame->tgt_y = &gMC->tgt_y;
+				gFrame.tgt_x = &gMC.tgt_x;
+				gFrame.tgt_y = &gMC.tgt_y;
 			}
 			break;
 
 		case 1:
-			gFrame->tgt_x = &gMC->tgt_x;
-			gFrame->tgt_y = &gMC->tgt_y;
+			gFrame.tgt_x = &gMC.tgt_x;
+			gFrame.tgt_y = &gMC.tgt_y;
 			npc->cond = 0;
 			break;
 	}
@@ -891,14 +891,14 @@ void ActEntity372(NPCHAR* npc)
 
 	if (npc->direct == 0)
 	{
-		if (npc->x < gMC->x)
+		if (npc->x < gMC.x)
 			npc->x += 0x5FF;
 		else
 			npc->x -= 0x5FF;
 	}
 	else
 	{
-		if (npc->y < gMC->y)
+		if (npc->y < gMC.y)
 			npc->y += 0x5FF;
 		else
 			npc->y -= 0x5FF;
@@ -907,14 +907,14 @@ void ActEntity372(NPCHAR* npc)
 	switch (npc->act_no)
 	{
 		case 0:
-			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+				npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+				npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 			{
 				g_GameFlags &= ~2;
 				g_GameFlags |= 1;
-				gMC->xm = 0;
+				gMC.xm = 0;
 				if (fade_dir <= 4)
 					StartFadeOut(fade_dir);
 				npc->act_no = 1;
@@ -922,7 +922,7 @@ void ActEntity372(NPCHAR* npc)
 			break;
 
 		case 1:
-			if (gFade->mode == 0)
+			if (gFade.mode == 0)
 				TransferStage(tra_map, tra_event, tra_x, tra_y);
 			break;
 	}
@@ -1009,16 +1009,16 @@ void ActEntity374(NPCHAR* npc)
 			if (npc->ani_no > 2)
 				npc->ani_no = 0;
 
-			if (gMC->x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC->y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
+			if (gMC.x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC.x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC.y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC.y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
 			{
 				if (Random(0, 5) == 1)
 					SetNpChar(199, npc->x, npc->y + (Random(-8, 8) * 0x200), 0, 0, 0, NULL, 0x100);
 			}
 
-			if (gMC->y < npc->y + (8 * 0x200) && gMC->y > npc->y - (8 * 0x200) && gMC->x < npc->x && gMC->x > npc->x - (96 * 0x200))
+			if (gMC.y < npc->y + (8 * 0x200) && gMC.y > npc->y - (8 * 0x200) && gMC.x < npc->x && gMC.x > npc->x - (96 * 0x200))
 			{
-				gMC->xm -= speed;
-				gMC->cond |= 0x20;
+				gMC.xm -= speed;
+				gMC.cond |= 0x20;
 			}
 
 			break;
@@ -1064,14 +1064,14 @@ void ActEntity375(NPCHAR* npc)
 			if (npc->ani_no > 2)
 				npc->ani_no = 0;
 
-			if (gMC->x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC->y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
+			if (gMC.x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC.x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC.y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC.y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
 			{
 				if (Random(0, 5) == 1)
 					SetNpChar(199, npc->x + (Random(-8, 8) * 0x200), npc->y, 0, 0, 1, NULL, 0x100);
 			}
 
-			if (gMC->x < npc->x + (8 * 0x200) && gMC->x > npc->x - (8 * 0x200) && gMC->y < npc->y && gMC->y > npc->y - (96 * 0x200))
-				gMC->ym -= speed;
+			if (gMC.x < npc->x + (8 * 0x200) && gMC.x > npc->x - (8 * 0x200) && gMC.y < npc->y && gMC.y > npc->y - (96 * 0x200))
+				gMC.ym -= speed;
 
 			break;
 	}
@@ -1116,16 +1116,16 @@ void ActEntity376(NPCHAR* npc)
 			if (npc->ani_no > 2)
 				npc->ani_no = 0;
 
-			if (gMC->x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC->y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
+			if (gMC.x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC.x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC.y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC.y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
 			{
 				if (Random(0, 5) == 1)
 					SetNpChar(199, npc->x, npc->y + (Random(-8, 8) * 0x200), 0, 0, 2, NULL, 0x100);
 			}
 
-			if (gMC->y < npc->y + (8 * 0x200) && gMC->y > npc->y - (8 * 0x200) && gMC->x < npc->x + (96 * 0x200) && gMC->x > npc->x)
+			if (gMC.y < npc->y + (8 * 0x200) && gMC.y > npc->y - (8 * 0x200) && gMC.x < npc->x + (96 * 0x200) && gMC.x > npc->x)
 			{
-				gMC->xm += speed;
-				gMC->cond |= 0x20;
+				gMC.xm += speed;
+				gMC.cond |= 0x20;
 			}
 
 			break;
@@ -1171,14 +1171,14 @@ void ActEntity377(NPCHAR* npc)
 			if (npc->ani_no > 2)
 				npc->ani_no = 0;
 
-			if (gMC->x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC->y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC->y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
+			if (gMC.x > npc->x - (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC.x < npc->x + (((WINDOW_WIDTH / 2) + 160) * 0x200) && gMC.y > npc->y - (((WINDOW_HEIGHT / 2) + 120) * 0x200) && gMC.y < npc->y + (((WINDOW_HEIGHT / 2) + 120) * 0x200))
 			{
 				if (Random(0, 5) == 1)
 					SetNpChar(199, npc->x + (Random(-8, 8) * 0x200), npc->y, 0, 0, 3, NULL, 0x100);
 			}
 
-			if (gMC->x < npc->x + (8 * 0x200) && gMC->x > npc->x - (8 * 0x200) && gMC->y < npc->y + (96 * 0x200) && gMC->y > npc->y)
-				gMC->ym += speed;
+			if (gMC.x < npc->x + (8 * 0x200) && gMC.x > npc->x - (8 * 0x200) && gMC.y < npc->y + (96 * 0x200) && gMC.y > npc->y)
+				gMC.ym += speed;
 
 			break;
 	}
@@ -1587,7 +1587,7 @@ void ActEntity381(NPCHAR* npc)
 			else
 				npc->xm = 0x400;
 
-			if (npc->x < gMC->x - (8 * 0x200))
+			if (npc->x < gMC.x - (8 * 0x200))
 			{
 				npc->direct = 2;
 				npc->act_no = 0;
@@ -2005,9 +2005,9 @@ void ActEntity386(NPCHAR* npc)
 				npc->ani_no = 1;
 			}
 
-			if (npc->x - (16 * 0x200) < gMC->x && npc->x + (16 * 0x200) > gMC->x && npc->y - (16 * 0x200) < gMC->y && npc->y + (16 * 0x200) > gMC->y)
+			if (npc->x - (16 * 0x200) < gMC.x && npc->x + (16 * 0x200) > gMC.x && npc->y - (16 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y)
 			{
-				if (npc->x > gMC->x)
+				if (npc->x > gMC.x)
 					npc->direct = 0;
 				else
 					npc->direct = 2;
@@ -3288,7 +3288,7 @@ void ActEntity395(NPCHAR* npc)
 		case 0:
 			if (npc->direct == 4)
 			{
-				if (npc->x > gMC->x)
+				if (npc->x > gMC.x)
 					npc->direct = 0;
 				else
 					npc->direct = 2;
@@ -3361,7 +3361,7 @@ void ActEntity395(NPCHAR* npc)
 			npc->ani_no = 1;
 			npc->ani_wait = 0;
 
-			if (npc->x > gMC->x)
+			if (npc->x > gMC.x)
 				npc->direct = 0;
 			else
 				npc->direct = 2;
@@ -3382,7 +3382,7 @@ void ActEntity395(NPCHAR* npc)
 			else
 				npc->x += 1 * 0x200;
 
-			if (gMC->x < npc->x + (20 * 0x200) && gMC->x > npc->x - (20 * 0x200))
+			if (gMC.x < npc->x + (20 * 0x200) && gMC.x > npc->x - (20 * 0x200))
 				npc->act_no = 0;
 
 			break;
@@ -3501,7 +3501,7 @@ void ActEntity396(NPCHAR* npc)
 		{1072, 16, 1088, 32}, // Downed
 	};
 
-	if (npc->y < gMC->y - (10 * 0x10 * 0x200))
+	if (npc->y < gMC.y - (10 * 0x10 * 0x200))
 	{
 		if (npc->y < 16 * 0x10 * 0x200)
 		{
@@ -3523,8 +3523,8 @@ void ActEntity396(NPCHAR* npc)
 		}
 		else
 		{
-			npc->tgt_x = gMC->x;
-			npc->tgt_y = gMC->y;
+			npc->tgt_x = gMC.x;
+			npc->tgt_y = gMC.y;
 		}
 	}
 
@@ -3536,8 +3536,8 @@ void ActEntity396(NPCHAR* npc)
 	switch (npc->act_no)
 	{
 		case 20:
-			npc->x = gMC->x;
-			npc->y = gMC->y;
+			npc->x = gMC.x;
+			npc->y = gMC.y;
 			npc->act_no = 100;
 			npc->ani_no = 0;
 			SetNpChar(183, 0, 0, 0, 0, 0, npc, 0x100);
@@ -3711,7 +3711,7 @@ void ActEntity396(NPCHAR* npc)
 
 	if (npc->act_no >= 100 && npc->act_no < 500)
 	{
-		if (npc->x < gMC->x - (80 * 0x200) || npc->x > gMC->x + (80 * 0x200))
+		if (npc->x < gMC.x - (80 * 0x200) || npc->x > gMC.x + (80 * 0x200))
 		{
 			if (npc->flag & 5)
 				npc->ym += 0x200 / 32;
@@ -3780,25 +3780,25 @@ void ActEntity397(NPCHAR* npc)
 			npc->act_no = 1;
 			// Fallthrough
 		case 1:
-			if (gMC->direct == 0)
+			if (gMC.direct == 0)
 				npc->direct = 0;
 			else
 				npc->direct = 2;
 
-			npc->y = gMC->y - (4 * 0x200);
+			npc->y = gMC.y - (4 * 0x200);
 
 			if (npc->direct == 0)
 			{
-				npc->x = gMC->x + (3 * 0x200);
+				npc->x = gMC.x + (3 * 0x200);
 				npc->rect = rcLeft;
 			}
 			else
 			{
-				npc->x = gMC->x - (3 * 0x200);
+				npc->x = gMC.x - (3 * 0x200);
 				npc->rect = rcRight;
 			}
 
-			if (gMC->ani_no % 2)
+			if (gMC.ani_no % 2)
 				++npc->rect.top;
 
 			break;
@@ -3853,62 +3853,62 @@ void ActEntity398(NPCHAR* npc)
 	if (npc->act_no == 0)
 	{
 		npc->act_no = 1;
-		npc->x = gMC->x;
-		npc->y = gMC->y;
+		npc->x = gMC.x;
+		npc->y = gMC.y;
 		SetNpChar(321, 0, 0, 0, 0, 0, npc, 0x100);
 	}
 
-	if (gMC->flag & 8)
+	if (gMC.flag & 8)
 	{
-		if (gMC->up)
+		if (gMC.up)
 		{
-			npc->tgt_x = gMC->x;
-			npc->tgt_y = gMC->y - (10 * 0x200);
+			npc->tgt_x = gMC.x;
+			npc->tgt_y = gMC.y - (10 * 0x200);
 			npc->ani_no = 1;
 		}
 		else
 		{
 			npc->ani_no = 0;
 
-			if (gMC->direct == 0)
+			if (gMC.direct == 0)
 			{
-				npc->tgt_x = gMC->x + (7 * 0x200);
-				npc->tgt_y = gMC->y - (3 * 0x200);
+				npc->tgt_x = gMC.x + (7 * 0x200);
+				npc->tgt_y = gMC.y - (3 * 0x200);
 			}
 			else
 			{
-				npc->tgt_x = gMC->x - (7 * 0x200);
-				npc->tgt_y = gMC->y - (3 * 0x200);
+				npc->tgt_x = gMC.x - (7 * 0x200);
+				npc->tgt_y = gMC.y - (3 * 0x200);
 			}
 		}
 	}
 	else
 	{
-		if (gMC->up)
+		if (gMC.up)
 		{
-			npc->tgt_x = gMC->x;
-			npc->tgt_y = gMC->y + (8 * 0x200);
+			npc->tgt_x = gMC.x;
+			npc->tgt_y = gMC.y + (8 * 0x200);
 			npc->ani_no = 2;
 		}
-		else if (gMC->down)
+		else if (gMC.down)
 		{
-			npc->tgt_x = gMC->x;
-			npc->tgt_y = gMC->y - (8 * 0x200);
+			npc->tgt_x = gMC.x;
+			npc->tgt_y = gMC.y - (8 * 0x200);
 			npc->ani_no = 1;
 		}
 		else
 		{
 			npc->ani_no = 0;
 
-			if (gMC->direct == 0)
+			if (gMC.direct == 0)
 			{
-				npc->tgt_x = gMC->x + (7 * 0x200);
-				npc->tgt_y = gMC->y - (3 * 0x200);
+				npc->tgt_x = gMC.x + (7 * 0x200);
+				npc->tgt_y = gMC.y - (3 * 0x200);
 			}
 			else
 			{
-				npc->tgt_x = gMC->x - (7 * 0x200);
-				npc->tgt_y = gMC->y - (3 * 0x200);
+				npc->tgt_x = gMC.x - (7 * 0x200);
+				npc->tgt_y = gMC.y - (3 * 0x200);
 			}
 		}
 	}
@@ -3916,10 +3916,10 @@ void ActEntity398(NPCHAR* npc)
 	npc->x += (npc->tgt_x - npc->x) / 2;
 	npc->y += (npc->tgt_y - npc->y) / 2;
 
-	if (gMC->ani_no % 2)
+	if (gMC.ani_no % 2)
 		npc->y -= 1 * 0x200;
 
-	if (gMC->direct == 0)
+	if (gMC.direct == 0)
 		npc->rect = rcRight[npc->ani_no];
 	else
 		npc->rect = rcLeft[npc->ani_no];
@@ -3972,9 +3972,9 @@ void ActEntity399(NPCHAR* npc)
 				npc->ani_no = 1;
 			}
 
-			if (npc->x - (32 * 0x200) < gMC->x && npc->x + (32 * 0x200) > gMC->x && npc->y - (32 * 0x200) < gMC->y && npc->y + (16 * 0x200) > gMC->y)
+			if (npc->x - (32 * 0x200) < gMC.x && npc->x + (32 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y)
 			{
-				if (npc->x > gMC->x)
+				if (npc->x > gMC.x)
 					npc->direct = 0;
 				else
 					npc->direct = 2;
@@ -4074,7 +4074,7 @@ void ActEntity400(NPCHAR* npc)
 			break;
 	}
 
-	if (gMC->x < npc->x)
+	if (gMC.x < npc->x)
 		npc->direct = 0;
 	else
 		npc->direct = 2;
@@ -4132,9 +4132,9 @@ void ActEntity401(NPCHAR* npc)
 				npc->ani_no = 1;
 			}
 
-			if (npc->x - (32 * 0x200) < gMC->x && npc->x + (32 * 0x200) > gMC->x && npc->y - (32 * 0x200) < gMC->y && npc->y + (16 * 0x200) > gMC->y)
+			if (npc->x - (32 * 0x200) < gMC.x && npc->x + (32 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y)
 			{
-				if (npc->x > gMC->x)
+				if (npc->x > gMC.x)
 					npc->direct = 0;
 				else
 					npc->direct = 2;
@@ -4242,7 +4242,7 @@ void ActEntity402(NPCHAR* npc)
 		break;
 	}
 
-	if (gMC->x < npc->x)
+	if (gMC.x < npc->x)
 		npc->direct = 0;
 	else
 		npc->direct = 2;
@@ -4394,9 +4394,9 @@ void ActEntity404(NPCHAR* npc)
 			npc->ani_no = 1;
 		}
 
-		if (npc->x - (32 * 0x200) < gMC->x && npc->x + (32 * 0x200) > gMC->x && npc->y - (32 * 0x200) < gMC->y && npc->y + (16 * 0x200) > gMC->y)
+		if (npc->x - (32 * 0x200) < gMC.x && npc->x + (32 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y)
 		{
-			if (npc->x > gMC->x)
+			if (npc->x > gMC.x)
 				npc->direct = 0;
 			else
 				npc->direct = 2;
@@ -4683,7 +4683,7 @@ void ActEntity410(NPCHAR* npc)
 		npc->ani_wait = 0;
 		// Fallthrough
 	case 1:
-		if (npc->x - (48 * 0x200) < gMC->x && npc->x + (48 * 0x200) > gMC->x && npc->y - (48 * 0x200) < gMC->y && npc->y + (16 * 0x200) > gMC->y)
+		if (npc->x - (48 * 0x200) < gMC.x && npc->x + (48 * 0x200) > gMC.x && npc->y - (48 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y)
 			npc->ani_no = 1;
 		else
 			npc->ani_no = 0;
@@ -5020,9 +5020,9 @@ void ActEntity414(NPCHAR* npc)
 			npc->ani_no = 1;
 		}
 
-		if (npc->x - (32 * 0x200) < gMC->x && npc->x + (32 * 0x200) > gMC->x && npc->y - (32 * 0x200) < gMC->y && npc->y + (16 * 0x200) > gMC->y)
+		if (npc->x - (32 * 0x200) < gMC.x && npc->x + (32 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y)
 		{
-			if (npc->x > gMC->x)
+			if (npc->x > gMC.x)
 				npc->direct = 0;
 			else
 				npc->direct = 2;
@@ -5091,7 +5091,7 @@ void ActEntity415(NPCHAR* npc)
 		npc->ani_wait = 0;
 		// Fallthrough
 	case 1:
-		if (npc->x - (48 * 0x200) < gMC->x && npc->x + (48 * 0x200) > gMC->x && npc->y - (48 * 0x200) < gMC->y && npc->y + (16 * 0x200) > gMC->y)
+		if (npc->x - (48 * 0x200) < gMC.x && npc->x + (48 * 0x200) > gMC.x && npc->y - (48 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y)
 			npc->ani_no = 1;
 		else
 			npc->ani_no = 0;
@@ -5377,7 +5377,7 @@ void ActEntity418(NPCHAR* npc)
 	npc->rect = rcRight[npc->ani_no];
 
 	// Use different sprite if player is wearing the Mimiga Mask
-	if (gMC->equip & EQUIP_MIMIGA_MASK)
+	if (gMC.equip & EQUIP_MIMIGA_MASK)
 	{
 		if (npc->ani_no > 1)
 		{
@@ -6247,7 +6247,7 @@ void ActEntity428(NPCHAR* npc)
 			break;
 	}
 
-	if (gMC->x < npc->x)
+	if (gMC.x < npc->x)
 		npc->direct = 0;
 	else
 		npc->direct = 2;
@@ -6932,7 +6932,7 @@ void ActEntity445(NPCHAR* npc)
 		case 0:
 			npc->ani_no = 0;
 
-			if (npc->x - (8 * 0x200) < gMC->x && npc->x + (8 * 0x200) > gMC->x && npc->y - (16 * 0x200) < gMC->y && npc->y + (8 * 0x200) > gMC->y)
+			if (npc->x - (8 * 0x200) < gMC.x && npc->x + (8 * 0x200) > gMC.x && npc->y - (16 * 0x200) < gMC.y && npc->y + (8 * 0x200) > gMC.y)
 			{
 				PlaySoundObject(43, SOUND_MODE_PLAY);
 				npc->act_no = 1;
@@ -7051,10 +7051,10 @@ void ActEntity448(NPCHAR* npc)
 			npc->act_wait = 0;
 			npc->ani_no = 0;
 
-			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+				npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+				npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 			{
 				PlaySoundObject(22, SOUND_MODE_PLAY);
 				current_jumps = jump_amount; // Set jumps to the jump amount -> 1 by default
@@ -7115,10 +7115,10 @@ void ActEntity449(NPCHAR* npc)
 			npc->ani_no = 0;
 
 
-			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+				npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+				npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 			{
 				PlaySoundObject(22, SOUND_MODE_PLAY);
 				npc->act_no = 3;
@@ -7129,8 +7129,8 @@ void ActEntity449(NPCHAR* npc)
 			if (++npc->act_wait > cooldown_rewind)
 			{
 				// Restore the players X/Y values to this entity
-				gMC->x = npc->x;
-				gMC->y = npc->y;
+				gMC.x = npc->x;
+				gMC.y = npc->y;
 
 				for (i = 0; i < 4; ++i)
 					SetNpChar(4, npc->x + (Random(-12, 12) * 0x200), npc->y + (Random(-12, 12) * 0x200), Random(-341, 341), Random(-0x600, 0), 0, NULL, 0x100);
@@ -7167,12 +7167,12 @@ void ActEntity450(NPCHAR* npc)
 				npc->act_no = 20;
 			break;
 		case 10:
-			if (gMC->x < npc->x + (8 * 0x200) && gMC->x > npc->x - (8 * 0x200) && gMC->y < npc->y && gMC->y > npc->y - (16 * 0x200) && gMC->flag & 8)
-				gMC->x -= (0.5 * 0x200) * speed;
+			if (gMC.x < npc->x + (8 * 0x200) && gMC.x > npc->x - (8 * 0x200) && gMC.y < npc->y && gMC.y > npc->y - (16 * 0x200) && gMC.flag & 8)
+				gMC.x -= (0.5 * 0x200) * speed;
 			break;
 		case 20:
-			if (gMC->x < npc->x + (8 * 0x200) && gMC->x > npc->x - (8 * 0x200) && gMC->y < npc->y && gMC->y > npc->y - (16 * 0x200) && gMC->flag & 8)
-				gMC->x += (0.5 * 0x200) * speed;
+			if (gMC.x < npc->x + (8 * 0x200) && gMC.x > npc->x - (8 * 0x200) && gMC.y < npc->y && gMC.y > npc->y - (16 * 0x200) && gMC.flag & 8)
+				gMC.x += (0.5 * 0x200) * speed;
 			break;
 	}
 
@@ -7247,10 +7247,10 @@ void ActEntity451(NPCHAR* npc)
 		npc->ani_no = 0;
 
 	// Wallboosting is inside of the hitbox and on a wall
-	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-		npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-		npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-		npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+	if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+		npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+		npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+		npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 	{
 		if (onWall != 0)
 			entity_IsWallboosting = true;
@@ -7323,10 +7323,10 @@ void ActEntity452(NPCHAR* npc)
 
 
 	// Icewalled when inside of the hitbox and on a wall
-	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-		npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-		npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-		npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+	if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+		npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+		npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+		npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 	{
 			entity_IsIceWalled = true;
 	}
@@ -7371,13 +7371,13 @@ void ActEntity453(NPCHAR* npc)
 	switch (npc->act_no)
 	{
 		case 0:
-			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+				npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+				npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 			{
 				PlaySoundObject(8, SOUND_MODE_PLAY);
-				gMC->ym += -0x5FF;
+				gMC.ym += -0x5FF;
 				npc->act_no = 1;
 			}
 			break;
@@ -7391,7 +7391,7 @@ void ActEntity453(NPCHAR* npc)
 			}
 
 			if (npc->ani_no < 3)
-				gMC->ym += -0x5FF;
+				gMC.ym += -0x5FF;
 
 
 			if (npc->ani_no > 8)
@@ -7441,14 +7441,14 @@ void ActEntity454(NPCHAR* npc)
 	switch (npc->act_no)
 	{
 		case 0:
-			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+				npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+				npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 			{
 				PlaySoundObject(8, SOUND_MODE_PLAY);
-				gMC->xm = -start_x_momentum;
-				gMC->ym = -start_y_momentum;
+				gMC.xm = -start_x_momentum;
+				gMC.ym = -start_y_momentum;
 				npc->act_no = 1;
 			}
 			break;
@@ -7462,10 +7462,10 @@ void ActEntity454(NPCHAR* npc)
 			}
 
 			if (npc->ani_no < 2)
-				gMC->xm += -added_x_momentum;
+				gMC.xm += -added_x_momentum;
 
 			if (npc->ani_no < 3)
-				gMC->ym += -added_y_momentum;
+				gMC.ym += -added_y_momentum;
 
 
 			if (npc->ani_no > 8)
@@ -7515,14 +7515,14 @@ void ActEntity455(NPCHAR* npc)
 	switch (npc->act_no)
 	{
 		case 0:
-			if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-				npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-				npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-				npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+			if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+				npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+				npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+				npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 			{
 				PlaySoundObject(8, SOUND_MODE_PLAY);
-				gMC->xm = start_x_momentum;
-				gMC->ym = -start_y_momentum;
+				gMC.xm = start_x_momentum;
+				gMC.ym = -start_y_momentum;
 				npc->act_no = 1;
 			}
 			break;
@@ -7536,10 +7536,10 @@ void ActEntity455(NPCHAR* npc)
 			}
 
 			if (npc->ani_no < 2)
-				gMC->xm += added_x_momentum;
+				gMC.xm += added_x_momentum;
 
 			if (npc->ani_no < 3)
-				gMC->ym += -added_y_momentum;
+				gMC.ym += -added_y_momentum;
 
 
 			if (npc->ani_no > 8)
@@ -7572,14 +7572,14 @@ void ActEntity456(NPCHAR* npc)
 		case 0:
 			if (npc->direct == 2)
 			{
-				npc->x = gMC->x + (x_offset * 0x200 * 0x10);
-				npc->y = gMC->y + (y_offset * 0x200 * 0x10);
+				npc->x = gMC.x + (x_offset * 0x200 * 0x10);
+				npc->y = gMC.y + (y_offset * 0x200 * 0x10);
 				npc->act_no = 1;
 			}
 			else
 			{
-				npc->x = gMC->x + (x_offset * 0x200 * 0x10);
-				npc->y = gMC->y + (y_offset * 0x200 * 0x10);
+				npc->x = gMC.x + (x_offset * 0x200 * 0x10);
+				npc->y = gMC.y + (y_offset * 0x200 * 0x10);
 			}
 			break;
 
@@ -7615,23 +7615,23 @@ void ActEntity457(NPCHAR* npc)
 
 	if (npc->direct == 0)
 	{
-		if (npc->x < gMC->x)
+		if (npc->x < gMC.x)
 			npc->x += 0x5FF;
 		else
 			npc->x -= 0x5FF;
 	}
 	else
 	{
-		if (npc->y < gMC->y)
+		if (npc->y < gMC.y)
 			npc->y += 0x5FF;
 		else
 			npc->y -= 0x5FF;
 	}
 
-	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-		npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-		npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-		npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+	if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+		npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+		npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+		npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 	{
 		// Do Camera Offset
 		SetFrameTargetMyCharOffset(wait, 0, camera_x_offset, camera_y_offset);
@@ -7674,23 +7674,23 @@ void ActEntity458(NPCHAR* npc)
 
 	if (npc->direct == 0)
 	{
-		if (npc->x < gMC->x)
+		if (npc->x < gMC.x)
 			npc->x += 0x5FF;
 		else
 			npc->x -= 0x5FF;
 	}
 	else
 	{
-		if (npc->y < gMC->y)
+		if (npc->y < gMC.y)
 			npc->y += 0x5FF;
 		else
 			npc->y -= 0x5FF;
 	}
 
-	if (npc->y - npc->hit.top < (gMC->y + gMC->hit.bottom) &&
-		npc->y + npc->hit.bottom >(gMC->y - gMC->hit.top) &&
-		npc->x - npc->hit.back < (gMC->x + gMC->hit.front) &&
-		npc->x + npc->hit.front >(gMC->x - gMC->hit.back))
+	if (npc->y - npc->hit.top < (gMC.y + gMC.hit.bottom) &&
+		npc->y + npc->hit.bottom >(gMC.y - gMC.hit.top) &&
+		npc->x - npc->hit.back < (gMC.x + gMC.hit.front) &&
+		npc->x + npc->hit.front >(gMC.x - gMC.hit.back))
 	{
 		// Do Camera Target
 		SetFrameTargetCoordinate(wait, camera_x_coordinate * 0x200 * 0x10, camera_y_coordinate * 0x200 * 0x10);
@@ -7703,7 +7703,7 @@ void ActEntity458(NPCHAR* npc)
 void ActEntity459(NPCHAR* npc)
 {
 	// In wind
-	if (gBack->type == 6 || gBack->type == 6)
+	if (gBack.type == 6 || gBack.type == 6)
 	{
 		if (npc->act_no == 0)
 		{

@@ -40,7 +40,8 @@ with items dropped by enemies.<NOD<END
 #0040
 <KEY<CMU0000<WAI0040<PRI<WAI0040<CMU0003
 <MSG
-You have died.<NOD<CLRWant to retry?<YNJ0049<CLO
+You have died.<NOD<CLRWant to retry?<YNJ0049<RVI<END
+<CLO
 <FAO0001<WAI0050<FLJ0431:0048<INI<END
 
 #0041

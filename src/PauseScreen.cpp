@@ -110,7 +110,7 @@ static int EnterOptionsMenu(OptionsMenu* options_menu, size_t selected_option)
 		GetTrg();
 
 		// Allow unpausing by pressing the pause button only when in the main pause menu (not submenus)
-		if (!options_menu->submenu && gKeyTrg & KEY_PAUSE)
+		if (!options_menu->submenu && gKeyTrg & KEY_ESCAPE)
 		{
 			return_value = CALLBACK_CONTINUE;
 			break;

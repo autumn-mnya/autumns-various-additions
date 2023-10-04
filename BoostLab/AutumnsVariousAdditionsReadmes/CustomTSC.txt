@@ -166,6 +166,10 @@ Arguments: 1 [<CTSstring$] [tileset$]
 Example: <CTSOside$
 ( The above will load PrtOside with pxa file Oside.pxa )
 
+- <EX+ - EXperience +
+Add W experience to the player. Works like touching normal XP!
+Arguments: 1 [<EX+wwww] [experience]
+
 - <FM2 - Focus on Me 2
 
 This TSC command allows you to focus the camera on the player with a custom offset!
@@ -278,6 +282,10 @@ Arguments: 0 [<RSP]
 Set the players respawn point at coordinates X:Y.
 Arguments: 2 [<SRPxxxx:yyyy] [x:y]
 
+- <RVI - ReVIve player
+Unlike the respawning function above, this revives the player where they died. The HP you're revived with is in settings.ini.
+Arguments: 0 [<RVI]
+
 - <TA2 - TrAnsport 2
 This TSC command is the same as <TRA, except it will not set a respawn point.
 Arguments: 4 [<TRMwwww:zzzz:xxxx:yyyy] [map:event:x:y]
@@ -303,7 +311,7 @@ Remove all teleporter slots that have been added.
 Arguments: 0 [<PSC]
 
 ##################################################
-#                 <PHY Variables                 #
+#                 <PHY Variables    
 # 0 - Max Walking Speed
 # 1 - Max Top Movement Speed
 # 2 - Gravity
@@ -328,12 +336,36 @@ Arguments: 0 [<PSC]
 # 21 - Extra Jump Momentum
 # 22 - Underwater Extra Jump Momentum
 # 23 - Max Running Speed // Run Button
-# 24 - Bouncy Block Speed // Tile Collision      #
+# 24 - Bouncy Block Speed // Tile Collision
+# ( Added in Version 1.0.7 or above! )
+# 25 - Booster 2.0 Acceleration (Up)
+# 26 - Booster 2.0 Acceleration (Left)
+# 27 - Booster 2.0 Acceleration (Right)
+# 28 - Booster 2.0 Acceleration (Down)
+# 29 - Booster 2.0 Acceleration (Up, No Key)
+# 30 - Booster 0.8 Acceleration (Added each frame, limited to 127!)
+# 31 - Booster 0.8 Acceleration (Max Speed/Sputter Limit)
+# 32 - Player Max Speed (Left)
+# 33 - Player Max Speed (Right)
+# 34 - Player Max Speed (Up)
+# 35 - Player Max Speed (Down)
+# 36 - Underwater Player Max Speed (Left)
+# 37 - Underwater Player Max Speed (Right)
+# 38 - Underwater Player Max Speed (Up)
+# 39 - Underwater Player Max Speed (Down)
 ##################################################
 
 - <RNJ - Random Number Jump
 Jump to a random event between W and Z.
 Arguments: 2 [<RNJwwww:zzzz] [event_min:event_max]
+
+- <SBL - Set BuLlet
+Set a bullet of type W at coordinates X:Y with direction Z. (I recommend using a <SCT with W being set to 3 for the effect that normally appears when shooting a weapon!)
+Arguments: 4 [<SBLwwww:xxxx:yyyy:zzzz] [bullet:x:y:direction]
+
+- <SCT - Set Caret
+Set a Caret of type W at coordinates X:Y with direction Z.
+Arguments: 4 [<SCTwwww:xxxx:yyyy:zzzz] [caret:x:y:direction]
 
 - <SNJ - Skipflag Not Jump
 Same as <SKJ, except it jumps to an event if the skipflag is NOT set.
@@ -407,16 +439,6 @@ Arguments: 3 [<VIJwwww:xxxx:yyyy] [variable:value:event]
 
 #########################################################
 
-<VAR	2	##--	VARiable set	Set Variable W to X. (Check TSC command txt).	0	0	1	4	4	4	4
-<VA+	2	##--	VAriable +	Add value X to variable W. (Check TSC command txt).	0	0	1	4	4	4	4
-<VA-	2	##--	VAriable -	Subtract value X from variable W. (Check TSC command txt).	0	0	1	4	4	4	4
-<VA*	2	##--	VAriable *	Multiply variable W by value X. (Check TSC command txt).	0	0	1	4	4	4	4
-<VA/	2	##--	VAriable /	Divide variable W by value X. (Check TSC command txt).	0	0	1	4	4	4	4
-<VAJ	4	###e	VAriable Jump	Compare number W to number X (Not variables!!) using compare method Y. Jump to event Z if true (Check TSC command txt).	0	0	1	4	4	4	4
-<VAZ	2	##--	VAriable Zero	Set X amount of variables to 0, starting at variable W. (Check TSC command txt).	0	0	1	4	4	4	4
-<VND	3	##e-	Variable raNDom	Generates a random number between W and X. Sets variable Y to the result number (Check TSC command txt).	0	0	1	4	4	4	4
-<VIJ	3	##e-	Variable Increment Jump	Increments variable W by 1. If W is greater than or equal to X, set variable W to 0 and jump to event Y (Check TSC command txt).	0	0	1	4	4	4	4
-
 - <WCL - Write CaLl
 Write a function call at address A to address B -- 2 text strings back-to-back, both ending with a $. The function address is a *hex value*.
 Arguments: 2 [<WCLstring$cstring2$] [address_a_string$address_b_string$]
@@ -436,7 +458,7 @@ Arguments: 0 [<CFD]
 - <CLN - CoLlab Name
 Set the Collab Name to a text string -- End the text string with a $ so the game knows to stop reading the text.
 Arguments: 1 [<CLNstring$] [collab_name$]
-Example: <SWNCollab\Beginner$
+Example: <CLNCollab\Beginner$
 ( The above will set the Collab Directory to "data\Collab\Beginner" !)
 
 - <ICF - Init Collab Flags

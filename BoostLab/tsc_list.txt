@@ -41,7 +41,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	170
+[BL_TSC]	174
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -152,6 +152,7 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <COJ	3	##e-	COllectable Jump	Jump to event Y if the player has X amount of collectables or more in variable W.	0	0	1	4	4	4	4
 <CSF	0	----	Change Surface File	Change surface ID string to load image string. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	0	0	4	4	4	4
 <CTS	0	----	Change TileSet	Change tileset loaded. Use $ at the end of the tileset name to mark the end of the text input. Do not include "Prt".	0	0	0	4	4	4	4
+<EX+	1	#---	EXperience +	Add W experience to the currently held weapon. 	0	0	1	4	4	4	4
 <FM2	4	.###	Focus on Me 2	Focus on the PC in W ticks (Use W > 0), with Mode X (Check TSC command txt), with Offset Y:Z.	0	0	1	4	4	4	4
 <FN2	2	N.--	Focus on Npc 2	Same as <FON but the players direction can effect the Camera.	0	0	1	4	4	4	4
 <FNJ	2	Fe--	Flag Not Jump	Opposite of <FLJ. Jump to event X if flag W is not set.	0	0	1	4	4	4	4
@@ -177,6 +178,9 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <PXT	0	----	PiXTone load	Load folder with sound effects from the /data/ folder. Use $ at the end of the name to mark the end of the text input (Check TSC command txt).	0	0	1	4	4	4	4
 <RSF	0	----	Reset SurFaces	Reset all surfaces to their defaults in settings.ini.	0	0	1	4	4	4	4
 <RSP	0	----	ReSPawn	Respawn the player (Check TSC command txt).	1	0	1	4	4	4	4
+<RVI	0	----	ReVIve	Revive the player (Check TSC command txt).	0	0	1	4	4	4	4
+<SBL	4	#xyd	Set BuLlet	Create a bullet of type W at coordinates X:Y with direction Z.	0	0	1	4	4	4	4
+<SCT	4	#xyd	Set CareT	Create a caret of type W at coordinates X:Y with direction Z.	0	0	1	4	4	4	4
 <SEL	1	#---	SELl (money+)	Increase amount of money by W.	0	0	1	4	4	4	4
 <SL=	1	#---	SeLl =	Set amount of money to W.	0	0	1	4	4	4	4
 <SNJ	2	Fe--	Skipflag Not Jump	Opposite of <SKJ. Jump to event X if skipflag W is not set.	0	0	1	4	4	4	4

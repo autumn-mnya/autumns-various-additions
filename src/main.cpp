@@ -37,8 +37,6 @@
 #include "TileCollisionMyChar.h"
 
 // Paths
-char gModulePath[MAX_PATH];
-char gDataPath[MAX_PATH];
 char gPatchesPath[MAX_PATH];
 char gBkgPath[MAX_PATH];
 
@@ -95,6 +93,26 @@ int init_collectables_e_x_offset = 0;
 int init_booster_08_fuel = 50;
 int init_booster_20_fuel = 50;
 
+// Version 1.0.7 physics
+int init_physics_boost20_accel_up = -1535;
+int init_physics_boost20_accel_left = -1535;
+int init_physics_boost20_accel_right = 1535;
+int init_physics_boost20_accel_down = 1535;
+int init_physics_boost20_accel_up_no_key = -1535;
+
+int init_physics_boost08_accel_add = 32;
+int init_physics_boost08_accel_max_speed = -1024;
+
+int init_physics_max_speed_left = -1535;
+int init_physics_max_speed_right = 1535;
+int init_physics_max_speed_up = -1535;
+int init_physics_max_speed_down = 1535;
+
+int init_physics_water_max_speed_left = -1535;
+int init_physics_water_max_speed_right = 1535;
+int init_physics_water_max_speed_up = -1535;
+int init_physics_water_max_speed_down = 1535;
+
 // GenericLoad paths
 
 char init_surfaceName_0_Title[MaxSurfaceName] = "Title";
@@ -124,8 +142,8 @@ char init_collab_name[CollabNameMaxPath] = "null";
 void PlayerDeath()
 {
 	PlaySoundObject(17, SOUND_MODE_PLAY);
-	gMC->cond = 0;
-	SetDestroyNpChar(gMC->x, gMC->y, 10 * 0x200, 0x40);
+	gMC.cond = 0;
+	SetDestroyNpChar(gMC.x, gMC.y, 10 * 0x200, 0x40);
 	StartTextScript(40);
 }
 
@@ -187,6 +205,25 @@ void InitMod_PreLaunch_PhysicsSettings()
 	init_extrajump_water_jump_height = setting_extrajump_water_jump_height;
 	init_running_speed = setting_running_speed;
 	init_bounce_speed = setting_bounce_speed;
+	// Version 1.0.7
+	init_physics_boost20_accel_up = setting_physics_boost20_accel_up;
+	init_physics_boost20_accel_left = setting_physics_boost20_accel_left;
+	init_physics_boost20_accel_right = setting_physics_boost20_accel_right;
+	init_physics_boost20_accel_down = setting_physics_boost20_accel_down;
+	init_physics_boost20_accel_up_no_key = setting_physics_boost20_accel_up_no_key;
+
+	init_physics_boost08_accel_add = setting_physics_boost08_accel_add;
+	init_physics_boost08_accel_max_speed = setting_physics_boost08_accel_max_speed;
+
+	init_physics_max_speed_left = setting_physics_max_speed_left;
+	init_physics_max_speed_right = setting_physics_max_speed_right;
+	init_physics_max_speed_up = setting_physics_max_speed_up;
+	init_physics_max_speed_down = setting_physics_max_speed_down;
+
+	init_physics_water_max_speed_left = setting_physics_water_max_speed_left;
+	init_physics_water_max_speed_right = setting_physics_water_max_speed_right;
+	init_physics_water_max_speed_up = setting_physics_water_max_speed_up;
+	init_physics_water_max_speed_down = setting_physics_water_max_speed_down;
 }
 
 void InitMod_PreLaunch_BoosterFuel()
@@ -419,6 +456,23 @@ void InitMyCharPhysics()
 	setting_extrajump_water_jump_height = init_extrajump_water_jump_height;
 	setting_running_speed = init_running_speed;
 	setting_bounce_speed = init_bounce_speed;
+	// Version 1.0.7
+	setting_physics_boost20_accel_up = init_physics_boost20_accel_up;
+	setting_physics_boost20_accel_left = init_physics_boost20_accel_left;
+	setting_physics_boost20_accel_right = init_physics_boost20_accel_right;
+	setting_physics_boost20_accel_down = init_physics_boost20_accel_down;
+	setting_physics_boost20_accel_up_no_key = init_physics_boost20_accel_up_no_key;
+	setting_physics_boost08_accel_add = init_physics_boost08_accel_add;
+	setting_physics_boost08_accel_max_speed = init_physics_boost08_accel_max_speed;
+	setting_physics_max_speed_left = init_physics_max_speed_left;
+	setting_physics_max_speed_right = init_physics_max_speed_right;
+	setting_physics_max_speed_up = init_physics_max_speed_up;
+	setting_physics_max_speed_down = init_physics_max_speed_down;
+	setting_physics_water_max_speed_left = init_physics_water_max_speed_left;
+	setting_physics_water_max_speed_right = init_physics_water_max_speed_right;
+	setting_physics_water_max_speed_up = init_physics_water_max_speed_up;
+	setting_physics_water_max_speed_down = init_physics_water_max_speed_down;
+	Set_Version107_Physics();
 }
 
 void InitMyCharBoostFuel()

@@ -41,3 +41,31 @@ Yeah! Collab Flags!<NOD<CLO<END
 
 #0305
 <ICF<END
+
+#0400
+<FLJ5565:0401
+<FL+5565
+<EQ+0001<END
+#0401
+<FL-5565
+<EQ-0001<END
+
+#0500
+<SCT0003:0000:0000:0000
+<END
+
+#0600
+// <INV -- Opens the Inventory menu !!
+<AM+0001:0000<IT+0001<IT+0003<AM+0005:0000<IT+0007
+<KEY<MSG
+I love the inventory<NOD<CLR
+Open it?<YNJ0000<CLR<INV0601
+// <INV takes an event argument.
+// After the inventory menu closes, it'll run the event given.
+#0601
+<KEY<MSG
+wtf<NOD<CLO<END
+
+#0701
+<KEY<MSG
+This is about to be Awesome<NOD<CLO<GME0601

@@ -99,6 +99,8 @@ void Replacement_LoadGenericData_Face_Call(const char* name, SurfaceID surf)
 void Replacement_LoadGenericData_Fade_Call(const char* name, SurfaceID surf)
 {
 	MakeSurface_File(surfaceName_6_Fade, surf);
+	// idk if this will work but, why not,?
+	MakeSurface_Generic(320, 240, SURFACE_ID_TEXT_LINE5, FALSE);
 }
 
 void Replacement_LoadGenericData_Calls()

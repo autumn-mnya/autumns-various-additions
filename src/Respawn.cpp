@@ -33,14 +33,16 @@ RESPAWN_PT gRespawnPoint;
 BOOL bSetRespawn = FALSE;
 BOOL PlayerIsRespawning = FALSE;
 
+int setting_revive_hp = 3;
+
 void SetRespawnPoint(int x, int y)
 {
 	gRespawnPoint.stage_no = gStageNo;
 	gRespawnPoint.x = x;
 	gRespawnPoint.y = y;
-	gRespawnPoint.direct = gMC->direct;
-	gRespawnPoint.max_life = gMC->max_life;
-	gRespawnPoint.equip = gMC->equip;
+	gRespawnPoint.direct = gMC.direct;
+	gRespawnPoint.max_life = gMC.max_life;
+	gRespawnPoint.equip = gMC.equip;
 	Freeware_memcpy(gRespawnPoint.flags, gFlagNPC, sizeof(gFlagNPC));
 	Freeware_memcpy(gRespawnPoint.arms, gArmsData, sizeof(gRespawnPoint.arms));
 	Freeware_memcpy(gRespawnPoint.items, gItemData, sizeof(gRespawnPoint.items));
@@ -116,15 +118,15 @@ BOOL RespawnPlayer(void)
 	if (!TransferStage(gRespawnPoint.stage_no, 0, gRespawnPoint.x, gRespawnPoint.y))
 		return FALSE;
 
-	gMC->equip = gRespawnPoint.equip;
-	gMC->direct = gRespawnPoint.direct;
-	gMC->max_life = gRespawnPoint.max_life;
-	gMC->life = gMC->max_life;
-	gMC->cond = 0x80;
-	gMC->air = 1000;
-	gMC->lifeBr = gMC->life;
-	gMC->x = gRespawnPoint.x * 0x10 * 0x200;
-	gMC->y = gRespawnPoint.y * 0x10 * 0x200;
+	gMC.equip = gRespawnPoint.equip;
+	gMC.direct = gRespawnPoint.direct;
+	gMC.max_life = gRespawnPoint.max_life;
+	gMC.life = gMC.max_life;
+	gMC.cond = 0x80;
+	gMC.air = 1000;
+	gMC.lifeBr = gMC.life;
+	gMC.x = gRespawnPoint.x * 0x10 * 0x200;
+	gMC.y = gRespawnPoint.y * 0x10 * 0x200;
 	
 	gSelectedArms = gRespawnPoint.select_arms;
 	gSelectedItem = gRespawnPoint.select_item;
@@ -208,5 +210,11 @@ BOOL RespawnPlayer(void)
 void Stage_SetRespawn()
 {
 	bSetRespawn = FALSE;
-	SetRespawnPoint((gMC->x + 0x1000) / 0x2000, (gMC->y + 0x1000) / 0x2000);
+	SetRespawnPoint((gMC.x + 0x1000) / 0x2000, (gMC.y + 0x1000) / 0x2000);
+}
+
+void RevivePlayer()
+{
+	gMC.cond = 0x80;
+	AddLifeMyChar(setting_revive_hp);
 }

@@ -21,7 +21,6 @@ bool setting_enable_collab_npc_table = false;
 
 CNPCHAR gCustomNPC[NPC_MAX];
 
-const char* const gPassPixEve = "PXE";
 const char* const gPassCustomPixEve = "AUT";
 
 const char* const cpxeFileName = "cpxe";
@@ -117,7 +116,7 @@ void Replacement_ChangeNpCharByEvent(int code_event, int code_char, int dir)
 			}
 			else if (dir == 4)
 			{
-				if (gNPC[n].x < gMC->x)
+				if (gNPC[n].x < gMC.x)
 					gNPC[n].direct = 2;
 				else
 					gNPC[n].direct = 0;
@@ -165,7 +164,7 @@ void Replacement_ChangeCheckableNpCharByEvent(int code_event, int code_char, int
 			}
 			else if (dir == 4)
 			{
-				if (gNPC[n].x < gMC->x)
+				if (gNPC[n].x < gMC.x)
 					gNPC[n].direct = 2;
 				else
 					gNPC[n].direct = 0;
@@ -296,7 +295,7 @@ void Replacement_HitMyCharNpChar(void)
 	int i;
 	int hit = 0;
 
-	if (!(gMC->cond & 0x80) || gMC->cond & 2)
+	if (!(gMC.cond & 0x80) || gMC.cond & 2)
 		return;
 
 	for (i = 0; i < NPC_MAX; ++i)
@@ -309,12 +308,12 @@ void Replacement_HitMyCharNpChar(void)
 		if (gNPC[i].bits & NPC_SOLID_SOFT)
 		{
 			hit = JudgeHitMyCharNPC(&gNPC[i]);
-			gMC->flag |= hit;
+			gMC.flag |= hit;
 		}
 		else if (gNPC[i].bits & NPC_SOLID_HARD)
 		{
 			hit = JudgeHitMyCharNPC4(&gNPC[i]);
-			gMC->flag |= hit;
+			gMC.flag |= hit;
 		}
 		else
 		{
@@ -335,7 +334,6 @@ void Replacement_HitMyCharNpChar(void)
 					else
 						AddMoney(gNPC[i].exp);
 				}
-					
 				else
 					AddMoney(gNPC[i].exp);
 			}
@@ -388,17 +386,17 @@ void Replacement_HitMyCharNpChar(void)
 		}
 
 		// Interaction
-		if (!(g_GameFlags & 4) && hit != 0 && gMC->cond & 1 && gNPC[i].bits & NPC_INTERACTABLE)
+		if (!(g_GameFlags & 4) && hit != 0 && gMC.cond & 1 && gNPC[i].bits & NPC_INTERACTABLE)
 		{
 			StartTextScript(gNPC[i].code_event);
-			gMC->xm = 0;
-			gMC->ques = FALSE;
+			gMC.xm = 0;
+			gMC.ques = FALSE;
 		}
 	}
 
 	// Create question mark when NPC hasn't been interacted with
-	if (gMC->ques)
-		SetCaret(gMC->x, gMC->y, CARET_QUESTION_MARK, DIR_LEFT);
+	if (gMC.ques)
+		SetCaret(gMC.x, gMC.y, CARET_QUESTION_MARK, DIR_LEFT);
 }
 
 // Custom Functions

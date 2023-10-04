@@ -59,6 +59,14 @@ char TSC_IMG_Folder[ImgFolderSize];
 char stageTblPath[StageTblMaxPath];
 char npcTblPath[NpcTblMaxPath];
 
+int inventoryBackupEvent = 0;
+
+void Mod_WriteBoosterFuel()
+{
+	ModLoader_WriteLong((void*)0x4157A7, booster_08_fuel); // Booster 0.8 Fuel
+	ModLoader_WriteLong((void*)0x4157BD, booster_20_fuel); // Booster 2.0 Fuel
+}
+
 // We replace the <TRA transfer stage call so that we can set a respawn point
 // 0x422E09
 void Replacement_TextScript_TransferStage_Call(int w, int x, int y, int z)
@@ -77,21 +85,21 @@ void SetCustomWindowTitle(char* window_name)
 int Replacement_GetTextScriptNo(int a)
 {
 	int b = 0;
-	char most_significant = gTS->data[a++];
+	char most_significant = gTS.data[a++];
 	if (most_significant == 'V') // Variables
 	{
 		int var = 0;
-		var += (gTS->data[a++] - '0') * 100;
-		var += (gTS->data[a++] - '0') * 10;
-		var += gTS->data[a] - '0';
+		var += (gTS.data[a++] - '0') * 100;
+		var += (gTS.data[a++] - '0') * 10;
+		var += gTS.data[a] - '0';
 		b = GetVariable(var);
 	}
 	else // Default behaviour
 	{
 		b += (most_significant - '0') * 1000;
-		b += (gTS->data[a++] - '0') * 100;
-		b += (gTS->data[a++] - '0') * 10;
-		b += gTS->data[a] - '0';
+		b += (gTS.data[a++] - '0') * 100;
+		b += (gTS.data[a++] - '0') * 10;
+		b += gTS.data[a] - '0';
 	}
 
 	return b;
@@ -101,15 +109,15 @@ int Replacement_GetTextScriptNo(int a)
 void GetTextScriptString(char returnData[])
 {
 	int i = 0;
-	while (gTS->data[gTS->p_read] != '$') {
-		returnData[i] = gTS->data[gTS->p_read];
-		gTS->p_read++;
+	while (gTS.data[gTS.p_read] != '$') {
+		returnData[i] = gTS.data[gTS.p_read];
+		gTS.p_read++;
 		i++;
 	}
 	//Insert the null terminator overtop the $
 	returnData[i] = '\0';
 	//Skip over the '$'
-	gTS->p_read++;
+	gTS.p_read++;
 }
 
 static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
@@ -117,15 +125,15 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	(void)ud;
 	int w, x, y, z;
 
-	char* where = TextScriptBuffer + gTS->p_read;
+	char* where = TextScriptBuffer + gTS.p_read;
 	if (where[0] != '<')
 		return 0;
 	if (strncmp(where + 1, "TA2", 3) == 0) //TrAnsport 2 (No Respawn)
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
-		w = GetTextScriptNo(gTS->p_read + 9);
-		x = GetTextScriptNo(gTS->p_read + 14);
-		y = GetTextScriptNo(gTS->p_read + 19);
+		z = GetTextScriptNo(gTS.p_read + 4);
+		w = GetTextScriptNo(gTS.p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 14);
+		y = GetTextScriptNo(gTS.p_read + 19);
 
 		bSetRespawn = FALSE;
 		if (!TransferStage(z, w, x, y))
@@ -135,13 +143,13 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "TRM", 3) == 0) //TRansport Momentum
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
-		w = GetTextScriptNo(gTS->p_read + 9);
-		x = GetTextScriptNo(gTS->p_read + 14);
-		y = GetTextScriptNo(gTS->p_read + 19);
+		z = GetTextScriptNo(gTS.p_read + 4);
+		w = GetTextScriptNo(gTS.p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 14);
+		y = GetTextScriptNo(gTS.p_read + 19);
 
-		int xm = gMC->xm;
-		int ym = gMC->ym;
+		int xm = gMC.xm;
+		int ym = gMC.ym;
 
 		bSetRespawn = TRUE;
 		if (!TransferStage(z, w, x, y))
@@ -150,18 +158,18 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		}
 
 		// Restore player velocity
-		gMC->xm = xm;
-		gMC->ym = ym;
+		gMC.xm = xm;
+		gMC.ym = ym;
 	}
 	else if (strncmp(where + 1, "TM2", 3) == 0) //Transport Momentum 2 (No Respawn)
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
-		w = GetTextScriptNo(gTS->p_read + 9);
-		x = GetTextScriptNo(gTS->p_read + 14);
-		y = GetTextScriptNo(gTS->p_read + 19);
+		z = GetTextScriptNo(gTS.p_read + 4);
+		w = GetTextScriptNo(gTS.p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 14);
+		y = GetTextScriptNo(gTS.p_read + 19);
 
-		int xm = gMC->xm;
-		int ym = gMC->ym;
+		int xm = gMC.xm;
+		int ym = gMC.ym;
 
 		bSetRespawn = FALSE; // Do NOT set a respawn point
 		if (!TransferStage(z, w, x, y))
@@ -170,16 +178,16 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		}
 
 		// Restore player velocity
-		gMC->xm = xm;
-		gMC->ym = ym;
+		gMC.xm = xm;
+		gMC.ym = ym;
 	}
 	else if (strncmp(where + 1, "TRX", 3) == 0) //TRansport keep X:Y (buggy)
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
-		w = GetTextScriptNo(gTS->p_read + 9);
+		z = GetTextScriptNo(gTS.p_read + 4);
+		w = GetTextScriptNo(gTS.p_read + 9);
 
-		int trx_x = gMC->x / 0x200 / 0x10;
-		int trx_y = gMC->y / 0x200 / 0x10;
+		int trx_x = gMC.x / 0x200 / 0x10;
+		int trx_y = gMC.y / 0x200 / 0x10;
 
 		bSetRespawn = TRUE;
 		if (!TransferStage(z, w, trx_x, trx_y))
@@ -189,11 +197,11 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "TX2", 3) == 0) //Transport keep X:Y (buggy, No Respawn)
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
-		w = GetTextScriptNo(gTS->p_read + 9);
+		z = GetTextScriptNo(gTS.p_read + 4);
+		w = GetTextScriptNo(gTS.p_read + 9);
 
-		int trx_x = gMC->x / 0x200 / 0x10;
-		int trx_y = gMC->y / 0x200 / 0x10;
+		int trx_x = gMC.x / 0x200 / 0x10;
+		int trx_y = gMC.y / 0x200 / 0x10;
 
 		bSetRespawn = FALSE; // Do NOT set a respawn point
 		if (!TransferStage(z, w, trx_x, trx_y))
@@ -204,33 +212,33 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	else if (strncmp(where + 1, "MS4", 3) == 0) // MeSsage box 4
 	{
 		ClearTextLine();
-		gTS->flags |= 0x01;
-		gTS->flags &= ~0x32;
-		if (gTS->flags & 0x40)
-			gTS->flags |= 0x10;
-		gTS->face = 0;
-		gTS->p_read += 4;
+		gTS.flags |= 0x01;
+		gTS.flags &= ~0x32;
+		if (gTS.flags & 0x40)
+			gTS.flags |= 0x10;
+		gTS.face = 0;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "FN2", 3) == 0) // Focus on Npc 2 (FON but with index_x and index_y in use?)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 		SetFrameTargetNpCharWithMyCharIndex(x, y);
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "FM2", 3) == 0) // Focus on Me 2 ~ (Wait, Mode, OffsetX, OffsetY)
 	{
-		w = GetTextScriptNo(gTS->p_read + 4);
-		x = GetTextScriptNo(gTS->p_read + 9);
-		y = GetTextScriptNo(gTS->p_read + 14);
-		z = GetTextScriptNo(gTS->p_read + 19);
+		w = GetTextScriptNo(gTS.p_read + 4);
+		x = GetTextScriptNo(gTS.p_read + 9);
+		y = GetTextScriptNo(gTS.p_read + 14);
+		z = GetTextScriptNo(gTS.p_read + 19);
 		SetFrameTargetMyCharOffset(w, x, y, z);
-		gTS->p_read += 23;
+		gTS.p_read += 23;
 	}
 	else if (strncmp(where + 1, "LDR", 3) == 0) // Lock Direction (only when using <FM2)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
 		switch (x)
 		{
@@ -244,41 +252,41 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 				break;
 		}
 
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "FOC", 3) == 0) // Focus on Coordinate
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
-		z = GetTextScriptNo(gTS->p_read + 14);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
+		z = GetTextScriptNo(gTS.p_read + 14);
 		SetFrameTargetCoordinate(x, y * 0x200 * 0x10, z * 0x200 * 0x10);
-		gTS->p_read += 18;
+		gTS.p_read += 18;
 	}
 	else if (strncmp(where + 1, "RNJ", 3) == 0) // Random Number Jump
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		z = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 9);
 		JumpTextScript(Random(x, z));
 	}
 	else if (strncmp(where + 1, "SWN", 3) == 0) // Set Window Name
 	{
 		char CustomWindowName[MAX_PATH];
-		gTS->p_read += 4;
-		memset(CustomWindowName, 0, sizeof(CustomWindowName));
-		GetTextScriptString(CustomWindowName);
-		SetCustomWindowTitle(CustomWindowName);
+		gTS.p_read += 4; // Read the command
+		memset(CustomWindowName, 0, sizeof(CustomWindowName)); // idk i wanna be safe
+		GetTextScriptString(CustomWindowName); // We get the string here
+		SetCustomWindowTitle(CustomWindowName); // NOW we use it !!
 	}
 	else if (strncmp(where + 1, "ML-", 3) == 0) // Max Life -
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 4);
 		RemoveMaxLifeMyChar(z);
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "ML=", 3) == 0) // Max Life =
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 4);
 		SetMaxLifeMyChar(z);
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "LSC", 3) == 0) // Load tsc SCript
 	{
@@ -286,7 +294,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		char path[MAX_PATH];
 		char path_dir[20];
 
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 		memset(CustomScriptName, 0, sizeof(CustomScriptName));
 		GetTextScriptString(CustomScriptName);
 
@@ -303,7 +311,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		char address[8];
 		char address2[8];
 
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(address, 0, sizeof(address));
 		memset(address2, 0, sizeof(address2));
@@ -315,29 +323,29 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "FNJ", 3) == 0) // Flag Not Jump
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		z = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 9);
 
 		if (!(GetNPCFlag(x)))
 			JumpTextScript(z);
 		else
-			gTS->p_read += 13;
+			gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "SNJ", 3) == 0) // Skipflag Not Jump
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		z = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 9);
 
 		if (!(GetSkipFlag(x)))
 			JumpTextScript(z);
 		else
-			gTS->p_read += 13;
+			gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "IMF", 3) == 0) // IMage Folder
 	{
 		char path[ImgFolderSize];
 
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(path, 0, sizeof(path));
 
@@ -355,7 +363,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	{
 		char name[ImgNameSize];
 
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(name, 0, sizeof(name));
 
@@ -365,7 +373,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	else if (strncmp(where + 1, "BKG", 3) == 0) // BacKGround
 	{
 		char bkPath[bkgTxTSize];
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(bkPath, 0, sizeof(bkPath));
 
@@ -374,47 +382,47 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "BKP", 3) == 0) // BacKground Parameter
 	{
-		w = GetTextScriptNo(gTS->p_read + 4);
-		x = GetTextScriptNo(gTS->p_read + 9);
-		y = GetTextScriptNo(gTS->p_read + 14);
+		w = GetTextScriptNo(gTS.p_read + 4);
+		x = GetTextScriptNo(gTS.p_read + 9);
+		y = GetTextScriptNo(gTS.p_read + 14);
 
 		BKG_SetParameter(w, x, y); // Set parameter X for layer W to value Y
-		gTS->p_read += 18;
+		gTS.p_read += 18;
 	}
 	else if (strncmp(where + 1, "BKR", 3) == 0) // BacKground Reset
 	{
 		BKG_ResetBackgrounds();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "BKE", 3) == 0) // BacKground Enable
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 4);
 		bkList[z].isActive = true;
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "BKD", 3) == 0) // BacKground Disable
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 4);
 		bkList[z].isActive = false;
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "BUY", 3) == 0) // BUY something (with money enabled)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
 		if (playerMoney < x) // if player money is less than X, jump event
 			JumpTextScript(y);
 		else
 		{
 			playerMoney -= x;
-			gTS->p_read += 13;
+			gTS.p_read += 13;
 		}
 	}
 	else if (strncmp(where + 1, "BY2", 3) == 0) // BuY something 2 (with money enabled)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
 		if (playerMoney >= x) // if player money is greater than or equal to X, jump event
 		{
@@ -422,24 +430,24 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 			JumpTextScript(y);
 		}
 		else
-			gTS->p_read += 13;
+			gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "SEL", 3) == 0) // SELl (Add money when money is enabled)
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 4);
 		playerMoney += z;
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "SL=", 3) == 0) // SeLl = (Set money to Z when money is enabled)
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 4);
 		playerMoney = z;
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "CSF", 3) == 0) // Change Surface File (This command needs a rewrite!)
 	{
 		char surfaceId[0x30];
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(surfaceId, 0, sizeof(surfaceId));
 		
@@ -541,7 +549,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	{
 		char back[32];
 		char id[32];
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(back, 0, sizeof(back));
 		memset(id, 0, sizeof(id));
@@ -557,7 +565,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		char path[MAX_PATH];
 		char path_dir[20];
 		char parts[32];
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(path, 0, sizeof(path));
 		memset(path_dir, 0, sizeof(path_dir));
@@ -577,29 +585,29 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "CO+", 3) == 0) // Collectable Jump
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
 		AddCollectables(x, y);
 
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "CO-", 3) == 0) // Collectable Jump
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
 		RemoveCollectables(x, y);
 
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "COJ", 3) == 0) // Collectable Jump
 	{
 		int collectable;
 
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
-		z = GetTextScriptNo(gTS->p_read + 14);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
+		z = GetTextScriptNo(gTS.p_read + 14);
 
 		switch (x)
 		{
@@ -628,104 +636,104 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		if (collectable >= y)
 			JumpTextScript(z);
 		else
-			gTS->p_read += 18;
+			gTS.p_read += 18;
 	}
 	else if (strncmp(where + 1, "COE", 3) == 0) // COllectable Enable
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 4);
 		EnableCollectable(z);
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "COD", 3) == 0) // COllectable Disable
 	{
-		z = GetTextScriptNo(gTS->p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 4);
 		DisableCollectable(z);
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "CXP", 3) == 0) // Collectable X Position
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
 		SetCollectablePosition(x, y, false);
 
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "CYP", 3) == 0) // Collectable Y Position
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
 		SetCollectablePosition(x, y, true);
 
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "CXO", 3) == 0) // Collectable X Offset
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
 		SetCollectableXOffset(x, y);
 
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "PHY", 3) == 0) // set PHYsics
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
-		SetPlayerPhysics(x, y);
+		SetPlayerPhysicsValues(x, y);
 
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "IPH", 3) == 0) // Init PHysics
 	{
 		InitMyCharPhysics();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "VAR", 3) == 0) // VARiable (Set variable X to Y)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 
 		SetVariable(x, y);
 
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "VA+", 3) == 0) // VAriable + (Add number Y to variable X)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 		SetVariable(x, GetVariable(x) + y);
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "VA-", 3) == 0) // VAriable - (Subtract number Y to variable X)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 		SetVariable(x, GetVariable(x) - y);
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "VA*", 3) == 0) // VAriable * (Multiply number Y to variable X)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 		SetVariable(x, GetVariable(x) * y);
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "VA/", 3) == 0) // VAriable / (Divide number Y to variable X)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 		SetVariable(x, GetVariable(x) / y);
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "VAJ", 3) == 0) // VAriable Jump (Compares number W to Number X (not variables) using compare method Y. Jump to event Z if successful)
 	{
-		w = GetTextScriptNo(gTS->p_read + 4);
-		x = GetTextScriptNo(gTS->p_read + 9);
-		y = GetTextScriptNo(gTS->p_read + 14);
-		z = GetTextScriptNo(gTS->p_read + 19);
+		w = GetTextScriptNo(gTS.p_read + 4);
+		x = GetTextScriptNo(gTS.p_read + 9);
+		y = GetTextScriptNo(gTS.p_read + 14);
+		z = GetTextScriptNo(gTS.p_read + 19);
 
 		BOOL success = FALSE;
 
@@ -763,30 +771,30 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		if (success)
 			JumpTextScript(z);
 		else
-			gTS->p_read += 23;
+			gTS.p_read += 23;
 	}
 	else if (strncmp(where + 1, "VAZ", 3) == 0) // VAriable Zero (Sets Y variables to 0, starting at X)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 		for (int j = 0; j < y; ++j) {
 			SetVariable(x + j, 0);
 		}
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "VND", 3) == 0) // Variable raNDom (Generates a random # between X and Y, and puts the result in variable Z)
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
-		z = GetTextScriptNo(gTS->p_read + 14);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
+		z = GetTextScriptNo(gTS.p_read + 14);
 		SetVariable(z, Random(x, y));
-		gTS->p_read += 18;
+		gTS.p_read += 18;
 	}
 	else if (strncmp(where + 1, "VIJ", 3) == 0) // Variable Increment Jump (Increments variable W, if W >= X, X is set to 0 and jumps to event Y)
 	{
-		w = GetTextScriptNo(gTS->p_read + 4);
-		x = GetTextScriptNo(gTS->p_read + 9);
-		y = GetTextScriptNo(gTS->p_read + 14);
+		w = GetTextScriptNo(gTS.p_read + 4);
+		x = GetTextScriptNo(gTS.p_read + 9);
+		y = GetTextScriptNo(gTS.p_read + 14);
 		SetVariable(w, GetVariable(w) + 1);
 		if (GetVariable(w) >= x)
 		{
@@ -794,12 +802,12 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 			JumpTextScript(y);
 		}
 		else
-			gTS->p_read += 18;
+			gTS.p_read += 18;
 	}
 	else if (strncmp(where + 1, "PAT", 3) == 0) // PATch load
 	{
 		char patch[MAX_PATH];
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(patch, 0, sizeof(patch));
 
@@ -810,7 +818,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	else if (strncmp(where + 1, "UPT", 3) == 0) // UnPaTch
 	{
 		UnpatchMemory();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "RSP", 3) == 0) // ReSPawn
 	{
@@ -818,43 +826,43 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "SRP", 3) == 0) // Set ResPawn
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
 		SetRespawnPoint(x, y);
-		gTS->p_read += 13;
+		gTS.p_read += 13;
 	}
 	else if (strncmp(where + 1, "AMC", 3) == 0) // ArMs Clear
 	{
 		ClearArmsData();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "ITC", 3) == 0) // ITem Clear
 	{
 		ClearItemData();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "BLO", 3) == 0) // BLOw up
 	{
-		w = GetTextScriptNo(gTS->p_read + 4);
+		w = GetTextScriptNo(gTS.p_read + 4);
 		BossExplosionAtNpc(w);
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "PS-", 3) == 0) // Portal Slot -
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
+		x = GetTextScriptNo(gTS.p_read + 4);
 		SubPermitStage(x);
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "PSC", 3) == 0) // Portal Slot Clear
 	{
 		ClearPermitStage();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "BFS", 3) == 0) // Booster Fuel Set
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
-		y = GetTextScriptNo(gTS->p_read + 9);
-		z = GetTextScriptNo(gTS->p_read + 14);
+		x = GetTextScriptNo(gTS.p_read + 4);
+		y = GetTextScriptNo(gTS.p_read + 9);
+		z = GetTextScriptNo(gTS.p_read + 14);
 		switch (x)
 		{
 			default:
@@ -887,11 +895,11 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 				break;
 		}
 		Mod_WriteBoosterFuel();
-		gTS->p_read += 18;
+		gTS.p_read += 18;
 	}
 	else if (strncmp(where + 1, "STT", 3) == 0) // STage Table
 	{
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(stageTblPath, 0, sizeof(stageTblPath));
 
@@ -900,7 +908,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	}
 	else if (strncmp(where + 1, "NPT", 3) == 0) // NPc Table
 	{
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 
 		memset(npcTblPath, 0, sizeof(npcTblPath));
 
@@ -910,7 +918,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	else if (strncmp(where + 1, "HSC", 3) == 0) // Head SCript
 	{
 		char headPath[CustomTscMaxPath];
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 		memset(headPath, 0, sizeof(headPath));
 		GetTextScriptString(headPath);
 		strcpy(CustomHeadTSCLocation, headPath);
@@ -918,7 +926,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	else if (strncmp(where + 1, "ASC", 3) == 0) // Armsitem SCript
 	{
 		char invPath[CustomTscMaxPath];
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 		memset(invPath, 0, sizeof(invPath));
 		GetTextScriptString(invPath);
 		strcpy(CustomArmsItemTSCLocation, invPath);
@@ -926,7 +934,7 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	else if (strncmp(where + 1, "PXT", 3) == 0) // PiXTone folder
 	{
 		char pixtoneFolder[MaxPixTonePath];
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 		memset(pixtoneFolder, 0, sizeof(pixtoneFolder));
 		GetTextScriptString(pixtoneFolder);
 		strcpy(global_pixtoneFolder, pixtoneFolder);
@@ -941,32 +949,32 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	else if (strncmp(where + 1, "RSF", 3) == 0) // Reset SurFaces
 	{
 		ResetCustomGenericData();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "CFE", 3) == 0) // Collab Flag Enable
 	{
 		enable_collab_flags = 1;
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "CFD", 3) == 0) // Collab Flag Disable
 	{
 		enable_collab_flags = 0;
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "ICF", 3) == 0) // Init Collab Flag
 	{
 		InitCollabFlags();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "ICD", 3) == 0) // Init Collab Data
 	{
 		InitMyCollabData();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "CLN", 3) == 0) // CoLlab Name
 	{
 		char collabName[CollabNameMaxPath];
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 		memset(collabName, 0, sizeof(collabName));
 		GetTextScriptString(collabName);
 		strcpy(setting_collab_name, collabName);
@@ -974,17 +982,78 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 	else if (strncmp(where + 1, "ICN", 3) == 0) // Init Collab Name
 	{
 		InitCollabName();
-		gTS->p_read += 4;
+		gTS.p_read += 4;
 	}
 	else if (strncmp(where + 1, "PFJ", 3) == 0) // ProFile Jump
 	{
-		w = GetTextScriptNo(gTS->p_read + 4);
+		w = GetTextScriptNo(gTS.p_read + 4);
 
 		if (IsProfile())
 			JumpTextScript(w);
 		else
-			gTS->p_read += 8;
+			gTS.p_read += 8;
 	}
+	else if (strncmp(where + 1, "RVI", 3) == 0) // ReVIve
+	{
+		RevivePlayer();
+		gTS.p_read += 4;
+	}
+	else if (strncmp(where + 1, "SBL", 3) == 0) // Spawn BuLlet
+	{
+		w = GetTextScriptNo(gTS.p_read + 4);
+		x = GetTextScriptNo(gTS.p_read + 9);
+		y = GetTextScriptNo(gTS.p_read + 14);
+		z = GetTextScriptNo(gTS.p_read + 19);
+
+		SetBullet(w, x * 0x200 * 0x10, y * 0x200 * 0x10, z);
+
+		gTS.p_read += 23;
+	}
+	else if (strncmp(where + 1, "SCT", 3) == 0) // Spawn CareT
+	{
+		w = GetTextScriptNo(gTS.p_read + 4);
+		x = GetTextScriptNo(gTS.p_read + 9);
+		y = GetTextScriptNo(gTS.p_read + 14);
+		z = GetTextScriptNo(gTS.p_read + 19);
+
+		SetCaret(x * 0x200 * 0x10, y * 0x200 * 0x10, w, z);
+
+		gTS.p_read += 23;
+	}
+	else if (strncmp(where + 1, "EX+", 3) == 0) // EXp +
+	{
+		x = GetTextScriptNo(gTS.p_read + 4);
+		AddExpMyChar(x);
+		gTS.p_read += 8;
+	}
+	/*
+	else if (strncmp(where + 1, "INV", 3) == 0) // INVentory
+	{
+		// Set event to return to
+		x = GetTextScriptNo(gTS.p_read + 4);
+		inventoryBackupEvent = x;
+
+		// Allow the player to move their cursor in the inventory
+		g_GameFlags |= 3;
+
+		BackupSurface(SURFACE_ID_SCREEN_GRAB, &grcGame);
+
+		// This needs changed
+		switch (CampLoop())
+		{
+			case 0:
+				return 0;
+
+			case 2:
+				return 2;
+		}
+		
+		gMC.cond &= ~1;
+
+		// Return to event
+		StartTextScript(inventoryBackupEvent);
+	}
+	*/
 	else
 		return 0;
 	
@@ -998,14 +1067,14 @@ static int CustomTSC_MIM(MLHookCPURegisters* regs, void* ud)
 	(void)ud;
 	int w, x, y, z;
 
-	char* where = TextScriptBuffer + gTS->p_read;
+	char* where = TextScriptBuffer + gTS.p_read;
 	if (where[0] != '<')
 		return 0;
 	if (strncmp(where + 1, "MIM", 3) == 0) // MIMiga mask
 	{
-		x = GetTextScriptNo(gTS->p_read + 4);
+		x = GetTextScriptNo(gTS.p_read + 4);
 		mim_num = x;
-		gTS->p_read += 8;
+		gTS.p_read += 8;
 	}
 	else
 		return 0;
@@ -1024,12 +1093,6 @@ void ResetCollabPaths()
 void Replacement_EncryptionBinaryData2(unsigned char* pData, long size)
 {
 
-}
-
-void Mod_WriteBoosterFuel()
-{
-	ModLoader_WriteLong((void*)0x4157A7, booster_08_fuel); // Booster 0.8 Fuel
-	ModLoader_WriteLong((void*)0x4157BD, booster_20_fuel); // Booster 2.0 Fuel
 }
 
 void InitMod_TSC()

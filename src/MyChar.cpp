@@ -8,6 +8,7 @@
 #include "MyChar.h"
 
 #include "main.h"
+#include "mod_loader.h"
 #include "ModSettings.h"
 #include "cave_story.h"
 #include "Collectables.h"
@@ -39,7 +40,6 @@ int setting_extrajump_water_jump_height = 640; // the jump force of an extra jum
 // physics settings
 // if the run button is enabled, you must set your own physics
 
-bool setting_physics_ini_enabled = false;
 bool setting_run_button_enabled = false;
 bool setting_run_button_flag_enabled = false;
 int setting_run_button_flag = 6502;
@@ -94,6 +94,57 @@ int mim_num = 0;
 int mim_player_size_width = 16;
 int mim_player_size_height = 16;
 
+// Version v1.0.7 physics updates
+
+int setting_physics_boost20_accel_up = -1535;
+int setting_physics_boost20_accel_left = -1535;
+int setting_physics_boost20_accel_right = 1535;
+int setting_physics_boost20_accel_down = 1535;
+int setting_physics_boost20_accel_up_no_key = -1535;
+
+int setting_physics_boost08_accel_add = 32;
+int setting_physics_boost08_accel_max_speed = -1024;
+
+int setting_physics_max_speed_left = -1535;
+int setting_physics_max_speed_right = 1535;
+int setting_physics_max_speed_up = -1535;
+int setting_physics_max_speed_down = 1535;
+
+int setting_physics_water_max_speed_left = -1535;
+int setting_physics_water_max_speed_right = 1535;
+int setting_physics_water_max_speed_up = -1535;
+int setting_physics_water_max_speed_down = 1535;
+
+void Set_Version107_Physics()
+{
+	ModLoader_WriteLong((void*)0x4159BA, setting_physics_boost20_accel_up);
+	ModLoader_WriteLong((void*)0x4159E8, setting_physics_boost20_accel_left);
+	ModLoader_WriteLong((void*)0x415A13, setting_physics_boost20_accel_right);
+	ModLoader_WriteLong((void*)0x415A3D, setting_physics_boost20_accel_down);
+	ModLoader_WriteLong((void*)0x415A5A, setting_physics_boost20_accel_up_no_key);
+
+	ModLoader_WriteByte((void*)0x415EEE, setting_physics_boost08_accel_add);
+	ModLoader_WriteLong((void*)0x415EE0, setting_physics_boost08_accel_max_speed);
+
+	ModLoader_WriteLong((void*)0x4160DD, setting_physics_max_speed_left);
+	ModLoader_WriteLong((void*)0x4160E9, setting_physics_max_speed_left);
+	ModLoader_WriteLong((void*)0x4160F3, setting_physics_max_speed_right);
+	ModLoader_WriteLong((void*)0x4160FF, setting_physics_max_speed_right);
+	ModLoader_WriteLong((void*)0x416109, setting_physics_max_speed_up);
+	ModLoader_WriteLong((void*)0x416115, setting_physics_max_speed_up);
+	ModLoader_WriteLong((void*)0x41611F, setting_physics_max_speed_down);
+	ModLoader_WriteLong((void*)0x41612B, setting_physics_max_speed_down);
+
+	ModLoader_WriteLong((void*)0x416083, setting_physics_water_max_speed_left);
+	ModLoader_WriteLong((void*)0x41608F, setting_physics_water_max_speed_left);
+	ModLoader_WriteLong((void*)0x416099, setting_physics_water_max_speed_right);
+	ModLoader_WriteLong((void*)0x4160A5, setting_physics_water_max_speed_right);
+	ModLoader_WriteLong((void*)0x4160AF, setting_physics_water_max_speed_up);
+	ModLoader_WriteLong((void*)0x4160BB, setting_physics_water_max_speed_up);
+	ModLoader_WriteLong((void*)0x4160C5, setting_physics_water_max_speed_down);
+	ModLoader_WriteLong((void*)0x4160D1, setting_physics_water_max_speed_down);
+}
+
 void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 {
 	Freeware_memset(dst, val, size);
@@ -124,22 +175,22 @@ void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 void InitMyChar_Original(void)
 {
 	Freeware_memset(&gMC, 0, sizeof(MYCHAR));
-	gMC->cond = 0x80;
-	gMC->direct = 2;
+	gMC.cond = 0x80;
+	gMC.direct = 2;
 
-	gMC->view.back = 8 * 0x200;
-	gMC->view.top = 8 * 0x200;
-	gMC->view.front = 8 * 0x200;
-	gMC->view.bottom = 8 * 0x200;
+	gMC.view.back = 8 * 0x200;
+	gMC.view.top = 8 * 0x200;
+	gMC.view.front = 8 * 0x200;
+	gMC.view.bottom = 8 * 0x200;
 
-	gMC->hit.back = 5 * 0x200;
-	gMC->hit.top = 8 * 0x200;
-	gMC->hit.front = 5 * 0x200;
-	gMC->hit.bottom = 8 * 0x200;
+	gMC.hit.back = 5 * 0x200;
+	gMC.hit.top = 8 * 0x200;
+	gMC.hit.front = 5 * 0x200;
+	gMC.hit.bottom = 8 * 0x200;
 
-	gMC->life = 3;
-	gMC->max_life = 3;
-	gMC->unit = 0;
+	gMC.life = 3;
+	gMC.max_life = 3;
+	gMC.unit = 0;
 }
 
 void InitMyCollabData()
@@ -151,7 +202,7 @@ void InitMyCollabData()
 	InitMyCharBoostFuel();
 }
 
-void SetPlayerPhysics(int x, int y)
+void SetPlayerPhysicsValues(int x, int y)
 {
 	switch (x)
 	{
@@ -261,6 +312,93 @@ void SetPlayerPhysics(int x, int y)
 		case 24:
 			setting_bounce_speed = y;
 			break;
+
+		// Booster 2.0 Acceleration
+		case 25:
+			setting_physics_boost20_accel_up = -y;
+			ModLoader_WriteLong((void*)0x4159BA, setting_physics_boost20_accel_up);
+			break;
+
+		case 26:
+			setting_physics_boost20_accel_left = -y;
+			ModLoader_WriteLong((void*)0x4159E8, setting_physics_boost20_accel_left);
+			break;
+
+		case 27:
+			setting_physics_boost20_accel_right = y;
+			ModLoader_WriteLong((void*)0x415A13, setting_physics_boost20_accel_right);
+			break;
+
+		case 28:
+			setting_physics_boost20_accel_down = y;
+			ModLoader_WriteLong((void*)0x415A3D, setting_physics_boost20_accel_down);
+			break;
+
+		case 29:
+			setting_physics_boost20_accel_up_no_key = -y;
+			ModLoader_WriteLong((void*)0x415A5A, setting_physics_boost20_accel_up_no_key);
+			break;
+
+		// Booster 0.8 Acceleration
+		case 30:
+			setting_physics_boost08_accel_add = y;
+			ModLoader_WriteByte((void*)0x415EEE, setting_physics_boost08_accel_add);
+			break;
+
+		case 31:
+			setting_physics_boost08_accel_max_speed = -y;
+			ModLoader_WriteLong((void*)0x415EE0, setting_physics_boost08_accel_max_speed);
+			break;
+
+		// Max Speed
+		case 32:
+			setting_physics_max_speed_left = -y;
+			ModLoader_WriteLong((void*)0x4160DD, setting_physics_max_speed_left);
+			ModLoader_WriteLong((void*)0x4160E9, setting_physics_max_speed_left);
+			break;
+
+		case 33:
+			setting_physics_max_speed_right = y;
+			ModLoader_WriteLong((void*)0x4160F3, setting_physics_max_speed_right);
+			ModLoader_WriteLong((void*)0x4160FF, setting_physics_max_speed_right);
+			break;
+
+		case 34:
+			setting_physics_max_speed_up = -y;
+			ModLoader_WriteLong((void*)0x416109, setting_physics_max_speed_up);
+			ModLoader_WriteLong((void*)0x416115, setting_physics_max_speed_up);
+			break;
+
+		case 35:
+			setting_physics_max_speed_down = y;
+			ModLoader_WriteLong((void*)0x41611F, setting_physics_max_speed_down);
+			ModLoader_WriteLong((void*)0x41612B, setting_physics_max_speed_down);
+			break;
+
+		// Max Speed (Underwater)
+		case 36:
+			setting_physics_water_max_speed_left = -y;
+			ModLoader_WriteLong((void*)0x416083, setting_physics_water_max_speed_left);
+			ModLoader_WriteLong((void*)0x41608F, setting_physics_water_max_speed_left);
+			break;
+
+		case 37:
+			setting_physics_water_max_speed_right = y;
+			ModLoader_WriteLong((void*)0x416099, setting_physics_water_max_speed_right);
+			ModLoader_WriteLong((void*)0x4160A5, setting_physics_water_max_speed_right);
+			break;
+
+		case 38:
+			setting_physics_water_max_speed_up = -y;
+			ModLoader_WriteLong((void*)0x4160AF, setting_physics_water_max_speed_up);
+			ModLoader_WriteLong((void*)0x4160BB, setting_physics_water_max_speed_up);
+			break;
+
+		case 39:
+			setting_physics_water_max_speed_down = y;
+			ModLoader_WriteLong((void*)0x4160C5, setting_physics_water_max_speed_down);
+			ModLoader_WriteLong((void*)0x4160D1, setting_physics_water_max_speed_down);
+			break;
 	}
 }
 
@@ -302,13 +440,13 @@ void PutPlayersJumps(int fx, int fy)
 	}
 
 	if (current_jumps >= 1)
-		PutBitmap3(&grcGame, (gMC->x / 0x200) + (setting_jump_arrow_x_offset * jump_arrow_negative_x) - (fx / 0x200), (gMC->y / 0x200) + (setting_jump_arrow_y_offset * jump_arrow_negative_y) - (fy / 0x200), &rcJumpArrow, SURFACE_ID_AUTUMN_HUD);
+		PutBitmap3(&grcGame, (gMC.x / 0x200) + (setting_jump_arrow_x_offset * jump_arrow_negative_x) - (fx / 0x200), (gMC.y / 0x200) + (setting_jump_arrow_y_offset * jump_arrow_negative_y) - (fy / 0x200), &rcJumpArrow, SURFACE_ID_AUTUMN_HUD);
 }
 
 // 0x415535
 void Replacement_PutMyChar_PutChar_Call(const RECT* r, int a, int b, const RECT* r2, SurfaceID s)
 {
-	RECT rect_player = gMC->rect;
+	RECT rect_player = gMC.rect;
 
 	rect_player.top += (mim_player_size_height * 2) * mim_num;
 	rect_player.bottom += (mim_player_size_height * 2) * mim_num;
@@ -326,14 +464,14 @@ void Replacement_PutMyChar_Call(int fx, int fy)
 void Replacement_SetMyCharPosition_InitStar_Call()
 {
 	// Possibly reset the offset and locked direction here?
-	custom_tgt_x = gMC->x;
-	custom_tgt_y = gMC->y;
+	custom_tgt_x = gMC.x;
+	custom_tgt_y = gMC.y;
 	InitStar();
 }
 
 void CameraHorizontalHelper(BOOL bKey)
 {
-	if (gMC->direct == 0)
+	if (gMC.direct == 0)
 	{
 		custom_index_x -= 0x200;
 		if (custom_index_x < -0x8000)
@@ -368,7 +506,7 @@ void ActMyChar_CustomCamOffset(BOOL bKey)
 	// Camera
 	if (is_direction_locked == false)
 	{
-		if (gMC->direct == 0)
+		if (gMC.direct == 0)
 		{
 			custom_index_x -= 0x200;
 			if (custom_index_x < -0x8000)
@@ -431,8 +569,8 @@ void ActMyChar_CustomCamOffset(BOOL bKey)
 		}
 	}
 
-	custom_tgt_x = gMC->x + (custom_index_x + (custom_camera_offset_x * 0x200));
-	custom_tgt_y = gMC->y + (custom_index_y + (custom_camera_offset_y * 0x200));
+	custom_tgt_x = gMC.x + (custom_index_x + (custom_camera_offset_x * 0x200));
+	custom_tgt_y = gMC.y + (custom_index_y + (custom_camera_offset_y * 0x200));
 }
 
 void ActMyChar_RunButton(BOOL bKey, Physics *physics)
@@ -440,9 +578,9 @@ void ActMyChar_RunButton(BOOL bKey, Physics *physics)
 	// Controller players can't do this.
 	if ((setting_run_button_flag_enabled == true && GetNPCFlag(setting_run_button_flag)) || (setting_run_button_flag_enabled == false))
 	{
-		if (gMC->flag & 8) // only while grounded
+		if (gMC.flag & 8) // only while grounded
 		{
-			if ((gKey & gKeyShift) && !(gMC->flag & 0x100)) // if running + not in water
+			if ((gKey & gKeyShift) && !(gMC.flag & 0x100)) // if running + not in water
 			{
 				physics->max_dash = setting_running_speed;
 			}
@@ -469,7 +607,7 @@ int custom_abs(int x)
 
 void setPlayerPhysics(BOOL bKey, Physics *physics)
 {
-	if (gMC->flag & 0x100) // While in water
+	if (gMC.flag & 0x100) // While in water
 	{
 		physics->max_dash = setting_physics_water_max_dash;
 		physics->max_move = setting_physics_water_max_move;
@@ -501,12 +639,12 @@ void setPlayerPhysics(BOOL bKey, Physics *physics)
 	int kRight = (bKey && gKey & gKeyRight) ? 1 : 0;
 
 	int h_input = (kRight - kLeft);
-	bool resisting = (h_input != 0 && custom_sign(gMC->xm) != h_input && custom_sign(gMC->xm) != 0);
+	bool resisting = (h_input != 0 && custom_sign(gMC.xm) != h_input && custom_sign(gMC.xm) != 0);
 
-	if (gMC->flag & 0x200)
+	if (gMC.flag & 0x200)
 	{
 		if (h_input && setting_ice_particles)
-			SetCaret(gMC->x, gMC->y + (4 * 0x200), 13, 0);
+			SetCaret(gMC.x, gMC.y + (4 * 0x200), 13, 0);
 
 		if (resisting)
 			physics->dash1 = setting_physics_water_dash1 / 2;
@@ -518,9 +656,9 @@ void setPlayerPhysics(BOOL bKey, Physics *physics)
 
 void ActMyChar_OnWall(BOOL bKey)
 {
-	if (gMC->flag & 4 && gKeyRight) // In contact with right wall
+	if (gMC.flag & 4 && gKeyRight) // In contact with right wall
 		onWall = 1;
-	else if (gMC->flag & 1 && gKeyLeft) // In contact with left wall
+	else if (gMC.flag & 1 && gKeyLeft) // In contact with left wall
 		onWall = -1;
 	else
 		onWall = 0;
@@ -533,20 +671,20 @@ void SpawnWalljumpCarets(int type)
 		default:
 			if (onWall == 1)
 			{
-				SetCaret(gMC->x + (8 * 0x200), gMC->y, 13, 0);
-				SetCaret(gMC->x + (8 * 0x200), gMC->y, 13, 0);
+				SetCaret(gMC.x + (8 * 0x200), gMC.y, 13, 0);
+				SetCaret(gMC.x + (8 * 0x200), gMC.y, 13, 0);
 			}
 			else {
-				SetCaret(gMC->x - (8 * 0x200), gMC->y, 13, 0);
-				SetCaret(gMC->x - (8 * 0x200), gMC->y, 13, 0);
+				SetCaret(gMC.x - (8 * 0x200), gMC.y, 13, 0);
+				SetCaret(gMC.x - (8 * 0x200), gMC.y, 13, 0);
 			}
 			break;
 
 		case 1:
 			if (onWall == 1)
-				SetCaret(gMC->x + (8 * 0x200), gMC->y, 13, 0);
+				SetCaret(gMC.x + (8 * 0x200), gMC.y, 13, 0);
 			else
-				SetCaret(gMC->x - (8 * 0x200), gMC->y, 13, 0);
+				SetCaret(gMC.x - (8 * 0x200), gMC.y, 13, 0);
 			break;
 	}
 	
@@ -562,7 +700,7 @@ void ActMyChar_WallJump(BOOL bKey)
 	int walljump_speed = 0;
 	int walljump_height = 0;
 
-	if (gMC->flag & 0x100)
+	if (gMC.flag & 0x100)
 	{
 		walljump_speed = setting_walljump_water_horizontal_speed;
 		walljump_height = setting_walljump_water_jump_height;
@@ -577,12 +715,12 @@ void ActMyChar_WallJump(BOOL bKey)
 	{
 		if (bKey && entity_IsIceWalled == false) // If you have input + arent on an ice wall
 		{
-			if ((onWall != 0) && ((!(gMC->flag & 8)) || entity_IsWallboosting == true)) // If on a wall, and not grounded/wallboosting..
+			if ((onWall != 0) && ((!(gMC.flag & 8)) || entity_IsWallboosting == true)) // If on a wall, and not grounded/wallboosting..
 			{
 				if (gKeyTrg & gKeyJump)
 				{
-					gMC->xm = onWall * -walljump_speed;
-					gMC->ym = -walljump_height;
+					gMC.xm = onWall * -walljump_speed;
+					gMC.ym = -walljump_height;
 					PlaySoundObject(15, SOUND_MODE_PLAY);
 					SpawnWalljumpCarets(0);
 				}
@@ -590,13 +728,13 @@ void ActMyChar_WallJump(BOOL bKey)
 				// Slide down the wall if holding against it
 				if (entity_IsWallboosting == false)
 				{
-					if (gMC->ym > setting_walljump_sliding_speed)
-						gMC->ym = setting_walljump_sliding_speed;
+					if (gMC.ym > setting_walljump_sliding_speed)
+						gMC.ym = setting_walljump_sliding_speed;
 				}
 				else // if you're wallboosting on a wallboost entity
 				{
 					SpawnWalljumpCarets(1);
-					gMC->ym += -0x120; // not customizable atm
+					gMC.ym += -0x120; // not customizable atm
 					PlaySoundObject(152, SOUND_MODE_PLAY);
 				}
 			}
@@ -614,10 +752,10 @@ void DoAirJump(int jump_height)
 
 	if (--current_jumps >= 0) // Only jump if we have more than 0 air jumps
 	{
-		gMC->ym = -jump_height;
+		gMC.ym = -jump_height;
 		PlaySoundObject(15, SOUND_MODE_PLAY);
 		for (i = 0; i < 4; ++i)
-			SetNpChar(4, gMC->x + (Random(-12, 12) * 0x200), gMC->y + (Random(-12, 12) * 0x200), Random(-341, 341), Random(-0x600, 0), 0, NULL, 0x100);
+			SetNpChar(4, gMC.x + (Random(-12, 12) * 0x200), gMC.y + (Random(-12, 12) * 0x200), Random(-341, 341), Random(-0x600, 0), 0, NULL, 0x100);
 	}
 }
 
@@ -626,14 +764,14 @@ void ActMyChar_AirJumps(BOOL bKey)
 	//Air jumps
 	int airjump_height = 0;
 
-	if (gMC->flag & 0x100)
+	if (gMC.flag & 0x100)
 		airjump_height = setting_extrajump_water_jump_height;
 	else
 		airjump_height = setting_extrajump_jump_height;
 
 	if (bKey)
 	{
-		if (gKeyTrg & gKeyJump && !(gMC->flag & 8) && gMC->boost_cnt == 0)
+		if (gKeyTrg & gKeyJump && !(gMC.flag & 8) && gMC.boost_cnt == 0)
 		{
 			// This code is awful and should be rewritten at some point i think ..
 			if (setting_walljumps_enabled == true) // If wall jumps are enabled
@@ -650,7 +788,7 @@ void ActMyChar_AirJumps(BOOL bKey)
 	}
 
 	// Remove jumps when grounded
-	if (gMC->flag & 8)
+	if (gMC.flag & 8)
 	{
 		if (setting_doublejump_enabled)
 		{

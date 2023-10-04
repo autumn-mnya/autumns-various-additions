@@ -33,7 +33,6 @@ extern int setting_extrajump_jump_height;
 extern int setting_extrajump_water_jump_height;
 
 // physics
-extern bool setting_physics_ini_enabled;
 extern bool setting_run_button_enabled;
 extern bool setting_run_button_flag_enabled;
 extern int setting_run_button_flag;
@@ -82,9 +81,31 @@ extern int mim_num;
 extern int mim_player_size_width;
 extern int mim_player_size_height;
 
+// Version 1.0.7
+
+extern int setting_physics_boost20_accel_up;
+extern int setting_physics_boost20_accel_left;
+extern int setting_physics_boost20_accel_right;
+extern int setting_physics_boost20_accel_down;
+extern int setting_physics_boost20_accel_up_no_key;
+
+extern int setting_physics_boost08_accel_add;
+extern int setting_physics_boost08_accel_max_speed;
+
+extern int setting_physics_max_speed_left;
+extern int setting_physics_max_speed_right;
+extern int setting_physics_max_speed_up;
+extern int setting_physics_max_speed_down;
+
+extern int setting_physics_water_max_speed_left;
+extern int setting_physics_water_max_speed_right;
+extern int setting_physics_water_max_speed_up;
+extern int setting_physics_water_max_speed_down;
+
+void Set_Version107_Physics();
 void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size);
 void InitMyCollabData();
-void SetPlayerPhysics(int x, int y);
+void SetPlayerPhysicsValues(int x, int y);
 void Replacement_PutMyChar_PutChar_Call(const RECT* r, int a, int b, const RECT* r2, SurfaceID s);
 void Replacement_PutMyChar_Call(int fx, int fy);
 void Replacement_SetMyCharPosition_InitStar_Call();

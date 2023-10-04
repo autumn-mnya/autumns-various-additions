@@ -93,7 +93,7 @@ void Replacement_ActNpc111(NPCHAR* npc)
 	npc->rect.bottom += 32 * mim_num;
 
 	// Use a different sprite if the player is wearing the Mimiga Mask
-	if (gMC->equip & EQUIP_MIMIGA_MASK)
+	if (gMC.equip & EQUIP_MIMIGA_MASK)
 	{
 		npc->rect.top += 32;
 		npc->rect.bottom += 32;
@@ -174,7 +174,7 @@ void Replacement_ActNpc112(NPCHAR* npc)
 	npc->rect.bottom += 32 * mim_num;
 
 	// Use a different sprite if the player is wearing the Mimiga Mask
-	if (gMC->equip & EQUIP_MIMIGA_MASK)
+	if (gMC.equip & EQUIP_MIMIGA_MASK)
 	{
 		npc->rect.top += 32;
 		npc->rect.bottom += 32;
@@ -226,8 +226,8 @@ void Replacement_ActNpc150(NPCHAR* npc)
 
 			if (npc->direct > 10)
 			{
-				npc->x = gMC->x;
-				npc->y = gMC->y;
+				npc->x = gMC.x;
+				npc->y = gMC.y;
 				npc->direct -= 10;
 			}
 			break;
@@ -372,7 +372,7 @@ void Replacement_ActNpc150(NPCHAR* npc)
 	}
 
 	// Use a different sprite if the player is wearing the Mimiga Mask
-	if (gMC->equip & EQUIP_MIMIGA_MASK)
+	if (gMC.equip & EQUIP_MIMIGA_MASK)
 	{
 		npc->rect.top += 32;
 		npc->rect.bottom += 32;
