@@ -247,3 +247,157 @@ you win<NOD<CLO<END
 
 #6000
 <BKGbkPathver8split$<END
+
+#6001
+<VAR0000:0232
+<VAR0049:0247
+<END
+
+#6002
+<FL+6001<END
+
+#6003
+<FL+6002<END
+
+#6500
+<KEY
+<CH+6501:it$
+<CH+6502:looks$
+<CH+0000:like$
+<CH+0000:this$
+<CH+0000:when$
+<CH+0000:on$
+<CH+0000:screen$
+<CHO
+<MSG
+BYE<NOD<CLO<END
+#6501
+<KEY<MSG
+nothing much<NOD<CLO<END
+#6502
+<KEY<MSG
+floor<NOD<CLO<END
+
+// Bullshit Zone
+
+// Var0 -> player direction (same directions as normal cave story)
+// Var1 -> player pos (head of the snake)
+// Var2 -> temp var
+// Var3 -> fruit pos
+// Var4 -> score
+// Var5 -> temp var used to check player + fruit pos
+
+#6999
+// player and fruit are in same position
+<FL-V003
+<VA+0004:0001
+<VND5001:5064:0003
+<FL+V003
+<WAI0001
+<EVE7999
+#7000
+// THIS EVENT RUNS ON START OF THE GAME
+<HMC<CMU0021
+<VAR0000:0002
+<VAR0001:4001
+<FL+V001
+<VND5001:5064:0003
+<FL+V003
+<WAI0030
+<EVE7999
+// Input test zone
+#7999
+// Main loop, this event gets run over and over
+
+// Check pos if we're in the same spot
+// Variable 5 is used to make player pos the same number
+<VAR0005:V001
+<VA+0005:1000
+<VAJV005:V003:0000:6999
+// input keys
+// <FLJ stands for "FLag Jump". When a certain flag is set, we jump to a different "event" in our script.
+// *HOWEVER*, there are only 8000 flags !! so if u go above that, it sets out of bounds memory
+// In this case, flags 9088-9091 are the arrow keys movement!! so we just change event based off of that
+<FLJ9088:8000
+<FLJ9090:8001
+<FLJ9089:8002
+<FLJ9091:8003
+// randomize fruit to random positions every frame
+<FL-V003
+<VND5001:5064:0003
+<FL+V003
+<SOU0001<WAI0001<EVE7999
+#8000
+// Input left pressed, so we jump to event 8000
+
+// If variable #1 == 4001, jump to event 9000
+<VAJV001:4001:0000:9000
+<FL-V001
+<VA-0001:0001
+<FL+V001
+<WAI0001
+<EVE7999
+#8001
+// Input up pressed
+<VAJV001:4009:0003:9001
+<FL-V001
+<VA-0001:0008
+<FL+V001
+<WAI0001
+<EVE7999
+#8002
+// Input right pressed
+<VAJV001:4064:0000:9002
+<FL-V001
+<VA+0001:0001
+<FL+V001
+<WAI0001
+<EVE7999
+#8003
+// Input down pressed
+<VAJV001:4056:0002:9003
+<FL-V001
+<VA+0001:0008
+<FL+V001
+<WAI0001
+<EVE7999
+
+#9000
+// input left pressed but we're at position 4001
+<FL-V001
+<VAR0001:4064
+<FL+V001
+<WAI0001
+<EVE7999
+
+#9001
+// input up pressed but we're at position 4008 or lower
+<FL-V001
+// set temp variable 2 to 1 so that we can get the proper position
+<VAR0002:V001
+<VA-0002:4000
+<VAR0001:4056
+// set proper position using variable 2
+<VA+0001:V002
+<FL+V001
+<WAI0001
+<EVE7999
+#9002
+// input right pressed but we're at position 4064
+<FL-V001
+<VAR0001:4001
+<VA-0001:0001
+<FL+V001
+<EVE7999
+#9003
+// input down pressed but we're at position 4057 or higher
+<FL-V001
+// set temp variable 2 to 1 so that we can get the proper position
+<VAR0002:V001
+<VA-0002:4056
+<VAR0001:4000
+// set proper position using variable 2
+<VA+0001:V002
+<FL+V001
+<WAI0001
+<EVE7999

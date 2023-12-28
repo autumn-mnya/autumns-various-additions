@@ -102,6 +102,23 @@ extern int setting_physics_water_max_speed_right;
 extern int setting_physics_water_max_speed_up;
 extern int setting_physics_water_max_speed_down;
 
+// Version 1.0.9
+
+extern bool setting_double_jump_wall_jump_refresh;
+
+// Version 1.1.0
+extern int max_coyote;
+extern int coyote_frames;
+extern bool coyote_spent;
+extern int coyote_spent_frames;
+
+extern int max_buffer;
+extern int jump_buffer;
+extern bool buffer_timer;
+extern bool buffer_can_jump;
+
+extern int jump_sound_effect;
+
 void Set_Version107_Physics();
 void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size);
 void InitMyCollabData();

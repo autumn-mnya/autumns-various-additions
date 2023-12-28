@@ -1,3 +1,18 @@
+__Autumns Various Additions v1.1.0__
+-Added the ability to refresh double jumps with a walljump through a settings.ini option
+-Added RTA2 TSC Commands (<RSH, <RS2, <ROP, <RSC, <RSU)
+-Added <SRQ (<SRP but automatic on the players coordinates)
+-Added <CH+ and <CHO (Dialogue Choice commands)
+-Added Screen Wind entities for having wind effect you everywhere instead of just in wind current tiles
+-Added Coyote Frames and Buffer Frames
+
+__Autumnal Lab v1.1.0__
+-Added RTA2 TSC Commands to the Documentation
+-Added <SRQ, <CH+, and <CHO to the documentation
+-Added the Screen Wind entities to the CustomEntities.txt documentation
+
+########################################################################
+
 __Autumns Various Additions v1.0.7__
 -Fixed Life Drain.
 -Added <EX+ -- Add experience to the player.

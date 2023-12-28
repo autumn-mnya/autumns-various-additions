@@ -7894,3 +7894,39 @@ void ActEntity460(NPCHAR* npc)
 
 	npc->rect = rect;
 }
+
+// Wind NPC (horizontal)
+void ActEntity461(NPCHAR* npc)
+{
+	RECT rect = { 0, 0, 16, 16 };
+
+	int speed = 136;
+
+	if (npc->direct == 0)
+		speed *= -1;
+
+	gMC.xm += speed;
+
+	npc->rect = rect;
+}
+
+// Wind NPC (vertical)
+void ActEntity462(NPCHAR* npc)
+{
+	RECT rect = { 0, 0, 16, 16 };
+
+	int speed = -128;
+
+	if (npc->direct == 0)
+		speed = 85;
+
+	gMC.ym += speed;
+
+	npc->rect = rect;
+}
+
+// Reverse Momentum
+void ActEntity463(NPCHAR* npc)
+{
+
+}

@@ -115,6 +115,10 @@ int setting_physics_water_max_speed_right = 1535;
 int setting_physics_water_max_speed_up = -1535;
 int setting_physics_water_max_speed_down = 1535;
 
+// Version v1.0.9
+
+bool setting_double_jump_wall_jump_refresh = false;
+
 void Set_Version107_Physics()
 {
 	ModLoader_WriteLong((void*)0x4159BA, setting_physics_boost20_accel_up);
@@ -591,6 +595,7 @@ void ActMyChar_RunButton(BOOL bKey, Physics *physics)
 // Apologies Autumn
 
 // Don't name these the same as normal functions as they apparently mess up using them normally
+
 int custom_sign(double x) {
 	if (x > 0) return 1;
 	if (x < 0) return -1;
@@ -603,6 +608,44 @@ int custom_abs(int x)
 		return 1;
 	else
 		return 1;
+}
+
+// Version 1.1.0 coyote frames
+int max_coyote = 6;
+int coyote_frames = 0;
+bool coyote_spent = false;
+int coyote_spent_frames = 0;
+// Jump Buffering
+int max_buffer = 3;
+int jump_buffer = 0;
+bool buffer_timer = false;
+bool buffer_can_jump = true;
+int jump_sound_effect = 15;
+
+void ActMyChar_ForceJump(BOOL bKey, Physics* physics)
+{
+	if (gMC.flag & 0x2000)
+	{
+		// Another weird empty case needed for accurate assembly.
+		// There probably used to be some commented-out code here.
+	}
+	else
+	{
+		gMC.ym = -physics->jump;
+		PlaySoundObject(jump_sound_effect, SOUND_MODE_PLAY);
+		coyote_spent = true;
+	}
+}
+
+void ActMyChar_CoyoteJump(BOOL bKey, Physics *physics)
+{
+	if (bKey)
+	{
+		if (gKeyTrg & gKeyJump)
+		{
+			ActMyChar_ForceJump(bKey, physics);
+		}
+	}
 }
 
 void setPlayerPhysics(BOOL bKey, Physics *physics)
@@ -633,6 +676,67 @@ void setPlayerPhysics(BOOL bKey, Physics *physics)
 	// Run button when the setting is set to true
 	if (setting_run_button_enabled)
 		ActMyChar_RunButton(bKey, physics);
+
+	// Jump Buffer (early instance)
+	if (gMC.flag & 8 && buffer_timer == true)
+	{
+		if ((gKey & gKeyJump) && buffer_can_jump == true)
+			ActMyChar_ForceJump(bKey, physics);
+	}
+
+	// Coyote Frames
+	if (gMC.flag & 8)
+	{
+		jump_buffer = 0;
+		buffer_timer = false;
+		buffer_can_jump = true;
+		coyote_frames = 0;
+		coyote_spent = false;
+	}
+	else
+	{
+		if (!(gMC.equip & 32) && !(gMC.equip & 1)) // if we don't have booster equipped, then we do coyote frames
+		{
+			if (coyote_frames < max_coyote)
+				++coyote_frames;
+		}
+	}
+
+	if (coyote_spent == true)
+	{
+		if (coyote_spent_frames < 1)
+			++coyote_spent_frames;
+	}
+	else
+		coyote_spent_frames = 0;
+
+	// Coyote Jump if we're not on the ground, coyote hasnt been spent, and we're not going upwards
+	if ((!(gMC.flag & 8)) && (coyote_frames < max_coyote) && (coyote_spent == false))
+	{
+		if (gMC.ym >= 0)
+			ActMyChar_CoyoteJump(bKey, physics);
+		else
+			coyote_spent = true;
+	}
+
+	// Buffer frames
+	if (max_buffer > 0) // disabled if 0
+	{
+		if (!(gMC.flag & 8 || gMC.flag & 0x10 || gMC.flag & 0x20))
+		{
+			if ((gKeyTrg & gKeyJump) && current_jumps == 0)
+				buffer_timer = true;
+
+			if (buffer_timer == true)
+			{
+				if (jump_buffer < max_buffer)
+					++jump_buffer;
+
+				if (jump_buffer >= max_buffer)
+					buffer_can_jump = false;
+			}
+		}
+	}
 
 	// Ice
 	int kLeft = (bKey && gKey & gKeyLeft) ? 1 : 0;
@@ -690,6 +794,15 @@ void SpawnWalljumpCarets(int type)
 	
 }
 
+void CheckForDoubleJump()
+{
+	if (setting_double_jump_wall_jump_refresh)
+	{
+		if (current_jumps == 0)
+			current_jumps = 1;
+	}
+}
+
 void ActMyChar_WallJump(BOOL bKey)
 {
 	//Wall jumping
@@ -721,6 +834,21 @@ void ActMyChar_WallJump(BOOL bKey)
 				{
 					gMC.xm = onWall * -walljump_speed;
 					gMC.ym = -walljump_height;
+					coyote_spent = true; // spend coyote jump automatically
+
+					// Do this messy code to deicde if we should refresh a wall jump ,
+					if (setting_doublejump_enabled == true)
+					{
+						if (setting_doublejump_flag_enabled)
+						{
+							if (GetNPCFlag(setting_doublejump_flag))
+								CheckForDoubleJump();
+						}
+						else
+							CheckForDoubleJump();
+
+					}
+
 					PlaySoundObject(15, SOUND_MODE_PLAY);
 					SpawnWalljumpCarets(0);
 				}
@@ -769,7 +897,7 @@ void ActMyChar_AirJumps(BOOL bKey)
 	else
 		airjump_height = setting_extrajump_jump_height;
 
-	if (bKey)
+	if (bKey && ((coyote_frames >= max_coyote) || coyote_spent_frames == 1))
 	{
 		if (gKeyTrg & gKeyJump && !(gMC.flag & 8) && gMC.boost_cnt == 0)
 		{
@@ -809,6 +937,7 @@ void ActMyChar_Normal_Custom(BOOL bKey)
 	if (setting_walljumps_enabled)
 		ActMyChar_WallJump(bKey);
 
+	// Don't allow air jumping until coyote has run out?
 	ActMyChar_AirJumps(bKey);
 
 	ActMyChar_CustomCamOffset(bKey);

@@ -5,6 +5,7 @@
 #include <ddraw.h>
 #include <dinput.h>
 #include <dsound.h>
+#include <cstdio>
 #include <windows.h>
 
 static int& window_magnification = *reinterpret_cast<int*>(0x48F914); // Window magnification

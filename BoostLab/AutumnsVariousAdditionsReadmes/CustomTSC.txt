@@ -97,6 +97,15 @@ Arguments: 2 [<BUYwwww:xxxx] [money:event]
 This command will jump to event X if the player has W money, and will remove X money as well. Otherwise, it will continue the current event.
 Arguments: 2 [BY2wwww:xxxx] [money:event]
 
+- <CH+ - CHoice +
+Add new choice with text "string" to a "Dialogue Choice Box" array, running event W when chosen. If W is set to "0", then it'll continue the current event when that option is picked.
+Arguments: 2 [<CH+wwww:string] [event:text$]
+Example: <CH+0016:Save the game$
+
+- <CHO - CHOice
+Display dialogue choice options on screen. Freezes the game.
+Arguments: 0 [<CHO]
+
 - <SEL - SELl (Add money)
 [This TSC command is only useful when the money code is enabled in settings.ini.]
 This command will add money W to the players money amount.
@@ -196,6 +205,14 @@ Arguments: 2 [<FNJwwww:zzzz] [flag:event]
 Focus the Camera at an X:Y position on the map.
 Arguments: 3 [<FOCwwww:xxxx:yyyy] [wait:x:y]
 
+- <GKT - gKeyTrg jump
+If key id W is pressed, jump to event Z. Continue the script otherwise. Very janky!
+Arguments: 2 [<GKT0001:4000] [key:event]
+
+- <GKY - gKeY jump 
+If key id W is held down, jump to event Z. Continue the script otherwise. Very janky!
+Arguments: 2 [<GKT0001:4000] [key:event]
+
 - <LDR - Lock DiRection
 Only when <FM2 has been used -- This can lock the players direction they're facing.
 Arguments: 2 [<LDRwwww:zzzz] [mode:direction]
@@ -278,9 +295,13 @@ This will save the players current flags from <FL+, current collectables if the 
 This basically mostly works the same as <LDP, but doesnt actually save the game. Useful for harder mods or mods that are more platforming focused.
 Arguments: 0 [<RSP]
 
-- <SRP - Set ResPawn point
+- <SRP - Set Respawn Point
 Set the players respawn point at coordinates X:Y.
 Arguments: 2 [<SRPxxxx:yyyy] [x:y]
+
+- <SRQ - Set Respawn Quote
+Set the players respawn point at the players coordinates.
+Arguments: 0 [<SRQ]
 
 - <RVI - ReVIve player
 Unlike the respawning function above, this revives the player where they died. The HP you're revived with is in settings.ini.
@@ -472,3 +493,25 @@ Arguments: 0 [<ICD]
 - <ICN - Init Collab Name
 Reset Collab Name back to the one in settings.ini.
 Arguments: 0 [<ICN]
+
+# Random Time Attack Commands #
+
+- <RSH - Rta puSH
+"Push" an event to a stack of events. Use <RSC to clear the stack.
+Arguments: 1 [<RSHwwww] [event]
+
+- <RS2 - Rta puSh 2
+"Push" an <TRA event to a stack of events. Use <RSC to clear the stack.
+Arguments: 4 [<RS2wwww:zzzz:xxxx:yyyy] [map:event:x:y]
+
+- <ROP - Rta pOP
+"Pop" the lowest event in a stack of events --> Jumping to that event number immediately.
+Arguments: 0 [<ROP]
+
+- <RSC - Rta Stack Clear
+Clear the "stack" of events used by <RSH / <RS2.
+Arguments: 0 [<RSC]
+
+- <RSU - Rta ShUffle
+Shuffle the "stack" of events used by <RSH / <RS2.
+Arguments: 0 [<RSU]

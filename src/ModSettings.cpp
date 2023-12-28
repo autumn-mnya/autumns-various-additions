@@ -125,6 +125,12 @@ void InitMod_Settings()
 	// MyChar //
 	////////////
 
+	// Coyote Frames
+
+	max_coyote = ModLoader_GetSettingInt("Coyote Frames", 0);
+	max_buffer = ModLoader_GetSettingInt("Buffer Frames", 0);
+	jump_sound_effect = ModLoader_GetSettingInt("AVA Jump Sound Effect", 15);
+
 	// Walljumps
 	setting_walljumps_enabled = ModLoader_GetSettingBool("Walljumps Enabled", false);
 	setting_walljumps_flag_enabled = ModLoader_GetSettingBool("Walljumps Enable on Flag", false);
@@ -154,6 +160,8 @@ void InitMod_Settings()
 	setting_doublejump_enabled = ModLoader_GetSettingBool("Double Jump Enabled", false);
 	setting_doublejump_flag_enabled = ModLoader_GetSettingBool("Double Jump Enable on Flag", false);
 	setting_doublejump_flag = ModLoader_GetSettingInt("Double Jump Flag", 6501);
+	// Added in v1.0.9
+	setting_double_jump_wall_jump_refresh = ModLoader_GetSettingBool("Walljumps refresh Double Jump", false);
 
 	// Physics + Run button
 	setting_run_button_enabled = ModLoader_GetSettingBool("Enable Run Button", false);

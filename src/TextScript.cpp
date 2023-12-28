@@ -34,6 +34,10 @@
 #include "TextScriptCollabLoad.h"
 #include "TextScriptVAR.h"
 
+#include "DialogueChoice.h"
+
+EventQueue gEventQueue;
+
 // Booleans
 bool setting_enable_money_code = false;
 bool setting_money_disable_enemy_money_drops = false;
@@ -60,6 +64,46 @@ char stageTblPath[StageTblMaxPath];
 char npcTblPath[NpcTblMaxPath];
 
 int inventoryBackupEvent = 0;
+
+EventQueue::EventQueue(): events{}, mt{std::random_device{}()}
+{}
+void EventQueue::push(int event_no)
+{
+	MapChange mc;
+	mc.map_no = -1;
+	mc.starting_event = event_no;
+	mc.x = -1;
+	mc.y = -1;
+	
+	events.push_back(mc);
+}
+void EventQueue::push(int map_no, int event_no, int x, int y)
+{
+	MapChange mc;
+	mc.map_no = map_no;
+	mc.starting_event = event_no;
+	mc.x = x;
+	mc.y = y;
+	
+	events.push_back(mc);
+}
+std::tuple<int,int,int,int> EventQueue::pop()
+{
+	if (events.empty())
+		return std::make_tuple(-1, -1, -1, -1);
+	
+	MapChange mc = events.front();
+	events.pop_front();
+	return std::make_tuple(mc.map_no, mc.starting_event, mc.x, mc.y);
+}
+void EventQueue::shuffle()
+{
+	std::shuffle(std::begin(events), std::end(events), mt);
+}
+void EventQueue::clear()
+{
+	events.clear();
+}
 
 void Mod_WriteBoosterFuel()
 {
@@ -831,6 +875,11 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		SetRespawnPoint(x, y);
 		gTS.p_read += 13;
 	}
+	else if (strncmp(where + 1, "SRQ", 3) == 0) // Set Respawn Quote
+	{
+		SetRespawnPoint((gMC.x + 0x1000) / 0x2000, (gMC.y + 0x1000) / 0x2000);
+		gTS.p_read += 4;
+	}
 	else if (strncmp(where + 1, "AMC", 3) == 0) // ArMs Clear
 	{
 		ClearArmsData();
@@ -1025,6 +1074,93 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		x = GetTextScriptNo(gTS.p_read + 4);
 		AddExpMyChar(x);
 		gTS.p_read += 8;
+	}
+	else if (strncmp(where + 1, "RSH", 3) == 0) // Rta puSH
+	{
+		w = GetTextScriptNo(gTS.p_read + 4);
+		gEventQueue.push(w);
+		gTS.p_read += 8;
+	}
+	else if (strncmp(where + 1, "RS2", 3) == 0) // Rta puSh 2
+	{
+		z = GetTextScriptNo(gTS.p_read + 4);
+		w = GetTextScriptNo(gTS.p_read + 9);
+		x = GetTextScriptNo(gTS.p_read + 14);
+		y = GetTextScriptNo(gTS.p_read + 19);
+
+		gEventQueue.push(z, w, x, y);
+		gTS.p_read += 23;
+	}
+	else if (strncmp(where + 1, "ROP", 3) == 0) // Rta pOP
+	{
+		std::tie(z, w, x, y) = gEventQueue.pop();
+
+		if (z != -1)
+		{
+			if (!TransferStage(z, w, x, y))
+			{
+				MessageBoxA(ghWnd, "Failed to load stage", "Error", MB_OK);
+				return FALSE;
+			}
+		}
+		else if (w != -1)
+			JumpTextScript(w);
+		else
+			gTS.p_read += 4;
+	}
+	else if (strncmp(where + 1, "RSC", 3) == 0) // Rta puSh Clear
+	{
+		gEventQueue.clear();
+		gTS.p_read += 4;
+	}
+	else if (strncmp(where + 1, "RSU", 3) == 0) // Rta ShUffle
+	{
+		gEventQueue.shuffle();
+		gTS.p_read += 4;
+		isLoadingSave = true;
+	}
+	else if (strncmp(where + 1, "RSU", 3) == 0) // Rta ShUffle
+	{
+		gEventQueue.shuffle();
+		gTS.p_read += 4;
+	}
+	else if (strncmp(where + 1, "GKT", 3) == 0) // gKeyTrg (jump)
+	{
+		x = GetTextScriptNo(gTS.p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 9);
+
+		if (gKeyTrg & x)
+			JumpTextScript(z);
+		else
+			gTS.p_read += 13;
+	}
+	else if (strncmp(where + 1, "GKY", 3) == 0) // gKeY (jump)
+	{
+		x = GetTextScriptNo(gTS.p_read + 4);
+		z = GetTextScriptNo(gTS.p_read + 9);
+
+		if (gKey & x)
+			JumpTextScript(z);
+		else
+			gTS.p_read += 13;
+	}
+	else if (strncmp(where + 1, "CH+", 3) == 0) // CHoice +
+	{
+		x = GetTextScriptNo(gTS.p_read + 4);
+		gTS.p_read += 9;
+		char cstr[50];
+		GetTextScriptString(cstr);
+		//std::string fName(cstr);
+		AddDialogueChoiceData(x, cstr);
+	}
+	else if (strncmp(where + 1, "CHO", 3) == 0) // CHOice
+	{
+		gTS.p_read += 4;
+		gTS.flags &= ~0x33; // disable textbox
+		gTS.mode = 8;
+		PlaySoundObject(5, SOUND_MODE_PLAY);
+		gTS.wait = 0;
+		gSelectedChoice = 0;
 	}
 	/*
 	else if (strncmp(where + 1, "INV", 3) == 0) // INVentory

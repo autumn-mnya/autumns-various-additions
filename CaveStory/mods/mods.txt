@@ -1,2 +1,3 @@
 60fps
+graphics_enhancement
 autumns_various_additions

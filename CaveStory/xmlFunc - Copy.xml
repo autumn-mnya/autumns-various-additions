@@ -1,0 +1,26 @@
+<Data>
+	<Bitmap>
+		<!-- Animated Frame -->
+		<Image x="8" y="8" surface="20">
+			<Animation speed="4">
+				<Frame rect="96,48,112,64" />
+				<Frame rect="112,48,128,64" />
+				<Frame rect="128,48,144,64" />
+				<Frame rect="144,48,160,64" />
+			</Animation>
+		</Image>
+
+		<!-- Standard Normal Rect -->
+		<Image x="32" y="32" surface="17">
+			<Rect rect="0,0,32,32" />
+		</Image>
+	</Bitmap>
+
+    <Number>
+		<Num x="16" y="8" numberType="Assembly" zeros="false" Address="0x49E6E8"/>
+        <Num x="16" y="16" numberType="PlayerLife" zeros="false" RequiredFlags="6001,6002"/>
+        <Num x="16" y="24" numberType="PlayerDirection" zeros="false"/>
+		<Num x="240" y="16" numberType="Variable" zeros="false" VarNum="0"/>
+		<Num x="240" y="24" numberType="Variable" zeros="false" VarNum="49"/>
+    </Number>
+</Data>

@@ -21,6 +21,9 @@
 #include "TextScript.h"
 #include "TextScriptCollabLoad.h"
 
+#include "DialogueChoice.h"
+#include "XMLLoad.h"
+
 // Set Respawn
 // 0x40F770
 void Replacement_ModeOpening_SetFrameTargetMyChar_Call(int x)
@@ -40,6 +43,7 @@ void Replacement_ModeOpening_PutTextScript_Call()
 		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
 
 	PutTextScript();
+	PutDialogueChoices();
 
 	// Show <IMG infront of textbox when flag is set
 	if (GetNPCFlag(setting_show_img_on_top_flag))
@@ -75,6 +79,8 @@ void Replacement_ModeTitle_InitStar_Call()
 // 0x41043B
 void Replacement_ModeAction_InitMyChar_Call() // Use this to load generic data
 {
+	// XML data
+	loadedData.isLoaded = false; // reset this to false on new game
 	InitGameSurfaces(); // init
 	LoadCustomGenericData(); // load
 	InitMyChar();
@@ -100,6 +106,7 @@ void Replacement_ModeAction_PutTextScript_Call()
 		Stage_SetRespawn();
 
 	PutTextScript();
+	PutDialogueChoices();
 
 	// Show <IMG infront of textbox when flag is set
 	if (GetNPCFlag(setting_show_img_on_top_flag))

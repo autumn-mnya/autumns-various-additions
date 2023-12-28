@@ -139,10 +139,10 @@ B - The cooldown for the object to be collected again after the player is return
 C - The position of the sprite in the spritesheet. Works like <MIM -- Setting it to 1 will move the sprite 16px down.
 
 #450 - Conveyor
-???
+Unfinished entity. No documentation here.
 
 Custom Values available:
-???
+Unfinished entity. No documentation
 
 #451 - Wall Booster [ Only when MyChar walljumping is enabled ]
 Instead of sliding down a wall, you will slide up the wall at a fast speed.
@@ -227,3 +227,9 @@ Drops from enemies when the TSC money code is enabled.
 #460 - Load Save Event Controller
 When placed in a room, it will run the entities Event #, but ONLY if the game is loading a save.
 Basically, you can run an event on reloading a save by using this entity, placing it anywhere on the map. Where it is placed does not matter.
+
+#461 - Screen Wind (Horizontal)
+Causes the player to be pushed horizontally automatically, similar to Wind Current tiles except across the entire screen. There is no visual effect. Set this entity to "Alt Direction" to make the wind go right instead of left.
+
+#462 - Screen Wind (Vertical)
+Causes the player to be pushed vertically automatically, similar to Wind Current tiles except across the entire screen. There is no visual effect. Set this entity to "Alt Direction" to make the wind go down instead of up.

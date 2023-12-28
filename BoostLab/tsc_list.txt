@@ -41,7 +41,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	174
+[BL_TSC]	180
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -63,8 +63,8 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <DNP	1	N---	Delete NPc	Remove all entities W.	0	0	1	4	4	4	4
 <ECJ	2	#e--	Event Check Jump	Jump to event X if any entities W exist.	0	0	1	4	4	4	4
 <END	0	----	END	End the current scripted event.	1	0	1	4	4	4	4
-<EQ+	1	E---	EQuip +	Equip item W.	0	0	1	4	4	4	4
-<EQ-	1	E---	EQuip -	Dequip item W.	0	0	1	4	4	4	4
+<EQ+	1	#---	EQuip +	Equip item W.	0	0	1	4	4	4	4
+<EQ-	1	#---	EQuip -	Dequip item W.	0	0	1	4	4	4	4
 <ESC	0	----	ESCape	Quit to title screen.	1	0	1	4	4	4	4
 <EVE	1	e---	EVEnt	Go to event W.	1	0	1	4	4	4	4
 <FAC	1	f---	FACe	Show face W in the message box.	0	0	1	4	4	4	4
@@ -185,6 +185,7 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <SL=	1	#---	SeLl =	Set amount of money to W.	0	0	1	4	4	4	4
 <SNJ	2	Fe--	Skipflag Not Jump	Opposite of <SKJ. Jump to event X if skipflag W is not set.	0	0	1	4	4	4	4
 <SRP	2	xy--	Set Respawn Point	Sets a respawn point at coordinates X:Y (Check TSC command txt).	0	0	1	4	4	4	4
+<SRQ	0	----	Set Respawn Quote	Sets a respawn point at the players coordinates (Check TSC command txt).	0	0	1	4	4	4	4
 <STT	0	----	STage Table	Load stage.tbl file from the data folder. Use $ at the end of the name to mark the end of the text input.	0	0	1	4	4	4	4
 <SWN	0	----	Set Window Name	Set the games Window Name in TSC. Use $ at the end of the window name to mark the end of the text input.	0	0	0	4	4	4	4
 <TA2	4	mexy	TrAnsport 2	Same as <TRA but respawn point (<SRP/<RSP) does not get set.	1	0	1	4	4	4	4
@@ -209,6 +210,11 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <ICD	0	----	Initialize Collab Data	[COLLAB MODE] Reset certain structs in the game (Check TSC command txt).	0	0	1	4	4	4	4
 <ICF	0	----	Initialize Collab Flags	[COLLAB MODE] Reset the Collab Flag array (Check TSC command txt).	0	0	1	4	4	4	4
 <ICN	0	----	Initialize Collab Name	[COLLAB MODE] Reset the Collab Name to the one found in settings.ini (Check TSC command txt).	0	0	1	4	4	4	4
+<ROP	0	----	Rta pOP	"Pop" the lowest event in a stack of events --> Jumping to that event.	0	0	1	4	4	4	4
+<RS2	4	mexy	Rta puSh 2	"Push" an <TRA event to a stack of events.	0	0	1	4	4	4	4
+<RSC	0	----	Rta Stack Clear	Clear the "stack" of events.	0	0	1	4	4	4	4
+<RSH	1	#---	Rta puSH	"Push" an event to a stack of events.	0	0	1	4	4	4	4
+<RSU	0	----	Rta ShUffle	Shuffle the "stack" of events.	0	0	1	4	4	4	4
 <CEV	1	#---	Change fmod EVent	[FMOD DLL] Change FMod Event to group W. Use this before trying to play something that isn't in the default Music group.	0	0	1	4	4	4	4
 <CVP	0	----	Change fmod eVent Parameter	[FMOD DLL] Change FMod Event Parameter <EVP will modify. Use $ at the end of the parameter name to mark the end of the text input.	0	0	0	4	4	4	4
 <EVP	1	#---	fmod EVent Parameter	[FMOD DLL] Set FMod Event Parameter (Parameter name set by <CVP) to W.	0	0	1	4	4	4	4

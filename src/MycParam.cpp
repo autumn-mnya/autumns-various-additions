@@ -16,6 +16,8 @@
 #include "TextScript.h"
 #include "TextScriptVAR.h"
 
+#include "XMLLoad.h"
+
 bool setting_enable_life_drain = false;
 bool setting_enable_life_regen = false;
 
@@ -138,4 +140,7 @@ void Replacement_PutActiveArmsList_Call()
 
 	if (setting_enable_life_regen == true && GetNPCFlag(setting_life_regen_flag))
 		PlayerLifeRegen();
+
+	// Test XML Code
+	// LoadAndExecuteFunctions("xmlFunc.xml");
 }

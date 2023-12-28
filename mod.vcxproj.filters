@@ -35,6 +35,9 @@
     <ClCompile Include="src\TileCollisionMyChar.cpp" />
     <ClCompile Include="src\TileCollisionEntity.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
+    <ClCompile Include="src\tinyxml2.cpp" />
+    <ClCompile Include="src\XMLLoad.cpp" />
+    <ClCompile Include="src\DialogueChoice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ASMLoader.h" />
@@ -73,5 +76,8 @@
     <ClInclude Include="src\TileCollisionEntity.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />
+    <ClInclude Include="src\tinyxml2.h" />
+    <ClInclude Include="src\XMLLoad.h" />
+    <ClInclude Include="src\DialogueChoice.h" />
   </ItemGroup>
 </Project>
