@@ -16,6 +16,7 @@ extern int setting_life_regen_wait;
 extern int setting_life_drain_amount;
 extern int setting_life_regen_amount;
 
+void PlayerDeath();
 void RemoveMaxLifeMyChar(int val);
 void SetMaxLifeMyChar(int val);
-void Replacement_PutActiveArmsList_Call();
+void AutumnsVariousAdditionsPlayerHud();

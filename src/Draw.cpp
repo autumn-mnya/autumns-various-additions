@@ -85,3 +85,7 @@ void ResetTSC_Image()
 	memset(TSC_IMG_Folder, 0, sizeof(TSC_IMG_Folder));
 	LoadTSC_Image("0");
 }
+
+static int& mag = *reinterpret_cast<int*>(0x48F914); // Window magnification
+static LPDIRECTDRAWSURFACE& backbuffer = *reinterpret_cast<LPDIRECTDRAWSURFACE*>(0x49D384);
+static auto& surf = *reinterpret_cast<LPDIRECTDRAWSURFACE(*)[40]>(0x49D388);

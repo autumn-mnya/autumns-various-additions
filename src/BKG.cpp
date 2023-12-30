@@ -17,7 +17,6 @@ SUBKG bkList[BKGCount] = {};
 int numBks = 0;
 char bkgTxT_Global[bkgTxTSize];
 
-// 0x402339
 void Replacement_InitBack_ReloadBitmap_File_Call(const char* fName)
 {
 	ReleaseSurface(0x1C);
@@ -426,10 +425,10 @@ void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg)
 	}
 }
 
-void Replacement_ModeOpening_PutBack_Call(int frame_x, int frame_y)
+void Replacement_ModeOpening_PutStageBack_Call(int frame_x, int frame_y)
 {
-	PutBack(frame_x, frame_y);
 	BKG_RenderBackgrounds(frame_x, frame_y, false);
+	PutStage_Back(frame_x, frame_y);
 }
 
 void Replacement_ModeOpening_PutFront_Call(int frame_x, int frame_y)
@@ -438,10 +437,10 @@ void Replacement_ModeOpening_PutFront_Call(int frame_x, int frame_y)
 	PutFront(frame_x, frame_y);
 }
 
-void Replacement_ModeAction_PutBack_Call(int frame_x, int frame_y)
+void Replacement_ModeAction_PutStageBack_Call(int frame_x, int frame_y)
 {
-	PutBack(frame_x, frame_y);
 	BKG_RenderBackgrounds(frame_x, frame_y, false);
+	PutStage_Back(frame_x, frame_y);
 }
 
 void Replacement_ModeAction_PutFront_Call(int frame_x, int frame_y)

@@ -116,6 +116,7 @@ extern int max_buffer;
 extern int jump_buffer;
 extern bool buffer_timer;
 extern bool buffer_can_jump;
+extern bool walljumps_can_be_buffered;
 
 extern int jump_sound_effect;
 
@@ -124,7 +125,7 @@ void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size);
 void InitMyCollabData();
 void SetPlayerPhysicsValues(int x, int y);
 void Replacement_PutMyChar_PutChar_Call(const RECT* r, int a, int b, const RECT* r2, SurfaceID s);
-void Replacement_PutMyChar_Call(int fx, int fy);
+void AutumnsVariousAdditionsExtraJumpUI();
 void Replacement_SetMyCharPosition_InitStar_Call();
 void setPlayerPhysics(BOOL bKey, Physics* physics);
 void ActMyChar_Normal_Custom(BOOL bKey);

@@ -1,3 +1,16 @@
+__Autumns Various Additions v1.1.1__
+-AVA now requires "AutPI" (Autumns API) to be loaded before ava is loaded. It is included with the new zip file. Add it above autumns_various_additions in mods.txt!
+-<BKG now supports Widescreen
+-You can now buffer walljumps (toggleable via settings.ini, off by default)
+-Jump Arrow UI now displays where the normal player UI code is, meaning it goes above tiles and disappears during cutscenes. The old method of drawing can be enabled in settings.ini
+-Fixed dialogue choices persisting through resets of the game
+-Jump Buffer will now get reset upon walljumping
+-Jump Buffer bug fixes
+-Double Jumps refreshing from walljumps will work all the time now
+
+__Autumnal Lab v1.1.1__
+<CH+ and <CHO properly added to tsc_list.txt
+
 __Autumns Various Additions v1.1.0__
 -Added the ability to refresh double jumps with a walljump through a settings.ini option
 -Added RTA2 TSC Commands (<RSH, <RS2, <ROP, <RSC, <RSU)

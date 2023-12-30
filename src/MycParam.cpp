@@ -10,6 +10,7 @@
 #include "main.h"
 #include "cave_story.h"
 #include "Collectables.h"
+#include "Draw.h"
 #include "Entity.h"
 #include "ModSettings.h"
 #include "MyChar.h"
@@ -29,6 +30,14 @@ int setting_life_regen_wait = 240;
 
 int setting_life_drain_amount = 1;
 int setting_life_regen_amount = 1;
+
+void PlayerDeath()
+{
+	PlaySoundObject(17, SOUND_MODE_PLAY);
+	gMC.cond = 0;
+	SetDestroyNpChar(gMC.x, gMC.y, 10 * 0x200, 0x40);
+	StartTextScript(40);
+}
 
 void RemoveMaxLifeMyChar(int val)
 {
@@ -124,11 +133,8 @@ void PlayerLifeRegen()
 	++waitLifeRegen;
 }
 
-// 0x410856
-void Replacement_PutActiveArmsList_Call()
+void AutumnsVariousAdditionsPlayerHud()
 {
-	PutActiveArmsList();
-
 	if (setting_enable_money_code)
 		PutMyMoney();
 

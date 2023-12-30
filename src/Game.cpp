@@ -8,6 +8,7 @@
 #include "Game.h"
 
 #include "main.h"
+#include "ModInit.h"
 #include "mod_loader.h"
 #include "ModSettings.h"
 #include "cave_story.h"
@@ -24,25 +25,27 @@
 #include "DialogueChoice.h"
 #include "XMLLoad.h"
 
-// Set Respawn
-// 0x40F770
-void Replacement_ModeOpening_SetFrameTargetMyChar_Call(int x)
-{
-	if (bSetRespawn)
-		Stage_SetRespawn();
-
-	SetFrameTargetMyChar(x);
-}
-
 // Put <IMG on screen
 
-void Replacement_ModeOpening_PutTextScript_Call()
+void AutumnsVariousAdditions_ModeOpening_TextBoxBelow()
+{
+	// Show <IMG behind textbox when flag isnt set
+	if (!(GetNPCFlag(setting_show_img_on_top_flag)))
+		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
+}
+
+void AutumnsVariousAdditions_ModeAction_TextBoxBelow()
 {
 	// Show <IMG behind textbox when flag isnt set
 	if (!(GetNPCFlag(setting_show_img_on_top_flag)))
 		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
 
-	PutTextScript();
+	if (bSetRespawn)
+		Stage_SetRespawn();
+}
+
+void AutumnsVariousAdditionsTextBoxAbove()
+{
 	PutDialogueChoices();
 
 	// Show <IMG infront of textbox when flag is set
@@ -51,9 +54,9 @@ void Replacement_ModeOpening_PutTextScript_Call()
 }
 
 // <IMG resetting calls among others
-void Replacement_ModeOpening_SetFadeMask_Call()
+void AutumnsVariousAdditionsModeOpeningInit()
 {
-	SetFadeMask();
+	// SetFadeMask();
 	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in settings.ini
 	Reset_CustomScriptNames(); // Reset custom script names in the opening
 	if (setting_enable_reset_pixtone_on_reset)
@@ -66,9 +69,8 @@ void Replacement_ModeOpening_SetFadeMask_Call()
 	BKG_ResetBackgrounds();
 }
 
-void Replacement_ModeTitle_InitStar_Call()
+void AutumnsVariousAdditionsModeTitleInit()
 {
-	InitStar();
 	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in settings.ini
 	Reset_CustomScriptNames(); // Reset custom script names on the title
 	if (setting_enable_reset_pixtone_on_reset)
@@ -76,24 +78,20 @@ void Replacement_ModeTitle_InitStar_Call()
 	ResetTSC_Image();
 }
 
-// 0x41043B
-void Replacement_ModeAction_InitMyChar_Call() // Use this to load generic data
+void AutumnsVariousAdditionsModeActionInit() // Use this to load generic data
 {
 	// XML data
 	loadedData.isLoaded = false; // reset this to false on new game
-	InitGameSurfaces(); // init
-	LoadCustomGenericData(); // load
-	InitMyChar();
+	InitGameSurfaces(); // init surfaces
+	LoadCustomGenericData(); // load surfaces
+	ClearDialogueChoiceData();  // clear dialogue choices on reset
 }
 
-// 0x410564
-void Replacement_ModeAction_ActValueView_Call()
+void AutumnsVariousAdditionsModeActionAct()
 {
 	// turn off isLoadingSave if it is active
 	if (isLoadingSave == true)
 		isLoadingSave = false;
-
-	ActValueView();
 }
 
 void Replacement_ModeAction_PutTextScript_Call()
@@ -113,9 +111,7 @@ void Replacement_ModeAction_PutTextScript_Call()
 		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
 }
 
-// 0x40F67C
-void Replacement_Game_InitTextScript2_Call()
+void AutumnsVariousAdditionsStageTableInit()
 {
 	LoadStageTable(NULL);
-	InitTextScript2();
 }

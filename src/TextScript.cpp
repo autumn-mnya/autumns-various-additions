@@ -9,6 +9,7 @@
 #include "TextScript.h"
 
 #include "main.h"
+#include "ModInit.h"
 
 #include "mod_loader.h"
 #include "mod_loader_hooks.h"
@@ -1242,7 +1243,7 @@ void InitMod_TSC()
 	// Respawning the player
 	ModLoader_WriteCall((void*)0x41D419, (void*)Replacement_LoadProfile_TransferStage_Call);
 	ModLoader_WriteCall((void*)0x41D59A, (void*)Replacement_InitializeGame_TransferStage_Call);
-	ModLoader_WriteCall((void*)0x40F770, (void*)Replacement_ModeOpening_SetFrameTargetMyChar_Call);
+	// ModLoader_WriteCall((void*)0x40F770, (void*)Replacement_ModeOpening_SetFrameTargetMyChar_Call);
 	ModLoader_WriteCall((void*)0x422E09, (void*)Replacement_TextScript_TransferStage_Call);
 
 	// <VAR

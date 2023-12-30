@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="src\ASMLoader.cpp" />
     <ClCompile Include="src\ASMPatches.cpp" />
+    <ClCompile Include="src\AutPI.cpp" />
     <ClCompile Include="src\BKG.cpp" />
     <ClCompile Include="src\CollabFlag.cpp" />
     <ClCompile Include="src\Collectables.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="src\GenericLoad.cpp" />
     <ClCompile Include="src\LoadPixtone.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\ModInit.cpp" />
     <ClCompile Include="src\ModSettings.cpp" />
     <ClCompile Include="src\MyChar.cpp" />
     <ClCompile Include="src\MycParam.cpp" />
@@ -130,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="src\ASMLoader.h" />
     <ClInclude Include="src\ASMPatches.h" />
+    <ClInclude Include="src\AutPI.h" />
     <ClInclude Include="src\BKG.h" />
     <ClInclude Include="src\cave_story.h" />
     <ClInclude Include="src\CollabFlag.h" />
@@ -147,6 +150,7 @@
     <ClInclude Include="src\GenericLoad.h" />
     <ClInclude Include="src\LoadPixtone.h" />
     <ClInclude Include="src\Main.h" />
+    <ClInclude Include="src\ModInit.h" />
     <ClInclude Include="src\ModSettings.h" />
     <ClInclude Include="src\MyChar.h" />
     <ClInclude Include="src\MycParam.h" />

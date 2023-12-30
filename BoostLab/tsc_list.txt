@@ -41,7 +41,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	180
+[BL_TSC]	182
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -145,6 +145,8 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <BUY	2	#e--	BUY jump	Jump to event X if player doesn't have W amount of money. Continue and remove W money otherwise.	0	0	1	4	4	4	4
 <BY2	2	#e--	BuY jump 2	Jump to event X if player has W amount of money or more, and remove W amount of money. Continue otherwise.	0	0	1	4	4	4	4
 <CBK	0	----	Change BacKground	Change vanilla background to image A with type B. Use $ at the end of both strings to mark the end of the text input (Check TSC command txt for more).	0	0	0	4	4	4	4
+<CH+	0	----	CHoice +	Add choice index "AAAA" with string "B" as the option text. Use $ at the end of the string to mark the end of the text input (Check TSC command txt for more).	0	0	0	4	4	4	4
+<CHO	0	----	CHOice	Show dialogue choices on screen. Use <CH+ before using this command.	0	0	1	4	4	4	4
 <CO+	2	##--	COllectables +	Add collectables amount X to collectable variable W. (Check TSC command txt)	0	0	1	4	4	4	4
 <CO-	2	##--	COllectables -	Subtract collectables amount X from collectable variable W. (Check TSC command txt)	0	0	1	4	4	4	4
 <COD	1	#---	COllectable Disable	Disables the display of collectable variable W.	0	0	1	4	4	4	4

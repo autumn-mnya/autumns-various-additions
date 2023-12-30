@@ -8,6 +8,7 @@
 #include "MyChar.h"
 
 #include "main.h"
+#include "ModInit.h"
 #include "mod_loader.h"
 #include "ModSettings.h"
 #include "cave_story.h"
@@ -458,9 +459,12 @@ void Replacement_PutMyChar_PutChar_Call(const RECT* r, int a, int b, const RECT*
 	PutBitmap3(r, a, b, &rect_player, s);
 }
 
-void Replacement_PutMyChar_Call(int fx, int fy)
+void AutumnsVariousAdditionsExtraJumpUI()
 {
-	PutMyChar(fx, fy);
+	int fx = 0;
+	int fy = 0;
+
+	GetFramePosition(&fx, &fy);
 
 	PutPlayersJumps(fx, fy);
 }
@@ -620,6 +624,7 @@ int max_buffer = 3;
 int jump_buffer = 0;
 bool buffer_timer = false;
 bool buffer_can_jump = true;
+bool walljumps_can_be_buffered = false;
 int jump_sound_effect = 15;
 
 void ActMyChar_ForceJump(BOOL bKey, Physics* physics)
@@ -648,115 +653,13 @@ void ActMyChar_CoyoteJump(BOOL bKey, Physics *physics)
 	}
 }
 
-void setPlayerPhysics(BOOL bKey, Physics *physics)
+void ResetJumpBuffer()
 {
-	if (gMC.flag & 0x100) // While in water
-	{
-		physics->max_dash = setting_physics_water_max_dash;
-		physics->max_move = setting_physics_water_max_move;
-		physics->gravity1 = setting_physics_water_gravity1;
-		physics->gravity2 = setting_physics_water_gravity2;
-		physics->jump = setting_physics_water_jump;
-		physics->dash1 = setting_physics_water_dash1;
-		physics->dash2 = setting_physics_water_dash2;
-		physics->resist = setting_physics_water_resist;
-	}
-	else
-	{
-		physics->max_dash = setting_physics_max_dash;
-		physics->max_move = setting_physics_max_move;
-		physics->gravity1 = setting_physics_gravity1;
-		physics->gravity2 = setting_physics_gravity2;
-		physics->jump = setting_physics_jump;
-		physics->dash1 = setting_physics_dash1;
-		physics->dash2 = setting_physics_dash2;
-		physics->resist = setting_physics_resist;
-	}
-
-	// Run button when the setting is set to true
-	if (setting_run_button_enabled)
-		ActMyChar_RunButton(bKey, physics);
-
-	// Jump Buffer (early instance)
-	if (gMC.flag & 8 && buffer_timer == true)
-	{
-		if ((gKey & gKeyJump) && buffer_can_jump == true)
-			ActMyChar_ForceJump(bKey, physics);
-	}
-
-	// Coyote Frames
-	if (gMC.flag & 8)
-	{
-		jump_buffer = 0;
-		buffer_timer = false;
-		buffer_can_jump = true;
-		coyote_frames = 0;
-		coyote_spent = false;
-	}
-	else
-	{
-		if (!(gMC.equip & 32) && !(gMC.equip & 1)) // if we don't have booster equipped, then we do coyote frames
-		{
-			if (coyote_frames < max_coyote)
-				++coyote_frames;
-		}
-	}
-
-	if (coyote_spent == true)
-	{
-		if (coyote_spent_frames < 1)
-			++coyote_spent_frames;
-	}
-	else
-		coyote_spent_frames = 0;
-
-	// Coyote Jump if we're not on the ground, coyote hasnt been spent, and we're not going upwards
-	if ((!(gMC.flag & 8)) && (coyote_frames < max_coyote) && (coyote_spent == false))
-	{
-		if (gMC.ym >= 0)
-			ActMyChar_CoyoteJump(bKey, physics);
-		else
-			coyote_spent = true;
-	}
-
-	// Buffer frames
-	if (max_buffer > 0) // disabled if 0
-	{
-		if (!(gMC.flag & 8 || gMC.flag & 0x10 || gMC.flag & 0x20))
-		{
-			if ((gKeyTrg & gKeyJump) && current_jumps == 0)
-				buffer_timer = true;
-
-			if (buffer_timer == true)
-			{
-				if (jump_buffer < max_buffer)
-					++jump_buffer;
-
-				if (jump_buffer >= max_buffer)
-					buffer_can_jump = false;
-			}
-		}
-	}
-
-	// Ice
-	int kLeft = (bKey && gKey & gKeyLeft) ? 1 : 0;
-	int kRight = (bKey && gKey & gKeyRight) ? 1 : 0;
-
-	int h_input = (kRight - kLeft);
-	bool resisting = (h_input != 0 && custom_sign(gMC.xm) != h_input && custom_sign(gMC.xm) != 0);
-
-	if (gMC.flag & 0x200)
-	{
-		if (h_input && setting_ice_particles)
-			SetCaret(gMC.x, gMC.y + (4 * 0x200), 13, 0);
-
-		if (resisting)
-			physics->dash1 = setting_physics_water_dash1 / 2;
-		else
-			physics->dash1 = setting_physics_water_dash1;
-		physics->resist = 12;
-	}
+	jump_buffer = 0;
+	buffer_timer = false;
+	buffer_can_jump = true;
 }
+
 
 void ActMyChar_OnWall(BOOL bKey)
 {
@@ -772,33 +675,33 @@ void SpawnWalljumpCarets(int type)
 {
 	switch (type)
 	{
-		default:
-			if (onWall == 1)
-			{
-				SetCaret(gMC.x + (8 * 0x200), gMC.y, 13, 0);
-				SetCaret(gMC.x + (8 * 0x200), gMC.y, 13, 0);
-			}
-			else {
-				SetCaret(gMC.x - (8 * 0x200), gMC.y, 13, 0);
-				SetCaret(gMC.x - (8 * 0x200), gMC.y, 13, 0);
-			}
-			break;
+	default:
+		if (onWall == 1)
+		{
+			SetCaret(gMC.x + (8 * 0x200), gMC.y, 13, 0);
+			SetCaret(gMC.x + (8 * 0x200), gMC.y, 13, 0);
+		}
+		else {
+			SetCaret(gMC.x - (8 * 0x200), gMC.y, 13, 0);
+			SetCaret(gMC.x - (8 * 0x200), gMC.y, 13, 0);
+		}
+		break;
 
-		case 1:
-			if (onWall == 1)
-				SetCaret(gMC.x + (8 * 0x200), gMC.y, 13, 0);
-			else
-				SetCaret(gMC.x - (8 * 0x200), gMC.y, 13, 0);
-			break;
+	case 1:
+		if (onWall == 1)
+			SetCaret(gMC.x + (8 * 0x200), gMC.y, 13, 0);
+		else
+			SetCaret(gMC.x - (8 * 0x200), gMC.y, 13, 0);
+		break;
 	}
-	
+
 }
 
 void CheckForDoubleJump()
 {
 	if (setting_double_jump_wall_jump_refresh)
 	{
-		if (current_jumps == 0)
+		if (current_jumps <= 0)
 			current_jumps = 1;
 	}
 }
@@ -806,7 +709,7 @@ void CheckForDoubleJump()
 void ActMyChar_WallJump(BOOL bKey)
 {
 	//Wall jumping
-	
+
 	// Only enable walljumping if you either:
 	// A: Have walljumps on flag set + the flag is set
 	// B: Have walljumps on flag *not* set
@@ -830,12 +733,11 @@ void ActMyChar_WallJump(BOOL bKey)
 		{
 			if ((onWall != 0) && ((!(gMC.flag & 8)) || entity_IsWallboosting == true)) // If on a wall, and not grounded/wallboosting..
 			{
-				if (gKeyTrg & gKeyJump)
+				if ((gKeyTrg & gKeyJump) || (gKey & gKeyJump) && buffer_timer == true && buffer_can_jump == true && walljumps_can_be_buffered == true) // wall jumps can be buffered now
 				{
 					gMC.xm = onWall * -walljump_speed;
 					gMC.ym = -walljump_height;
 					coyote_spent = true; // spend coyote jump automatically
-
 					// Do this messy code to deicde if we should refresh a wall jump ,
 					if (setting_doublejump_enabled == true)
 					{
@@ -851,6 +753,7 @@ void ActMyChar_WallJump(BOOL bKey)
 
 					PlaySoundObject(15, SOUND_MODE_PLAY);
 					SpawnWalljumpCarets(0);
+					ResetJumpBuffer();
 				}
 
 				// Slide down the wall if holding against it
@@ -930,6 +833,114 @@ void ActMyChar_AirJumps(BOOL bKey)
 	}
 }
 
+void setPlayerPhysics(BOOL bKey, Physics *physics)
+{
+	if (gMC.flag & 0x100) // While in water
+	{
+		physics->max_dash = setting_physics_water_max_dash;
+		physics->max_move = setting_physics_water_max_move;
+		physics->gravity1 = setting_physics_water_gravity1;
+		physics->gravity2 = setting_physics_water_gravity2;
+		physics->jump = setting_physics_water_jump;
+		physics->dash1 = setting_physics_water_dash1;
+		physics->dash2 = setting_physics_water_dash2;
+		physics->resist = setting_physics_water_resist;
+	}
+	else
+	{
+		physics->max_dash = setting_physics_max_dash;
+		physics->max_move = setting_physics_max_move;
+		physics->gravity1 = setting_physics_gravity1;
+		physics->gravity2 = setting_physics_gravity2;
+		physics->jump = setting_physics_jump;
+		physics->dash1 = setting_physics_dash1;
+		physics->dash2 = setting_physics_dash2;
+		physics->resist = setting_physics_resist;
+	}
+
+	// Run button when the setting is set to true
+	if (setting_run_button_enabled)
+		ActMyChar_RunButton(bKey, physics);
+
+	// Jump Buffer (early instance)
+	if (gMC.flag & 8 && buffer_timer == true)
+	{
+		if ((gKey & gKeyJump) && buffer_can_jump == true)
+			ActMyChar_ForceJump(bKey, physics);
+	}
+
+	// Coyote Frames
+	if (gMC.flag & 8)
+	{
+		ResetJumpBuffer();
+		coyote_frames = 0;
+		coyote_spent = false;
+	}
+	else
+	{
+		if (!(gMC.equip & 32) && !(gMC.equip & 1)) // if we don't have booster equipped, then we do coyote frames
+		{
+			if (coyote_frames < max_coyote)
+				++coyote_frames;
+		}
+	}
+
+	if (coyote_spent == true)
+	{
+		if (coyote_spent_frames < 1)
+			++coyote_spent_frames;
+	}
+	else
+		coyote_spent_frames = 0;
+
+	// Coyote Jump if we're not on the ground, coyote hasnt been spent, and we're not going upwards
+	if ((!(gMC.flag & 8)) && (coyote_frames < max_coyote) && (coyote_spent == false))
+	{
+		if (gMC.ym >= 0)
+			ActMyChar_CoyoteJump(bKey, physics);
+		else
+			coyote_spent = true;
+	}
+
+	// Buffer frames
+	if (max_buffer > 0) // disabled if 0
+	{
+		if (!(gMC.flag & 8))
+		{
+			if ((gKeyTrg & gKeyJump) && current_jumps <= 0)
+				buffer_timer = true;
+
+			if (buffer_timer == true)
+			{
+				if (jump_buffer < max_buffer)
+					++jump_buffer;
+
+				if (jump_buffer >= max_buffer)
+					buffer_can_jump = false;
+			}
+		}
+	}
+
+	// Ice
+	int kLeft = (bKey && gKey & gKeyLeft) ? 1 : 0;
+	int kRight = (bKey && gKey & gKeyRight) ? 1 : 0;
+
+	int h_input = (kRight - kLeft);
+	bool resisting = (h_input != 0 && custom_sign(gMC.xm) != h_input && custom_sign(gMC.xm) != 0);
+
+	if (gMC.flag & 0x200)
+	{
+		if (h_input && setting_ice_particles)
+			SetCaret(gMC.x, gMC.y + (4 * 0x200), 13, 0);
+
+		if (resisting)
+			physics->dash1 = setting_physics_water_dash1 / 2;
+		else
+			physics->dash1 = setting_physics_water_dash1;
+		physics->resist = 12;
+	}
+}
+
 void ActMyChar_Normal_Custom(BOOL bKey)
 {
 	ActMyChar_OnWall(bKey); // Check if the player is on a wall
@@ -937,7 +948,6 @@ void ActMyChar_Normal_Custom(BOOL bKey)
 	if (setting_walljumps_enabled)
 		ActMyChar_WallJump(bKey);
 
-	// Don't allow air jumping until coyote has run out?
 	ActMyChar_AirJumps(bKey);
 
 	ActMyChar_CustomCamOffset(bKey);

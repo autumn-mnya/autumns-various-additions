@@ -54,6 +54,8 @@ bool setting_enable_reset_npctbl_on_reset = false;
 bool setting_collab_enabled = false;
 char setting_collab_name[CollabNameMaxPath] = "null";
 
+bool legacy_extra_jumps_ui = false;
+
 // For settings related things, this function will be used.
 void InitMod_Settings()
 {
@@ -129,6 +131,7 @@ void InitMod_Settings()
 
 	max_coyote = ModLoader_GetSettingInt("Coyote Frames", 0);
 	max_buffer = ModLoader_GetSettingInt("Buffer Frames", 0);
+	walljumps_can_be_buffered = ModLoader_GetSettingBool("Walljumps Can Be Buffered", false);
 	jump_sound_effect = ModLoader_GetSettingInt("AVA Jump Sound Effect", 15);
 
 	// Walljumps
@@ -146,6 +149,7 @@ void InitMod_Settings()
 	setting_extrajump_water_jump_height = ModLoader_GetSettingInt("Underwater Extra Jump Momentum", 640);
 
 	// Extra Jump UI
+	legacy_extra_jumps_ui = ModLoader_GetSettingBool("Legacy Extra Jump UI Display", false);
 	setting_jump_arrow_x_offset = ModLoader_GetSettingInt("Jump Arrow UI X Offset", 4);
 	setting_jump_arrow_y_offset = ModLoader_GetSettingInt("Jump Arrow UI Y Offset", 20);
 

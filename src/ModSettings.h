@@ -24,4 +24,6 @@ extern bool setting_enable_reset_npctbl_on_reset;
 extern bool setting_collab_enabled;
 extern char setting_collab_name[CollabNameMaxPath];
 
+extern bool legacy_extra_jumps_ui;
+
 void InitMod_Settings();

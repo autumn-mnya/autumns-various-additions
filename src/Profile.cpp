@@ -8,6 +8,7 @@
 #include "Profile.h"
 
 #include "main.h"
+#include "ModInit.h"
 #include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
@@ -175,6 +176,8 @@ void Replacement_LoadProfile_InitMyChar_Call()
 }
 
 // 0x41D353 
+
+
 void Replacement_LoadProfile_fclose_Call(FILE* fp)
 {
 	// Set this up if needed
@@ -473,8 +476,8 @@ void Replacement_InitializeGame_ClearArmsData_Call()
 	Reset_CustomScriptNames(); // Reset custom script names on new game
 	Reset_PixToneFolder(); // reset pixtone folder
 	ResetCollabPaths();
-	ClearArmsData();
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();
 	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
+	ClearArmsData();
 }

@@ -4,11 +4,12 @@
 
 #include "cave_story.h"
 
-void Replacement_ModeOpening_SetFrameTargetMyChar_Call(int x);
-void Replacement_ModeOpening_PutTextScript_Call();
-void Replacement_ModeOpening_SetFadeMask_Call();
-void Replacement_ModeTitle_InitStar_Call();
-void Replacement_ModeAction_InitMyChar_Call();
-void Replacement_ModeAction_ActValueView_Call();
+void AutumnsVariousAdditions_ModeOpening_TextBoxBelow();
+void AutumnsVariousAdditions_ModeAction_TextBoxBelow();
+void AutumnsVariousAdditionsTextBoxAbove();
+void AutumnsVariousAdditionsModeOpeningInit();
+void AutumnsVariousAdditionsModeTitleInit();
+void AutumnsVariousAdditionsModeActionInit();
+void AutumnsVariousAdditionsModeActionAct();
 void Replacement_ModeAction_PutTextScript_Call();
-void Replacement_Game_InitTextScript2_Call();
+void AutumnsVariousAdditionsStageTableInit();

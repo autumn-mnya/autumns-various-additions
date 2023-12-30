@@ -27,10 +27,8 @@ void LoadBKG_TxT_Background()
 }
 
 // This is the final function call in TransferStage -- Only used if stage.tbl support is disabled!
-void Replacement_TransferStage_ResetFlash_Call()
+void AutumnsVariousAdditionsTransferStageInit()
 {
-	ResetFlash();
-
 	// reset bkg backgrounds on stage transition
 	if (isLoadingSave == false)
 	{
@@ -182,7 +180,7 @@ BOOL Replacement_TransferStage(int no, int w, int x, int y)
 	ClearValueView();
 	ResetQuake();
 	InitBossChar(cTMT[no].boss_no);
-	Replacement_TransferStage_ResetFlash_Call(); // So we don't just copy the same code again lol
+	AutumnsVariousAdditionsTransferStageInit(); // So we don't just copy the same code again lol
 	gStageNo = no;
 
 	return TRUE;

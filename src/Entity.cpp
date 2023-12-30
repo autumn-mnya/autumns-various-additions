@@ -13,6 +13,7 @@
 #include "EntityLoad.h"
 #include "Frame.h"
 #include "MyChar.h"
+#include "MycParam.h"
 
 #include "Profile.h"
 

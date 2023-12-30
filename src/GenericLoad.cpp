@@ -9,6 +9,7 @@
 #include "GenericLoad.h"
 
 #include "main.h"
+#include "ModInit.h"
 #include "ModSettings.h"
 #include "mod_loader.h"
 #include "cave_story.h"
