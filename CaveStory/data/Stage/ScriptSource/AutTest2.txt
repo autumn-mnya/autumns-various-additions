@@ -218,6 +218,30 @@ you win<NOD<CLO<END
 #3004
 <PATdoublejump$<END
 
+#3101
+<KEY<MSG
+Test Box 1<NOD<CLO<END
+
+#3102
+<KEY<MS2
+Test Box 2<NOD<CLO<END
+
+#3103
+<KEY<MS3
+Test Box 3<NOD<CLO<END
+
+#3104
+<KEY<MS4
+Test Box 4<NOD<CLO<END
+
+#3105
+<KEY<MS5
+Test Box 5<NOD<CLO<END
+
+#3106
+<KEY<MS6
+Test Box 6<NOD<CLO<END
+
 #4000
 <RSP<END
 
