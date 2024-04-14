@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;EXAMPLE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../common;src\external\enet-1.3.17\include;src\external\SDL2-2.0.22\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -64,14 +64,14 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Shlwapi.lib;ws2_32.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>external\fmod\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib;Shlwapi.lib;ws2_32.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;EXAMPLE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../common;src\external\enet-1.3.17\include;src\external\SDL2-2.0.22\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -83,8 +83,8 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Shlwapi.lib;ws2_32.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>external\fmod\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib;Shlwapi.lib;ws2_32.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -102,10 +102,14 @@
     <ClCompile Include="src\EntityLoad.cpp" />
     <ClCompile Include="src\EntityTable.cpp" />
     <ClCompile Include="src\File.cpp" />
+    <ClCompile Include="src\fmod\fmodAudio.cpp" />
     <ClCompile Include="src\Frame.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Generic.cpp" />
     <ClCompile Include="src\GenericLoad.cpp" />
+    <ClCompile Include="src\library\ini.c" />
+    <ClCompile Include="src\library\INIReader.cpp" />
+    <ClCompile Include="src\library\tinyxml2.cpp" />
     <ClCompile Include="src\LoadPixtone.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\ModInit.cpp" />
@@ -125,7 +129,6 @@
     <ClCompile Include="src\TileCollisionBullet.cpp" />
     <ClCompile Include="src\TileCollisionMyChar.cpp" />
     <ClCompile Include="src\TileCollisionEntity.cpp" />
-    <ClCompile Include="src\tinyxml2.cpp" />
     <ClCompile Include="src\XMLLoad.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
   </ItemGroup>
@@ -144,10 +147,14 @@
     <ClInclude Include="src\EntityLoad.h" />
     <ClInclude Include="src\EntityTable.h" />
     <ClInclude Include="src\File.h" />
+    <ClInclude Include="src\fmod\fmodAudio.h" />
     <ClInclude Include="src\Frame.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Generic.h" />
     <ClInclude Include="src\GenericLoad.h" />
+    <ClInclude Include="src\library\ini.h" />
+    <ClInclude Include="src\library\INIReader.h" />
+    <ClInclude Include="src\library\tinyxml2.h" />
     <ClInclude Include="src\LoadPixtone.h" />
     <ClInclude Include="src\Main.h" />
     <ClInclude Include="src\ModInit.h" />
@@ -167,7 +174,6 @@
     <ClInclude Include="src\TileCollisionBullet.h" />
     <ClInclude Include="src\TileCollisionMyChar.h" />
     <ClInclude Include="src\TileCollisionEntity.h" />
-    <ClInclude Include="src\tinyxml2.h" />
     <ClInclude Include="src\XMLLoad.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />

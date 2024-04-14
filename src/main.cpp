@@ -40,9 +40,16 @@
 
 #include "ModInit.h"
 
+#include "fmod/fmodAudio.h"
+
 // Paths
 char gPatchesPath[MAX_PATH];
 char gBkgPath[MAX_PATH];
+char gAudioPath[MAX_PATH];
+char gAVAPath[MAX_PATH];
+char gAVAConfigPath[MAX_PATH];
+
+const char* audioDirectory = "data\\audio\\Desktop";
 
 // Inits anything relating to entities. The main thing are the 3 ModLoader_WriteJump's -- These replace every function that uses the Npc Table, and instead we also insert our new table!
 void InitMod_Entity()
@@ -146,6 +153,39 @@ void InitMod_TSCImage()
 	RegisterAboveTextBoxElement(AutumnsVariousAdditionsTextBoxAbove);
 }
 
+void FModUpdate()
+{
+	FmodStudioObj->update();
+}
+void ReleaseFModAudio()
+{
+	ReleaseFmod();
+}
+
+void InitFMOD_MusicCalls()
+{
+	ModLoader_WriteCall((void*)0x40F756, (void*)Replacement_ModeOpening_ChangeMusic_Silence_Call);
+	ModLoader_WriteCall((void*)0x40FE81, (void*)Replacement_ModeTitle_ChangeMusic_RunningHell_Call);
+	ModLoader_WriteCall((void*)0x40FE96, (void*)Replacement_ModeTitle_ChangeMusic_TorokosTheme_Call);
+	ModLoader_WriteCall((void*)0x40FEAB, (void*)Replacement_ModeTitle_ChangeMusic_White_Call);
+	ModLoader_WriteCall((void*)0x40FEC0, (void*)Replacement_ModeTitle_ChangeMusic_Safety_Call);
+	ModLoader_WriteCall((void*)0x40FECC, (void*)Replacement_ModeTitle_ChangeMusic_CaveStory_Call);
+	ModLoader_WriteCall((void*)0x41038C, (void*)Replacement_ModeTitle_ChangeMusic_Silence_Call);
+}
+
+void InitMod_FMOD()
+{
+	fmod_Init();
+	fmod_LoadBanks();
+	InitFMOD_MusicCalls();
+
+	RegisterOpeningActionElement(FModUpdate);
+	RegisterTitleActionElement(FModUpdate);
+	RegisterActionElement(FModUpdate);
+	RegisterReleaseElement(ReleaseFModAudio);
+	RegisterInitializeGameInitElement(FModClearEventNames);
+}
+
 // Init TSC <BKG related calls
 // AutPI is not used for this function.
 void InitMod_TSCBkg()
@@ -202,10 +242,25 @@ void InitMod(void)
 	strcpy(gDataPath, gModulePath);
 	strcat(gDataPath, "\\data");
 
+	// Get path of the audio folder
+	strcpy(gAudioPath, gModulePath);
+	strcat(gAudioPath, "\\");
+	strcat(gAudioPath, audioDirectory);
+
+	// Get path of the ava folder
+	strcpy(gAVAPath, gModulePath);
+	strcat(gAVAPath, "\\ava");
+
+	// Get path of the ava config folder
+
+	strcpy(gAVAConfigPath, gAVAPath);
+	strcat(gAVAConfigPath, "\\config");
+
 	// The 4 calls above setup gDataPath and gModulePath so they can be used
 
 	// Init settings set by the user
-	InitMod_Settings();
+	//InitMod_Settings();
+	InitSettingsRevamp();
 
 	// Functions
 
@@ -270,4 +325,7 @@ void InitMod(void)
 
 	if (setting_enable_default_config_options)
 		InitMod_AutumnConfigDefaults();
+
+	if (setting_enable_fmod)
+		InitMod_FMOD();
 }

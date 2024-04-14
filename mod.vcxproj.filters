@@ -35,11 +35,22 @@
     <ClCompile Include="src\TileCollisionMyChar.cpp" />
     <ClCompile Include="src\TileCollisionEntity.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
-    <ClCompile Include="src\tinyxml2.cpp" />
     <ClCompile Include="src\XMLLoad.cpp" />
     <ClCompile Include="src\DialogueChoice.cpp" />
     <ClCompile Include="src\AutPI.cpp" />
     <ClCompile Include="src\ModInit.cpp" />
+    <ClCompile Include="src\fmod\fmodAudio.cpp">
+      <Filter>fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="src\library\tinyxml2.cpp">
+      <Filter>library</Filter>
+    </ClCompile>
+    <ClCompile Include="src\library\INIReader.cpp">
+      <Filter>library</Filter>
+    </ClCompile>
+    <ClCompile Include="src\library\ini.c">
+      <Filter>library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ASMLoader.h" />
@@ -78,10 +89,29 @@
     <ClInclude Include="src\TileCollisionEntity.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />
-    <ClInclude Include="src\tinyxml2.h" />
     <ClInclude Include="src\XMLLoad.h" />
     <ClInclude Include="src\DialogueChoice.h" />
     <ClInclude Include="src\AutPI.h" />
     <ClInclude Include="src\ModInit.h" />
+    <ClInclude Include="src\fmod\fmodAudio.h">
+      <Filter>fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="src\library\tinyxml2.h">
+      <Filter>library</Filter>
+    </ClInclude>
+    <ClInclude Include="src\library\INIReader.h">
+      <Filter>library</Filter>
+    </ClInclude>
+    <ClInclude Include="src\library\ini.h">
+      <Filter>library</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="fmod">
+      <UniqueIdentifier>{d475fe52-87b3-4fd7-ba0f-37a996d02d0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library">
+      <UniqueIdentifier>{864a5525-7fbf-4aeb-8ae5-68aba31050e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

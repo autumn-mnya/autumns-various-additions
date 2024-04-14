@@ -320,12 +320,12 @@ void SetPlayerPhysicsValues(int x, int y)
 
 		// Booster 2.0 Acceleration
 		case 25:
-			setting_physics_boost20_accel_up = -y;
+			setting_physics_boost20_accel_up = y;
 			ModLoader_WriteLong((void*)0x4159BA, setting_physics_boost20_accel_up);
 			break;
 
 		case 26:
-			setting_physics_boost20_accel_left = -y;
+			setting_physics_boost20_accel_left = y;
 			ModLoader_WriteLong((void*)0x4159E8, setting_physics_boost20_accel_left);
 			break;
 
@@ -340,7 +340,7 @@ void SetPlayerPhysicsValues(int x, int y)
 			break;
 
 		case 29:
-			setting_physics_boost20_accel_up_no_key = -y;
+			setting_physics_boost20_accel_up_no_key = y;
 			ModLoader_WriteLong((void*)0x415A5A, setting_physics_boost20_accel_up_no_key);
 			break;
 
@@ -351,13 +351,13 @@ void SetPlayerPhysicsValues(int x, int y)
 			break;
 
 		case 31:
-			setting_physics_boost08_accel_max_speed = -y;
+			setting_physics_boost08_accel_max_speed = y;
 			ModLoader_WriteLong((void*)0x415EE0, setting_physics_boost08_accel_max_speed);
 			break;
 
 		// Max Speed
 		case 32:
-			setting_physics_max_speed_left = -y;
+			setting_physics_max_speed_left = y;
 			ModLoader_WriteLong((void*)0x4160DD, setting_physics_max_speed_left);
 			ModLoader_WriteLong((void*)0x4160E9, setting_physics_max_speed_left);
 			break;
@@ -369,7 +369,7 @@ void SetPlayerPhysicsValues(int x, int y)
 			break;
 
 		case 34:
-			setting_physics_max_speed_up = -y;
+			setting_physics_max_speed_up = y;
 			ModLoader_WriteLong((void*)0x416109, setting_physics_max_speed_up);
 			ModLoader_WriteLong((void*)0x416115, setting_physics_max_speed_up);
 			break;
@@ -382,7 +382,7 @@ void SetPlayerPhysicsValues(int x, int y)
 
 		// Max Speed (Underwater)
 		case 36:
-			setting_physics_water_max_speed_left = -y;
+			setting_physics_water_max_speed_left = y;
 			ModLoader_WriteLong((void*)0x416083, setting_physics_water_max_speed_left);
 			ModLoader_WriteLong((void*)0x41608F, setting_physics_water_max_speed_left);
 			break;
@@ -394,7 +394,7 @@ void SetPlayerPhysicsValues(int x, int y)
 			break;
 
 		case 38:
-			setting_physics_water_max_speed_up = -y;
+			setting_physics_water_max_speed_up = y;
 			ModLoader_WriteLong((void*)0x4160AF, setting_physics_water_max_speed_up);
 			ModLoader_WriteLong((void*)0x4160BB, setting_physics_water_max_speed_up);
 			break;
@@ -415,6 +415,9 @@ void PutPlayersJumps(int fx, int fy)
 	int jump_arrow_negative_x = -1;
 	int jump_arrow_negative_y = -1;
 
+	// Pre 1.1.2 behaviour --> jump arrow no longer needs a negative boolean !!
+
+	/*
 	if (setting_jump_arrow_x_offset_negative == true)
 		jump_arrow_negative_x = -1;
 	else
@@ -425,6 +428,7 @@ void PutPlayersJumps(int fx, int fy)
 		jump_arrow_negative_y = -1;
 	else
 		jump_arrow_negative_y = 1;
+	*/
 
 	// Rect Changing
 	if (current_jumps >= 2)
@@ -445,7 +449,7 @@ void PutPlayersJumps(int fx, int fy)
 	}
 
 	if (current_jumps >= 1)
-		PutBitmap3(&grcGame, (gMC.x / 0x200) + (setting_jump_arrow_x_offset * jump_arrow_negative_x) - (fx / 0x200), (gMC.y / 0x200) + (setting_jump_arrow_y_offset * jump_arrow_negative_y) - (fy / 0x200), &rcJumpArrow, SURFACE_ID_AUTUMN_HUD);
+		PutBitmap3(&grcGame, (gMC.x / 0x200) + setting_jump_arrow_x_offset - (fx / 0x200), (gMC.y / 0x200) + setting_jump_arrow_y_offset - (fy / 0x200), &rcJumpArrow, SURFACE_ID_AUTUMN_HUD);
 }
 
 // 0x415535

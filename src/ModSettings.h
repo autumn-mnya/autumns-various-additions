@@ -27,3 +27,4 @@ extern char setting_collab_name[CollabNameMaxPath];
 extern bool legacy_extra_jumps_ui;
 
 void InitMod_Settings();
+void InitSettingsRevamp();
