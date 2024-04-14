@@ -664,17 +664,6 @@ void ResetJumpBuffer()
 	buffer_can_jump = true;
 }
 
-
-void ActMyChar_OnWall(BOOL bKey)
-{
-	if (gMC.flag & 4 && gKeyRight) // In contact with right wall
-		onWall = 1;
-	else if (gMC.flag & 1 && gKeyLeft) // In contact with left wall
-		onWall = -1;
-	else
-		onWall = 0;
-}
-
 void SpawnWalljumpCarets(int type)
 {
 	switch (type)
@@ -699,6 +688,35 @@ void SpawnWalljumpCarets(int type)
 		break;
 	}
 
+}
+
+void ActMyChar_OnWall(BOOL bKey)
+{
+	if (gMC.flag & 4 && gKeyRight) // In contact with right wall
+		onWall = 1;
+	else if (gMC.flag & 1 && gKeyLeft) // In contact with left wall
+		onWall = -1;
+	else
+		onWall = 0;
+
+	// Slide down the wall if holding against it
+	if (onWall != 0)
+	{
+		if (entity_IsWallboosting == false)
+		{
+			if (setting_walljumps_enabled)
+			{
+				if (gMC.ym > setting_walljump_sliding_speed)
+					gMC.ym = setting_walljump_sliding_speed;
+			}
+		}
+		else // if you're wallboosting on a wallboost entity
+		{
+			SpawnWalljumpCarets(1);
+			gMC.ym += -0x120; // not customizable atm
+			PlaySoundObject(152, SOUND_MODE_PLAY);
+		}
+	}
 }
 
 void CheckForDoubleJump()
@@ -758,19 +776,6 @@ void ActMyChar_WallJump(BOOL bKey)
 					PlaySoundObject(15, SOUND_MODE_PLAY);
 					SpawnWalljumpCarets(0);
 					ResetJumpBuffer();
-				}
-
-				// Slide down the wall if holding against it
-				if (entity_IsWallboosting == false)
-				{
-					if (gMC.ym > setting_walljump_sliding_speed)
-						gMC.ym = setting_walljump_sliding_speed;
-				}
-				else // if you're wallboosting on a wallboost entity
-				{
-					SpawnWalljumpCarets(1);
-					gMC.ym += -0x120; // not customizable atm
-					PlaySoundObject(152, SOUND_MODE_PLAY);
 				}
 			}
 		}
