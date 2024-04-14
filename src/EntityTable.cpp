@@ -12,6 +12,8 @@
 #include "Entity.h"
 #include "EntityLoad.h"
 
+#include "AutPI.h"
+
 // Contains the NPC function table.
 
 // Npc function table
@@ -120,3 +122,15 @@ const NPCFUNCTION gpEntityFuncTbl[] = {
 	ActEntity462,
 	ActEntity463,
 };
+
+// Npc function table (1.1.2)
+
+// Define the function AddAVAEntities
+void AddAVAEntities()
+{
+	// Iterate through each ActEntity function in the gpEntityFuncTbl array
+	for (size_t i = 0; i < sizeof(gpEntityFuncTbl) / sizeof(gpEntityFuncTbl[0]); ++i) {
+		// Call AutPI_AddEntity with the current ActEntity function
+		AutPI_AddEntity(gpEntityFuncTbl[i]);
+	}
+}

@@ -1,6 +1,7 @@
 // AutPI.h
 
 #include <Windows.h>
+#include "cave_story.h"
 #include <vector>
 
 extern HMODULE autpiDLL;  // Global variable
@@ -43,7 +44,7 @@ typedef void (*InitializeGameInitElementHandler)();
 typedef void (*TransferStageInitElementHandler)();
 
 void LoadAutPiDll();
-
+void AutPI_AddEntity(NPCFUNCTION func);
 // Game() API
 void RegisterPreModeElement(PreModeElementHandler handler);
 void RegisterReleaseElement(ReleaseElementHandler handler);

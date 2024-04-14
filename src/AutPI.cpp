@@ -11,6 +11,22 @@ HMODULE autpiDLL = nullptr;  // Global variable
 // Function pointer for dynamically loaded functions
 typedef void (*RegisterElementFunc)(void (*)());
 
+void AutPI_AddEntity(NPCFUNCTION func)
+{
+    // Get function pointer to AutPI_AddEntity from the DLL
+    typedef void (*AutPI_AddEntityFunc)(NPCFUNCTION);
+    AutPI_AddEntityFunc addEntityFunc = reinterpret_cast<AutPI_AddEntityFunc>(
+        GetProcAddress(autpiDLL, "AutPI_AddEntity"));
+
+    if (addEntityFunc == nullptr) {
+        std::cerr << "Failed to get the function pointer for AutPI_AddEntity\n";
+        return;
+    }
+
+    // Call AutPI_AddEntity with the specified function pointer
+    addEntityFunc(func);
+}
+
 // Function to register an element handler
 void RegisterElement(std::vector<void (*)()>& handlers, const char* functionName, void (*handler)())
 {

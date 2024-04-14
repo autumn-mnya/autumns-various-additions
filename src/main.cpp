@@ -21,6 +21,7 @@
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
+#include "EntityTable.h"
 #include "Game.h"
 #include "Generic.h"
 #include "GenericLoad.h"
@@ -54,10 +55,14 @@ const char* audioDirectory = "data\\audio\\Desktop";
 // Inits anything relating to entities. The main thing are the 3 ModLoader_WriteJump's -- These replace every function that uses the Npc Table, and instead we also insert our new table!
 void InitMod_Entity()
 {
+	AddAVAEntities();
 	InitCustomEntityPatch();
+	// Possibly needs removed (3 lines below)
+	/*
 	ModLoader_WriteJump((void*)0x46FA00, (void*)Replacement_ActNpChar);
 	ModLoader_WriteJump((void*)0x46FAB0, (void*)Replacement_ChangeNpCharByEvent);
 	ModLoader_WriteJump((void*)0x46FD10, (void*)Replacement_ChangeCheckableNpCharByEvent);
+	*/
 	// This only gets replaced if TSC is loaded
 	if (setting_enable_text_script_code)
 	{

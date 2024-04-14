@@ -4,3 +4,4 @@
 #include "Entity.h"
 
 extern const NPCFUNCTION gpEntityFuncTbl[];
+void AddAVAEntities();
