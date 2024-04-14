@@ -26,5 +26,6 @@ CaveStory/mods/autumns_various_additions/settings.ini
 SeaTone/tone.ini
 CaveStory/Profile - Copy.dat
 CaveStory/Profile.FMOD.dat
-!external/fmod/lib
+!external/fmod/lib/fmod_vc.lib
+!external/fmod/lib/fmodstudio_vc.lib
 !CaveStory/ava/config
