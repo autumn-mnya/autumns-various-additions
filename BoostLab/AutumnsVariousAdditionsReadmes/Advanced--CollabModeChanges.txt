@@ -1,4 +1,4 @@
-"Collab Mode" is a toggle inside of settings.ini. It's going to be mainly used for when I (autumn) host a collab coming up soon eventually, but I should probably explain what it does first.
+"Collab Mode" is a toggle inside of collab.ini. It's going to be mainly used for when I (autumn) host a collab coming up soon eventually, but I should probably explain what it does first.
 
 Collab Mode makes certain files load from "data/CollabName/" instead, so that the format of stuff is a lot easier to organize. These are the TSC commands effected by Collab Mode.
 

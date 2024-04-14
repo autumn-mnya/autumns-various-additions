@@ -411,10 +411,6 @@ void PutPlayersJumps(int fx, int fy)
 {
 	RECT rcJumpArrow = { 0, 0, 8, 8 };
 
-	// Jank way of allowing negative/positive values in settings.ini
-	int jump_arrow_negative_x = -1;
-	int jump_arrow_negative_y = -1;
-
 	// Pre 1.1.2 behaviour --> jump arrow no longer needs a negative boolean !!
 
 	/*

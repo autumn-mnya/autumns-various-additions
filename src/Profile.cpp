@@ -516,7 +516,7 @@ void Replacement_InitializeGame_TransferStage_Call(int w, int x, int y, int z)
 
 void Replacement_InitializeGame_ClearArmsData_Call()
 {
-	InitCollabName(); // Init collab name to the one found in settings.ini
+	InitCollabName(); // Init collab name to the one found in collab.ini
 	ResetCustomGenericData(); // Reload Surfaces that were changed if they dont match default surface names
 	Reset_CustomScriptNames(); // Reset custom script names on new game
 	Reset_PixToneFolder(); // reset pixtone folder

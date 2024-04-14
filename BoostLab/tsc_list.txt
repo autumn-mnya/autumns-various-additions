@@ -162,7 +162,7 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <HSC	0	----	Head SCript	Load new Head tsc file from the data folder. Use $ at the end of the name to mark the end of the text input.	0	0	1	4	4	4	4
 <IMF	0	----	IMage Folder	Set a subfolder for <IMG to load from. Use $ at the end of the folder name to mark the end of the text input (Check TSC command txt for more).	0	0	0	4	4	4	4
 <IMG	0	----	IMaGe display	Show an image on screen. Use $ at the end of the image name to mark the end of the text input (Check TSC command txt for more).	0	0	0	4	4	4	4
-<IPH	0	----	Initialize PHysics	Resets the physics values for the player (<PHY) back to the ones set in settings.ini.	0	0	1	4	4	4	4
+<IPH	0	----	Initialize PHysics	Resets the physics values for the player (<PHY) back to the ones set in mychar.ini.	0	0	1	4	4	4	4
 <ITC	0	----	ITem Clear	Removes all of the items from the players inventory.	0	0	1	4	4	4	4
 <LDR	2	#d--	Lock DiRection	Lock Direction when using <FM2 Camera (Check TSC command txt).	0	0	1	4	4	4	4
 <LSC	0	----	Load SCript	Load TSC script and run event 0 afterwards. Use $ at the end of the script name to mark the end of the text input.	0	0	0	4	4	4	4
@@ -178,7 +178,7 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <PS-	1	#---	Portal Slot -	Remove teleporter slot W.	0	0	1	4	4	4	4
 <PSC	0	----	Portal Slot Clear	Removes all of the teleporter slots that have been added.	0	0	1	4	4	4	4
 <PXT	0	----	PiXTone load	Load folder with sound effects from the /data/ folder. Use $ at the end of the name to mark the end of the text input (Check TSC command txt).	0	0	1	4	4	4	4
-<RSF	0	----	Reset SurFaces	Reset all surfaces to their defaults in settings.ini.	0	0	1	4	4	4	4
+<RSF	0	----	Reset SurFaces	Reset all surfaces to their defaults in graphics.ini.	0	0	1	4	4	4	4
 <RSP	0	----	ReSPawn	Respawn the player (Check TSC command txt).	1	0	1	4	4	4	4
 <RVI	0	----	ReVIve	Revive the player (Check TSC command txt).	0	0	1	4	4	4	4
 <SBL	4	#xyd	Set BuLlet	Create a bullet of type W at coordinates X:Y with direction Z.	0	0	1	4	4	4	4
@@ -211,7 +211,7 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <CLN	0	----	CoLlab Name	[COLLAB MODE] Set the Collab Name. Use $ at the end of the name to mark the end of the text input.	0	0	0	4	4	4	4
 <ICD	0	----	Initialize Collab Data	[COLLAB MODE] Reset certain structs in the game (Check TSC command txt).	0	0	1	4	4	4	4
 <ICF	0	----	Initialize Collab Flags	[COLLAB MODE] Reset the Collab Flag array (Check TSC command txt).	0	0	1	4	4	4	4
-<ICN	0	----	Initialize Collab Name	[COLLAB MODE] Reset the Collab Name to the one found in settings.ini (Check TSC command txt).	0	0	1	4	4	4	4
+<ICN	0	----	Initialize Collab Name	[COLLAB MODE] Reset the Collab Name to the one found in collab.ini (Check TSC command txt).	0	0	1	4	4	4	4
 <ROP	0	----	Rta pOP	"Pop" the lowest event in a stack of events --> Jumping to that event.	0	0	1	4	4	4	4
 <RS2	4	mexy	Rta puSh 2	"Push" an <TRA event to a stack of events.	0	0	1	4	4	4	4
 <RSC	0	----	Rta Stack Clear	Clear the "stack" of events.	0	0	1	4	4	4	4

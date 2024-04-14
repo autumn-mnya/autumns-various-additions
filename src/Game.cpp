@@ -59,7 +59,7 @@ void AutumnsVariousAdditionsTextBoxAbove()
 void AutumnsVariousAdditionsModeOpeningInit()
 {
 	// SetFadeMask();
-	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in settings.ini
+	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in graphics.ini
 	Reset_CustomScriptNames(); // Reset custom script names in the opening
 	if (setting_enable_reset_pixtone_on_reset)
 		Reset_PixToneFolder(); // reset pixtone folder
@@ -73,7 +73,7 @@ void AutumnsVariousAdditionsModeOpeningInit()
 
 void AutumnsVariousAdditionsModeTitleInit()
 {
-	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in settings.ini
+	ResetCustomGenericData(); // Reset the sprites if they were changed from the defaults in graphics.ini
 	Reset_CustomScriptNames(); // Reset custom script names on the title
 	if (setting_enable_reset_pixtone_on_reset)
 		Reset_PixToneFolder(); // reset pixtone folder

@@ -88,12 +88,12 @@ Displays a boss explosion flash effect at entity with the assigned event number.
 Arguments: 1 [<BLOwwww] [entity_event]
 
 - <BUY - BUY jump
-[This TSC command is only useful when the money code is enabled in settings.ini.]
+[This TSC command is only useful when the money code is enabled in tsc.ini.]
 This command will jump to event X if the player doesn't have W money. Otherwise, it will continue the current event and remove W money.
 Arguments: 2 [<BUYwwww:xxxx] [money:event]
 
 - <BY2 - BuY jump 2
-[This TSC command is only useful when the money code is enabled in settings.ini.]
+[This TSC command is only useful when the money code is enabled in tsc.ini.]
 This command will jump to event X if the player has W money, and will remove X money as well. Otherwise, it will continue the current event.
 Arguments: 2 [BY2wwww:xxxx] [money:event]
 
@@ -107,12 +107,12 @@ Display dialogue choice options on screen. Freezes the game.
 Arguments: 0 [<CHO]
 
 - <SEL - SELl (Add money)
-[This TSC command is only useful when the money code is enabled in settings.ini.]
+[This TSC command is only useful when the money code is enabled in tsc.ini.]
 This command will add money W to the players money amount.
 Arguments: 1 [<SELwwww] [money]
 
 - <SL= - SeLl = (Set money)
-[This TSC command is only useful when the money code is enabled in settings.ini.]
+[This TSC command is only useful when the money code is enabled in tsc.ini.]
 This command will set the players money amount to W.
 Arguments: 1 [<SL=wwww] [money]
 
@@ -243,7 +243,7 @@ Load a 320x340 image onto the whole screen. Default folder is "data/Image" -- En
 [ IMPORTANT: Must be less than or equal to 50 characters in length! ]
 Arguments: 1 [<IMGstring$] [image$]
 Example: <IMGglyph$
-( You can set a flag to make the image appear *above* the textbox instead of behind it. The default is 6503, you can change this in the dll's settings.ini )
+( You can set a flag to make the image appear *above* the textbox instead of behind it. The default is 6503, you can change this in the dll's tsc.ini )
 
 - <LSC - Load SCript
 Load TSC Script and run event 0 afterwards. -- End the text string with a $ so the game knows to stop reading the text.
@@ -286,7 +286,7 @@ Example: <PXTpixtone2$
 Note: <PXT0$ will load the default folder.
 
 - <RSF - Reset SurFaces
-Reset all surfaces to their defaults in settings.ini. Useful if you want to reset after using <CSF.
+Reset all surfaces to their defaults in graphics.ini. Useful if you want to reset after using <CSF.
 Arguments: 0 [<RSF]
 
 - <RSP - ReSPawn player
@@ -304,7 +304,7 @@ Set the players respawn point at the players coordinates.
 Arguments: 0 [<SRQ]
 
 - <RVI - ReVIve player
-Unlike the respawning function above, this revives the player where they died. The HP you're revived with is in settings.ini.
+Unlike the respawning function above, this revives the player where they died. The HP you're revived with is in tsc.ini.
 Arguments: 0 [<RVI]
 
 - <TA2 - TrAnsport 2
@@ -316,7 +316,7 @@ Unloads and unpatches all hex patches applies via <PAT.
 Arguments: 0 [<UPT]
 
 - <IPH - Initialize PHysics
-Reset the physics for the player back to the ones set in settings.ini. Physics are auto-reset on new game.
+Reset the physics for the player back to the ones set in mychar.ini. Physics are auto-reset on new game.
 Arguments: 0 [<IPH]
 
 - <PHY - PHYsics
@@ -487,11 +487,11 @@ Reset Collab Flag array back to default settings.
 Arguments: 0 [<ICF]
 
 - <ICD - Init Collab Data
-Reset MyChar, Collectables Position, Collectables Enabled, and Booster Fuel back to settings.ini / freeware stats.
+Reset MyChar, Collectables Position, Collectables Enabled, and Booster Fuel back to config / freeware stats.
 Arguments: 0 [<ICD]
 
 - <ICN - Init Collab Name
-Reset Collab Name back to the one in settings.ini.
+Reset Collab Name back to the one in collab.ini.
 Arguments: 0 [<ICN]
 
 # Random Time Attack Commands #
