@@ -161,6 +161,7 @@ void InitMod_TSCImage()
 void FModUpdate()
 {
 	FmodStudioObj->update();
+	InjectMusicProgressParams();
 }
 void ReleaseFModAudio()
 {
@@ -176,19 +177,6 @@ void InitFMOD_MusicCalls()
 	ModLoader_WriteCall((void*)0x40FEC0, (void*)Replacement_ModeTitle_ChangeMusic_Safety_Call);
 	ModLoader_WriteCall((void*)0x40FECC, (void*)Replacement_ModeTitle_ChangeMusic_CaveStory_Call);
 	ModLoader_WriteCall((void*)0x41038C, (void*)Replacement_ModeTitle_ChangeMusic_Silence_Call);
-}
-
-void InitMod_FMOD()
-{
-	fmod_Init();
-	fmod_LoadBanks();
-	InitFMOD_MusicCalls();
-
-	RegisterOpeningActionElement(FModUpdate);
-	RegisterTitleActionElement(FModUpdate);
-	RegisterActionElement(FModUpdate);
-	RegisterReleaseElement(ReleaseFModAudio);
-	RegisterInitializeGameInitElement(FModClearEventNames);
 }
 
 // Init TSC <BKG related calls
@@ -332,5 +320,26 @@ void InitMod(void)
 		InitMod_AutumnConfigDefaults();
 
 	if (setting_enable_fmod)
-		InitMod_FMOD();
+	{
+		fmod_Init();
+		fmod_LoadBanks();
+		ModLoader_WriteCall((void*)0x413316, (void*)ActiveWindow);
+		InitFMOD_MusicCalls();
+
+		RegisterOpeningActionElement(FModUpdate);
+		RegisterTitleActionElement(FModUpdate);
+		RegisterActionElement(FModUpdate);
+		RegisterReleaseElement(ReleaseFModAudio);
+		RegisterInitializeGameInitElement(FModClearEventNames);
+
+		RegisterPlayerHudElement(FModUITest);
+
+		if (replace_fan_code == true)
+		{
+			ModLoader_WriteJump((void*)0x43AAF0, (void*)Replacement_ActNpc096);
+			ModLoader_WriteJump((void*)0x43AD10, (void*)Replacement_ActNpc097);
+			ModLoader_WriteJump((void*)0x43AF20, (void*)Replacement_ActNpc098);
+			ModLoader_WriteJump((void*)0x43B140, (void*)Replacement_ActNpc099);
+		}
+	}
 }

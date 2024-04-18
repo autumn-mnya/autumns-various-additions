@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <string>
+#include <time.h>
 
 #include "MyChar.h"
 
@@ -946,8 +947,72 @@ void setPlayerPhysics(BOOL bKey, Physics *physics)
 	}
 }
 
+void MoveWindowBy(HWND hWnd, int dx, int dy) {
+	if (hWnd != NULL) {
+		// Get current window position
+		RECT rect;
+		GetWindowRect(hWnd, &rect);
+
+		// Calculate new position
+		int newLeft = rect.left + dx;
+		int newTop = rect.top + dy;
+		int width = rect.right - rect.left;
+		int height = rect.bottom - rect.top;
+		int newRight = newLeft + width;
+		int newBottom = newTop + height;
+
+		// Set new position using SetWindowPos
+		SetWindowPos(hWnd, NULL, newLeft, newTop, width, height, SWP_NOZORDER | SWP_NOSIZE);
+	}
+}
+
+void RandomlyOffsetWindow(HWND hWnd) {
+	if (hWnd != NULL) {
+		// Get current window position
+		RECT rect;
+		GetWindowRect(hWnd, &rect);
+
+		// Seed the random number generator with current time (should be done once)
+		static bool initialized = false;
+		if (!initialized) {
+			srand((unsigned int)time(NULL));
+			initialized = true;
+		}
+
+		// Generate random offsets within range [-20, 20]
+		int offsetX = rand() % 41 - 20;  // Random number between -20 and 20
+		int offsetY = rand() % 41 - 20;  // Random number between -20 and 20
+
+		// Calculate new position based on original coordinates + random offsets
+		int newLeft = rect.left + offsetX;
+		int newTop = rect.top + offsetY;
+		int width = rect.right - rect.left;
+		int height = rect.bottom - rect.top;
+		int newRight = newLeft + width;
+		int newBottom = newTop + height;
+
+		// Set new position using SetWindowPos
+		SetWindowPos(hWnd, NULL, newLeft, newTop, width, height, SWP_NOZORDER | SWP_NOSIZE);
+	}
+}
+
+
 void ActMyChar_Normal_Custom(BOOL bKey)
 {
+	/*
+	HWND hWnd = GetForegroundWindow();
+	if (gMC.shock != 0)
+		RandomlyOffsetWindow(hWnd);
+	*/
+
+	/*
+	if (gKey & gKeyArmsRev)
+		MoveWindowBy(hWnd, -1, 0);
+
+	if (gKey & gKeyArms)
+		MoveWindowBy(hWnd, 1, 0);
+	*/
+
 	ActMyChar_OnWall(bKey); // Check if the player is on a wall
 
 	if (setting_walljumps_enabled)

@@ -25,6 +25,7 @@
 
 bool entity_IsWallboosting = false;
 bool entity_IsIceWalled = false;
+bool playerIsInFan = false;
 
 // Booster Fuel Refill
 void ActEntity361(NPCHAR* npc)
@@ -1019,8 +1020,11 @@ void ActEntity374(NPCHAR* npc)
 			if (gMC.y < npc->y + (8 * 0x200) && gMC.y > npc->y - (8 * 0x200) && gMC.x < npc->x && gMC.x > npc->x - (96 * 0x200))
 			{
 				gMC.xm -= speed;
+				playerIsInFan = true;
 				gMC.cond |= 0x20;
 			}
+			else
+				playerIsInFan = false;
 
 			break;
 	}
@@ -1072,7 +1076,12 @@ void ActEntity375(NPCHAR* npc)
 			}
 
 			if (gMC.x < npc->x + (8 * 0x200) && gMC.x > npc->x - (8 * 0x200) && gMC.y < npc->y && gMC.y > npc->y - (96 * 0x200))
+			{
 				gMC.ym -= speed;
+				playerIsInFan = true;
+			}
+			else
+				playerIsInFan = false;
 
 			break;
 	}
@@ -1126,8 +1135,11 @@ void ActEntity376(NPCHAR* npc)
 			if (gMC.y < npc->y + (8 * 0x200) && gMC.y > npc->y - (8 * 0x200) && gMC.x < npc->x + (96 * 0x200) && gMC.x > npc->x)
 			{
 				gMC.xm += speed;
+				playerIsInFan = true;
 				gMC.cond |= 0x20;
 			}
+			else
+				playerIsInFan = false;
 
 			break;
 	}
@@ -1179,7 +1191,12 @@ void ActEntity377(NPCHAR* npc)
 			}
 
 			if (gMC.x < npc->x + (8 * 0x200) && gMC.x > npc->x - (8 * 0x200) && gMC.y < npc->y + (96 * 0x200) && gMC.y > npc->y)
+			{
 				gMC.ym += speed;
+				playerIsInFan = true;
+			}
+			else
+				playerIsInFan = false;
 
 			break;
 	}

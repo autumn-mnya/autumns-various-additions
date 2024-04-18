@@ -27,3 +27,5 @@ void ReleaseFmod();
 void PlayFModAudio(const char* audiofile);
 void StopFmodAllAudio();
 void FModClearEventNames();
+void InjectMusicProgressParams();
+void FModUITest();

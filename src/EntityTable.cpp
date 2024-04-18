@@ -16,6 +16,8 @@
 
 // Contains the NPC function table.
 
+#define ADD_NPC_FUNCTION(func) AutPI_AddEntity(func, #func)
+
 // Npc function table
 const NPCFUNCTION gpEntityFuncTbl[] = {
 	ActEntity361,
@@ -131,6 +133,6 @@ void AddAVAEntities()
 	// Iterate through each ActEntity function in the gpEntityFuncTbl array
 	for (size_t i = 0; i < sizeof(gpEntityFuncTbl) / sizeof(gpEntityFuncTbl[0]); ++i) {
 		// Call AutPI_AddEntity with the current ActEntity function
-		AutPI_AddEntity(gpEntityFuncTbl[i]);
+		AutPI_AddEntity(gpEntityFuncTbl[i], "autumn", "ava");
 	}
 }

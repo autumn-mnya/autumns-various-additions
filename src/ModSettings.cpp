@@ -59,6 +59,9 @@ char setting_collab_name[CollabNameMaxPath] = "null";
 
 bool legacy_extra_jumps_ui = false;
 
+// Version 1.1.3
+bool replace_fan_code = false;
+
 // Used to be used before 1.1.2 --> the settings system has seen a massive overhaul.
 void InitMod_Settings()
 {
@@ -428,6 +431,7 @@ void Init_INI_fmod()
 	setting_titlescreen_toroko_music = copyString(fmod.GetString("Event Names", "Title Screen Music [Torokos Theme] (FMOD)", "event:/Null/null0000"));
 	setting_titlescreen_white_music = copyString(fmod.GetString("Event Names", "Title Screen Music [White] (FMOD)", "event:/Null/null0000"));
 	setting_titlescreen_safety_music = copyString(fmod.GetString("Event Names", "Title Screen Music [Safety] (FMOD)", "event:/Null/null0000"));
+	replace_fan_code = fmod.GetBoolean("Parameter", "Replace Fan NPC code", false);
 }
 
 void Init_INI_graphics()

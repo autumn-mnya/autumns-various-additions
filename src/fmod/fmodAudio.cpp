@@ -18,6 +18,8 @@
 #include "../mod_loader.h"
 #include "../cave_story.h"
 #include "../TextScript.h"
+#include "../AutPI.h"
+#include "../Entity.h"
 
 namespace fs = std::filesystem;
 
@@ -245,4 +247,64 @@ void FModClearEventNames()
     memset(eventName6, 0, sizeof(eventName6));
     memset(eventName7, 0, sizeof(eventName7));
     memset(eventName8, 0, sizeof(eventName8));
+}
+
+bool isplayinwater = false;
+
+void InjectMusicProgressParams()
+{
+    // If the player is in Water
+    if (gMC.flag & 0x100)
+        FmodMusicInstance->setParameterByName("isInWater", 1, false);
+    else
+        FmodMusicInstance->setParameterByName("isInWater", 0, false);
+
+    // If the player is airborne currently
+    if (gMC.ym != 0)
+        FmodMusicInstance->setParameterByName("isAirborne", 1, false);
+    else
+        FmodMusicInstance->setParameterByName("isInWater", 0, false);
+
+    // If the player is moving at high speed horizontally
+    if (abs(gMC.xm) > 950)
+        FmodMusicInstance->setParameterByName("isAtHighXSpeed", 1, false);
+    else
+        FmodMusicInstance->setParameterByName("isAtHighXSpeed", 0, false);
+
+    // If the player is moving at high speed vertically
+    if (abs(gMC.ym) > 1300)
+        FmodMusicInstance->setParameterByName("isAtHighYSpeed", 1, false);
+    else
+        FmodMusicInstance->setParameterByName("isAtHighYSpeed", 0, false);
+
+    // If the player is moving at high speed in either direction
+    if ((abs(gMC.ym) > 1300) || (abs(gMC.xm) > 950))
+        FmodMusicInstance->setParameterByName("isAtHighSpeed", 1, false);
+    else
+        FmodMusicInstance->setParameterByName("isAtHighSpeed", 0, false);
+
+    // If the player is in a wind tile
+    if ((gMC.flag & 0x1000) || (gMC.flag & 0x2000) || (gMC.flag & 0x4000) || (gMC.flag & 0x8000) || playerIsInFan == true)
+        FmodMusicInstance->setParameterByName("isInWind", 1, false);
+    else
+        FmodMusicInstance->setParameterByName("isInWind", 0, false);
+
+    // players current weapon level
+    FmodMusicInstance->setParameterByName("playerArmsLevel", gArmsData[gSelectedArms].level, false);
+
+    // Calculate 30% of max_life
+    double threshold = 0.3 * gMC.max_life;
+
+    if (gMC.life <= threshold)
+        FmodMusicInstance->setParameterByName("playerAtLowHP", 1, false);
+    else
+        FmodMusicInstance->setParameterByName("playerAtLowHP", 0, false);
+}
+
+void FModUITest()
+{
+    /*
+   if (isplayinwater)
+    PutNumber4(0, 0, 1, FALSE);
+    */
 }

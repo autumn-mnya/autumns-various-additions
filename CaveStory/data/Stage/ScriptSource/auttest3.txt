@@ -111,3 +111,9 @@ Neverbefore used RS2 Test<NOD<RSU
 #0803
 <PRI<MS3
 FINISH<NOD<RSC<END
+
+#0900
+<KEY<CMU0000<PEVevent:/Autumn/AVA/test$<END
+
+#0901
+<CVPisInWater$<EVP0001<END

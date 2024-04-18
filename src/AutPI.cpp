@@ -11,22 +11,6 @@ HMODULE autpiDLL = nullptr;  // Global variable
 // Function pointer for dynamically loaded functions
 typedef void (*RegisterElementFunc)(void (*)());
 
-void AutPI_AddEntity(NPCFUNCTION func)
-{
-    // Get function pointer to AutPI_AddEntity from the DLL
-    typedef void (*AutPI_AddEntityFunc)(NPCFUNCTION);
-    AutPI_AddEntityFunc addEntityFunc = reinterpret_cast<AutPI_AddEntityFunc>(
-        GetProcAddress(autpiDLL, "AutPI_AddEntity"));
-
-    if (addEntityFunc == nullptr) {
-        std::cerr << "Failed to get the function pointer for AutPI_AddEntity\n";
-        return;
-    }
-
-    // Call AutPI_AddEntity with the specified function pointer
-    addEntityFunc(func);
-}
-
 // Function to register an element handler
 void RegisterElement(std::vector<void (*)()>& handlers, const char* functionName, void (*handler)())
 {
@@ -44,6 +28,48 @@ void RegisterElement(std::vector<void (*)()>& handlers, const char* functionName
             // You might want to handle the error appropriately.
         }
     }
+}
+
+void AutPI_AddBoss(BOSSFUNCTION func, char* author, char* name)
+{
+    typedef void (*AutPI_AddBossFunc)(BOSSFUNCTION, char*, char*);
+    AutPI_AddBossFunc addBossFunc = reinterpret_cast<AutPI_AddBossFunc>(
+        GetProcAddress(autpiDLL, "AutPI_AddBoss"));
+
+    if (addBossFunc == nullptr) {
+        std::cerr << "Failed to get the function pointer for AutPI_AddBoss\n";
+        return;
+    }
+
+    addBossFunc(func, author, name);
+}
+
+void AutPI_AddCaret(CARETFUNCTION func, char* author, char* name)
+{
+    typedef void (*AutPI_AddCaretFunc)(CARETFUNCTION, char*, char*);
+    AutPI_AddCaretFunc addCaretFunc = reinterpret_cast<AutPI_AddCaretFunc>(
+        GetProcAddress(autpiDLL, "AutPI_AddCaret"));
+
+    if (addCaretFunc == nullptr) {
+        std::cerr << "Failed to get the function pointer for AutPI_AddCaret\n";
+        return;
+    }
+
+    addCaretFunc(func, author, name);
+}
+
+void AutPI_AddEntity(NPCFUNCTION func, char* author, char* name)
+{
+    typedef void (*AutPI_AddEntityFunc)(NPCFUNCTION, char*, char*);
+    AutPI_AddEntityFunc addEntityFunc = reinterpret_cast<AutPI_AddEntityFunc>(
+        GetProcAddress(autpiDLL, "AutPI_AddEntity"));
+
+    if (addEntityFunc == nullptr) {
+        std::cerr << "Failed to get the function pointer for AutPI_AddEntity\n";
+        return;
+    }
+
+    addEntityFunc(func, author, name);
 }
 
 // Function to load autpi.dll
@@ -90,6 +116,8 @@ std::vector<SaveProfilePostWriteElementHandler> saveprofilepostwriteElementHandl
 std::vector<LoadProfilePreCloseElementHandler> loadprofileprecloseElementHandlers;
 std::vector<LoadProfilePostCloseElementHandler> loadprofilepostcloseElementHandlers;
 std::vector<InitializeGameInitElementHandler> intializegameElementHandlers;
+
+std::vector<TextScriptSVPElementHandler> textscriptsvpElementHandlers;
 
 std::vector<TransferStageInitElementHandler> transferstageinitElementHandlers;
 
@@ -246,6 +274,13 @@ void RegisterLoadProfilePostCloseElement(LoadProfilePostCloseElementHandler hand
 void RegisterInitializeGameInitElement(InitializeGameInitElementHandler handler)
 {
     RegisterElement(intializegameElementHandlers, "RegisterInitializeGameInitElement", reinterpret_cast<void (*)()>(handler));
+}
+
+// TextScript API
+
+void RegisterSVPElement(TextScriptSVPElementHandler handler)
+{
+    RegisterElement(textscriptsvpElementHandlers, "RegisterSVPElement", reinterpret_cast<void (*)()>(handler));
 }
 
 // TransferStage API

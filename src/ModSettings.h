@@ -26,5 +26,7 @@ extern char setting_collab_name[CollabNameMaxPath];
 
 extern bool legacy_extra_jumps_ui;
 
+extern bool replace_fan_code;
+
 void InitMod_Settings();
 void InitSettingsRevamp();

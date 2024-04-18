@@ -8,6 +8,7 @@
 
 extern bool entity_IsWallboosting;
 extern bool entity_IsIceWalled;
+extern bool playerIsInFan;
 
 enum NPCNames
 {

@@ -6,6 +6,12 @@
 
 extern HMODULE autpiDLL;  // Global variable
 
+// Boss API
+void AutPI_AddBoss(BOSSFUNCTION func, char* author, char* name);
+
+// Caret API
+void AutPI_AddCaret(CARETFUNCTION func, char* author, char* name);
+
 // Game()
 typedef void (*OpeningBelowFadeElementHandler)();
 typedef void (*OpeningAboveFadeElementHandler)();
@@ -40,11 +46,16 @@ typedef void (*SaveProfilePostWriteElementHandler)();
 typedef void (*LoadProfilePreCloseElementHandler)();
 typedef void (*LoadProfilePostCloseElementHandler)();
 typedef void (*InitializeGameInitElementHandler)();
+// TextScript
+typedef void (*TextScriptSVPElementHandler)();
 // TransferStage()
 typedef void (*TransferStageInitElementHandler)();
 
 void LoadAutPiDll();
-void AutPI_AddEntity(NPCFUNCTION func);
+
+// NpcTbl API
+void AutPI_AddEntity(NPCFUNCTION func, char* author, char* name);
+
 // Game() API
 void RegisterPreModeElement(PreModeElementHandler handler);
 void RegisterReleaseElement(ReleaseElementHandler handler);
@@ -79,5 +90,7 @@ void RegisterSaveProfilePostWriteElement(SaveProfilePostWriteElementHandler hand
 void RegisterLoadProfilePreCloseElement(LoadProfilePreCloseElementHandler handler);
 void RegisterLoadProfilePostCloseElement(LoadProfilePostCloseElementHandler handler);
 void RegisterInitializeGameInitElement(InitializeGameInitElementHandler handler);
+// TextScript API
+void RegisterSVPElement(TextScriptSVPElementHandler handler);
 // TransferStage() API
 void RegisterTransferStageInitElement(TransferStageInitElementHandler handler);
