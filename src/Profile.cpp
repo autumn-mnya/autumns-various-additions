@@ -25,8 +25,6 @@
 #include "TextScriptCollabLoad.h"
 #include "TileCollisionMyChar.h"
 
-#include "fmod/fmodAudio.h"
-
 const char* const gAutumnProfileCode = "AutumnMnyaHazel";
 CustomProfileData profile;
 FILE* LoadProfileFp;
@@ -149,16 +147,6 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	profile.phy_physics_water_max_speed_right = setting_physics_water_max_speed_right;
 	profile.phy_physics_water_max_speed_up = setting_physics_water_max_speed_up;
 	profile.phy_physics_water_max_speed_down = setting_physics_water_max_speed_down;
-
-	// FMOD (Version 1.1.2)
-	memcpy(profile.eventName, eventName, sizeof(profile.eventName));
-	memcpy(profile.eventName2, eventName2, sizeof(profile.eventName2));
-	memcpy(profile.eventName3, eventName3, sizeof(profile.eventName3));
-	memcpy(profile.eventName4, eventName4, sizeof(profile.eventName4));
-	memcpy(profile.eventName5, eventName5, sizeof(profile.eventName5));
-	memcpy(profile.eventName6, eventName6, sizeof(profile.eventName6));
-	memcpy(profile.eventName7, eventName7, sizeof(profile.eventName7));
-	memcpy(profile.eventName8, eventName8, sizeof(profile.eventName8));
 	// Write new save code after this
 }
 
@@ -308,15 +296,6 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		Freeware_fread(&profile.phy_physics_water_max_speed_right, 4, 1, fp);
 		Freeware_fread(&profile.phy_physics_water_max_speed_up, 4, 1, fp);
 		Freeware_fread(&profile.phy_physics_water_max_speed_down, 4, 1, fp);
-		// FMOD (Version 1.1.2)
-		Freeware_fread(&profile.eventName, MAX_PATH, 1, fp);
-		Freeware_fread(&profile.eventName2, MAX_PATH, 1, fp);
-		Freeware_fread(&profile.eventName3, MAX_PATH, 1, fp);
-		Freeware_fread(&profile.eventName4, MAX_PATH, 1, fp);
-		Freeware_fread(&profile.eventName5, MAX_PATH, 1, fp);
-		Freeware_fread(&profile.eventName6, MAX_PATH, 1, fp);
-		Freeware_fread(&profile.eventName7, MAX_PATH, 1, fp);
-		Freeware_fread(&profile.eventName8, MAX_PATH, 1, fp);
 	}
 
 	// Close the file
@@ -361,16 +340,6 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 
 		// Collab Name
 		strcpy(setting_collab_name, profile.CollabName);
-
-		// FMOD (Version 1.1.2)
-		strcpy(eventName, profile.eventName);
-		strcpy(eventName2, profile.eventName2);
-		strcpy(eventName3, profile.eventName3);
-		strcpy(eventName4, profile.eventName4);
-		strcpy(eventName5, profile.eventName5);
-		strcpy(eventName6, profile.eventName6);
-		strcpy(eventName7, profile.eventName7);
-		strcpy(eventName8, profile.eventName8);
 	}
 }
 
@@ -490,19 +459,6 @@ void Replacement_LoadProfile_ClearFade_Call()
 		BKG_ResetBackgrounds();
 
 	ResetTSC_Image();
-
-	// Play all fmod audio, if its enabled
-	if (setting_enable_fmod)
-	{
-		PlayFModAudio(eventName);
-		PlayFModAudio(eventName2);
-		PlayFModAudio(eventName3);
-		PlayFModAudio(eventName4);
-		PlayFModAudio(eventName5);
-		PlayFModAudio(eventName6);
-		PlayFModAudio(eventName7);
-		PlayFModAudio(eventName8);
-	}
 
 	ClearFade();
 }

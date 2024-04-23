@@ -59,9 +59,6 @@ char setting_collab_name[CollabNameMaxPath] = "null";
 
 bool legacy_extra_jumps_ui = false;
 
-// Version 1.1.3
-bool replace_fan_code = false;
-
 // Used to be used before 1.1.2 --> the settings system has seen a massive overhaul.
 void InitMod_Settings()
 {
@@ -418,22 +415,6 @@ void Init_INI_collab()
 	setting_enable_collab_flags = collab.GetBoolean("Collab Flags", "Collab Flags", false);
 }
 
-void Init_INI_fmod()
-{
-	char path[MAX_PATH];
-	sprintf(path, "%s\\%s", gAVAConfigPath, "fmod.ini");
-	INIReader fmod(path);
-
-	setting_enable_fmod = fmod.GetBoolean("Main", "Enable FMod", false);
-	audioDirectory = copyString(fmod.GetString("Main", "FMOD Audio Directory", "data\\audio\\Desktop"));
-	setting_titlescreen_cavestory_music = copyString(fmod.GetString("Event Names", "Title Screen Music (FMOD)", "event:/Null/null0000"));
-	setting_titlescreen_hell_music = copyString(fmod.GetString("Event Names", "Title Screen Music [Running Hell] (FMOD)", "event:/Null/null0000"));
-	setting_titlescreen_toroko_music = copyString(fmod.GetString("Event Names", "Title Screen Music [Torokos Theme] (FMOD)", "event:/Null/null0000"));
-	setting_titlescreen_white_music = copyString(fmod.GetString("Event Names", "Title Screen Music [White] (FMOD)", "event:/Null/null0000"));
-	setting_titlescreen_safety_music = copyString(fmod.GetString("Event Names", "Title Screen Music [Safety] (FMOD)", "event:/Null/null0000"));
-	replace_fan_code = fmod.GetBoolean("Parameter", "Replace Fan NPC code", false);
-}
-
 void Init_INI_graphics()
 {
 	char path[MAX_PATH];
@@ -689,8 +670,6 @@ void InitSettingsRevamp()
 	printf("Loaded main.ini\n");
 	Init_INI_collab();
 	printf("Loaded collab.ini\n");
-	Init_INI_fmod();
-	printf("Loaded fmod.ini\n");
 	Init_INI_graphics();
 	printf("Loaded graphics.ini\n");
 	Init_INI_mychar();

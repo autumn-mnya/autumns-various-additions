@@ -39,9 +39,6 @@
     <ClCompile Include="src\DialogueChoice.cpp" />
     <ClCompile Include="src\AutPI.cpp" />
     <ClCompile Include="src\ModInit.cpp" />
-    <ClCompile Include="src\fmod\fmodAudio.cpp">
-      <Filter>fmod</Filter>
-    </ClCompile>
     <ClCompile Include="src\library\tinyxml2.cpp">
       <Filter>library</Filter>
     </ClCompile>
@@ -50,6 +47,16 @@
     </ClCompile>
     <ClCompile Include="src\library\ini.c">
       <Filter>library</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InitMod.cpp" />
+    <ClCompile Include="src\lua\Lua.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lua\Lua_Respawn.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lua\Lua_Var.cpp">
+      <Filter>lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,9 +100,6 @@
     <ClInclude Include="src\DialogueChoice.h" />
     <ClInclude Include="src\AutPI.h" />
     <ClInclude Include="src\ModInit.h" />
-    <ClInclude Include="src\fmod\fmodAudio.h">
-      <Filter>fmod</Filter>
-    </ClInclude>
     <ClInclude Include="src\library\tinyxml2.h">
       <Filter>library</Filter>
     </ClInclude>
@@ -105,13 +109,26 @@
     <ClInclude Include="src\library\ini.h">
       <Filter>library</Filter>
     </ClInclude>
+    <ClInclude Include="src\InitMod.h" />
+    <ClInclude Include="src\lua\Lua.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lua\Lua_Respawn.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lua\Lua_Var.h">
+      <Filter>lua</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="fmod">
-      <UniqueIdentifier>{d475fe52-87b3-4fd7-ba0f-37a996d02d0a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="library">
       <UniqueIdentifier>{864a5525-7fbf-4aeb-8ae5-68aba31050e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="api">
+      <UniqueIdentifier>{59c0b925-b5c4-41f5-ad3f-07fedf1b3e35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua">
+      <UniqueIdentifier>{f20232ff-52d8-46f9-a43f-967b9a2982f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

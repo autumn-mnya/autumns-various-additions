@@ -19,6 +19,8 @@
 
 #include "XMLLoad.h"
 
+#include "AutPI.h"
+
 bool setting_enable_life_drain = false;
 bool setting_enable_life_regen = false;
 

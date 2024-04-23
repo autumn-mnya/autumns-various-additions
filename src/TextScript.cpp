@@ -37,8 +37,6 @@
 
 #include "DialogueChoice.h"
 
-#include "fmod/fmodAudio.h"
-
 EventQueue gEventQueue;
 
 // Booleans
@@ -1247,177 +1245,6 @@ static int CustomTSC_MIM(MLHookCPURegisters* regs, void* ud)
 	return 1;
 }
 
-// Different hook if FMOD is enabled
-static int CustomTSC_FMOD(MLHookCPURegisters* regs, void* ud)
-{
-	(void)ud;
-	int w, x, y, z;
-
-	char* where = TextScriptBuffer + gTS.p_read;
-	if (where[0] != '<')
-		return 0;
-	if (strncmp(where + 1, "PEV", 3) == 0) // Play EVent
-	{
-		char event_name_tsc[MAX_PATH];
-		gTS.p_read += 4;
-
-		switch (eventNameChoice)
-		{
-		default:
-			memset(event_name_tsc, 0, sizeof(event_name_tsc));
-			GetTextScriptString(event_name_tsc);
-			if (!(strcmp(eventName, event_name_tsc) == 0))
-			{
-				PlayFModAudio(event_name_tsc);
-				strcpy(eventName, event_name_tsc);
-			}
-			break;
-
-		case 1:
-			memset(event_name_tsc, 0, sizeof(event_name_tsc));
-			GetTextScriptString(event_name_tsc);
-			if (!(strcmp(eventName2, event_name_tsc) == 0))
-			{
-				PlayFModAudio(event_name_tsc);
-				strcpy(eventName2, event_name_tsc);
-			}
-			break;
-
-		case 2:
-			memset(event_name_tsc, 0, sizeof(event_name_tsc));
-			GetTextScriptString(event_name_tsc);
-			if (!(strcmp(eventName3, event_name_tsc) == 0))
-			{
-				PlayFModAudio(event_name_tsc);
-				strcpy(eventName3, event_name_tsc);
-			}
-			break;
-
-		case 3:
-			memset(event_name_tsc, 0, sizeof(event_name_tsc));
-			GetTextScriptString(event_name_tsc);
-			if (!(strcmp(eventName4, event_name_tsc) == 0))
-			{
-				PlayFModAudio(event_name_tsc);
-				strcpy(eventName4, event_name_tsc);
-			}
-			break;
-
-		case 4:
-			memset(event_name_tsc, 0, sizeof(event_name_tsc));
-			GetTextScriptString(event_name_tsc);
-			if (!(strcmp(eventName5, event_name_tsc) == 0))
-			{
-				PlayFModAudio(event_name_tsc);
-				strcpy(eventName5, event_name_tsc);
-			}
-			break;
-
-		case 5:
-			memset(event_name_tsc, 0, sizeof(event_name_tsc));
-			GetTextScriptString(event_name_tsc);
-			if (!(strcmp(eventName6, event_name_tsc) == 0))
-			{
-				PlayFModAudio(event_name_tsc);
-				strcpy(eventName6, event_name_tsc);
-			}
-			break;
-
-		case 6:
-			memset(event_name_tsc, 0, sizeof(event_name_tsc));
-			GetTextScriptString(event_name_tsc);
-			if (!(strcmp(eventName7, event_name_tsc) == 0))
-			{
-				PlayFModAudio(event_name_tsc);
-				strcpy(eventName7, event_name_tsc);
-			}
-			break;
-
-		case 7:
-			memset(event_name_tsc, 0, sizeof(event_name_tsc));
-			GetTextScriptString(event_name_tsc);
-			if (!(strcmp(eventName8, event_name_tsc) == 0))
-			{
-				PlayFModAudio(event_name_tsc);
-				strcpy(eventName8, event_name_tsc);
-			}
-			break;
-		}
-
-	}
-	else if (strncmp(where + 1, "CEV", 3) == 0) // Change EVent (i cant get this to work with the original <PEV event)
-	{
-		eventNameChoice = GetTextScriptNo(gTS.p_read + 4);
-		gTS.p_read += 8;
-	}
-	else if (strncmp(where + 1, "SEV", 3) == 0) // Stop EVent (This is jank as fuck please fix this later)
-	{
-		x = GetTextScriptNo(gTS.p_read + 4);
-
-		switch (x)
-		{
-		default:
-			memset(eventName, 0, sizeof(eventName));
-			strcpy(eventName, gNull1Name);
-			PlayFModAudio("event:/Null/null0000");
-			break;
-
-		case 1:
-			memset(eventName2, 0, sizeof(eventName2));
-			PlayFModAudio("event:/Null/null0001");
-			break;
-
-		case 2:
-			memset(eventName3, 0, sizeof(eventName3));
-			PlayFModAudio("event:/Null/null0002");
-			break;
-
-		case 3:
-			memset(eventName4, 0, sizeof(eventName4));
-			PlayFModAudio("event:/Null/null0003");
-			break;
-
-		case 4:
-			memset(eventName5, 0, sizeof(eventName5));
-			PlayFModAudio("event:/Null/null0004");
-			break;
-
-		case 5:
-			memset(eventName6, 0, sizeof(eventName6));
-			PlayFModAudio("event:/Null/null0005");
-			break;
-
-		case 6:
-			memset(eventName7, 0, sizeof(eventName7));
-			PlayFModAudio("event:/Null/null0006");
-			break;
-
-		case 7:
-			memset(eventName8, 0, sizeof(eventName8));
-			PlayFModAudio("event:/Null/null0007");
-			break;
-		}
-
-		gTS.p_read += 8;
-	}
-	else if (strncmp(where + 1, "CVP", 3) == 0) // Change eVent Parameter
-	{
-		gTS.p_read += 4;
-		GetTextScriptString(eventParameter);
-	}
-	else if (strncmp(where + 1, "EVP", 3) == 0) // EVent Parameter
-	{
-		x = GetTextScriptNo(gTS.p_read + 4);
-		FmodMusicInstance->setParameterByName(eventParameter, x, false);
-		gTS.p_read += 8;
-	}
-	else
-		return 0;
-
-	regs->eip = CSJ_tsc_done;
-	return 1;
-}
-
 void ResetCollabPaths()
 {
 	memset(stageTblPath, 0, sizeof(stageTblPath));
@@ -1453,9 +1280,6 @@ void InitMod_TSC()
 	// <MIM command
 	if (setting_enable_mim_mod)
 		ModLoader_AddStackableHook(CSH_tsc_start, CustomTSC_MIM, (void*)0);
-
-	if (setting_enable_fmod)
-		ModLoader_AddStackableHook(CSH_tsc_start, CustomTSC_FMOD, (void*)0);
 
 	if (setting_disable_tsc_encryption)
 		ModLoader_WriteJump((void*)0x4215C0, (void*)Replacement_EncryptionBinaryData2);

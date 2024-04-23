@@ -8,3 +8,6 @@ isAtHighXSpeed --> Set when the player is moving above 950 speed horizontally in
 isAtHighYSpeed --> Set when the player is moving above 1300 speed vertically in either direction.
 isAtHighSpeed --> Set when the player is moving at either of the speeds listed above.
 isInWind --> Set when the player is in a wind tile, or using a fan.
+playerArmsNum --> Should be a value between 0 and 99 or something. Value is the current ID of the weapon you're holding.
+playerArmsLevel --> The level of the gun you're holding will be what the parameter is set to.
+playerAtLowHP --> If the player is at 30% hp or less

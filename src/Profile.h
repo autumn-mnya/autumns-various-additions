@@ -130,15 +130,6 @@ typedef struct CustomProfileData
 	int phy_physics_water_max_speed_right;
 	int phy_physics_water_max_speed_up;
 	int phy_physics_water_max_speed_down;
-	// FMOD (AVA 1.1.2)
-	char eventName[MAX_PATH];
-	char eventName2[MAX_PATH];
-	char eventName3[MAX_PATH];
-	char eventName4[MAX_PATH];
-	char eventName5[MAX_PATH];
-	char eventName6[MAX_PATH];
-	char eventName7[MAX_PATH];
-	char eventName8[MAX_PATH];
 } CustomProfileData;
 
 extern CustomProfileData profile;

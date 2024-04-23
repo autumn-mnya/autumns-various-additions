@@ -3,6 +3,12 @@
 #include <Windows.h>
 #include "cave_story.h"
 #include <vector>
+#include "lua/Lua.h"
+
+extern "C"
+{
+#include <lua.h>
+}
 
 extern HMODULE autpiDLL;  // Global variable
 
@@ -15,6 +21,8 @@ void AutPI_AddCaret(CARETFUNCTION func, char* author, char* name);
 // Game()
 typedef void (*OpeningBelowFadeElementHandler)();
 typedef void (*OpeningAboveFadeElementHandler)();
+// GetTrg()
+typedef void (*GetTrgElementHandler)();
 // ModeOpening()
 typedef void (*PreModeElementHandler)();
 typedef void (*ReleaseElementHandler)();
@@ -50,6 +58,10 @@ typedef void (*InitializeGameInitElementHandler)();
 typedef void (*TextScriptSVPElementHandler)();
 // TransferStage()
 typedef void (*TransferStageInitElementHandler)();
+// Lua
+typedef void (*LuaPreGlobalModCSElementHandler)();
+typedef void (*LuaMetadataElementHandler)();
+typedef void (*LuaFuncElementHandler)();
 
 void LoadAutPiDll();
 
@@ -59,6 +71,8 @@ void AutPI_AddEntity(NPCFUNCTION func, char* author, char* name);
 // Game() API
 void RegisterPreModeElement(PreModeElementHandler handler);
 void RegisterReleaseElement(ReleaseElementHandler handler);
+// GetTrg() API
+void RegisterGetTrgElement(GetTrgElementHandler handler);
 // ModeOpening() API
 void RegisterOpeningBelowFadeElement(OpeningBelowFadeElementHandler handler);
 void RegisterOpeningAboveFadeElement(OpeningAboveFadeElementHandler handler);
@@ -94,3 +108,13 @@ void RegisterInitializeGameInitElement(InitializeGameInitElementHandler handler)
 void RegisterSVPElement(TextScriptSVPElementHandler handler);
 // TransferStage() API
 void RegisterTransferStageInitElement(TransferStageInitElementHandler handler);
+// Lua API
+lua_State* GetLuaL();
+BOOL ReadStructBasic(lua_State* L, const char* name, STRUCT_TABLE* table, void* data, int length);
+BOOL Write2StructBasic(lua_State* L, const char* name, STRUCT_TABLE* table, void* data, int length);
+void PushFunctionTable(lua_State* L, const char* name, const FUNCTION_TABLE* table, int length, BOOL pop);
+void PushFunctionTableModName(lua_State* L, const char* modname, const char* name, const FUNCTION_TABLE* table, int length, BOOL pop);
+void PushSimpleMetatables(lua_State* L, const METATABLE_TABLE* table, int length);
+void RegisterLuaPreGlobalModCSElement(LuaPreGlobalModCSElementHandler handler);
+void RegisterLuaMetadataElement(LuaMetadataElementHandler handler);
+void RegisterLuaFuncElement(LuaFuncElementHandler handler);

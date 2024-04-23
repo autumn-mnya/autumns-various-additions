@@ -475,7 +475,6 @@ void Replacement_SetMyCharPosition_InitStar_Call()
 	// Possibly reset the offset and locked direction here?
 	custom_tgt_x = gMC.x;
 	custom_tgt_y = gMC.y;
-	InitStar();
 }
 
 void CameraHorizontalHelper(BOOL bKey)
