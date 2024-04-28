@@ -27,7 +27,6 @@
 #include "MyChar.h"
 #include "MycParam.h"
 #include "NpcReplacements.h"
-#include "PauseScreen.h"
 #include "Profile.h"
 #include "Stage.h"
 #include "SurfaceDefines.h"

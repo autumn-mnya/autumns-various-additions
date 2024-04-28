@@ -15,7 +15,6 @@ extern bool setting_enable_tilecollision;
 extern bool setting_enable_text_script_code;
 extern bool setting_enable_savedata_code;
 extern bool setting_enable_teleporter_bugfix;
-extern bool setting_enable_pause_screen;
 
 extern bool setting_enable_reset_pixtone_on_reset;
 extern bool setting_enable_reset_stagetbl_on_reset;
@@ -27,6 +26,8 @@ extern char setting_collab_name[CollabNameMaxPath];
 extern bool legacy_extra_jumps_ui;
 
 extern bool replace_fan_code;
+
+extern bool pause_menu_ava_enabled;
 
 void InitMod_Settings();
 void InitSettingsRevamp();

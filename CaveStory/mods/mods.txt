@@ -1,4 +1,5 @@
 60fps
 autpi
+pause
 autumns_various_additions
 graphics_enhancement

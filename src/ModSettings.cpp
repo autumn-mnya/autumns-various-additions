@@ -25,7 +25,6 @@
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "MycParam.h"
-#include "PauseScreen.h"
 #include "Respawn.h"
 #include "Stage.h"
 #include "SurfaceDefines.h"
@@ -48,7 +47,6 @@ bool setting_enable_tilecollision = true;
 bool setting_enable_text_script_code = true;
 bool setting_enable_savedata_code = true;
 bool setting_enable_teleporter_bugfix = true;
-bool setting_enable_pause_screen = false;
 
 bool setting_enable_reset_pixtone_on_reset = false;
 bool setting_enable_reset_stagetbl_on_reset = false;
@@ -58,6 +56,9 @@ bool setting_collab_enabled = false;
 char setting_collab_name[CollabNameMaxPath] = "null";
 
 bool legacy_extra_jumps_ui = false;
+
+// Version 1.1.3
+bool pause_menu_ava_enabled = false;
 
 // Used to be used before 1.1.2 --> the settings system has seen a massive overhaul.
 void InitMod_Settings()
@@ -79,7 +80,7 @@ void InitMod_Settings()
 	setting_disable_window_rect_saving = ModLoader_GetSettingBool("Disable window.rect Saving", true);
 	setting_disable_errorlog_saving = ModLoader_GetSettingBool("Disable error.log Saving", false);
 	setting_enable_default_config_options = ModLoader_GetSettingBool("Autumn's Default Config Options", true);
-	setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
+	// setting_enable_pause_screen = ModLoader_GetSettingBool("Enable Custom Pause Screen", false);
 
 	///////////////////
 	// Surface Names //
@@ -314,7 +315,9 @@ void InitMod_Settings()
 
 	/////////////////////
 	// Pause Menu Text //
-	/////////////////////
+	////////////////////
+	
+	/*
 
 	setting_pausetext_paused = ModLoader_GetSettingString("Paused Text", "PAUSED");
 	setting_pausetext_resume = ModLoader_GetSettingString("Resume Text", "Resume");
@@ -337,6 +340,7 @@ void InitMod_Settings()
 	setting_pausetext_no = ModLoader_GetSettingString("No Text", "No");
 	setting_pausetext_are_you_sure = ModLoader_GetSettingString("Confirm Text", "Are you sure?");
 	setting_pausetext_unsaved_progress = ModLoader_GetSettingString("Progress Text", "Unsaved progress will be lost!");
+	*/
 
 	////////////////////
 	// Major Settings //
@@ -401,6 +405,7 @@ void Init_INI_main()
 	setting_enable_text_script_code = main.GetBoolean("Main", "Enable Custom TSC Code", true);
 	setting_enable_asm_loader = main.GetBoolean("Main", "Enable Custom Hex Patch Loader", true);
 	setting_enable_savedata_code = main.GetBoolean("Main", "Enable Custom Save Data Code", true);
+	pause_menu_ava_enabled = main.GetBoolean("Extra", "Enable AVA Pause Additions", false);
 }
 
 void Init_INI_collab()
@@ -596,37 +601,6 @@ void Init_INI_mychar()
 	setting_bounce_sfx = mychar.GetInteger("Collision", "Bouncy Block Sound Effect", 25);
 }
 
-void Init_INI_pause()
-{
-	char path[MAX_PATH];
-	sprintf(path, "%s\\%s", gAVAConfigPath, "pause.ini");
-	INIReader pause(path);
-
-	setting_enable_pause_screen = pause.GetBoolean("Main", "Enable Custom Pause Screen", false);
-
-	setting_pausetext_paused = copyString(pause.GetString("Text", "Paused Text", "PAUSED"));
-	setting_pausetext_resume = copyString(pause.GetString("Text", "Resume Text", "Resume"));
-	setting_pausetext_reset = copyString(pause.GetString("Text", "Reset Text", "Reset"));
-	setting_pausetext_options = copyString(pause.GetString("Text", "Options Text", "Options"));
-	setting_pausetext_quit = copyString(pause.GetString("Text", "Quit Text", "Quit"));
-	setting_pausetext_restart_required = copyString(pause.GetString("Text", "Restart Required Text", "RESTART REQUIRED"));
-	setting_pausetext_menu_options = copyString(pause.GetString("Text", "Options Menu Text", "OPTIONS"));
-
-	setting_pausetext_resolution = copyString(pause.GetString("Text", "Resolution Text", "Resolution"));
-	setting_pausetext_gamepad_enabled = copyString(pause.GetString("Text", "Gamepad Text", "Gamepad Enabled"));
-	setting_pausetext_windowsize_a = copyString(pause.GetString("Text", "Fullscreen Text", "Fullscreen"));
-	setting_pausetext_windowsize_b = copyString(pause.GetString("Text", "Windowed 1 Text", "Windowed 320x240"));
-	setting_pausetext_windowsize_c = copyString(pause.GetString("Text", "Windowed 2 Text", "Windowed 640x480"));
-	setting_pausetext_windowsize_d = copyString(pause.GetString("Text", "Fullscreen 24bit Text", "Fullscreen 24-Bit"));
-	setting_pausetext_windowsize_e = copyString(pause.GetString("Text", "Fullscreen 32bit Text", "Fullscreen 32-Bit"));
-	setting_pausetext_disabled = copyString(pause.GetString("Text", "Disabled Text", "Disabled"));
-	setting_pausetext_enabled = copyString(pause.GetString("Text", "Enabled Text", "Enabled"));
-	setting_pausetext_yes = copyString(pause.GetString("Text", "Yes Text", "Yes"));
-	setting_pausetext_no = copyString(pause.GetString("Text", "No Text", "No"));
-	setting_pausetext_are_you_sure = copyString(pause.GetString("Text", "Confirm Text", "Are you sure?"));
-	setting_pausetext_unsaved_progress = copyString(pause.GetString("Text", "Progress Text", "Unsaved progress will be lost!"));
-}
-
 void Init_INI_qol()
 {
 	char path[MAX_PATH];
@@ -674,8 +648,6 @@ void InitSettingsRevamp()
 	printf("Loaded graphics.ini\n");
 	Init_INI_mychar();
 	printf("Loaded mychar.ini\n");
-	Init_INI_pause();
-	printf("Loaded pause.ini\n");
 	Init_INI_qol();
 	printf("Loaded qol.ini\n");
 	Init_INI_tsc();

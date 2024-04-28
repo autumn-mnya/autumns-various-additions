@@ -10,6 +10,7 @@
 #include "ModSettings.h"
 
 #include "AutPI.h"
+#include "API_Pause.h"
 
 #include "mod_loader.h"
 #include "cave_story.h"
@@ -30,7 +31,6 @@
 #include "MyChar.h"
 #include "MycParam.h"
 #include "NpcReplacements.h"
-#include "PauseScreen.h"
 #include "Profile.h"
 #include "Stage.h"
 #include "SurfaceDefines.h"
@@ -51,7 +51,39 @@ char gAudioPath[MAX_PATH];
 char gAVAPath[MAX_PATH];
 char gAVAConfigPath[MAX_PATH];
 
-const char* audioDirectory = "data\\audio\\Desktop";
+int gCurrentGameMode = 0;
+
+void SetModeOpening()
+{
+	gCurrentGameMode = 1;
+}
+
+void SetModeTitle()
+{
+	gCurrentGameMode = 2;
+}
+
+void SetModeAction()
+{
+	gCurrentGameMode = 3;
+}
+
+static int Callback_Resume(OptionsMenu* parent_menu, size_t this_option, CallbackAction action)
+{
+	(void)parent_menu;
+
+	if (action != ACTION_OK)
+		return CALLBACK_CONTINUE;
+
+	PlaySoundObject(18, SOUND_MODE_PLAY);
+	return enum_ESCRETURN_continue;
+}
+
+void AVAPauseEntries()
+{
+	// For a later date --> I can now add
+	// add_pause_entry(GetOptionsMain(), "AVA TEST", Callback_Resume, NULL, NULL, 0, FALSE, GetNumEntriesAddedMain());
+}
 
 // Init the whole mod
 void InitMod(void)
@@ -64,11 +96,6 @@ void InitMod(void)
 	// Get path of the data folder
 	strcpy(gDataPath, gModulePath);
 	strcat(gDataPath, "\\data");
-
-	// Get path of the audio folder
-	strcpy(gAudioPath, gModulePath);
-	strcat(gAudioPath, "\\");
-	strcat(gAudioPath, audioDirectory);
 
 	// Get path of the ava folder
 	strcpy(gAVAPath, gModulePath);
@@ -101,9 +128,6 @@ void InitMod(void)
 
 	if (setting_enable_tilecollision)
 		InitMod_TileCollision();
-
-	if (setting_enable_pause_screen)
-		InitMod_PauseScreen();
 
 	if (setting_enable_text_script_code)
 	{
@@ -149,7 +173,18 @@ void InitMod(void)
 	if (setting_enable_default_config_options)
 		InitMod_AutumnConfigDefaults();
 
-	// PushAVAMetadata();
 	RegisterLuaPreGlobalModCSElement(SetAVAGlobalString);
+	RegisterLuaMetadataElement(PushAVAMetadata);
 	RegisterLuaFuncElement(SetAVALua);
+
+	// jank way of getting mode
+	RegisterOpeningInitElement(SetModeOpening);
+	RegisterTitleInitElement(SetModeTitle);
+	RegisterInitElement(SetModeAction);
+
+	if (pause_menu_ava_enabled)
+	{
+		LoadPauseMenuDll();
+		RegisterPreModeElement(AVAPauseEntries);
+	}
 }

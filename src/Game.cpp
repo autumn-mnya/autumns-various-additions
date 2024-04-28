@@ -25,6 +25,8 @@
 #include "DialogueChoice.h"
 #include "XMLLoad.h"
 
+#include "AutPI.h"
+
 // Put <IMG on screen
 
 void AutumnsVariousAdditions_ModeOpening_TextBoxBelow()

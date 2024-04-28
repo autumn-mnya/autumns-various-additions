@@ -59,6 +59,24 @@ void AddMoney(int x)
 		playerMoney += x;
 }
 
+int GetCollectable(int type)
+{
+	int value = 0;
+
+	if (type == 0)
+		value = gCollectables.numA;
+	else if (type == 1)
+		value = gCollectables.numB;
+	else if (type == 2)
+		value = gCollectables.numC;
+	else if (type == 3)
+		value = gCollectables.numD;
+	else if (type == 5)
+		value = gCollectables.numE;
+
+	return value;
+}
+
 void AddCollectables(int x, int y)
 {
 	switch (x)

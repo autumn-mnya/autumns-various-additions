@@ -1,3 +1,0 @@
-  Could not load mod 'autumns_various_additions'
-  Windows reports: The specified module could not be found.
-

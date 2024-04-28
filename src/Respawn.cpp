@@ -21,7 +21,6 @@
 #include "LoadPixtone.h"
 #include "MyChar.h"
 #include "MycParam.h"
-#include "PauseScreen.h"
 #include "TextScript.h"
 #include "TileCollisionBoss.h"
 #include "TileCollisionBullet.h"
@@ -217,4 +216,10 @@ void RevivePlayer()
 {
 	gMC.cond = 0x80;
 	AddLifeMyChar(setting_revive_hp);
+}
+
+void RevivePlayerWithValue(int value)
+{
+	gMC.cond = 0x80;
+	AddLifeMyChar(value);
 }

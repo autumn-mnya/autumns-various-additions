@@ -44,6 +44,6 @@ static int lua_SetVariable(lua_State* L)
 
 FUNCTION_TABLE VarFunctionTable[FUNCTION_TABLE_VAR_SIZE] =
 {
-	{"GetVar", lua_GetVariable},
-	{"SetVar", lua_SetVariable}
+	{"Get", lua_GetVariable},
+	{"Set", lua_SetVariable}
 };

@@ -11,5 +11,5 @@ extern "C"
 #include "Lua.h"
 #include "../AutPI.h"
 
-#define FUNCTION_TABLE_RESPAWN_SIZE 4
-extern FUNCTION_TABLE RespawnFunctionTable[FUNCTION_TABLE_RESPAWN_SIZE];
+#define FUNCTION_TABLE_MONEY_SIZE 2
+extern FUNCTION_TABLE MoneyFunctionTable[FUNCTION_TABLE_MONEY_SIZE];

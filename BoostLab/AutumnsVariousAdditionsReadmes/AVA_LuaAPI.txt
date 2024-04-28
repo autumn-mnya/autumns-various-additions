@@ -1,0 +1,94 @@
+These are the things you can access in AVA via AutPI's Lua API, "ModCS".
+
+Anything indicated with a * is an optional parameter.
+
+# Misc.
+
+-- This will kill the player immediately.
+-- It has an optional number argument, which is the event the game runs on death. By default if theres no number, it runs event 40.
+ModCS.AVA.KillPlayer(*event)
+
+-- Returns the players "<MIM" value, if the ava <MIM code is enabled in tsc.ini.
+ModCS.AVA.GetMim()
+
+-- Returns true if the player is touching a wallbooster entity.
+ModCS.AVA.OnWallbooster()
+
+-- Returns true if the player is touching an ice wall entity.
+ModCS.AVA.OnIcewall()
+
+-- Returns true if the player is touching a left or right wall.
+-- This is the AVA method of checking if you're on a wall.
+ModCS.AVA.OnWall()
+
+-- Returns the current amount of air jumps the player has, like 1 from a double jump or 1 from a jump arrow refill entity.
+ModCS.AVA.GetAirJumps()
+
+-- Returns true if the game is currently loading a save file.
+ModCS.AVA.LoadingSave()
+
+# Custom Entity Values (CPXE)
+
+-- Get the "Custom Value" for your npc inside of your function of Custom Value "num".
+-- "num" being 0 means Custom Value A, for example. 5 is Custom Value F.
+-- You should use this function only while inside of an npc function you've created/edited, usually.
+ModCS.CPXE.Get(npc, num)
+
+# Collectables
+
+-- Returns collectable type when used. Inputting "0" will return collectable A. Goes up to E, so the last one is 4.
+-- Any others will result in 0 being returned anyways.
+ModCS.Collectable.Get(type)
+
+-- Set collectable "type" to the "num" you wish to set it to.
+ModCS.Collectable.Set(type, num)
+
+# Camera
+
+-- Sets an offset of the players camera. 16 equals 1 tile.
+-- It has an optional "wait" argument, which is the speed at which the camera will move around. Default is 16, just like normal.
+ModCS.CameraEx.SetOffset(x, y, *wait)
+
+-- Sets the camera to target a specific set of coordinates.
+-- It has an optional "wait" argument, which is the speed at which the camera will move around. Default is 16, just like normal.
+ModCS.CameraEx.SetTargetCoords(x, y, *wait)
+
+# Money
+
+-- Returns the current amount of money the player has.
+ModCS.Money.Get()
+
+-- Sets the players money value to "num".
+ModCS.Money.Set(num)
+
+# Respawning
+
+-- Set the players "respawn" point to values x and y. Should be tile coordinates.
+ModCS.Respawn.Set(x, y)
+
+-- Run the respawning code, which is similar to loading a save file. Reloads the player data with what was saved at the most recent respawn point.
+ModCS.Respawn.Run()
+
+-- Revive the player, immediately bringing them back to life where they just were.
+-- It has an optional parameter for "life", which is the amount of life you get revived with.
+-- The default life value is the value found for <RVI inside of tsc.ini.
+ModCS.Respawn.Revive(*life)
+
+-- Returns true if the player is currently respawning from <RSP.
+ModCS.Respawn.IsRespawning()
+
+# Physics
+
+-- Returns the physics value of physics "num". The list of physics is found in CustomTSC.txt.
+ModCS.Physics.Get(num)
+
+-- Set the players physics of "type" to "num".
+ModCS.Physics.Set(type, num)
+
+# Variables
+
+-- Returns the value of variable "num".
+ModCS.Var.Get(num)
+
+-- Set variable "var" to value "num".
+ModCS.Var.Set(var, num)

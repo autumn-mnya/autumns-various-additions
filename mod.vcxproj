@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\API_Pause.cpp" />
     <ClCompile Include="src\ASMLoader.cpp" />
     <ClCompile Include="src\ASMPatches.cpp" />
     <ClCompile Include="src\AutPI.cpp" />
@@ -112,6 +113,11 @@
     <ClCompile Include="src\library\tinyxml2.cpp" />
     <ClCompile Include="src\LoadPixtone.cpp" />
     <ClCompile Include="src\lua\Lua.cpp" />
+    <ClCompile Include="src\lua\Lua_Collectables.cpp" />
+    <ClCompile Include="src\lua\Lua_CPXE.cpp" />
+    <ClCompile Include="src\lua\Lua_Frame.cpp" />
+    <ClCompile Include="src\lua\Lua_Money.cpp" />
+    <ClCompile Include="src\lua\Lua_Physics.cpp" />
     <ClCompile Include="src\lua\Lua_Respawn.cpp" />
     <ClCompile Include="src\lua\Lua_Var.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -120,7 +126,6 @@
     <ClCompile Include="src\MyChar.cpp" />
     <ClCompile Include="src\MycParam.cpp" />
     <ClCompile Include="src\NpcReplacements.cpp" />
-    <ClCompile Include="src\PauseScreen.cpp" />
     <ClCompile Include="src\Profile.cpp" />
     <ClCompile Include="src\Respawn.cpp" />
     <ClCompile Include="src\Stage.cpp" />
@@ -136,6 +141,7 @@
     <ClCompile Include="src\\mod_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\API_Pause.h" />
     <ClInclude Include="src\ASMLoader.h" />
     <ClInclude Include="src\ASMPatches.h" />
     <ClInclude Include="src\AutPI.h" />
@@ -160,6 +166,11 @@
     <ClInclude Include="src\library\tinyxml2.h" />
     <ClInclude Include="src\LoadPixtone.h" />
     <ClInclude Include="src\lua\Lua.h" />
+    <ClInclude Include="src\lua\Lua_Collectables.h" />
+    <ClInclude Include="src\lua\Lua_CPXE.h" />
+    <ClInclude Include="src\lua\Lua_Frame.h" />
+    <ClInclude Include="src\lua\Lua_Money.h" />
+    <ClInclude Include="src\lua\Lua_Physics.h" />
     <ClInclude Include="src\lua\Lua_Respawn.h" />
     <ClInclude Include="src\lua\Lua_Var.h" />
     <ClInclude Include="src\Main.h" />
@@ -168,7 +179,6 @@
     <ClInclude Include="src\MyChar.h" />
     <ClInclude Include="src\MycParam.h" />
     <ClInclude Include="src\NpcReplacements.h" />
-    <ClInclude Include="src\PauseScreen.h" />
     <ClInclude Include="src\Profile.h" />
     <ClInclude Include="src\Respawn.h" />
     <ClInclude Include="src\Stage.h" />

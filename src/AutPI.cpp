@@ -96,6 +96,8 @@ std::vector<OpeningAboveTextBoxElementHandler> Opening_abovetextBoxElementHandle
 std::vector<OpeningEarlyActionElementHandler> Opening_earlyactionElementHandlers;
 std::vector<OpeningActionElementHandler> Opening_actionElementHandlers;
 std::vector<OpeningInitElementHandler> Opening_initElementHandlers;
+std::vector<OpeningBelowPutCaretElementHandler> Opening_belowputcaretElementHandlers;
+std::vector<OpeningAbovePutCaretElementHandler> Opening_aboveputcaretElementHandlers;
 
 std::vector<TitleInitElementHandler> Title_initElementHandlers;
 std::vector<TitleActionElementHandler> Title_actionElementHandlers;
@@ -113,12 +115,16 @@ std::vector<EarlyActionElementHandler> earlyactionElementHandlers;
 std::vector<ActionElementHandler> actionElementHandlers;
 std::vector<CreditsActionElementHandler> creditsactionElementHandlers;
 std::vector<InitElementHandler> initElementHandlers;
+std::vector<BelowPutCaretElementHandler> belowputcaretElementHandlers;
+std::vector<AbovePutCaretElementHandler> aboveputcaretElementHandlers;
 
 std::vector<SaveProfilePreWriteElementHandler> saveprofileprewriteElementHandlers;
 std::vector<SaveProfilePostWriteElementHandler> saveprofilepostwriteElementHandlers;
 std::vector<LoadProfilePreCloseElementHandler> loadprofileprecloseElementHandlers;
 std::vector<LoadProfilePostCloseElementHandler> loadprofilepostcloseElementHandlers;
 std::vector<InitializeGameInitElementHandler> intializegameElementHandlers;
+
+std::vector<PutFPSElementHandler> putfpsElementHandlers;
 
 std::vector<TextScriptSVPElementHandler> textscriptsvpElementHandlers;
 
@@ -182,6 +188,16 @@ void RegisterOpeningActionElement(OpeningActionElementHandler handler)
 void RegisterOpeningInitElement(OpeningInitElementHandler handler)
 {
     RegisterElement(Opening_initElementHandlers, "RegisterOpeningInitElement", reinterpret_cast<void (*)()>(handler));
+}
+
+void RegisterOpeningBelowPutCaretElement(OpeningBelowPutCaretElementHandler handler)
+{
+    RegisterElement(Opening_belowputcaretElementHandlers, "RegisterOpeningPutCaretElement", reinterpret_cast<void (*)()>(handler));
+}
+
+void RegisterOpeningAbovePutCaretElement(OpeningAbovePutCaretElementHandler handler)
+{
+    RegisterElement(Opening_aboveputcaretElementHandlers, "RegisterOpeningAbovePutCaretElement", reinterpret_cast<void (*)()>(handler));
 }
 
 // ModeTitleAPI
@@ -263,6 +279,16 @@ void RegisterInitElement(InitElementHandler handler)
     RegisterElement(initElementHandlers, "RegisterInitElement", reinterpret_cast<void (*)()>(handler));
 }
 
+void RegisterBelowPutCaretElement(BelowPutCaretElementHandler handler)
+{
+    RegisterElement(belowputcaretElementHandlers, "RegisterBelowPutCaretElement", reinterpret_cast<void (*)()>(handler));
+}
+
+void RegisterAbovePutCaretElement(AbovePutCaretElementHandler handler)
+{
+    RegisterElement(aboveputcaretElementHandlers, "RegisterAbovePutCaretElement", reinterpret_cast<void (*)()>(handler));
+}
+
 // Profile API
 
 void RegisterSaveProfilePreWriteElement(SaveProfilePreWriteElementHandler handler)
@@ -288,6 +314,13 @@ void RegisterLoadProfilePostCloseElement(LoadProfilePostCloseElementHandler hand
 void RegisterInitializeGameInitElement(InitializeGameInitElementHandler handler)
 {
     RegisterElement(intializegameElementHandlers, "RegisterInitializeGameInitElement", reinterpret_cast<void (*)()>(handler));
+}
+
+// PutFPS API
+
+void RegisterPutFPSElement(PutFPSElementHandler handler)
+{
+    RegisterElement(putfpsElementHandlers, "RegisterPutFPSElement", reinterpret_cast<void (*)()>(handler));
 }
 
 // TextScript API

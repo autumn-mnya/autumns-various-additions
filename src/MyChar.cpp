@@ -208,6 +208,186 @@ void InitMyCollabData()
 	InitMyCharBoostFuel();
 }
 
+int GetPlayerPhysicsValue(int x)
+{
+	int value = 0;
+	switch (x)
+	{
+	default:
+	case 0:
+		value = setting_physics_max_dash;
+		break;
+
+	case 1:
+		value = setting_physics_max_move;
+		break;
+
+	case 2:
+		value = setting_physics_gravity1;
+		break;
+
+	case 3:
+		value = setting_physics_gravity2;
+		break;
+
+	case 4:
+		value = setting_physics_dash1;
+		break;
+
+	case 5:
+		value = setting_physics_dash2;
+		break;
+
+	case 6:
+		value = setting_physics_resist;
+		break;
+
+	case 7:
+		value = setting_physics_jump;
+		break;
+
+	case 8:
+		value = setting_physics_water_max_dash;
+		break;
+
+	case 9:
+		value = setting_physics_water_max_move;
+		break;
+
+	case 10:
+		value = setting_physics_water_gravity1;
+		break;
+
+	case 11:
+		value = setting_physics_water_gravity2;
+		break;
+
+	case 12:
+		value = setting_physics_water_dash1;
+		break;
+
+	case 13:
+		value = setting_physics_water_dash2;
+		break;
+
+	case 14:
+		value = setting_physics_water_resist;
+		break;
+
+	case 15:
+		value = setting_physics_water_jump;
+		break;
+
+		// Custom DLL <PHY changes
+
+		// Wall jumps
+	case 16:
+		value = setting_walljump_horizontal_speed;
+		break;
+
+	case 17:
+		value = setting_walljump_jump_height;
+		break;
+
+	case 18:
+		value = setting_walljump_sliding_speed;
+		break;
+
+	case 19:
+		value = setting_walljump_water_horizontal_speed;
+		break;
+
+	case 20:
+		value = setting_walljump_water_jump_height;
+		break;
+
+		// Extra jumps
+	case 21:
+		value = setting_extrajump_jump_height;
+		break;
+
+	case 22:
+		value = setting_extrajump_water_jump_height;
+		break;
+
+		// Run button speed
+	case 23:
+		value = setting_running_speed;
+		break;
+
+		// bounce block speed
+	case 24:
+		value = setting_bounce_speed;
+		break;
+
+		// Booster 2.0 Acceleration
+	case 25:
+		value = setting_physics_boost20_accel_up;
+		break;
+
+	case 26:
+		value = setting_physics_boost20_accel_left;
+		break;
+
+	case 27:
+		value = setting_physics_boost20_accel_right;
+		break;
+
+	case 28:
+		value = setting_physics_boost20_accel_down;
+		break;
+
+	case 29:
+		value = setting_physics_boost20_accel_up_no_key;
+		break;
+
+		// Booster 0.8 Acceleration
+	case 30:
+		value = setting_physics_boost08_accel_add;
+		break;
+
+	case 31:
+		value = setting_physics_boost08_accel_max_speed;
+		break;
+
+		// Max Speed
+	case 32:
+		value = setting_physics_max_speed_left;
+		break;
+
+	case 33:
+		value = setting_physics_max_speed_right;
+		break;
+
+	case 34:
+		value = setting_physics_max_speed_up;
+		break;
+
+	case 35:
+		value = setting_physics_max_speed_down;
+		break;
+
+		// Max Speed (Underwater)
+	case 36:
+		value = setting_physics_water_max_speed_left;
+		break;
+
+	case 37:
+		value = setting_physics_water_max_speed_right;
+		break;
+
+	case 38:
+		value = setting_physics_water_max_speed_up;
+		break;
+
+	case 39:
+		value = setting_physics_water_max_speed_down;
+		break;
+	}
+	return value;
+}
+
+
 void SetPlayerPhysicsValues(int x, int y)
 {
 	switch (x)

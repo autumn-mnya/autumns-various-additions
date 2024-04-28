@@ -41,6 +41,14 @@ void PlayerDeath()
 	StartTextScript(40);
 }
 
+void PlayerDeathWithEvent(int event)
+{
+	PlaySoundObject(17, SOUND_MODE_PLAY);
+	gMC.cond = 0;
+	SetDestroyNpChar(gMC.x, gMC.y, 10 * 0x200, 0x40);
+	StartTextScript(event);
+}
+
 void RemoveMaxLifeMyChar(int val)
 {
 	gMC.max_life -= (short)val;

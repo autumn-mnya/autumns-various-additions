@@ -31,6 +31,8 @@ typedef void (*OpeningAboveTextBoxElementHandler)();
 typedef void (*OpeningEarlyActionElementHandler)();
 typedef void (*OpeningActionElementHandler)();
 typedef void (*OpeningInitElementHandler)();
+typedef void (*OpeningBelowPutCaretElementHandler)();
+typedef void (*OpeningAbovePutCaretElementHandler)();
 // ModeTitle()
 typedef void (*TitleInitElementHandler)();
 typedef void (*TitleActionElementHandler)();
@@ -48,12 +50,16 @@ typedef void (*EarlyActionElementHandler)();
 typedef void (*ActionElementHandler)();
 typedef void (*CreditsActionElementHandler)();
 typedef void (*InitElementHandler)();
+typedef void (*BelowPutCaretElementHandler)();
+typedef void (*AbovePutCaretElementHandler)();
 // Profile
 typedef void (*SaveProfilePreWriteElementHandler)();
 typedef void (*SaveProfilePostWriteElementHandler)();
 typedef void (*LoadProfilePreCloseElementHandler)();
 typedef void (*LoadProfilePostCloseElementHandler)();
 typedef void (*InitializeGameInitElementHandler)();
+// PutFPS
+typedef void (*PutFPSElementHandler)();
 // TextScript
 typedef void (*TextScriptSVPElementHandler)();
 // TransferStage()
@@ -81,6 +87,8 @@ void RegisterOpeningAboveTextBoxElement(OpeningAboveTextBoxElementHandler handle
 void RegisterOpeningEarlyActionElement(OpeningEarlyActionElementHandler handler);
 void RegisterOpeningActionElement(OpeningActionElementHandler handler);
 void RegisterOpeningInitElement(OpeningInitElementHandler handler);
+void RegisterOpeningBelowPutCaretElement(OpeningBelowPutCaretElementHandler handler);
+void RegisterOpeningAbovePutCaretElement(OpeningAbovePutCaretElementHandler handler);
 // ModeTitle() API
 void RegisterTitleInitElement(TitleInitElementHandler handler);
 void RegisterTitleActionElement(TitleActionElementHandler handler);
@@ -93,17 +101,21 @@ void RegisterAboveFadeElement(AboveFadeElementHandler handler);
 void RegisterBelowTextBoxElement(BelowTextBoxElementHandler handler);
 void RegisterAboveTextBoxElement(AboveTextBoxElementHandler handler);
 void RegisterBelowPlayerElement(BelowPlayerElementHandler handler);
-void RegisterAbovePlayerElement(AboveTextBoxElementHandler handler);
+void RegisterAbovePlayerElement(AbovePlayerElementHandler handler);
 void RegisterEarlyActionElement(EarlyActionElementHandler handler);
 void RegisterActionElement(ActionElementHandler handler);
 void RegisterCreditsActionElement(CreditsActionElementHandler handler);
 void RegisterInitElement(InitElementHandler handler);
+void RegisterBelowPutCaretElement(BelowPutCaretElementHandler handler);
+void RegisterAbovePutCaretElement(AbovePutCaretElementHandler handler);
 // Profile API
 void RegisterSaveProfilePreWriteElement(SaveProfilePreWriteElementHandler handler);
 void RegisterSaveProfilePostWriteElement(SaveProfilePostWriteElementHandler handler);
 void RegisterLoadProfilePreCloseElement(LoadProfilePreCloseElementHandler handler);
 void RegisterLoadProfilePostCloseElement(LoadProfilePostCloseElementHandler handler);
 void RegisterInitializeGameInitElement(InitializeGameInitElementHandler handler);
+// PutFPS API
+void RegisterPutFPSElement(PutFPSElementHandler handler);
 // TextScript API
 void RegisterSVPElement(TextScriptSVPElementHandler handler);
 // TransferStage() API

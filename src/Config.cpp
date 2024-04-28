@@ -14,26 +14,6 @@
 
 bool setting_enable_default_config_options = true;
 
-BOOL SaveConfigData(ConfigData* conf)
-{
-	// Get path
-	char path[MAX_PATH];
-	sprintf(path, "%s\\%s", gModulePath, gConfigFileName);
-
-	// Open file
-	FILE* fp = fopen(path, "wb");
-	if (fp == NULL)
-		return FALSE;
-
-	// Read data
-	fwrite(conf, sizeof(ConfigData), 1, fp); // Not the original name
-
-	// Close file
-	fclose(fp);
-
-	return TRUE;
-}
-
 void Replacement_DefaultConfigData(ConfigData* conf)
 {
 	// Clear old configuration data

@@ -30,7 +30,6 @@
 #include "MyChar.h"
 #include "MycParam.h"
 #include "NpcReplacements.h"
-#include "PauseScreen.h"
 #include "Profile.h"
 #include "Stage.h"
 #include "SurfaceDefines.h"
@@ -107,11 +106,6 @@ void InitMod_TileCollision()
 	ModLoader_WriteJump((void*)0x473080, (void*)Replacement_HitBossMap);
 }
 
-void InitMod_PauseScreen()
-{
-	ModLoader_WriteJump((void*)0x40DD70, (void*)Call_Pause);
-}
-
 void InitMod_SaveData()
 {
 	ModLoader_WriteCall((void*)0x41D213, (void*)Replacement_SaveProfile_LastMemcpy_Call); // autpi
@@ -147,6 +141,7 @@ void InitMod_TSCImage()
 // AutPI is not used for this function.
 void InitMod_TSCBkg()
 {
+	// Be able to inject code here? AutPI addition for later to consider
 	ModLoader_WriteCall((void*)0x402339, (void*)Replacement_InitBack_ReloadBitmap_File_Call); // Release Surface + MakeSurface_File instead of reloading bitmap
 	ModLoader_WriteCall((void*)0x40F881, (void*)Replacement_ModeOpening_PutStageBack_Call);
 	ModLoader_WriteCall((void*)0x40F8D1, (void*)Replacement_ModeOpening_PutFront_Call);

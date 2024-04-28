@@ -86,3 +86,4 @@ void SetRespawnPoint(int x, int y);
 BOOL RespawnPlayer(void);
 void Stage_SetRespawn();
 void RevivePlayer();
+void RevivePlayerWithValue(int value);

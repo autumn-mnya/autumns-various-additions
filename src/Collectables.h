@@ -46,6 +46,7 @@ extern int playerMoney;
 void InitCollectables();
 void InitMoney();
 void AddMoney(int x);
+int GetCollectable(int type);
 void AddCollectables(int x, int y);
 void RemoveCollectables(int x, int y);
 void SetCollectables(int x, int y);

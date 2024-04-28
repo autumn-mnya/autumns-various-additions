@@ -123,6 +123,7 @@ extern int jump_sound_effect;
 void Set_Version107_Physics();
 void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size);
 void InitMyCollabData();
+int GetPlayerPhysicsValue(int x);
 void SetPlayerPhysicsValues(int x, int y);
 void Replacement_PutMyChar_PutChar_Call(const RECT* r, int a, int b, const RECT* r2, SurfaceID s);
 void AutumnsVariousAdditionsExtraJumpUI();

@@ -38,8 +38,32 @@ static int lua_RespawnPlayer(lua_State* L)
 	return 0;
 }
 
+static int lua_RevivePlayer(lua_State* L)
+{
+	int life = setting_revive_hp;
+
+	if (lua_gettop(L) >= 1) {
+		life = (int)luaL_checknumber(L, 1);
+	}
+
+	RevivePlayerWithValue(life);
+	return 0;
+}
+
+static int lua_IsRespawning(lua_State* L)
+{
+	if (PlayerIsRespawning != FALSE)
+		lua_pushboolean(L, 1);
+	else
+		lua_pushboolean(L, 0);
+
+	return 1;
+}
+
 FUNCTION_TABLE RespawnFunctionTable[FUNCTION_TABLE_RESPAWN_SIZE] =
 {
-	{"SetRespawn", lua_SetRespawn},
-	{"Respawn", lua_RespawnPlayer}
+	{"Set", lua_SetRespawn},
+	{"Run", lua_RespawnPlayer},
+	{"IsRespawning", lua_IsRespawning},
+	{"Revive", lua_RevivePlayer}
 };
