@@ -11,6 +11,9 @@ ModCS.AVA.KillPlayer(*event)
 -- Returns the players "<MIM" value, if the ava <MIM code is enabled in tsc.ini.
 ModCS.AVA.GetMim()
 
+-- Sets the players "<MIM" value to "num", if the ava <MIM code is enabled in tsc.ini.
+ModCS.AVA.SetMim(num)
+
 -- Returns true if the player is touching a wallbooster entity.
 ModCS.AVA.OnWallbooster()
 

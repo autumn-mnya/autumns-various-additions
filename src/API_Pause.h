@@ -6,6 +6,8 @@
 
 extern HMODULE pauseDLL;
 
+typedef void (*SaveConfigElementHandler)();
+
 enum
 {
 	CALLBACK_CONTINUE = -1,
@@ -51,3 +53,4 @@ size_t* GetNumEntriesAddedMain();
 size_t* GetNumEntriesAddedMenu();
 void add_pause_entry(Option** options_ptr, const char* name, int (*callback)(OptionsMenu* parent_menu, size_t this_option, CallbackAction action), void* user_data, const char* value_string, long value, BOOL disabled, size_t* num_entries_added);
 int EnterOptionsMenu(OptionsMenu* options_menu, size_t selected_option);
+void RegisterSaveConfigElement(SaveConfigElementHandler handler);

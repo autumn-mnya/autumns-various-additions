@@ -3,6 +3,7 @@
 #include "mod_loader.h"
 #include "cave_story.h"
 #include "API_Pause.h"
+#include <vector>
 
 HMODULE pauseDLL = nullptr;  // Global variable
 
@@ -21,6 +22,27 @@ typedef size_t* (*GetNumEntriesAddedMainFunc)();
 typedef size_t* (*GetNumEntriesAddedMenuFunc)();
 typedef void (*add_pause_entryFunc)(Option**,const char*,int(*)(OptionsMenu*,size_t,CallbackAction),void*,const char*,long,BOOL,size_t*);
 typedef int (*EnterOptionsMenuFunc)(OptionsMenu*,size_t);
+
+typedef void (*RegisterElementFunc)(void (*)());
+std::vector<SaveConfigElementHandler> saveconfigElementHandlers;
+
+void RegisterElementPause(std::vector<void (*)()>& handlers, const char* functionName, void (*handler)())
+{
+    if (pauseDLL != nullptr) {
+        RegisterElementFunc registerFunc =
+            reinterpret_cast<RegisterElementFunc>(
+                GetProcAddress(pauseDLL, functionName));
+
+        if (registerFunc != nullptr) {
+            registerFunc(handler);
+            handlers.push_back(handler);
+        }
+        else {
+            std::cerr << "Failed to get the function pointer for " << functionName << "\n";
+            // You might want to handle the error appropriately.
+        }
+    }
+}
 
 Option** GetOptionsMain()
 {
@@ -103,4 +125,9 @@ int EnterOptionsMenu(OptionsMenu* options_menu, size_t selected_option)
 
     int val = func(options_menu, selected_option);
     return val;
+}
+
+void RegisterSaveConfigElement(SaveConfigElementHandler handler)
+{
+    RegisterElementPause(saveconfigElementHandlers, "RegisterSaveConfigElement", reinterpret_cast<void (*)()>(handler));
 }

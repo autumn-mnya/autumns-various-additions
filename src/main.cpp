@@ -98,7 +98,7 @@ void InitMod(void)
 	strcat(gDataPath, "\\data");
 
 	// Get path of the ava folder
-	strcpy(gAVAPath, gModulePath);
+	strcpy(gAVAPath, gDataPath);
 	strcat(gAVAPath, "\\ava");
 
 	// Get path of the ava config folder

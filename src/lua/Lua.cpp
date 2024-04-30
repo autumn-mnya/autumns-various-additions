@@ -37,7 +37,7 @@ extern "C"
 
 #define gL GetLuaL()
 const char* LuaModName = "AVA";
-#define FUNCTION_TABLE_AVA_SIZE 7
+#define FUNCTION_TABLE_AVA_SIZE 8
 
 static int lua_KillPlayer(lua_State* L)
 {
@@ -105,10 +105,20 @@ static int lua_GetLoadingSave(lua_State* L)
 	return 1;
 }
 
+static int lua_SetMimVal(lua_State* L)
+{
+	int num = (int)luaL_checknumber(L, 1);
+
+	mim_num = num;
+
+	return 0;
+}
+
 FUNCTION_TABLE AvaFunctionTable[FUNCTION_TABLE_AVA_SIZE] =
 {
 	{"KillPlayer", lua_KillPlayer},
 	{"GetMim", lua_GetMimVal},
+	{"SetMim", lua_SetMimVal},
 	{"OnWallbooster", lua_GetWallboosting},
 	{"OnIcewall", lua_GetIcewalled},
 	{"OnWall", lua_AvaOnWall},
