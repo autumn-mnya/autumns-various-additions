@@ -53,8 +53,8 @@ typedef void (*InitElementHandler)();
 typedef void (*BelowPutCaretElementHandler)();
 typedef void (*AbovePutCaretElementHandler)();
 // Profile
-typedef void (*SaveProfilePreWriteElementHandler)();
-typedef void (*SaveProfilePostWriteElementHandler)();
+typedef void (*SaveProfilePreCloseElementHandler)();
+typedef void (*SaveProfilePostCloseElementHandler)();
 typedef void (*LoadProfilePreCloseElementHandler)();
 typedef void (*LoadProfilePostCloseElementHandler)();
 typedef void (*InitializeGameInitElementHandler)();
@@ -109,8 +109,8 @@ void RegisterInitElement(InitElementHandler handler);
 void RegisterBelowPutCaretElement(BelowPutCaretElementHandler handler);
 void RegisterAbovePutCaretElement(AbovePutCaretElementHandler handler);
 // Profile API
-void RegisterSaveProfilePreWriteElement(SaveProfilePreWriteElementHandler handler);
-void RegisterSaveProfilePostWriteElement(SaveProfilePostWriteElementHandler handler);
+void RegisterSaveProfilePreCloseElement(SaveProfilePreCloseElementHandler handler);
+void RegisterSaveProfilePostCloseElement(SaveProfilePostCloseElementHandler handler);
 void RegisterLoadProfilePreCloseElement(LoadProfilePreCloseElementHandler handler);
 void RegisterLoadProfilePostCloseElement(LoadProfilePostCloseElementHandler handler);
 void RegisterInitializeGameInitElement(InitializeGameInitElementHandler handler);

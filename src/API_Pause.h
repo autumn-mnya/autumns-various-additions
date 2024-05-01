@@ -34,6 +34,8 @@ typedef struct Option
 	const char* value_string;
 	long value;
 	BOOL disabled;
+	long attribute_size;
+	long attribute_index;
 } Option;
 
 typedef struct OptionsMenu

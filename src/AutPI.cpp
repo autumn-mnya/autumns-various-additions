@@ -118,8 +118,8 @@ std::vector<InitElementHandler> initElementHandlers;
 std::vector<BelowPutCaretElementHandler> belowputcaretElementHandlers;
 std::vector<AbovePutCaretElementHandler> aboveputcaretElementHandlers;
 
-std::vector<SaveProfilePreWriteElementHandler> saveprofileprewriteElementHandlers;
-std::vector<SaveProfilePostWriteElementHandler> saveprofilepostwriteElementHandlers;
+std::vector<SaveProfilePreCloseElementHandler> saveprofileprecloseElementHandlers;
+std::vector<SaveProfilePostCloseElementHandler> saveprofilepostcloseElementHandlers;
 std::vector<LoadProfilePreCloseElementHandler> loadprofileprecloseElementHandlers;
 std::vector<LoadProfilePostCloseElementHandler> loadprofilepostcloseElementHandlers;
 std::vector<InitializeGameInitElementHandler> intializegameElementHandlers;
@@ -291,14 +291,14 @@ void RegisterAbovePutCaretElement(AbovePutCaretElementHandler handler)
 
 // Profile API
 
-void RegisterSaveProfilePreWriteElement(SaveProfilePreWriteElementHandler handler)
+void RegisterSaveProfilePreCloseElement(SaveProfilePreCloseElementHandler handler)
 {
-    RegisterElement(saveprofileprewriteElementHandlers, "RegisterSaveProfilePreWriteElement", reinterpret_cast<void (*)()>(handler));
+    RegisterElement(saveprofileprecloseElementHandlers, "RegisterSaveProfilePreWriteElement", reinterpret_cast<void (*)()>(handler));
 }
 
-void RegisterSaveProfilePostWriteElement(SaveProfilePostWriteElementHandler handler)
+void RegisterSaveProfilePostCloseElement(SaveProfilePostCloseElementHandler handler)
 {
-    RegisterElement(saveprofilepostwriteElementHandlers, "RegisterSaveProfilePostWriteElement", reinterpret_cast<void (*)()>(handler));
+    RegisterElement(saveprofilepostcloseElementHandlers, "RegisterSaveProfilePostWriteElement", reinterpret_cast<void (*)()>(handler));
 }
 
 void RegisterLoadProfilePreCloseElement(LoadProfilePreCloseElementHandler handler)
