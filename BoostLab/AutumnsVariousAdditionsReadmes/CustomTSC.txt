@@ -38,10 +38,12 @@ Disable <BKG layer W. Layer 0 is the first <BKG layer. -- Doesn't do anything if
 Arguments: 1 [<BKDwwww] [layer]
 
 - <BKG - BacKGround
-Load Background txt file from data/bkg. -- End the text string with a $ so the game knows to stop reading the text.
+Load Background yaml file from data/bkg. -- End the text string with a $ so the game knows to stop reading the text.
 Arguments: 1 [<BKGstring$] [background$]
 Example: <BKGbkMoon$
-( The above will load bkMoon.txt )
+( The above will load bkMoon.yaml )
+
+Note: Older versions of AVA used txt files for BKG, but now it uses yamls for easier readability.
 
 # BKG Readme #
 
@@ -49,8 +51,8 @@ Example: <BKGbkMoon$
 
 It's incredibly complex though, as it has many moving parts. I'll try to explain most of them here!
 
-<BKG loads a txt file from the "data/bkg" folder. This txt file contains the name of the background you want to display, and all of the layers you want your background to have.
-You can see the "CustomTSC_BKG_Format" and "CustomTSC_BKG_Example" txt files for both an example of a <BKG txt file, and also the format of understanding which values do what.
+<BKG loads a yaml file from the "data/bkg" folder. This yaml file contains the name of the background you want to display, and all of the layers you want your background to have.
+You can see the "CustomTSC_BKG_Example.yaml" files for both an example of a <BKG yaml file, and also the format of understanding which values do what.
 
 Read "CustomTSC_BKG_Explanation.txt" for more info on <BKG itself.
 

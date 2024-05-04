@@ -1,4 +1,5 @@
 function ModCS.Game.Act()
+	ModCS.Player.Equip(32)
 	-- Swimming Script
 	if (ModCS.Game.GetMode()) == 3 then
 		ModCS.Collectable.Set(0, ModCS.Collectable.Get(0) + 1)
@@ -46,7 +47,6 @@ ModCS.Npc.Act[70] = function(npc)
     }
 	
 	value = ModCS.CPXE.Get(npc, 0)
-	print(ModCS.CPXE.Get(npc, 0))
 
 	-- increase npc.ani_wait every frame
     npc.ani_wait = npc.ani_wait + 1

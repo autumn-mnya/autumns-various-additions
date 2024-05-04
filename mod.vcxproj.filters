@@ -73,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="src\Config.cpp" />
     <ClCompile Include="src\API_Pause.cpp" />
+    <ClCompile Include="src\lua\Lua_BKG.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ASMLoader.h" />
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\API_Pause.h" />
+    <ClInclude Include="src\lua\Lua_BKG.h">
+      <Filter>lua</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="library">

@@ -1,8 +1,8 @@
 AVA Lua API things to add:
 [-] BKG (?)
-[-] Collectables
+[x] Collectables
 [-] IMG
 [x] FMod
-[-] MyChar physics
+[x] MyChar physics
 [x] Respawn
-[-] VAR
+[x] VAR

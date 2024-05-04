@@ -1,6 +1,6 @@
 # <BKG Explanation #
 
-<BKG has many factors that goes into it.
+<BKG has many factors that goes into it. If you've looked at "CustomTSC_BKG_Format.txt", you'll see that there are many different values.
 I'll do my best to explain them here!
 
 # Background Name #
@@ -102,7 +102,7 @@ This is a decimal value!
 
 Example: bkBlue in vanilla would be "0.9"
 
-# Frame Count #
+# Sprite Number #
 How many sprites your background has. If set higher than 1, then you can have a background with animated frames as well!
 
 Example: bkBlue in vanilla would be "0"

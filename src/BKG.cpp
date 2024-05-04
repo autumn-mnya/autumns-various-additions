@@ -13,6 +13,8 @@
 #include "Generic.h"
 #include "Profile.h"
 
+#include <yaml-cpp/yaml.h>
+
 SUBKG bkList[BKGCount] = {};
 int numBks = 0;
 char bkgTxT_Global[bkgTxTSize];
@@ -149,34 +151,60 @@ void BKG_SetParameter(int w, int x, int y)
 	}
 }
 
-void BKG_LoadBackground(char* file)
+// Load from YAML
+void LoadBackgroundFromYAML(const char* yamlPath)
 {
-	FILE* fptr;
-	char path[MAX_PATH];
-	char pathtxt[bkgTxTSize];
+	// Load YAML file
+	YAML::Node config;
+	try {
+		config = YAML::LoadFile(yamlPath);
+	}
+	catch (const std::exception& e) {
+		printf("Error: Failed to open or parse YAML file: %s\n", e.what());
+		return;
+	}
 
-	// Get path
+	// Extract background name from YAML node
+	std::string backFi = config["BackgroundName"].as<std::string>();
+	InitBack(backFi.c_str(), 0);
 
-	// Note for autumn: Collab BKGs should start with "Difficulty_Authorname" i think?
-	// They go in CollabName/bkg/
-	if (setting_collab_enabled == true)
-		sprintf(path, "%s\\%s\\%s", gDataPath, setting_collab_name, "bkg");
-	else
-		sprintf(path, "%s", gBkgPath);
+	// Initialize the number of backgrounds loaded
+	int bkCount = 0;
 
-	sprintf(pathtxt, "\\%s.txt", file);
-	strcat(path, pathtxt);
+	// Iterate over each background entry in the "Backgrounds" array
+	const YAML::Node& backgrounds = config["Backgrounds"];
+	for (const auto& entry : backgrounds) {
+		// Extract background information from YAML node
+		int bkXOffset = entry["bkXOffset"].as<int>();
+		int bkYOffset = entry["bkYOffset"].as<int>();
+		int bkWidth = entry["bkWidth"].as<int>();
+		int bkHeight = entry["bkHeight"].as<int>();
+		int repeatX = entry["repeatX"].as<int>();
+		int repeatY = entry["repeatY"].as<int>();
+		int repeatGapX = entry["repeatGapX"].as<int>();
+		int repeatGapY = entry["repeatGapY"].as<int>();
+		int t = entry["type"].as<int>();
+		double m1 = entry["xSpeed"].as<double>();
+		double m2 = entry["ySpeed"].as<double>();
+		int f = entry["frameCount"].as<int>();
+		int s = entry["aniSpeed"].as<int>();
+		double o1 = entry["mapX"].as<double>();
+		double o2 = entry["mapY"].as<double>();
 
-	// Open file
-	fptr = fopen(path, "rb");
+		// Set background using extracted information
+		BKG_SetBackground(bkCount, bkXOffset, bkYOffset, bkWidth, bkHeight, repeatX, repeatY, repeatGapX, repeatGapY, t, m1, m2, f, s, o1, o2);
 
-	// only reset background if the bkgTxT_Global path != 0
-	if (bkgTxT_Global[0] == 0)
-		BKG_ResetBackgrounds();
+		// Increment the number of backgrounds loaded
+		bkCount++;
+	}
 
-	// This is for the save file
-	memcpy(bkgTxT_Global, file, sizeof(bkgTxT_Global));
+	numBks = bkCount;
+}
 
+
+// Legacy way of loading backgrounds
+void LoadBackgroundFromTXT(FILE* fptr)
+{
 	int bkXOffset, bkYOffset, bkWidth, bkHeight, repeatX, repeatY, repeatGapX, repeatGapY, t, f, s;
 	double m1, m2, o1, o2;
 	char line[256];
@@ -186,12 +214,9 @@ void BKG_LoadBackground(char* file)
 	sscanf(line, "%s", backFi);
 	InitBack(backFi, 0);
 
-	for (int i = 0; fgets(line, sizeof(line), fptr); i = i)
-	{
-		if (('0' <= line[0] && line[0] <= '9') || line[0] == '-')
-		{
-			switch (i)
-			{
+	for (int i = 0; fgets(line, sizeof(line), fptr); i = i) {
+		if (('0' <= line[0] && line[0] <= '9') || line[0] == '-') {
+			switch (i) {
 			case(0):
 				if (sscanf(line, "%d", &bkXOffset))
 					i++;
@@ -249,8 +274,7 @@ void BKG_LoadBackground(char* file)
 					i++;
 				break;
 			case(14):
-				if (sscanf(line, "%lf", &o2))
-				{
+				if (sscanf(line, "%lf", &o2)) {
 					i = 0;
 					BKG_SetBackground(bkCount, bkXOffset, bkYOffset, bkWidth, bkHeight, repeatX, repeatY, repeatGapX, repeatGapY, t, m1, m2, f, s, o1, o2);
 					bkCount++;
@@ -259,10 +283,49 @@ void BKG_LoadBackground(char* file)
 			}
 		}
 	}
-
-	fclose(fptr);
 	numBks = bkCount;
 }
+
+void BKG_LoadBackground(char* file)
+{
+	char path[MAX_PATH];
+	char yamlPath[MAX_PATH];
+	char txtPath[MAX_PATH];
+
+	// Construct paths for YAML and TXT files
+	if (setting_collab_enabled == true)
+		sprintf(path, "%s\\%s\\%s", gDataPath, setting_collab_name, "bkg");
+	else
+		sprintf(path, "%s", gBkgPath);
+
+	sprintf(yamlPath, "%s\\%s.yaml", path, file);
+	sprintf(txtPath, "%s\\%s.txt", path, file);
+
+	if (bkgTxT_Global[0] == 0)
+		BKG_ResetBackgrounds();
+
+	memcpy(bkgTxT_Global, file, sizeof(bkgTxT_Global));
+
+	// Check if YAML file exists and load from YAML
+	FILE* yamlFile = fopen(yamlPath, "rb");
+	if (yamlFile) {
+		fclose(yamlFile);
+		LoadBackgroundFromYAML(yamlPath);
+	}
+	else {
+		// If YAML file not found, load from TXT
+		FILE* txtFile = fopen(txtPath, "rb");
+		if (txtFile) {
+			LoadBackgroundFromTXT(txtFile);
+			fclose(txtFile);
+		}
+		else {
+			// Neither YAML nor TXT file found, handle error
+			printf("Error: Neither YAML nor TXT file found for %s\n", file);
+		}
+	}
+}
+
 
 void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg)
 {

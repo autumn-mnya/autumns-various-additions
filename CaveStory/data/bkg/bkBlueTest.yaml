@@ -1,0 +1,47 @@
+BackgroundName: "bkBlueTest"
+Backgrounds:
+  - bkXOffset: 128
+    bkYOffset: 0
+    bkWidth: 64
+    bkHeight: 64
+    repeatX: 320
+    repeatY: 240
+    repeatGapX: 0
+    repeatGapY: 0
+    type: 0
+    xSpeed: 0.0
+    ySpeed: 0.0
+    frameCount: 0
+    aniSpeed: 0
+    mapX: 0.0
+    mapY: 0.0
+  - bkXOffset: 64
+    bkYOffset: 0
+    bkWidth: 64
+    bkHeight: 64
+    repeatX: 128
+    repeatY: 128
+    repeatGapX: 0
+    repeatGapY: 0
+    type: 12
+    xSpeed: 2.0
+    ySpeed: 2.0
+    frameCount: 0
+    aniSpeed: 0
+    mapX: 0.0
+    mapY: 0.0
+  - bkXOffset: 0
+    bkYOffset: 0
+    bkWidth: 64
+    bkHeight: 64
+    repeatX: 64
+    repeatY: 64
+    repeatGapX: 0
+    repeatGapY: 0
+    type: 8
+    xSpeed: 0.9
+    ySpeed: -0.9
+    frameCount: 0
+    aniSpeed: 0
+    mapX: 0.0
+    mapY: 0.0

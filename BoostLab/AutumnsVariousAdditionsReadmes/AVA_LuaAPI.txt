@@ -30,6 +30,45 @@ ModCS.AVA.GetAirJumps()
 -- Returns true if the game is currently loading a save file.
 ModCS.AVA.LoadingSave()
 
+# BKG
+
+-- All of the <BKG variables you can access via ModCS lua
+ModCS.BKG.GetActive(layerNumber)
+ModCS.BKG.GetBkXOffset(layerNumber)
+ModCS.BKG.GetBkYOffset(layerNumber)
+ModCS.BKG.GetBkWidth(layerNumber)
+ModCS.BKG.GetBkHeight(layerNumber)
+ModCS.BKG.GetRepeatX(layerNumber)
+ModCS.BKG.GetRepeatY(layerNumber)
+ModCS.BKG.GetRepeatGapX(layerNumber)
+ModCS.BKG.GetRepeatGapY(layerNumber)
+ModCS.BKG.GetType(layerNumber)
+ModCS.BKG.GetXSpeed(layerNumber)
+ModCS.BKG.GetYSpeed(layerNumber)
+ModCS.BKG.GetFrameCount(layerNumber)
+ModCS.BKG.GetAniFrame(layerNumber) -- The current frame the sprite animation is on (not defined in the BKG text/yaml file)
+ModCS.BKG.GetAniSpeed(layerNumber)
+ModCS.BKG.GetMapX(layerNumber)
+ModCS.BKG.GetMapY(layerNumber)
+
+ModCS.BKG.SetActive(layerNumber, bool) -- set to true or false
+ModCS.BKG.SetBkXOffset(layerNumber, num)
+ModCS.BKG.SetBkYOffset(layerNumber, num)
+ModCS.BKG.SetBkWidth(layerNumber, num)
+ModCS.BKG.SetBkHeight(layerNumber, num)
+ModCS.BKG.SetRepeatX(layerNumber, num)
+ModCS.BKG.SetRepeatY(layerNumber, num)
+ModCS.BKG.SetRepeatGapX(layerNumber, num)
+ModCS.BKG.SetRepeatGapY(layerNumber, num)
+ModCS.BKG.SetType(layerNumber, num)
+ModCS.BKG.SetXSpeed(layerNumber, num)
+ModCS.BKG.SetYSpeed(layerNumber, num)
+ModCS.BKG.SetFrameCount(layerNumber, num)
+ModCS.BKG.SetAniFrame(layerNumber, num) -- The current frame the sprite animation is on (not defined in the BKG text/yaml file)
+ModCS.BKG.SetAniSpeed(layerNumber, num)
+ModCS.BKG.SetMapX(layerNumber, num)
+ModCS.BKG.SetMapY(layerNumber, num)
+
 # Custom Entity Values (CPXE)
 
 -- Get the "Custom Value" for your npc inside of your function of Custom Value "num".
