@@ -33,10 +33,14 @@ typedef void (*OpeningActionElementHandler)();
 typedef void (*OpeningInitElementHandler)();
 typedef void (*OpeningBelowPutCaretElementHandler)();
 typedef void (*OpeningAbovePutCaretElementHandler)();
+typedef void (*MOBelowPutFPSElementHandler)();
+typedef void (*MOAbovePutFPSElementHandler)();
 // ModeTitle()
 typedef void (*TitleInitElementHandler)();
 typedef void (*TitleActionElementHandler)();
 typedef void (*TitleBelowCounterElementHandler)();
+typedef void (*MTBelowPutFPSElementHandler)();
+typedef void (*MTAbovePutFPSElementHandler)();
 // ModeAction()
 typedef void (*PlayerHudElementHandler)();
 typedef void (*CreditsHudElementHandler)();
@@ -52,6 +56,8 @@ typedef void (*CreditsActionElementHandler)();
 typedef void (*InitElementHandler)();
 typedef void (*BelowPutCaretElementHandler)();
 typedef void (*AbovePutCaretElementHandler)();
+typedef void (*MABelowPutFPSElementHandler)();
+typedef void (*MAAbovePutFPSElementHandler)();
 // Profile
 typedef void (*SaveProfilePreCloseElementHandler)();
 typedef void (*SaveProfilePostCloseElementHandler)();
@@ -89,10 +95,14 @@ void RegisterOpeningActionElement(OpeningActionElementHandler handler);
 void RegisterOpeningInitElement(OpeningInitElementHandler handler);
 void RegisterOpeningBelowPutCaretElement(OpeningBelowPutCaretElementHandler handler);
 void RegisterOpeningAbovePutCaretElement(OpeningAbovePutCaretElementHandler handler);
+void RegisterModeOpeningBelowPutFPSElement(MOBelowPutFPSElementHandler handler);
+void RegisterModeOpeningAbovePutFPSElement(MOAbovePutFPSElementHandler handler);
 // ModeTitle() API
 void RegisterTitleInitElement(TitleInitElementHandler handler);
 void RegisterTitleActionElement(TitleActionElementHandler handler);
 void RegisterTitleBelowCounterElement(TitleBelowCounterElementHandler handler);
+void RegisterModeTitleBelowPutFPSElement(MTBelowPutFPSElementHandler handler);
+void RegisterModeTitleAbovePutFPSElement(MTAbovePutFPSElementHandler handler);
 // ModeAction() API
 void RegisterPlayerHudElement(PlayerHudElementHandler handler);
 void RegisterCreditsHudElement(CreditsHudElementHandler handler);
@@ -108,6 +118,8 @@ void RegisterCreditsActionElement(CreditsActionElementHandler handler);
 void RegisterInitElement(InitElementHandler handler);
 void RegisterBelowPutCaretElement(BelowPutCaretElementHandler handler);
 void RegisterAbovePutCaretElement(AbovePutCaretElementHandler handler);
+void RegisterModeActionBelowPutFPSElement(MABelowPutFPSElementHandler handler);
+void RegisterModeActionAbovePutFPSElement(MAAbovePutFPSElementHandler handler);
 // Profile API
 void RegisterSaveProfilePreCloseElement(SaveProfilePreCloseElementHandler handler);
 void RegisterSaveProfilePostCloseElement(SaveProfilePostCloseElementHandler handler);

@@ -98,10 +98,14 @@ std::vector<OpeningActionElementHandler> Opening_actionElementHandlers;
 std::vector<OpeningInitElementHandler> Opening_initElementHandlers;
 std::vector<OpeningBelowPutCaretElementHandler> Opening_belowputcaretElementHandlers;
 std::vector<OpeningAbovePutCaretElementHandler> Opening_aboveputcaretElementHandlers;
+std::vector<MOBelowPutFPSElementHandler> MObelowputfpsElementHandlers;
+std::vector<MOAbovePutFPSElementHandler> MOaboveputfpsElementHandlers;
 
 std::vector<TitleInitElementHandler> Title_initElementHandlers;
 std::vector<TitleActionElementHandler> Title_actionElementHandlers;
 std::vector<TitleBelowCounterElementHandler> Title_belowcounterElementHandlers;
+std::vector<MTBelowPutFPSElementHandler> MTbelowputfpsElementHandlers;
+std::vector<MTAbovePutFPSElementHandler> MTaboveputfpsElementHandlers;
 
 std::vector<PlayerHudElementHandler> playerhudElementHandlers;
 std::vector<CreditsHudElementHandler> creditshudElementHandlers;
@@ -117,6 +121,8 @@ std::vector<CreditsActionElementHandler> creditsactionElementHandlers;
 std::vector<InitElementHandler> initElementHandlers;
 std::vector<BelowPutCaretElementHandler> belowputcaretElementHandlers;
 std::vector<AbovePutCaretElementHandler> aboveputcaretElementHandlers;
+std::vector<MABelowPutFPSElementHandler> MAbelowputfpsElementHandlers;
+std::vector<MAAbovePutFPSElementHandler> MAaboveputfpsElementHandlers;
 
 std::vector<SaveProfilePreCloseElementHandler> saveprofileprecloseElementHandlers;
 std::vector<SaveProfilePostCloseElementHandler> saveprofilepostcloseElementHandlers;
@@ -200,6 +206,16 @@ void RegisterOpeningAbovePutCaretElement(OpeningAbovePutCaretElementHandler hand
     RegisterElement(Opening_aboveputcaretElementHandlers, "RegisterOpeningAbovePutCaretElement", reinterpret_cast<void (*)()>(handler));
 }
 
+void RegisterModeOpeningBelowPutFPSElement(MOBelowPutFPSElementHandler handler)
+{
+    RegisterElement(MObelowputfpsElementHandlers, "RegisterModeOpeningBelowPutFPSElement", reinterpret_cast<void (*)()>(handler));
+}
+
+void RegisterModeOpeningAbovePutFPSElement(MOAbovePutFPSElementHandler handler)
+{
+    RegisterElement(MOaboveputfpsElementHandlers, "RegisterModeOpeningAbovePutFPSElement", reinterpret_cast<void (*)()>(handler));
+}
+
 // ModeTitleAPI
 
 void RegisterTitleInitElement(TitleInitElementHandler handler)
@@ -215,6 +231,16 @@ void RegisterTitleActionElement(TitleActionElementHandler handler)
 void RegisterTitleBelowCounterElement(TitleBelowCounterElementHandler handler)
 {
     RegisterElement(Title_belowcounterElementHandlers, "RegisterTitleBelowCounterElement", reinterpret_cast<void (*)()>(handler));
+}
+
+void RegisterModeTitleBelowPutFPSElement(MOBelowPutFPSElementHandler handler)
+{
+    RegisterElement(MTbelowputfpsElementHandlers, "RegisterModeTitleBelowPutFPSElement", reinterpret_cast<void (*)()>(handler));
+}
+
+void RegisterModeTitleAbovePutFPSElement(MOAbovePutFPSElementHandler handler)
+{
+    RegisterElement(MTaboveputfpsElementHandlers, "RegisterModeTitleAbovePutFPSElement", reinterpret_cast<void (*)()>(handler));
 }
 
 // ModeActionAPI
@@ -287,6 +313,16 @@ void RegisterBelowPutCaretElement(BelowPutCaretElementHandler handler)
 void RegisterAbovePutCaretElement(AbovePutCaretElementHandler handler)
 {
     RegisterElement(aboveputcaretElementHandlers, "RegisterAbovePutCaretElement", reinterpret_cast<void (*)()>(handler));
+}
+
+void RegisterModeActionBelowPutFPSElement(MOBelowPutFPSElementHandler handler)
+{
+    RegisterElement(MAbelowputfpsElementHandlers, "RegisterModeActionBelowPutFPSElement", reinterpret_cast<void (*)()>(handler));
+}
+
+void RegisterModeActionAbovePutFPSElement(MOAbovePutFPSElementHandler handler)
+{
+    RegisterElement(MAaboveputfpsElementHandlers, "RegisterModeActionAbovePutFPSElement", reinterpret_cast<void (*)()>(handler));
 }
 
 // Profile API

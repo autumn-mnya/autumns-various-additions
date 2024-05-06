@@ -85,10 +85,19 @@ void AVAPauseEntries()
 	// add_pause_entry(GetOptionsMain(), "AVA TEST", Callback_Resume, NULL, NULL, 0, FALSE, GetNumEntriesAddedMain());
 }
 
+void ReleaseData()
+{
+	if (autpiDLL != nullptr)
+		free(autpiDLL);
+	if (pauseDLL != nullptr)
+		free(pauseDLL);
+}
+
 // Init the whole mod
 void InitMod(void)
 {
 	LoadAutPiDll();
+	RegisterReleaseElement(ReleaseData); // Release dlls once finished with them
 	// Get executable's path
 	GetModuleFileNameA(NULL, gModulePath, MAX_PATH);
 	PathRemoveFileSpecA(gModulePath);
