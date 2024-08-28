@@ -6,6 +6,13 @@
 
 #define CustomNpcValues(N) gCustomNPC[(N - gNPC)]
 
+#define CustomNpcValueA(N) CustomNpcValues(N).CustomValueA
+#define CustomNpcValueB(N) CustomNpcValues(N).CustomValueB
+#define CustomNpcValueC(N) CustomNpcValues(N).CustomValueC
+#define CustomNpcValueD(N) CustomNpcValues(N).CustomValueD
+#define CustomNpcValueE(N) CustomNpcValues(N).CustomValueE
+#define CustomNpcValueF(N) CustomNpcValues(N).CustomValueF
+
 extern bool entity_IsWallboosting;
 extern bool entity_IsIceWalled;
 extern bool playerIsInFan;

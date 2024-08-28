@@ -25,6 +25,9 @@
 #0305
 <EQ+0032<BKGbkBlueTest$<END
 
+#0306
+<CN1Npc\NpcCemet$<END
+
 #0402
 <KEY<MSG<BUY0030:0404
 Event A<NOD<CLO<END

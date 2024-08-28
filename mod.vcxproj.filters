@@ -76,6 +76,7 @@
     <ClCompile Include="src\lua\Lua_BKG.cpp">
       <Filter>lua</Filter>
     </ClCompile>
+    <ClCompile Include="src\AVA_API.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ASMLoader.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="src\lua\Lua_BKG.h">
       <Filter>lua</Filter>
     </ClInclude>
+    <ClInclude Include="src\AVA_API.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="library">

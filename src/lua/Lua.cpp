@@ -15,6 +15,7 @@ extern "C"
 #include "Lua.h"
 
 
+#include "../Draw.h"
 #include "../Main.h"
 #include "../MycParam.h"
 #include "../mod_loader.h"
@@ -24,6 +25,7 @@ extern "C"
 #include "../Entity.h"
 #include "../MyChar.h"
 #include "../Profile.h"
+#include "../TextScript.h"
 
 #include "../AutPI.h"
 
@@ -38,7 +40,7 @@ extern "C"
 
 #define gL GetLuaL()
 const char* LuaModName = "AVA";
-#define FUNCTION_TABLE_AVA_SIZE 8
+#define FUNCTION_TABLE_AVA_SIZE 10
 
 static int lua_KillPlayer(lua_State* L)
 {
@@ -115,6 +117,42 @@ static int lua_SetMimVal(lua_State* L)
 	return 0;
 }
 
+void SetImageFolder(const char* string)
+{
+	char path[ImgFolderSize];
+
+	if (path[0] == 0)
+		memset(TSC_IMG_Folder, 0, sizeof(TSC_IMG_Folder));
+	else
+	{
+		memcpy(TSC_IMG_Folder, path, sizeof(TSC_IMG_Folder));
+		strcpy(path, string);
+		strcat(TSC_IMG_Folder, "\\");
+	}
+}
+
+void SetImage(const char* string)
+{
+	char name[ImgNameSize];
+	memset(name, 0, sizeof(name));
+	strcpy(name, string);
+	LoadTSC_Image(name);
+}
+
+static int lua_IMGFolder(lua_State* L)
+{
+	const char* string = luaL_checkstring(L, 1);
+	SetImageFolder(string);
+	return 0;
+}
+
+static int lua_IMGSet(lua_State* L)
+{
+	const char* string = luaL_checkstring(L, 1);
+	SetImage(string);
+	return 0;
+}
+
 FUNCTION_TABLE AvaFunctionTable[FUNCTION_TABLE_AVA_SIZE] =
 {
 	{"KillPlayer", lua_KillPlayer},
@@ -124,7 +162,9 @@ FUNCTION_TABLE AvaFunctionTable[FUNCTION_TABLE_AVA_SIZE] =
 	{"OnIcewall", lua_GetIcewalled},
 	{"OnWall", lua_AvaOnWall},
 	{"GetAirJumps", lua_GetCurrentJumps},
-	{"LoadingSave", lua_GetLoadingSave}
+	{"LoadingSave", lua_GetLoadingSave},
+	{"SetIMG", lua_IMGSet},
+	{"SetIMGFolder", lua_IMGFolder}
 };
 
 void SetAVAGlobalString()
