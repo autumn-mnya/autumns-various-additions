@@ -143,10 +143,10 @@ void InitMod_TSCBkg()
 {
 	// Be able to inject code here? AutPI addition for later to consider
 	ModLoader_WriteCall((void*)0x402339, (void*)Replacement_InitBack_ReloadBitmap_File_Call); // Release Surface + MakeSurface_File instead of reloading bitmap
-	ModLoader_WriteCall((void*)0x40F881, (void*)Replacement_ModeOpening_PutStageBack_Call);
-	ModLoader_WriteCall((void*)0x40F8D1, (void*)Replacement_ModeOpening_PutFront_Call);
-	ModLoader_WriteCall((void*)0x410643, (void*)Replacement_ModeAction_PutStageBack_Call);
-	ModLoader_WriteCall((void*)0x4106C3, (void*)Replacement_ModeAction_PutFront_Call);
+	RegisterOpeningBelowPutStage_BackElement(PutBKGBack);
+	RegisterOpeningAbovePutStage_FrontElement(PutBKGFront);
+	RegisterBelowPutStage_BackElement(PutBKGBack);
+	RegisterAbovePutStage_FrontElement(PutBKGFront);
 	RegisterTransferStageInitElement(AutumnsVariousAdditionsTransferStageInit);
 	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
 

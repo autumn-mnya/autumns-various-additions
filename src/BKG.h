@@ -39,7 +39,5 @@ void BKG_SetBackground(int i, int b1, int b2, int b3, int b4, int r1, int r2, in
 void BKG_SetParameter(int w, int x, int y);
 void BKG_LoadBackground(char* file);
 void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg);
-void Replacement_ModeOpening_PutStageBack_Call(int frame_x, int frame_y);
-void Replacement_ModeOpening_PutFront_Call(int frame_x, int frame_y);
-void Replacement_ModeAction_PutStageBack_Call(int frame_x, int frame_y);
-void Replacement_ModeAction_PutFront_Call(int frame_x, int frame_y);
+void PutBKGBack();
+void PutBKGFront();

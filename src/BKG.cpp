@@ -488,26 +488,12 @@ void BKG_RenderBackgrounds(int CS_camera_x_pos, int CS_camera_y_pos, bool forg)
 	}
 }
 
-void Replacement_ModeOpening_PutStageBack_Call(int frame_x, int frame_y)
+void PutBKGBack()
 {
-	BKG_RenderBackgrounds(frame_x, frame_y, false);
-	PutStage_Back(frame_x, frame_y);
+	BKG_RenderBackgrounds(gFrame.x, gFrame.y, false);
 }
 
-void Replacement_ModeOpening_PutFront_Call(int frame_x, int frame_y)
+void PutBKGFront()
 {
-	BKG_RenderBackgrounds(frame_x, frame_y, true);
-	PutFront(frame_x, frame_y);
-}
-
-void Replacement_ModeAction_PutStageBack_Call(int frame_x, int frame_y)
-{
-	BKG_RenderBackgrounds(frame_x, frame_y, false);
-	PutStage_Back(frame_x, frame_y);
-}
-
-void Replacement_ModeAction_PutFront_Call(int frame_x, int frame_y)
-{
-	BKG_RenderBackgrounds(frame_x, frame_y, true);
-	PutFront(frame_x, frame_y);
+	BKG_RenderBackgrounds(gFrame.x, gFrame.y, true);
 }
