@@ -153,9 +153,6 @@ void InitMod(void)
 			strcpy(gPatchesPath, gDataPath);
 			strcat(gPatchesPath, "\\patches");
 		}
-
-		if (setting_external_stage_tbl_support == true)
-			InitMod_ExternalStageTable();
 	}
 
 	if (setting_collab_enabled)

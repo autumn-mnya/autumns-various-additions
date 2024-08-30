@@ -162,12 +162,6 @@ void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 	InitTSCVariables();
 	InitMyCharBoostFuel();
 
-	if (setting_external_stage_tbl_support == true)
-	{
-		if (stageTblPath[0] == 0)
-			LoadStageTable(NULL); // load default stage.tbl when running InitMyChar
-	}
-
 	if (setting_enable_collab_npc_table == true)
 	{
 		if (npcTblPath[0] == 0)

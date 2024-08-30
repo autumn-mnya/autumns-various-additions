@@ -41,7 +41,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	182
+[BL_TSC]	181
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -188,7 +188,6 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <SNJ	2	Fe--	Skipflag Not Jump	Opposite of <SKJ. Jump to event X if skipflag W is not set.	0	0	1	4	4	4	4
 <SRP	2	xy--	Set Respawn Point	Sets a respawn point at coordinates X:Y (Check TSC command txt).	0	0	1	4	4	4	4
 <SRQ	0	----	Set Respawn Quote	Sets a respawn point at the players coordinates (Check TSC command txt).	0	0	1	4	4	4	4
-<STT	0	----	STage Table	Load stage.tbl file from the data folder. Use $ at the end of the name to mark the end of the text input.	0	0	1	4	4	4	4
 <SWN	0	----	Set Window Name	Set the games Window Name in TSC. Use $ at the end of the window name to mark the end of the text input.	0	0	0	4	4	4	4
 <TA2	4	mexy	TrAnsport 2	Same as <TRA but respawn point (<SRP/<RSP) does not get set.	1	0	1	4	4	4	4
 <TM2	4	mexy	Transport Momentum 2	Same as <TRM but respawn point (<SRP/<RSP) does not get set.	1	0	1	4	4	4	4

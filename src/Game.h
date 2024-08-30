@@ -12,4 +12,3 @@ void AutumnsVariousAdditionsModeTitleInit();
 void AutumnsVariousAdditionsModeActionInit();
 void AutumnsVariousAdditionsModeActionAct();
 void Replacement_ModeAction_PutTextScript_Call();
-void AutumnsVariousAdditionsStageTableInit();

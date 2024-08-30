@@ -147,19 +147,12 @@ void InitMod_TSCBkg()
 	ModLoader_WriteCall((void*)0x40F8D1, (void*)Replacement_ModeOpening_PutFront_Call);
 	ModLoader_WriteCall((void*)0x410643, (void*)Replacement_ModeAction_PutStageBack_Call);
 	ModLoader_WriteCall((void*)0x4106C3, (void*)Replacement_ModeAction_PutFront_Call);
-	if (setting_external_stage_tbl_support == false) // Only replace this if stage.tbl support is disabled
-		RegisterTransferStageInitElement(AutumnsVariousAdditionsTransferStageInit);
+	RegisterTransferStageInitElement(AutumnsVariousAdditionsTransferStageInit);
 	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
 
 	// Get path of the Bkg folder
 	strcpy(gBkgPath, gDataPath);
 	strcat(gBkgPath, "\\bkg");
-}
-
-void InitMod_ExternalStageTable()
-{
-	RegisterPreModeElement(AutumnsVariousAdditionsStageTableInit);
-	ModLoader_WriteJump((void*)0x420BE0, (void*)Replacement_TransferStage); // TransferStage replaced for stage.tbl changing
 }
 
 void InitMod_TeleporterMenuFix()

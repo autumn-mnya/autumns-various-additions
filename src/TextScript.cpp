@@ -972,15 +972,6 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		Mod_WriteBoosterFuel();
 		gTS.p_read += 18;
 	}
-	else if (strncmp(where + 1, "STT", 3) == 0) // STage Table
-	{
-		gTS.p_read += 4;
-
-		memset(stageTblPath, 0, sizeof(stageTblPath));
-
-		GetTextScriptString(stageTblPath);
-		LoadStageTable(stageTblPath);
-	}
 	else if (strncmp(where + 1, "NPT", 3) == 0) // NPc Table
 	{
 		gTS.p_read += 4;

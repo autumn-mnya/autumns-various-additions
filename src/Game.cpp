@@ -63,8 +63,6 @@ void AutumnsVariousAdditionsModeOpeningInit()
 	Reset_CustomScriptNames(); // Reset custom script names in the opening
 	if (setting_enable_reset_pixtone_on_reset)
 		Reset_PixToneFolder(); // reset pixtone folder
-	if (setting_external_stage_tbl_support && setting_enable_reset_stagetbl_on_reset)
-		LoadStageTable(NULL); // reset stage table on modeopening
 	if (setting_enable_collab_npc_table && setting_enable_reset_npctbl_on_reset)
 		LoadCustomNpcTable(NULL); // reset npc table on modeopening
 	ResetTSC_Image();
@@ -111,9 +109,4 @@ void Replacement_ModeAction_PutTextScript_Call()
 	// Show <IMG infront of textbox when flag is set
 	if (GetNPCFlag(setting_show_img_on_top_flag))
 		PutBitmap3(&grcGame, 0, 0, &rcTSCImage, SURFACE_ID_TSC_IMG);
-}
-
-void AutumnsVariousAdditionsStageTableInit()
-{
-	LoadStageTable(NULL);
 }

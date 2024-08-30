@@ -49,7 +49,6 @@ bool setting_enable_savedata_code = true;
 bool setting_enable_teleporter_bugfix = true;
 
 bool setting_enable_reset_pixtone_on_reset = false;
-bool setting_enable_reset_stagetbl_on_reset = false;
 bool setting_enable_reset_npctbl_on_reset = false;
 
 bool setting_collab_enabled = false;
@@ -346,7 +345,6 @@ void InitMod_Settings()
 	// Major Settings //
 	////////////////////
 
-	setting_external_stage_tbl_support = ModLoader_GetSettingBool("Enable External Stage.tbl Files", false);
 	setting_enable_collab_npc_table = ModLoader_GetSettingBool("Enable Custom NPC Table Loading", false);
 
 	setting_enable_custom_armsitem_location = ModLoader_GetSettingBool("Enable Custom ArmsItem.tsc Locations", false); // <ASC - Armsitem SCript
@@ -360,7 +358,6 @@ void InitMod_Settings()
 	strcpy(setting_collab_name, settings_collab_name);
 	setting_enable_collab_flags = ModLoader_GetSettingBool("Collab Flags", false);
 	setting_enable_reset_pixtone_on_reset = ModLoader_GetSettingBool("Enable PixTone Reloading on Reset", false);
-	setting_enable_reset_stagetbl_on_reset = ModLoader_GetSettingBool("Enable stage.tbl Reloading on Reset", false);
 	setting_enable_reset_npctbl_on_reset = ModLoader_GetSettingBool("Enable npc.tbl Reloading on Reset", false);
 
 	char path2[MAX_PATH];
@@ -405,6 +402,8 @@ void Init_INI_main()
 	setting_enable_text_script_code = main.GetBoolean("Main", "Enable Custom TSC Code", true);
 	setting_enable_asm_loader = main.GetBoolean("Main", "Enable Custom Hex Patch Loader", true);
 	setting_enable_savedata_code = main.GetBoolean("Main", "Enable Custom Save Data Code", true);
+	setting_enable_collab_npc_table = main.GetBoolean("NpcTable", "Enable Custom NPC Table Loading", false);
+	setting_enable_reset_npctbl_on_reset = main.GetBoolean("NpcTable", "Enable npc.tbl Reloading on Reset", false);
 	pause_menu_ava_enabled = main.GetBoolean("Extra", "Enable AVA Pause Additions", false);
 }
 

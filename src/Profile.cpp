@@ -433,12 +433,6 @@ void SetProfileData()
 // 0x41D419
 void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z)
 {
-	if (setting_external_stage_tbl_support)
-	{
-		if (!(stageTblPath[0] == 0))
-			LoadStageTable(stageTblPath);
-	}
-
 	if (setting_enable_collab_npc_table)
 	{
 		if (!(npcTblPath[0] == 0))
