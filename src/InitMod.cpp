@@ -101,9 +101,9 @@ void InitMod_TileCollision()
 {
 	ModLoader_WriteJump((void*)0x402B30, (void*)Replacement_JudgeHitBulletBlock2);
 	ModLoader_WriteJump((void*)0x403740, (void*)Replacement_HitBulletMap);
-	ModLoader_WriteJump((void*)0x417E40, (void*)Replacement_HitMyCharMap);
-	ModLoader_WriteJump((void*)0x471160, (void*)Replacement_HitNpCharMap);
-	ModLoader_WriteJump((void*)0x473080, (void*)Replacement_HitBossMap);
+	RegisterActionElement(HitMyCharMapAVA);
+	RegisterActionElement(HitNpCharMapAVA);
+	RegisterActionElement(HitBossMapAVA);
 }
 
 void InitMod_SaveData()

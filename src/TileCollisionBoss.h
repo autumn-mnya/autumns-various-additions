@@ -4,4 +4,4 @@
 
 #include "cave_story.h"
 
-void Replacement_HitBossMap(void);
+void HitBossMapAVA();

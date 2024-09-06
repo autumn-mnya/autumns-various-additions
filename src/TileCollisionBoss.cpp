@@ -14,7 +14,7 @@
 #include "mod_loader.h"
 #include "cave_story.h"
 
-void Replacement_HitBossMap(void)
+void HitBossMapAVA()
 {
 	int x, y;
 	unsigned char atrb[16];
@@ -78,7 +78,6 @@ void Replacement_HitBossMap(void)
 			y = gBoss[b].y / 0x10 / 0x200;
 		}
 
-		gBoss[b].flag = 0;
 		for (j = 0; j < judg; ++j)
 		{
 			atrb[j] = GetAttribute(x + offx[j], y + offy[j]);
@@ -88,12 +87,6 @@ void Replacement_HitBossMap(void)
 			case 0x44:
 				if (gBoss[b].bits & NPC_IGNORE_TILE_44)
 					break;
-				// Fallthrough
-			case 0x05:
-			case 0x41:
-			case 0x43:
-				JadgeHitNpCharBlock(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
 			case 0x47:
 				JadgeHitNpCharBlock(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
@@ -114,30 +107,7 @@ void Replacement_HitBossMap(void)
 			case 0x4C:
 				JadgeHitNpCharBlock(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
-			case 0x50:
-				JudgeHitNpCharTriangleA(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x51:
-				JudgeHitNpCharTriangleB(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x52:
-				JudgeHitNpCharTriangleC(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x53:
-				JudgeHitNpCharTriangleD(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x54:
-				JudgeHitNpCharTriangleE(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x55:
-				JudgeHitNpCharTriangleF(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x56:
-				JudgeHitNpCharTriangleG(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x57:
-				JudgeHitNpCharTriangleH(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
+			// Ice slopes
 			case 0x58:
 				JudgeHitNpCharTriangleE(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
@@ -149,45 +119,6 @@ void Replacement_HitBossMap(void)
 				break;
 			case 0x5B:
 				JudgeHitNpCharTriangleH(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x02:
-			case 0x60:
-			case 0x61:
-			case 0x64:
-				JadgeHitNpCharBlock(&gBoss[b], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x70:
-				JudgeHitNpCharTriangleA(&gBoss[b], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x71:
-				JudgeHitNpCharTriangleB(&gBoss[b], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x72:
-				JudgeHitNpCharTriangleC(&gBoss[b], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x73:
-				JudgeHitNpCharTriangleD(&gBoss[b], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x74:
-				JudgeHitNpCharTriangleE(&gBoss[b], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x75:
-				JudgeHitNpCharTriangleF(&gBoss[b], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x76:
-				JudgeHitNpCharTriangleG(&gBoss[b], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gBoss[b], x + offx[j], y + offy[j]);
-				break;
-			case 0x77:
-				JudgeHitNpCharTriangleH(&gBoss[b], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gBoss[b], x + offx[j], y + offy[j]);
 				break;
 			}
 		}

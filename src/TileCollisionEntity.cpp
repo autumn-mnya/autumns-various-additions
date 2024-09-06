@@ -109,7 +109,7 @@ void JudgeHitNpCharJumpThruSidewayLeft(NPCHAR* npc, int x, int y)
 	npc->flag |= hit;
 }
 
-void Replacement_HitNpCharMap(void)
+void HitNpCharMapAVA()
 {
 	int x, y;
 	int judg;
@@ -160,8 +160,6 @@ void Replacement_HitNpCharMap(void)
 			y = gNPC[i].y / 0x10 / 0x200;
 		}
 
-		gNPC[i].flag = 0;
-
 		for (j = 0; j < judg; ++j)
 		{
 			switch (GetAttribute(x + offx[j], y + offy[j]))
@@ -171,14 +169,8 @@ void Replacement_HitNpCharMap(void)
 				if (gNPC[i].bits & NPC_IGNORE_TILE_44)
 					break;
 				// Fallthrough
-			// Block
-			case 0x03:
-			case 0x05:
-			case 0x41:
-			case 0x43:
-				JadgeHitNpCharBlock(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
 
+			// Bounce Block
 			case 0x47:
 				JadgeHitNpCharBlock(&gNPC[i], x + offx[j], y + offy[j]);
 				break;
@@ -205,39 +197,6 @@ void Replacement_HitNpCharMap(void)
 				JadgeHitNpCharBlock(&gNPC[i], x + offx[j], y + offy[j]);
 				break;
 
-				// Slopes
-			case 0x50:
-				JudgeHitNpCharTriangleA(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x51:
-				JudgeHitNpCharTriangleB(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x52:
-				JudgeHitNpCharTriangleC(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x53:
-				JudgeHitNpCharTriangleD(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x54:
-				JudgeHitNpCharTriangleE(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x55:
-				JudgeHitNpCharTriangleF(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x56:
-				JudgeHitNpCharTriangleG(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x57:
-				JudgeHitNpCharTriangleH(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
 			// Ice Slopes
 			case 0x58:
 				JudgeHitNpCharTriangleE(&gNPC[i], x + offx[j], y + offy[j]);
@@ -254,114 +213,7 @@ void Replacement_HitNpCharMap(void)
 			case 0x5B:
 				JudgeHitNpCharTriangleH(&gNPC[i], x + offx[j], y + offy[j]);
 				break;
-
-				// Water
-			case 0x02:
-			case 0x60:
-			case 0x62:
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-				// Water block
-			case 0x04:
-			case 0x61:
-			case 0x64:
-				JadgeHitNpCharBlock(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x65:
-				JudgeHitNpCharJumpThru(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x66:
-				JudgeHitNpCharJumpThruUpsideDown(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x67:
-				JudgeHitNpCharJumpThruSidewayRight(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x68:
-				JudgeHitNpCharJumpThruSidewayLeft(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-				// Water slopes
-			case 0x70:
-				JudgeHitNpCharTriangleA(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x71:
-				JudgeHitNpCharTriangleB(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x72:
-				JudgeHitNpCharTriangleC(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x73:
-				JudgeHitNpCharTriangleD(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x74:
-				JudgeHitNpCharTriangleE(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x75:
-				JudgeHitNpCharTriangleF(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x76:
-				JudgeHitNpCharTriangleG(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0x77:
-				JudgeHitNpCharTriangleH(&gNPC[i], x + offx[j], y + offy[j]);
-				JudgeHitNpCharWater(&gNPC[i], x + offx[j], y + offy[j]);
-				break;
-
-			case 0xA0:
-				gNPC[i].flag |= 0x100;
-				// Fallthrough
-			case 0x80:
-				gNPC[i].flag |= 0x1000;
-				break;
-
-			case 0xA1:
-				gNPC[i].flag |= 0x100;
-				// Fallthrough
-			case 0x81:
-				gNPC[i].flag |= 0x2000;
-				break;
-
-			case 0xA2:
-				gNPC[i].flag |= 0x100;
-				// Fallthrough
-			case 0x82:
-				gNPC[i].flag |= 0x4000;
-				break;
-
-			case 0xA3:
-				gNPC[i].flag |= 0x100;
-				// Fallthrough
-			case 0x83:
-				gNPC[i].flag |= 0x8000;
-				break;
 			}
-
-			if (gNPC[i].y > gWaterY + 0x800)
-				gNPC[i].flag |= 0x100;
 		}
 	}
 }
