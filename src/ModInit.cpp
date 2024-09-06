@@ -131,9 +131,6 @@ char init_surfaceName_27_Face[MaxSurfaceName] = "Face";
 char init_surfaceName_38_AutumnItems[MaxSurfaceName] = "Autumn";
 char init_surfaceName_39_AutumnCharacters[MaxSurfaceName] = "Npc\\NpcAutumnChar";
 
-// Collab Name
-char init_collab_name[CollabNameMaxPath] = "null";
-
 // These functions set "init" values so that we can know what set variables were on boot of the game.
 
 void InitMod_PreLaunch_CollectablesEnabled()
@@ -241,11 +238,6 @@ void InitMod_PreLaunch_GenericLoad()
 	strcpy(init_surfaceName_39_AutumnCharacters, surfaceName_39_AutumnCharacters);
 }
 
-void InitMod_PreLaunch_CollabName()
-{
-	strcpy(init_collab_name, setting_collab_name);
-}
-
 // Functions below here reset the set values to the values they were on boot of the game
 
 void InitCollectablesEnabled()
@@ -350,9 +342,4 @@ void InitGameSurfaces()
 	strcpy(surfaceName_27_Face, init_surfaceName_27_Face);
 	strcpy(surfaceName_38_AutumnItems, init_surfaceName_38_AutumnItems);
 	strcpy(surfaceName_39_AutumnCharacters, init_surfaceName_39_AutumnCharacters);
-}
-
-void InitCollabName()
-{
-	strcpy(setting_collab_name, init_collab_name);
 }

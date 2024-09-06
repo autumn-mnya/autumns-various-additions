@@ -41,7 +41,7 @@ Autumn's Various Additions version of Booster's Lab also includes other custom T
 They all come in their own alphabetically sorted sections one after another, anything that isn't the Autumns Various Additions dll will have a note telling you what it's from. (Example: [Custom DLL], [Custom ASM Hack])
 
 NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1!
-[BL_TSC]	181
+[BL_TSC]	175
 <AE+	0	----	Arms Energy +	Refill all weapon ammo.	0	0	1	4	4	4	4
 <AM+	2	aA--	ArMs +	Give weapon W with X ammo. Use 0000 for infinite ammo.	0	0	1	4	4	4	4
 <AM-	1	a---	ArMs -	Remove weapon W.	0	0	1	4	4	4	4
@@ -205,12 +205,6 @@ NOTE: If you add a command, make sure to increase the number next to BL_TSC by 1
 <VND	3	##v-	Variable raNDom	Generates a random number between W and X. Sets variable Y to the result number (Check TSC command txt).	0	0	1	4	4	4	4
 <VIJ	3	v#e-	Variable Increment Jump	Increments variable W by 1. If W is greater than or equal to X, set variable W to 0 and jump to event Y (Check TSC command txt).	0	0	1	4	4	4	4
 <WCL	0	----	Write CaLl	Replace function call A with function call B (Check TSC command txt).	0	0	1	4	4	4	4
-<CFE	0	----	Collab Flags Enable	[COLLAB MODE] Enable the Collab Flag array (Check TSC command txt).	0	0	1	4	4	4	4
-<CFD	0	----	Collab Flags Disable	[COLLAB MODE] Disable the Collab Flag array (Check TSC command txt).	0	0	1	4	4	4	4
-<CLN	0	----	CoLlab Name	[COLLAB MODE] Set the Collab Name. Use $ at the end of the name to mark the end of the text input.	0	0	0	4	4	4	4
-<ICD	0	----	Initialize Collab Data	[COLLAB MODE] Reset certain structs in the game (Check TSC command txt).	0	0	1	4	4	4	4
-<ICF	0	----	Initialize Collab Flags	[COLLAB MODE] Reset the Collab Flag array (Check TSC command txt).	0	0	1	4	4	4	4
-<ICN	0	----	Initialize Collab Name	[COLLAB MODE] Reset the Collab Name to the one found in collab.ini (Check TSC command txt).	0	0	1	4	4	4	4
 <ROP	0	----	Rta pOP	"Pop" the lowest event in a stack of events --> Jumping to that event.	0	0	1	4	4	4	4
 <RS2	4	mexy	Rta puSh 2	"Push" an <TRA event to a stack of events.	0	0	1	4	4	4	4
 <RSC	0	----	Rta Stack Clear	Clear the "stack" of events.	0	0	1	4	4	4	4

@@ -155,9 +155,6 @@ void InitMod(void)
 		}
 	}
 
-	if (setting_collab_enabled)
-		InitMod_PreLaunch_CollabName();
-
 	if (setting_enable_ui)
 		InitMod_GameUI();
 

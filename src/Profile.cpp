@@ -12,7 +12,6 @@
 #include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
-#include "CollabFlag.h"
 #include "Draw.h"
 #include "EntityLoad.h"
 #include "GenericLoad.h"
@@ -22,7 +21,7 @@
 #include "Stage.h"
 #include "SurfaceDefines.h"
 #include "TextScript.h"
-#include "TextScriptCollabLoad.h"
+#include "TextScriptCustomLoad.h"
 #include "TileCollisionMyChar.h"
 
 const char* const gAutumnProfileCode = "AutumnMnyaHazel";
@@ -95,8 +94,7 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	profile.mim_num = mim_num;
 	profile.booster_08_fuel = booster_08_fuel;
 	profile.booster_20_fuel = booster_20_fuel;
-	// Set Collab Tables
-	memcpy(profile.stage_tbl, stageTblPath, sizeof(profile.stage_tbl));
+	// Set Custom Tables
 	memcpy(profile.npc_tbl, npcTblPath, sizeof(profile.npc_tbl));
 	// Set <CSF surfaces
 	memcpy(profile.surfaceName_0_Title, surfaceName_0_Title, sizeof(profile.surfaceName_0_Title));
@@ -123,11 +121,6 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	memcpy(profile.head_tsc, CustomHeadTSCLocation, sizeof(profile.head_tsc));
 	// PixTone folder
 	memcpy(profile.pixtoneFolder, global_pixtoneFolder, sizeof(profile.pixtoneFolder));
-	// Collab Flags
-	profile.enable_collab_flags = enable_collab_flags;
-	memcpy(profile.collab_flags, gCollabFlag, sizeof(profile.collab_flags));
-	// Collab Name
-	memcpy(profile.CollabName, setting_collab_name, sizeof(profile.CollabName));
 	// Version 1.0.7
 	profile.phy_physics_boost20_accel_up = setting_physics_boost20_accel_up;
 	profile.phy_physics_boost20_accel_left = setting_physics_boost20_accel_left;
@@ -248,8 +241,7 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		// read savefile booster fuel values
 		Freeware_fread(&profile.booster_08_fuel, 4, 1, fp);
 		Freeware_fread(&profile.booster_20_fuel, 4, 1, fp);
-		// read savefile collab tables
-		Freeware_fread(&profile.stage_tbl, StageTblMaxPath, 1, fp);
+		// read savefile custom tables
 		Freeware_fread(&profile.npc_tbl, NpcTblMaxPath, 1, fp);
 		// read savefile <CSF names
 		Freeware_fread(&profile.surfaceName_0_Title, MaxSurfaceName, 1, fp);
@@ -275,11 +267,6 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		Freeware_fread(&profile.head_tsc, CustomTscMaxPath, 1, fp);
 		// read savefile PixTone path
 		Freeware_fread(&profile.pixtoneFolder, MaxPixTonePath, 1, fp);
-		// read savefile Collab Flags
-		Freeware_fread(&profile.enable_collab_flags, 4, 1, fp);
-		Freeware_fread(profile.collab_flags, 1000, 1, fp);
-		// read savefile Collab Name
-		Freeware_fread(&profile.CollabName, CollabNameMaxPath, 1, fp);
 		// read version 1.0.7 physics
 		Freeware_fread(&profile.phy_physics_boost20_accel_up, 4, 1, fp);
 		Freeware_fread(&profile.phy_physics_boost20_accel_left, 4, 1, fp);
@@ -307,8 +294,7 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 		strcpy(TSC_IMG_Folder, profile.imgFolder);
 		strcpy(bkgTxT_Global, profile.bkgTxT);
 
-		// Collab Tables
-		strcpy(stageTblPath, profile.stage_tbl);
+		// custom npc table
 		strcpy(npcTblPath, profile.npc_tbl);
 
 		// <CSF surface names
@@ -337,9 +323,6 @@ void Replacement_LoadProfile_fclose_Call(FILE* fp)
 
 		// PixTone path
 		strcpy(global_pixtoneFolder, profile.pixtoneFolder);
-
-		// Collab Name
-		strcpy(setting_collab_name, profile.CollabName);
 	}
 }
 
@@ -407,9 +390,6 @@ void SetProfileData()
 		booster_08_fuel = profile.booster_08_fuel;
 		booster_20_fuel = profile.booster_20_fuel;
 		Mod_WriteBoosterFuel();
-		// Collab Flags
-		enable_collab_flags = profile.enable_collab_flags;
-		memcpy(gCollabFlag, profile.collab_flags, sizeof(gCollabFlag));
 		// Version 1.0.7
 		setting_physics_boost20_accel_up = profile.phy_physics_boost20_accel_up;
 		setting_physics_boost20_accel_left = profile.phy_physics_boost20_accel_left;
@@ -433,7 +413,7 @@ void SetProfileData()
 // 0x41D419
 void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z)
 {
-	if (setting_enable_collab_npc_table)
+	if (setting_enable_custom_npc_table)
 	{
 		if (!(npcTblPath[0] == 0))
 			LoadCustomNpcTable(npcTblPath);
@@ -466,11 +446,10 @@ void Replacement_InitializeGame_TransferStage_Call(int w, int x, int y, int z)
 
 void Replacement_InitializeGame_ClearArmsData_Call()
 {
-	InitCollabName(); // Init collab name to the one found in collab.ini
 	ResetCustomGenericData(); // Reload Surfaces that were changed if they dont match default surface names
 	Reset_CustomScriptNames(); // Reset custom script names on new game
 	Reset_PixToneFolder(); // reset pixtone folder
-	ResetCollabPaths();
+	ResetTablePaths();
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();
 	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));

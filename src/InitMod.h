@@ -15,7 +15,6 @@ void InitMod_SaveData();
 void InitMod_GameUI();
 void InitMod_TSCImage();
 void InitMod_TSCBkg();
-void InitMod_ExternalStageTable();
 void InitMod_TeleporterMenuFix();
 void InitMod_DisableWindowRect();
 void InitMod_DisableErrorLog();

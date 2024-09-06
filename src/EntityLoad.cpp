@@ -17,7 +17,7 @@
 
 // This file loads certain things relating to entities, but does not hold entity code itself.
 
-bool setting_enable_collab_npc_table = false;
+bool setting_enable_custom_npc_table;
 
 CNPCHAR gCustomNPC[NPC_MAX];
 
@@ -414,20 +414,13 @@ void BossExplosionAtNpc(int event)
 	}
 }
 
-// Collab
-
 void LoadCustomNpcTable(const char* name)
 {
 	char path[MAX_PATH];
 
 	// Try to load npc.tbl
 	if (name != NULL)
-	{
-		if (setting_collab_enabled == true)
-			sprintf(path, "%s\\%s\\%s%s", gDataPath, setting_collab_name, name, ".npc.tbl");
-		else
-			sprintf(path, "%s\\%s%s", gDataPath, name, ".npc.tbl");
-	}
+		sprintf(path, "%s\\%s%s", gDataPath, name, ".npc.tbl");
 	else
 		sprintf(path, "%s\\%s", gDataPath, gDefaultNpcTableName);
 

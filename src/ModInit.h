@@ -23,17 +23,13 @@ extern char init_surfaceName_27_Face[MaxSurfaceName];
 extern char init_surfaceName_38_AutumnItems[MaxSurfaceName];
 extern char init_surfaceName_39_AutumnCharacters[MaxSurfaceName];
 
-extern char init_collab_name[CollabNameMaxPath];
-
 void InitMod_PreLaunch_CollectablesEnabled();
 void InitMod_PreLaunch_CollectablesPositioning();
 void InitMod_PreLaunch_PhysicsSettings();
 void InitMod_PreLaunch_BoosterFuel();
 void InitMod_PreLaunch_GenericLoad();
-void InitMod_PreLaunch_CollabName();
 void InitCollectablesEnabled();
 void InitCollectablesPositioning();
 void InitMyCharPhysics();
 void InitMyCharBoostFuel();
 void InitGameSurfaces();
-void InitCollabName();

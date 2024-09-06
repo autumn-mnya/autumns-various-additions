@@ -10,7 +10,7 @@
 #include "Profile.h"
 #include "SurfaceDefines.h"
 #include "TextScript.h"
-#include "TextScriptCollabLoad.h"
+#include "TextScriptCustomLoad.h"
 #include "TextScriptVAR.h"
 
 #define ProfileCodeSize 16
@@ -79,8 +79,7 @@ typedef struct CustomProfileData
 	// Booster Fuel
 	int booster_08_fuel;
 	int booster_20_fuel;
-	// Collab Tables
-	char stage_tbl[StageTblMaxPath];
+	// custom npc table
 	char npc_tbl[NpcTblMaxPath];
 	// Surface Names
 	char surfaceName_0_Title[MaxSurfaceName];
@@ -106,11 +105,6 @@ typedef struct CustomProfileData
 	char head_tsc[CustomTscMaxPath];
 	// PixTone folder path
 	char pixtoneFolder[MaxPixTonePath];
-	// Collab Flags
-	int enable_collab_flags;
-	unsigned char collab_flags[1000];
-	// Collab Name
-	char CollabName[CollabNameMaxPath];
 	// Version 1.0.7 Additions
 	int phy_physics_boost20_accel_up;
 	int phy_physics_boost20_accel_left;

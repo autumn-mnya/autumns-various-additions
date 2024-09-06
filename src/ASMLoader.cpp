@@ -32,11 +32,7 @@ std::vector<PatchData> patches;
 void ApplyPatches(const char* patchFile)
 {
     char path[MAX_PATH];
-
-    if (setting_collab_enabled)
-        sprintf(path, "%s\\%s\\%s\\%s.txt", gDataPath, setting_collab_name, "patches", patchFile); // Load from data/CollabName/patches
-    else
-        sprintf(path, "%s\\%s.txt", gPatchesPath, patchFile);
+    sprintf(path, "%s\\%s.txt", gPatchesPath, patchFile);
 
     FILE* file = fopen(path, "r");
     if (!file) {

@@ -17,8 +17,6 @@
 #include "TextScript.h"
 #include "TextScriptVAR.h"
 
-#include "XMLLoad.h"
-
 #include "AutPI.h"
 
 bool setting_enable_life_drain = false;

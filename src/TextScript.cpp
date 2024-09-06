@@ -18,7 +18,6 @@
 #include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
-#include "CollabFlag.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
@@ -32,7 +31,7 @@
 #include "Respawn.h"
 #include "Stage.h"
 #include "SurfaceDefines.h"
-#include "TextScriptCollabLoad.h"
+#include "TextScriptCustomLoad.h"
 #include "TextScriptVAR.h"
 
 #include "DialogueChoice.h"
@@ -61,8 +60,7 @@ int booster_20_fuel = 50;
 // Text for different things
 char TSC_IMG_Folder[ImgFolderSize];
 
-// Stage/Npc table paths
-char stageTblPath[StageTblMaxPath];
+// Npc table path
 char npcTblPath[NpcTblMaxPath];
 
 int inventoryBackupEvent = 0;
@@ -1017,39 +1015,6 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 		ResetCustomGenericData();
 		gTS.p_read += 4;
 	}
-	else if (strncmp(where + 1, "CFE", 3) == 0) // Collab Flag Enable
-	{
-		enable_collab_flags = 1;
-		gTS.p_read += 4;
-	}
-	else if (strncmp(where + 1, "CFD", 3) == 0) // Collab Flag Disable
-	{
-		enable_collab_flags = 0;
-		gTS.p_read += 4;
-	}
-	else if (strncmp(where + 1, "ICF", 3) == 0) // Init Collab Flag
-	{
-		InitCollabFlags();
-		gTS.p_read += 4;
-	}
-	else if (strncmp(where + 1, "ICD", 3) == 0) // Init Collab Data
-	{
-		InitMyCollabData();
-		gTS.p_read += 4;
-	}
-	else if (strncmp(where + 1, "CLN", 3) == 0) // CoLlab Name
-	{
-		char collabName[CollabNameMaxPath];
-		gTS.p_read += 4;
-		memset(collabName, 0, sizeof(collabName));
-		GetTextScriptString(collabName);
-		strcpy(setting_collab_name, collabName);
-	}
-	else if (strncmp(where + 1, "ICN", 3) == 0) // Init Collab Name
-	{
-		InitCollabName();
-		gTS.p_read += 4;
-	}
 	else if (strncmp(where + 1, "PFJ", 3) == 0) // ProFile Jump
 	{
 		w = GetTextScriptNo(gTS.p_read + 4);
@@ -1236,9 +1201,8 @@ static int CustomTSC_MIM(MLHookCPURegisters* regs, void* ud)
 	return 1;
 }
 
-void ResetCollabPaths()
+void ResetTablePaths()
 {
-	memset(stageTblPath, 0, sizeof(stageTblPath));
 	memset(npcTblPath, 0, sizeof(npcTblPath));
 }
 
@@ -1250,12 +1214,10 @@ void Replacement_EncryptionBinaryData2(unsigned char* pData, long size)
 
 void InitMod_TSC()
 {
-	// Collab Tables
+	// Tables
 	ModLoader_WriteCall((void*)0x41D407, (void*)Replacement_LoadProfile_InitMyChar_Call);
 	// Script Replacements (Head.tsc / ArmsItem.tsc)
 	InitMod_ScriptReplacements();
-	// Collab Flags loading
-	InitMod_CollabFlagLoading();
 	// Respawning the player
 	ModLoader_WriteCall((void*)0x41D419, (void*)Replacement_LoadProfile_TransferStage_Call);
 	ModLoader_WriteCall((void*)0x41D59A, (void*)Replacement_InitializeGame_TransferStage_Call);

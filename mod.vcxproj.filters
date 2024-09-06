@@ -4,7 +4,6 @@
     <ClCompile Include="src\ASMLoader.cpp" />
     <ClCompile Include="src\ASMPatches.cpp" />
     <ClCompile Include="src\BKG.cpp" />
-    <ClCompile Include="src\CollabFlag.cpp" />
     <ClCompile Include="src\Collectables.cpp" />
     <ClCompile Include="src\Draw.cpp" />
     <ClCompile Include="src\Entity.cpp" />
@@ -26,14 +25,13 @@
     <ClCompile Include="src\Stage.cpp" />
     <ClCompile Include="src\SurfaceDefines.cpp" />
     <ClCompile Include="src\TextScript.cpp" />
-    <ClCompile Include="src\TextScriptCollabLoad.cpp" />
+    <ClCompile Include="src\TextScriptCustomLoad.cpp" />
     <ClCompile Include="src\TextScriptVAR.cpp" />
     <ClCompile Include="src\TileCollisionBoss.cpp" />
     <ClCompile Include="src\TileCollisionBullet.cpp" />
     <ClCompile Include="src\TileCollisionMyChar.cpp" />
     <ClCompile Include="src\TileCollisionEntity.cpp" />
     <ClCompile Include="src\\mod_loader.cpp" />
-    <ClCompile Include="src\XMLLoad.cpp" />
     <ClCompile Include="src\DialogueChoice.cpp" />
     <ClCompile Include="src\AutPI.cpp" />
     <ClCompile Include="src\ModInit.cpp" />
@@ -83,7 +81,6 @@
     <ClInclude Include="src\ASMPatches.h" />
     <ClInclude Include="src\BKG.h" />
     <ClInclude Include="src\cave_story.h" />
-    <ClInclude Include="src\CollabFlag.h" />
     <ClInclude Include="src\Collectables.h" />
     <ClInclude Include="src\Draw.h" />
     <ClInclude Include="src\Entity.h" />
@@ -105,7 +102,7 @@
     <ClInclude Include="src\Stage.h" />
     <ClInclude Include="src\SurfaceDefines.h" />
     <ClInclude Include="src\TextScript.h" />
-    <ClInclude Include="src\TextScriptCollabLoad.h" />
+    <ClInclude Include="src\TextScriptCustomLoad.h" />
     <ClInclude Include="src\TextScriptVAR.h" />
     <ClInclude Include="src\TileCollisionBoss.h" />
     <ClInclude Include="src\TileCollisionBullet.h" />
@@ -113,7 +110,6 @@
     <ClInclude Include="src\TileCollisionEntity.h" />
     <ClInclude Include="src\\mod_loader.h" />
     <ClInclude Include="src\\mod_loader_hooks.h" />
-    <ClInclude Include="src\XMLLoad.h" />
     <ClInclude Include="src\DialogueChoice.h" />
     <ClInclude Include="src\AutPI.h" />
     <ClInclude Include="src\ModInit.h" />

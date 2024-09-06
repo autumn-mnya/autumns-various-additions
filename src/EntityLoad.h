@@ -3,7 +3,7 @@
 #include "cave_story.h"
 #include "Entity.h"
 
-extern bool setting_enable_collab_npc_table;
+extern bool setting_enable_custom_npc_table;
 
 struct CNPCHAR
 {
@@ -25,5 +25,5 @@ void Replacement_HitMyCharNpChar(void);
 void Replacement_SetExpObjects(int x, int y, int exp);
 // Custom
 void BossExplosionAtNpc(int event);
-// Collab npc.tbl functionality
+// Custom npc.tbl functionality
 void LoadCustomNpcTable(const char* name);

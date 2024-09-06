@@ -293,10 +293,7 @@ void BKG_LoadBackground(char* file)
 	char txtPath[MAX_PATH];
 
 	// Construct paths for YAML and TXT files
-	if (setting_collab_enabled == true)
-		sprintf(path, "%s\\%s\\%s", gDataPath, setting_collab_name, "bkg");
-	else
-		sprintf(path, "%s", gBkgPath);
+	sprintf(path, "%s", gBkgPath);
 
 	sprintf(yamlPath, "%s\\%s.yaml", path, file);
 	sprintf(txtPath, "%s\\%s.txt", path, file);

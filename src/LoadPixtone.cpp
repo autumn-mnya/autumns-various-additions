@@ -130,20 +130,10 @@ void LoadUserCustomPixtoneData(const char* folder)
 {
 	char path[MAX_PATH];
 
-	if (setting_collab_enabled == true) // If a collab is enabled we go into the CollabName folder first
-	{
-		if (folder != NULL)
-			sprintf(path, "%s\\%s\\%s", gDataPath, setting_collab_name, folder);
-		else
-			sprintf(path, "%s\\%s", gDataPath, default_pixtoneFolder);
-	}
+	if (folder != NULL)
+		sprintf(path, "%s\\%s", gDataPath, folder);
 	else
-	{
-		if (folder != NULL)
-			sprintf(path, "%s\\%s", gDataPath, folder);
-		else
-			sprintf(path, "%s\\%s", gDataPath, default_pixtoneFolder);
-	}
+		sprintf(path, "%s\\%s", gDataPath, default_pixtoneFolder);
 
 	std::vector<CustomPtpData> customPtpData;  // Vector to hold the ID and file path
 

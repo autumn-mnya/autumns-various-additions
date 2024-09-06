@@ -20,10 +20,9 @@
 #include "Respawn.h"
 #include "Stage.h"
 #include "TextScript.h"
-#include "TextScriptCollabLoad.h"
+#include "TextScriptCustomLoad.h"
 
 #include "DialogueChoice.h"
-#include "XMLLoad.h"
 
 #include "AutPI.h"
 
@@ -63,7 +62,7 @@ void AutumnsVariousAdditionsModeOpeningInit()
 	Reset_CustomScriptNames(); // Reset custom script names in the opening
 	if (setting_enable_reset_pixtone_on_reset)
 		Reset_PixToneFolder(); // reset pixtone folder
-	if (setting_enable_collab_npc_table && setting_enable_reset_npctbl_on_reset)
+	if (setting_enable_custom_npc_table && setting_enable_reset_npctbl_on_reset)
 		LoadCustomNpcTable(NULL); // reset npc table on modeopening
 	ResetTSC_Image();
 	BKG_ResetBackgrounds();
@@ -80,8 +79,6 @@ void AutumnsVariousAdditionsModeTitleInit()
 
 void AutumnsVariousAdditionsModeActionInit() // Use this to load generic data
 {
-	// XML data
-	loadedData.isLoaded = false; // reset this to false on new game
 	InitGameSurfaces(); // init surfaces
 	LoadCustomGenericData(); // load surfaces
 	ClearDialogueChoiceData();  // clear dialogue choices on reset

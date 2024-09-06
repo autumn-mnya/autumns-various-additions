@@ -162,7 +162,7 @@ void Replacement_InitMyChar_memset_Call(void* dst, int val, size_t size)
 	InitTSCVariables();
 	InitMyCharBoostFuel();
 
-	if (setting_enable_collab_npc_table == true)
+	if (setting_enable_custom_npc_table == true)
 	{
 		if (npcTblPath[0] == 0)
 			LoadCustomNpcTable(NULL); // load default npc.tbl when running InitMyChar
@@ -191,15 +191,6 @@ void InitMyChar_Original(void)
 	gMC.life = 3;
 	gMC.max_life = 3;
 	gMC.unit = 0;
-}
-
-void InitMyCollabData()
-{
-	InitMyChar_Original();
-	InitCollectablesPositioning();
-	InitCollectablesEnabled();
-	InitTSCVariables();
-	InitMyCharBoostFuel();
 }
 
 int GetPlayerPhysicsValue(int x)

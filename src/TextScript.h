@@ -14,7 +14,6 @@
 #define ImgFolderSize 48
 #define ImgNameSize 0x32
 
-#define StageTblMaxPath 120
 #define NpcTblMaxPath 120
 
 /// Event queue
@@ -85,10 +84,9 @@ extern char eventName8[MAX_PATH];
 
 extern char TSC_IMG_Folder[ImgFolderSize];
 
-// Custom stage/npc tbl paths
-extern char stageTblPath[StageTblMaxPath];
+// Custom npc tbl path
 extern char npcTblPath[NpcTblMaxPath];
 
-void ResetCollabPaths();
+void ResetTablePaths();
 void Mod_WriteBoosterFuel();
 void InitMod_TSC();

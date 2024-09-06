@@ -468,34 +468,6 @@ Arguments: 2 [<WCLstring$cstring2$] [address_a_string$address_b_string$]
 Example: <WCL423DE9$401000$
 ( The above will replace <CSS with the "ClearArmsData" function )
 
-# Collab Specific #
-
-- <CFE - Collab Flag Enable
-Enable the usage of the Collab Flag array instead of the normal flag array.
-Arguments: 0 [<CFE]
-
-- <CFD - Collab Flag Disable
-Disable the usage of the Collab Flag array.
-Arguments: 0 [<CFD]
-
-- <CLN - CoLlab Name
-Set the Collab Name to a text string -- End the text string with a $ so the game knows to stop reading the text.
-Arguments: 1 [<CLNstring$] [collab_name$]
-Example: <CLNCollab\Beginner$
-( The above will set the Collab Directory to "data\Collab\Beginner" !)
-
-- <ICF - Init Collab Flags
-Reset Collab Flag array back to default settings.
-Arguments: 0 [<ICF]
-
-- <ICD - Init Collab Data
-Reset MyChar, Collectables Position, Collectables Enabled, and Booster Fuel back to config / freeware stats.
-Arguments: 0 [<ICD]
-
-- <ICN - Init Collab Name
-Reset Collab Name back to the one in collab.ini.
-Arguments: 0 [<ICN]
-
 # Random Time Attack Commands #
 
 - <RSH - Rta puSH
