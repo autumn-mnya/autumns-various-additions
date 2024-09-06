@@ -8,6 +8,8 @@ autumns_various_additions.vcxproj.user
 *.exp
 *.lib
 *.pdb
+/CaveStory/savedata
+!CaveStory/savedata/mod_savedata_goes_here
 
 BoostLab/editor.rect
 CaveStory/fps
