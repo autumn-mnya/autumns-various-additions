@@ -159,8 +159,6 @@ CustomProfileData setDataProfile;
 
 void LoadAvaFile()
 {
-	isLoadingSave = true;
-
 	FILE* fp;
 	CustomProfileData profile;
 	char path[MAX_PATH];
@@ -214,6 +212,8 @@ void LoadAvaFile()
 	strcpy(global_pixtoneFolder, profile.pixtoneFolder);
 
 	setDataProfile = profile;
+
+	isLoadingSave = true;
 
 	return;
 }
@@ -329,7 +329,9 @@ void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z)
 
 void AvaLoadProfileInit()
 {
-	SetProfileData(); // Set profile data
+	if (isLoadingSave == true)
+		SetProfileData(); // Set profile data
+
 	Stage_SetRespawn(); // Set respawn point (this should actually work now?)
 
 	ResetTSC_Image();
