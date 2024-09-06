@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="src\ASMLoader.cpp" />
     <ClCompile Include="src\ASMPatches.cpp" />
-    <ClCompile Include="src\BKG.cpp" />
     <ClCompile Include="src\Collectables.cpp" />
     <ClCompile Include="src\Draw.cpp" />
     <ClCompile Include="src\Entity.cpp" />
@@ -71,15 +70,11 @@
     </ClCompile>
     <ClCompile Include="src\Config.cpp" />
     <ClCompile Include="src\API_Pause.cpp" />
-    <ClCompile Include="src\lua\Lua_BKG.cpp">
-      <Filter>lua</Filter>
-    </ClCompile>
     <ClCompile Include="src\AVA_API.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ASMLoader.h" />
     <ClInclude Include="src\ASMPatches.h" />
-    <ClInclude Include="src\BKG.h" />
     <ClInclude Include="src\cave_story.h" />
     <ClInclude Include="src\Collectables.h" />
     <ClInclude Include="src\Draw.h" />
@@ -149,9 +144,6 @@
     </ClInclude>
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\API_Pause.h" />
-    <ClInclude Include="src\lua\Lua_BKG.h">
-      <Filter>lua</Filter>
-    </ClInclude>
     <ClInclude Include="src\AVA_API.h" />
   </ItemGroup>
   <ItemGroup>

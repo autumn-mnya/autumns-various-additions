@@ -10,7 +10,6 @@
 
 #include "main.h"
 #include "mod_loader.h"
-#include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
 #include "MyChar.h"
@@ -167,7 +166,7 @@ int GetVariable(int id)
             return current_jumps;
 
         case 549:
-            return numBks;
+            return 0; // Used to be numBKs from BKG
 
         case 550:
             return lock_direction;
@@ -383,7 +382,6 @@ void SetVariable(int id, int value)
             break;
 
         case 549:
-            numBks = value;
             break;
 
         case 550:

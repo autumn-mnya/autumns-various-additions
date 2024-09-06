@@ -2,7 +2,6 @@
 
 #include <Windows.h>
 
-#include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
 #include "LoadPixtone.h"
@@ -21,7 +20,6 @@ typedef struct CustomProfileData
 {
 	char code[ProfileCodeSize];
 	char imgFolder[ImgFolderSize];
-	char bkgTxT[bkgTxTSize];
 	int playerMoney;
 	COLLECTABLES pCollectables;
 	// Collectables enabled (ints instead of bools to deal with struct padding lol)

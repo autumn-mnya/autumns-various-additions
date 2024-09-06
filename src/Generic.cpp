@@ -29,22 +29,6 @@ BOOL IsKeyDataFile(const char* name)
 	return TRUE;
 }
 
-BOOL IsKeyBKGFile(const char* name)
-{
-	char path[MAX_PATH];
-	FILE* fp;
-
-	sprintf(path, "%s\\%s", gBkgPath, name);
-
-	fp = fopen(path, "rb");
-
-	if (fp == NULL)
-		return FALSE;
-
-	fclose(fp);
-	return TRUE;
-}
-
 // I honestly hate saving the window rect. Let's keep it disabled by default!
 BOOL Replacement_SaveWindowRect(HWND hWnd, const char* filename)
 {

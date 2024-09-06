@@ -14,7 +14,6 @@ void InitMod_PauseScreen();
 void InitMod_SaveData();
 void InitMod_GameUI();
 void InitMod_TSCImage();
-void InitMod_TSCBkg();
 void InitMod_TeleporterMenuFix();
 void InitMod_DisableWindowRect();
 void InitMod_DisableErrorLog();

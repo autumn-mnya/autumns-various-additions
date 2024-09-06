@@ -16,7 +16,6 @@
 #include "cave_story.h"
 #include "ASMPatches.h"
 #include "ASMLoader.h"
-#include "BKG.h"
 #include "Collectables.h"
 #include "Config.h"
 #include "Draw.h"
@@ -134,24 +133,6 @@ void InitMod_TSCImage()
 	RegisterOpeningAboveTextBoxElement(AutumnsVariousAdditionsTextBoxAbove);
 	RegisterBelowTextBoxElement(AutumnsVariousAdditions_ModeAction_TextBoxBelow);
 	RegisterAboveTextBoxElement(AutumnsVariousAdditionsTextBoxAbove);
-}
-
-// Init TSC <BKG related calls
-// AutPI is not used for this function.
-void InitMod_TSCBkg()
-{
-	// Be able to inject code here? AutPI addition for later to consider
-	ModLoader_WriteCall((void*)0x402339, (void*)Replacement_InitBack_ReloadBitmap_File_Call); // Release Surface + MakeSurface_File instead of reloading bitmap
-	RegisterOpeningBelowPutStage_BackElement(PutBKGBack);
-	RegisterOpeningAbovePutStage_FrontElement(PutBKGFront);
-	RegisterBelowPutStage_BackElement(PutBKGBack);
-	RegisterAbovePutStage_FrontElement(PutBKGFront);
-	RegisterTransferStageInitElement(AutumnsVariousAdditionsTransferStageInit);
-	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
-
-	// Get path of the Bkg folder
-	strcpy(gBkgPath, gDataPath);
-	strcat(gBkgPath, "\\bkg");
 }
 
 void InitMod_TeleporterMenuFix()

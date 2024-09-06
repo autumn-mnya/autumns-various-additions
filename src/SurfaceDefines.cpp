@@ -8,7 +8,6 @@
 #include "SurfaceDefines.h"
 
 #include "ModSettings.h"
-#include "BKG.h"
 #include "cave_story.h"
 #include "Draw.h"
 #include "File.h"

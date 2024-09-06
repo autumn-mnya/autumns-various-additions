@@ -15,7 +15,6 @@
 #include "mod_loader_hooks.h"
 #include "ModSettings.h"
 #include "ASMLoader.h"
-#include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
 #include "Draw.h"
@@ -437,42 +436,6 @@ static int CustomTextScriptCommands(MLHookCPURegisters* regs, void* ud)
 
 		GetTextScriptString(name);
 		LoadTSC_Image(name);
-	}
-	else if (strncmp(where + 1, "BKG", 3) == 0) // BacKGround
-	{
-		char bkPath[bkgTxTSize];
-		gTS.p_read += 4;
-
-		memset(bkPath, 0, sizeof(bkPath));
-
-		GetTextScriptString(bkPath);
-		BKG_LoadBackground(bkPath);
-	}
-	else if (strncmp(where + 1, "BKP", 3) == 0) // BacKground Parameter
-	{
-		w = GetTextScriptNo(gTS.p_read + 4);
-		x = GetTextScriptNo(gTS.p_read + 9);
-		y = GetTextScriptNo(gTS.p_read + 14);
-
-		BKG_SetParameter(w, x, y); // Set parameter X for layer W to value Y
-		gTS.p_read += 18;
-	}
-	else if (strncmp(where + 1, "BKR", 3) == 0) // BacKground Reset
-	{
-		BKG_ResetBackgrounds();
-		gTS.p_read += 4;
-	}
-	else if (strncmp(where + 1, "BKE", 3) == 0) // BacKground Enable
-	{
-		z = GetTextScriptNo(gTS.p_read + 4);
-		bkList[z].isActive = true;
-		gTS.p_read += 8;
-	}
-	else if (strncmp(where + 1, "BKD", 3) == 0) // BacKground Disable
-	{
-		z = GetTextScriptNo(gTS.p_read + 4);
-		bkList[z].isActive = false;
-		gTS.p_read += 8;
 	}
 	else if (strncmp(where + 1, "BUY", 3) == 0) // BUY something (with money enabled)
 	{

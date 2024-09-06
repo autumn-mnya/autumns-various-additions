@@ -29,7 +29,6 @@ extern "C"
 
 #include "../AutPI.h"
 
-#include "Lua_BKG.h"
 #include "Lua_Collectables.h"
 #include "Lua_CPXE.h"
 #include "Lua_Frame.h"
@@ -180,7 +179,6 @@ void PushAVAMetadata()
 void SetAVALua()
 {
 	PushFunctionTable(gL, "AVA", AvaFunctionTable, FUNCTION_TABLE_AVA_SIZE, TRUE);
-	PushFunctionTable(gL, "BKG", BkgFunctionTable, FUNCTION_TABLE_BKG_SIZE, TRUE);
 	PushFunctionTable(gL, "Collectable", CollectablesFunctionTable, FUNCTION_TABLE_COLLECTABLES_SIZE, TRUE);
 	PushFunctionTable(gL, "CPXE", CpxeFunctionTable, FUNCTION_TABLE_CPXE_SIZE, TRUE);
 	PushFunctionTable(gL, "CameraEx", CameraExFunctionTable, FUNCTION_TABLE_CAMERAEX_SIZE, TRUE);

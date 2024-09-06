@@ -16,7 +16,6 @@
 #include "cave_story.h"
 #include "ASMPatches.h"
 #include "ASMLoader.h"
-#include "BKG.h"
 #include "Collectables.h"
 #include "Config.h"
 #include "Draw.h"
@@ -46,7 +45,6 @@
 
 // Paths
 char gPatchesPath[MAX_PATH];
-char gBkgPath[MAX_PATH];
 char gAudioPath[MAX_PATH];
 char gAVAPath[MAX_PATH];
 char gAVAConfigPath[MAX_PATH];
@@ -148,7 +146,6 @@ void InitMod(void)
 	{
 		InitMod_TSC();
 		InitMod_TSCImage();
-		InitMod_TSCBkg();
 		InitMod_PreLaunch_CollectablesEnabled();
 		InitMod_PreLaunch_CollectablesPositioning();
 		InitMod_PreLaunch_BoosterFuel();

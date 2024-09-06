@@ -65,7 +65,6 @@ void AutumnsVariousAdditionsModeOpeningInit()
 	if (setting_enable_custom_npc_table && setting_enable_reset_npctbl_on_reset)
 		LoadCustomNpcTable(NULL); // reset npc table on modeopening
 	ResetTSC_Image();
-	BKG_ResetBackgrounds();
 }
 
 void AutumnsVariousAdditionsModeTitleInit()

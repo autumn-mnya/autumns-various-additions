@@ -1,6 +1,5 @@
 #pragma once
 
-#include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
 #include "TextScriptVAR.h"
@@ -19,7 +18,6 @@ struct RESPAWN_PT
 	int select_item;
 	ARMS arms[8];
 	ITEM items[32];
-	char bkgTxT[bkgTxTSize];
 	COLLECTABLES collectables[CollectableCount]; // collectables struct
 	int playerMoney; // money
 	// .. and now all of the customizable collectable stuff

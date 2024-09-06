@@ -13,7 +13,6 @@
 #include "cave_story.h"
 #include "ASMPatches.h"
 #include "ASMLoader.h"
-#include "BKG.h"
 #include "Collectables.h"
 #include "Draw.h"
 #include "Entity.h"
@@ -46,7 +45,6 @@ void SetRespawnPoint(int x, int y)
 	Freeware_memcpy(gRespawnPoint.arms, gArmsData, sizeof(gRespawnPoint.arms));
 	Freeware_memcpy(gRespawnPoint.items, gItemData, sizeof(gRespawnPoint.items));
 	// more custom stuff
-	Freeware_memcpy(gRespawnPoint.bkgTxT, bkgTxT_Global, sizeof(gRespawnPoint.bkgTxT)); // <BKG txt file?
 	Freeware_memcpy(gRespawnPoint.collectables, &gCollectables, sizeof(gRespawnPoint.collectables));
 	gRespawnPoint.playerMoney = playerMoney; // money
 	gRespawnPoint.enable_collectables_a = enable_collectables_a; // collectables enabled
@@ -111,7 +109,6 @@ BOOL RespawnPlayer(void)
 
 	// Modeling this after LoadProfile
 	Freeware_memcpy(gFlagNPC, gRespawnPoint.flags, sizeof(gFlagNPC));
-	Freeware_memcpy(bkgTxT_Global, gRespawnPoint.bkgTxT, sizeof(bkgTxT_Global));
 
 	InitMyChar();
 	if (!TransferStage(gRespawnPoint.stage_no, 0, gRespawnPoint.x, gRespawnPoint.y))
@@ -134,7 +131,6 @@ BOOL RespawnPlayer(void)
 	Freeware_memcpy(gItemData, gRespawnPoint.items, sizeof(gItemData));
 
 	// Set custom data
-	// <BKG txt file
 	
 	// Collectables Values
 	Freeware_memcpy(&gCollectables, gRespawnPoint.collectables, sizeof(gCollectables));

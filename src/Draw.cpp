@@ -12,7 +12,6 @@
 
 #include "mod_loader.h"
 #include "ModSettings.h"
-#include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
 #include "Entity.h"

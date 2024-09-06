@@ -14,7 +14,6 @@
 #include "cave_story.h"
 #include "ASMPatches.h"
 #include "ASMLoader.h"
-#include "BKG.h"
 #include "Collectables.h"
 #include "Config.h"
 #include "Draw.h"

@@ -14,7 +14,6 @@
 #include "mod_loader_hooks.h"
 #include "ModSettings.h"
 #include "ASMLoader.h"
-#include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
 #include "Draw.h"

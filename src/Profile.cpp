@@ -9,7 +9,6 @@
 
 #include "main.h"
 #include "ModInit.h"
-#include "BKG.h"
 #include "cave_story.h"
 #include "Collectables.h"
 #include "Draw.h"
@@ -47,7 +46,6 @@ void SaveAvaFile()
 
 	memcpy(profile.code, gAutumnProfileCode, sizeof(profile.code));
 	memcpy(profile.imgFolder, TSC_IMG_Folder, sizeof(profile.imgFolder));
-	memcpy(profile.bkgTxT, bkgTxT_Global, sizeof(profile.bkgTxT));
 	profile.playerMoney = playerMoney;
 	memcpy(&profile.pCollectables, &gCollectables, sizeof(COLLECTABLES));
 	// Collectables enabled on screen
@@ -184,7 +182,6 @@ void LoadAvaFile()
 	printf("Trying to do this :(\n");
 
 	strcpy(TSC_IMG_Folder, profile.imgFolder);
-	strcpy(bkgTxT_Global, profile.bkgTxT);
 
 	// custom npc table
 	strcpy(npcTblPath, profile.npc_tbl);
@@ -335,10 +332,6 @@ void AvaLoadProfileInit()
 	SetProfileData(); // Set profile data
 	Stage_SetRespawn(); // Set respawn point (this should actually work now?)
 
-	// this needs to NOT reset if we're loading
-	if (isLoadingSave == false)
-		BKG_ResetBackgrounds();
-
 	ResetTSC_Image();
 }
 
@@ -356,7 +349,5 @@ void Replacement_InitializeGame_ClearArmsData_Call()
 	Reset_PixToneFolder(); // reset pixtone folder
 	ResetTablePaths();
 	ResetTSC_Image();
-	BKG_ResetBackgrounds();
-	memset(bkgTxT_Global, 0, sizeof(bkgTxT_Global));
 	ClearArmsData();
 }
