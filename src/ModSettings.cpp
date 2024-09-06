@@ -44,7 +44,6 @@ bool setting_enable_mychar = true;
 bool setting_enable_ui = true;
 bool setting_enable_tilecollision = true;
 bool setting_enable_text_script_code = true;
-bool setting_enable_savedata_code = true;
 bool setting_enable_teleporter_bugfix = true;
 
 bool setting_enable_reset_pixtone_on_reset = false;
@@ -90,7 +89,6 @@ void Init_INI_main()
 	setting_enable_tilecollision = main.GetBoolean("Main", "Enable Custom Tileset Code", true);
 	setting_enable_text_script_code = main.GetBoolean("Main", "Enable Custom TSC Code", true);
 	setting_enable_asm_loader = main.GetBoolean("Main", "Enable Custom Hex Patch Loader", true);
-	setting_enable_savedata_code = main.GetBoolean("Main", "Enable Custom Save Data Code", true);
 	setting_enable_custom_npc_table = main.GetBoolean("NpcTable", "Enable Custom NPC Table Loading", false);
 	setting_enable_reset_npctbl_on_reset = main.GetBoolean("NpcTable", "Enable npc.tbl Reloading on Reset", false);
 	pause_menu_ava_enabled = main.GetBoolean("Extra", "Enable AVA Pause Additions", false);

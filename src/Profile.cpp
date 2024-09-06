@@ -24,19 +24,27 @@
 #include "TextScriptCustomLoad.h"
 #include "TileCollisionMyChar.h"
 
-const char* const gAutumnProfileCode = "AutumnMnyaHazel";
-CustomProfileData profile;
-FILE* LoadProfileFp;
+const char* gAvaSaveFileName = "Profile.AVA.dat";
+const char* gAutumnProfileCode = "AutumnMnyaHazel";
+
 bool isLoadingSave = false;
 
-// 0x41D213
-void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t size)
+void SaveAvaFile()
 {
-	Freeware_memcpy(dst, src, size); // gFlagNPC
+	FILE* fp;
+	CustomProfileData profile;
 
-	// Custom Save below
+	char path[MAX_PATH];
 
-	memset(&profile, 0, sizeof(profile)); // Reset this when doing the last memcpy
+	// Get path
+	sprintf(path, "%s\\%s", gSavePath, gAvaSaveFileName);
+
+	fp = fopen(path, "wb");
+	if (fp == NULL)
+		return;
+
+	memset(&profile, 0, sizeof(CustomProfileData));
+
 	memcpy(profile.code, gAutumnProfileCode, sizeof(profile.code));
 	memcpy(profile.imgFolder, TSC_IMG_Folder, sizeof(profile.imgFolder));
 	memcpy(profile.bkgTxT, bkgTxT_Global, sizeof(profile.bkgTxT));
@@ -140,16 +148,77 @@ void Replacement_SaveProfile_LastMemcpy_Call(void* dst, const void* src, size_t 
 	profile.phy_physics_water_max_speed_right = setting_physics_water_max_speed_right;
 	profile.phy_physics_water_max_speed_up = setting_physics_water_max_speed_up;
 	profile.phy_physics_water_max_speed_down = setting_physics_water_max_speed_down;
-	// Write new save code after this
+
+	// Write to file
+	fwrite(&profile, sizeof(CustomProfileData), 1, fp);
+
+	fclose(fp);
+
+	return;
 }
 
-// 0x41D22D
-void Replacement_SaveProfile_fwrite_Call(void* buf, size_t eleS, size_t eleC, FILE* fp)
-{
-	Freeware_fwrite(buf, eleS, eleC, fp);
+CustomProfileData setDataProfile;
 
-	// Write the whole struct
-	Freeware_fwrite(&profile, sizeof(CustomProfileData), 1, fp);
+void LoadAvaFile()
+{
+	isLoadingSave = true;
+
+	FILE* fp;
+	CustomProfileData profile;
+	char path[MAX_PATH];
+
+	// Get path
+	sprintf(path, "%s\\%s", gSavePath, gAvaSaveFileName);
+
+	// Open file
+	fp = fopen(path, "rb");
+	if (fp == NULL)
+		return;
+
+	// Read data
+	fseek(fp, 0, SEEK_SET);
+	memset(&profile, 0, sizeof(CustomProfileData));
+	fread(&profile, sizeof(CustomProfileData), 1, fp);
+	fclose(fp);
+
+	printf("Trying to do this :(\n");
+
+	strcpy(TSC_IMG_Folder, profile.imgFolder);
+	strcpy(bkgTxT_Global, profile.bkgTxT);
+
+	// custom npc table
+	strcpy(npcTblPath, profile.npc_tbl);
+
+	// <CSF surface names
+	strcpy(surfaceName_0_Title, profile.surfaceName_0_Title);
+	strcpy(surfaceName_5_Image, profile.surfaceName_5_Image);
+	strcpy(surfaceName_6_Fade, profile.surfaceName_6_Fade);
+	strcpy(surfaceName_8_ItemImage, profile.surfaceName_8_ItemImage);
+	strcpy(surfaceName_11_Arms, profile.surfaceName_11_Arms);
+	strcpy(surfaceName_12_ArmsImage, profile.surfaceName_12_ArmsImage);
+	strcpy(surfaceName_14_StageImage, profile.surfaceName_14_StageImage);
+	strcpy(surfaceName_16_MyChar, profile.surfaceName_16_MyChar);
+	strcpy(surfaceName_17_Bullet, profile.surfaceName_17_Bullet);
+	strcpy(surfaceName_19_Caret, profile.surfaceName_19_Caret);
+	strcpy(surfaceName_20_NpcSym, profile.surfaceName_20_NpcSym);
+	strcpy(surfaceName_23_NpcRegu, profile.surfaceName_23_NpcRegu);
+	strcpy(surfaceName_24_AutumnUI, profile.surfaceName_24_AutumnUI);
+	strcpy(surfaceName_25_AutumnObjects, profile.surfaceName_25_AutumnObjects);
+	strcpy(surfaceName_26_TextBox, profile.surfaceName_26_TextBox);
+	strcpy(surfaceName_27_Face, profile.surfaceName_27_Face);
+	strcpy(surfaceName_38_AutumnItems, profile.surfaceName_38_AutumnItems);
+	strcpy(surfaceName_39_AutumnCharacters, profile.surfaceName_39_AutumnCharacters);
+
+	// Head.tsc / ArmsItem.tsc
+	strcpy(CustomArmsItemTSCLocation, profile.armsitem_tsc);
+	strcpy(CustomHeadTSCLocation, profile.head_tsc);
+
+	// PixTone path
+	strcpy(global_pixtoneFolder, profile.pixtoneFolder);
+
+	setDataProfile = profile;
+
+	return;
 }
 
 // 0x41D407
@@ -168,246 +237,84 @@ void Replacement_LoadProfile_InitMyChar_Call()
 	}
 }
 
-// 0x41D353 
-
-
-void Replacement_LoadProfile_fclose_Call(FILE* fp)
-{
-	// Set this up if needed
-	LoadProfileFp = fp;
-	isLoadingSave = true;
-
-	memset(&profile, 0, sizeof(CustomProfileData));
-	Freeware_fread(profile.code, ProfileCodeSize, 1, fp);
-
-	if (memcmp(profile.code, gAutumnProfileCode, ProfileCodeSize) == 0)
-	{
-		Freeware_fread(&profile.imgFolder, ImgFolderSize, 1, fp);
-		Freeware_fread(&profile.bkgTxT, bkgTxTSize, 1, fp);
-		Freeware_fread(&profile.playerMoney, 4, 1, fp);
-		Freeware_fread(&profile.pCollectables, sizeof(COLLECTABLES), 1, fp);
-		// read savefile "collectables are enabled" booleans
-		Freeware_fread(&profile.enable_collect_a, 4, 1, fp);
-		Freeware_fread(&profile.enable_collect_b, 4, 1, fp);
-		Freeware_fread(&profile.enable_collect_c, 4, 1, fp);
-		Freeware_fread(&profile.enable_collect_d, 4, 1, fp);
-		Freeware_fread(&profile.enable_collect_e, 4, 1, fp);
-		// read savefile collectable positions
-		Freeware_fread(&profile.collectables_a_x_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_a_y_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_a_x_offset, 4, 1, fp);
-		Freeware_fread(&profile.collectables_b_x_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_b_y_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_b_x_offset, 4, 1, fp);
-		Freeware_fread(&profile.collectables_c_x_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_c_y_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_c_x_offset, 4, 1, fp);
-		Freeware_fread(&profile.collectables_d_x_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_d_y_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_d_x_offset, 4, 1, fp);
-		Freeware_fread(&profile.collectables_e_x_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_e_y_pos, 4, 1, fp);
-		Freeware_fread(&profile.collectables_e_x_offset, 4, 1, fp);
-		// read savefile <PHY ints
-		Freeware_fread(&profile.phy_physics_max_dash, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_max_move, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_gravity1, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_gravity2, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_dash1, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_dash2, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_resist, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_jump, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_max_dash, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_max_move, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_gravity1, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_gravity2, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_dash1, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_dash2, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_resist, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_jump, 4, 1, fp);
-		Freeware_fread(&profile.phy_walljump_horizontal_speed, 4, 1, fp);
-		Freeware_fread(&profile.phy_walljump_jump_height, 4, 1, fp);
-		Freeware_fread(&profile.phy_walljump_sliding_speed, 4, 1, fp);
-		Freeware_fread(&profile.phy_walljump_water_horizontal_speed, 4, 1, fp);
-		Freeware_fread(&profile.phy_walljump_water_jump_height, 4, 1, fp);
-		Freeware_fread(&profile.phy_extrajump_jump_height, 4, 1, fp);
-		Freeware_fread(&profile.phy_extrajump_water_jump_height, 4, 1, fp);
-		Freeware_fread(&profile.phy_running_speed, 4, 1, fp);
-		Freeware_fread(&profile.phy_bounce_speed, 4, 1, fp);
-		// read savefile <VAR data
-		Freeware_fread(&profile.varData, sizeof(profile.varData), 1, fp);
-		// read savefile <MIM value
-		Freeware_fread(&profile.mim_num, 4, 1, fp);
-		// read savefile booster fuel values
-		Freeware_fread(&profile.booster_08_fuel, 4, 1, fp);
-		Freeware_fread(&profile.booster_20_fuel, 4, 1, fp);
-		// read savefile custom tables
-		Freeware_fread(&profile.npc_tbl, NpcTblMaxPath, 1, fp);
-		// read savefile <CSF names
-		Freeware_fread(&profile.surfaceName_0_Title, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_5_Image, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_6_Fade, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_8_ItemImage, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_11_Arms, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_12_ArmsImage, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_14_StageImage, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_16_MyChar, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_17_Bullet, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_19_Caret, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_20_NpcSym, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_23_NpcRegu, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_24_AutumnUI, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_25_AutumnObjects, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_26_TextBox, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_27_Face, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_38_AutumnItems, MaxSurfaceName, 1, fp);
-		Freeware_fread(&profile.surfaceName_39_AutumnCharacters, MaxSurfaceName, 1, fp);
-		// read savefile Head.tsc/ArmsItem.tsc names
-		Freeware_fread(&profile.armsitem_tsc, CustomTscMaxPath, 1, fp);
-		Freeware_fread(&profile.head_tsc, CustomTscMaxPath, 1, fp);
-		// read savefile PixTone path
-		Freeware_fread(&profile.pixtoneFolder, MaxPixTonePath, 1, fp);
-		// read version 1.0.7 physics
-		Freeware_fread(&profile.phy_physics_boost20_accel_up, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_boost20_accel_left, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_boost20_accel_right, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_boost20_accel_down, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_boost20_accel_up_no_key, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_boost08_accel_add, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_boost08_accel_max_speed, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_max_speed_left, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_max_speed_right, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_max_speed_up, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_max_speed_down, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_max_speed_left, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_max_speed_right, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_max_speed_up, 4, 1, fp);
-		Freeware_fread(&profile.phy_physics_water_max_speed_down, 4, 1, fp);
-	}
-
-	// Close the file
-	Freeware_fclose(fp);
-
-	// We set some of the profile data here because I honestly don't want to touch any of the code later lol ,
-	if (memcmp(profile.code, gAutumnProfileCode, ProfileCodeSize) == 0)
-	{
-		strcpy(TSC_IMG_Folder, profile.imgFolder);
-		strcpy(bkgTxT_Global, profile.bkgTxT);
-
-		// custom npc table
-		strcpy(npcTblPath, profile.npc_tbl);
-
-		// <CSF surface names
-		strcpy(surfaceName_0_Title, profile.surfaceName_0_Title);
-		strcpy(surfaceName_5_Image, profile.surfaceName_5_Image);
-		strcpy(surfaceName_6_Fade, profile.surfaceName_6_Fade);
-		strcpy(surfaceName_8_ItemImage, profile.surfaceName_8_ItemImage);
-		strcpy(surfaceName_11_Arms, profile.surfaceName_11_Arms);
-		strcpy(surfaceName_12_ArmsImage, profile.surfaceName_12_ArmsImage);
-		strcpy(surfaceName_14_StageImage, profile.surfaceName_14_StageImage);
-		strcpy(surfaceName_16_MyChar, profile.surfaceName_16_MyChar);
-		strcpy(surfaceName_17_Bullet, profile.surfaceName_17_Bullet);
-		strcpy(surfaceName_19_Caret, profile.surfaceName_19_Caret);
-		strcpy(surfaceName_20_NpcSym, profile.surfaceName_20_NpcSym);
-		strcpy(surfaceName_23_NpcRegu, profile.surfaceName_23_NpcRegu);
-		strcpy(surfaceName_24_AutumnUI, profile.surfaceName_24_AutumnUI);
-		strcpy(surfaceName_25_AutumnObjects, profile.surfaceName_25_AutumnObjects);
-		strcpy(surfaceName_26_TextBox, profile.surfaceName_26_TextBox);
-		strcpy(surfaceName_27_Face, profile.surfaceName_27_Face);
-		strcpy(surfaceName_38_AutumnItems, profile.surfaceName_38_AutumnItems);
-		strcpy(surfaceName_39_AutumnCharacters, profile.surfaceName_39_AutumnCharacters);
-
-		// Head.tsc / ArmsItem.tsc
-		strcpy(CustomArmsItemTSCLocation, profile.armsitem_tsc);
-		strcpy(CustomHeadTSCLocation, profile.head_tsc);
-
-		// PixTone path
-		strcpy(global_pixtoneFolder, profile.pixtoneFolder);
-	}
-}
-
 // This sets the data for everything in LoadProfile, AFTER it runs InitMyChar and other stuff (it makes more sense!!)
 void SetProfileData()
 {
-	// Set Custom Data here
-	if (memcmp(profile.code, gAutumnProfileCode, ProfileCodeSize) == 0)
-	{
-		playerMoney = profile.playerMoney;
-		memcpy(&gCollectables, &profile.pCollectables, sizeof(COLLECTABLES)); // write collectables
-		// set enable collectables booleans to the save file ones
-		enable_collectables_a = profile.enable_collect_a;
-		enable_collectables_b = profile.enable_collect_b;
-		enable_collectables_c = profile.enable_collect_c;
-		enable_collectables_d = profile.enable_collect_d;
-		enable_collectables_e = profile.enable_collect_e;
-		// set collectables position values
-		collectables_a_x_pos = profile.collectables_a_x_pos;
-		collectables_a_y_pos = profile.collectables_a_y_pos;
-		collectables_a_x_offset = profile.collectables_a_x_offset;
-		collectables_b_x_pos = profile.collectables_b_x_pos;
-		collectables_b_y_pos = profile.collectables_b_y_pos;
-		collectables_b_x_offset = profile.collectables_b_x_offset;
-		collectables_c_x_pos = profile.collectables_c_x_pos;
-		collectables_c_y_pos = profile.collectables_c_y_pos;
-		collectables_c_x_offset = profile.collectables_c_x_offset;
-		collectables_d_x_pos = profile.collectables_d_x_pos;
-		collectables_d_y_pos = profile.collectables_d_y_pos;
-		collectables_d_x_offset = profile.collectables_d_x_offset;
-		collectables_e_x_pos = profile.collectables_e_x_pos;
-		collectables_e_y_pos = profile.collectables_e_y_pos;
-		collectables_e_x_offset = profile.collectables_e_x_offset;
-		// set <PHY values to the save file ones
-		setting_physics_max_dash = profile.phy_physics_max_dash;
-		setting_physics_max_move = profile.phy_physics_max_move;
-		setting_physics_gravity1 = profile.phy_physics_gravity1;
-		setting_physics_gravity2 = profile.phy_physics_gravity2;
-		setting_physics_dash1 = profile.phy_physics_dash1;
-		setting_physics_dash2 = profile.phy_physics_dash2;
-		setting_physics_resist = profile.phy_physics_resist;
-		setting_physics_jump = profile.phy_physics_jump;
-		setting_physics_water_max_dash = profile.phy_physics_water_max_dash;
-		setting_physics_water_max_move = profile.phy_physics_water_max_move;
-		setting_physics_water_gravity1 = profile.phy_physics_water_gravity1;
-		setting_physics_water_gravity2 = profile.phy_physics_water_gravity2;
-		setting_physics_water_dash1 = profile.phy_physics_water_dash1;
-		setting_physics_water_dash2 = profile.phy_physics_water_dash2;
-		setting_physics_water_resist = profile.phy_physics_water_resist;
-		setting_physics_water_jump = profile.phy_physics_water_jump;
-		setting_walljump_horizontal_speed = profile.phy_walljump_horizontal_speed;
-		setting_walljump_jump_height = profile.phy_walljump_jump_height;
-		setting_walljump_sliding_speed = profile.phy_walljump_sliding_speed;
-		setting_walljump_water_horizontal_speed = profile.phy_walljump_water_horizontal_speed;
-		setting_walljump_water_jump_height = profile.phy_walljump_water_jump_height;
-		setting_extrajump_jump_height = profile.phy_extrajump_jump_height;
-		setting_extrajump_water_jump_height = profile.phy_extrajump_water_jump_height;
-		setting_running_speed = profile.phy_running_speed;
-		setting_bounce_speed = profile.phy_bounce_speed;
-		// set <VAR values
-		memcpy(&varData, profile.varData, sizeof(varData));
-		// set <MIM value
-		mim_num = profile.mim_num;
-		// set booster fuel values
-		booster_08_fuel = profile.booster_08_fuel;
-		booster_20_fuel = profile.booster_20_fuel;
-		Mod_WriteBoosterFuel();
-		// Version 1.0.7
-		setting_physics_boost20_accel_up = profile.phy_physics_boost20_accel_up;
-		setting_physics_boost20_accel_left = profile.phy_physics_boost20_accel_left;
-		setting_physics_boost20_accel_right = profile.phy_physics_boost20_accel_right;
-		setting_physics_boost20_accel_down = profile.phy_physics_boost20_accel_down;
-		setting_physics_boost20_accel_up_no_key = profile.phy_physics_boost20_accel_up_no_key;
-		setting_physics_boost08_accel_add = profile.phy_physics_boost08_accel_add;
-		setting_physics_boost08_accel_max_speed = profile.phy_physics_boost08_accel_max_speed;
-		setting_physics_max_speed_left = profile.phy_physics_max_speed_left;
-		setting_physics_max_speed_right = profile.phy_physics_max_speed_right;
-		setting_physics_max_speed_up = profile.phy_physics_max_speed_up;
-		setting_physics_max_speed_down = profile.phy_physics_max_speed_down;
-		setting_physics_water_max_speed_left = profile.phy_physics_water_max_speed_left;
-		setting_physics_water_max_speed_right = profile.phy_physics_water_max_speed_right;
-		setting_physics_water_max_speed_up = profile.phy_physics_water_max_speed_up;
-		setting_physics_water_max_speed_down = profile.phy_physics_water_max_speed_down;
-		Set_Version107_Physics();
-	}
+	playerMoney = setDataProfile.playerMoney;
+	memcpy(&gCollectables, &setDataProfile.pCollectables, sizeof(COLLECTABLES)); // write collectables
+	// set enable collectables booleans to the save file ones
+	enable_collectables_a = setDataProfile.enable_collect_a;
+	enable_collectables_b = setDataProfile.enable_collect_b;
+	enable_collectables_c = setDataProfile.enable_collect_c;
+	enable_collectables_d = setDataProfile.enable_collect_d;
+	enable_collectables_e = setDataProfile.enable_collect_e;
+	// set collectables position values
+	collectables_a_x_pos = setDataProfile.collectables_a_x_pos;
+	collectables_a_y_pos = setDataProfile.collectables_a_y_pos;
+	collectables_a_x_offset = setDataProfile.collectables_a_x_offset;
+	collectables_b_x_pos = setDataProfile.collectables_b_x_pos;
+	collectables_b_y_pos = setDataProfile.collectables_b_y_pos;
+	collectables_b_x_offset = setDataProfile.collectables_b_x_offset;
+	collectables_c_x_pos = setDataProfile.collectables_c_x_pos;
+	collectables_c_y_pos = setDataProfile.collectables_c_y_pos;
+	collectables_c_x_offset = setDataProfile.collectables_c_x_offset;
+	collectables_d_x_pos = setDataProfile.collectables_d_x_pos;
+	collectables_d_y_pos = setDataProfile.collectables_d_y_pos;
+	collectables_d_x_offset = setDataProfile.collectables_d_x_offset;
+	collectables_e_x_pos = setDataProfile.collectables_e_x_pos;
+	collectables_e_y_pos = setDataProfile.collectables_e_y_pos;
+	collectables_e_x_offset = setDataProfile.collectables_e_x_offset;
+	// set <PHY values to the save file ones
+	setting_physics_max_dash = setDataProfile.phy_physics_max_dash;
+	setting_physics_max_move = setDataProfile.phy_physics_max_move;
+	setting_physics_gravity1 = setDataProfile.phy_physics_gravity1;
+	setting_physics_gravity2 = setDataProfile.phy_physics_gravity2;
+	setting_physics_dash1 = setDataProfile.phy_physics_dash1;
+	setting_physics_dash2 = setDataProfile.phy_physics_dash2;
+	setting_physics_resist = setDataProfile.phy_physics_resist;
+	setting_physics_jump = setDataProfile.phy_physics_jump;
+	setting_physics_water_max_dash = setDataProfile.phy_physics_water_max_dash;
+	setting_physics_water_max_move = setDataProfile.phy_physics_water_max_move;
+	setting_physics_water_gravity1 = setDataProfile.phy_physics_water_gravity1;
+	setting_physics_water_gravity2 = setDataProfile.phy_physics_water_gravity2;
+	setting_physics_water_dash1 = setDataProfile.phy_physics_water_dash1;
+	setting_physics_water_dash2 = setDataProfile.phy_physics_water_dash2;
+	setting_physics_water_resist = setDataProfile.phy_physics_water_resist;
+	setting_physics_water_jump = setDataProfile.phy_physics_water_jump;
+	setting_walljump_horizontal_speed = setDataProfile.phy_walljump_horizontal_speed;
+	setting_walljump_jump_height = setDataProfile.phy_walljump_jump_height;
+	setting_walljump_sliding_speed = setDataProfile.phy_walljump_sliding_speed;
+	setting_walljump_water_horizontal_speed = setDataProfile.phy_walljump_water_horizontal_speed;
+	setting_walljump_water_jump_height = setDataProfile.phy_walljump_water_jump_height;
+	setting_extrajump_jump_height = setDataProfile.phy_extrajump_jump_height;
+	setting_extrajump_water_jump_height = setDataProfile.phy_extrajump_water_jump_height;
+	setting_running_speed = setDataProfile.phy_running_speed;
+	setting_bounce_speed = setDataProfile.phy_bounce_speed;
+	// set <VAR values
+	memcpy(&varData, setDataProfile.varData, sizeof(varData));
+	// set <MIM value
+	mim_num = setDataProfile.mim_num;
+	// set booster fuel values
+	booster_08_fuel = setDataProfile.booster_08_fuel;
+	booster_20_fuel = setDataProfile.booster_20_fuel;
+	Mod_WriteBoosterFuel();
+	// Version 1.0.7
+	setting_physics_boost20_accel_up = setDataProfile.phy_physics_boost20_accel_up;
+	setting_physics_boost20_accel_left = setDataProfile.phy_physics_boost20_accel_left;
+	setting_physics_boost20_accel_right = setDataProfile.phy_physics_boost20_accel_right;
+	setting_physics_boost20_accel_down = setDataProfile.phy_physics_boost20_accel_down;
+	setting_physics_boost20_accel_up_no_key = setDataProfile.phy_physics_boost20_accel_up_no_key;
+	setting_physics_boost08_accel_add = setDataProfile.phy_physics_boost08_accel_add;
+	setting_physics_boost08_accel_max_speed = setDataProfile.phy_physics_boost08_accel_max_speed;
+	setting_physics_max_speed_left = setDataProfile.phy_physics_max_speed_left;
+	setting_physics_max_speed_right = setDataProfile.phy_physics_max_speed_right;
+	setting_physics_max_speed_up = setDataProfile.phy_physics_max_speed_up;
+	setting_physics_max_speed_down = setDataProfile.phy_physics_max_speed_down;
+	setting_physics_water_max_speed_left = setDataProfile.phy_physics_water_max_speed_left;
+	setting_physics_water_max_speed_right = setDataProfile.phy_physics_water_max_speed_right;
+	setting_physics_water_max_speed_up = setDataProfile.phy_physics_water_max_speed_up;
+	setting_physics_water_max_speed_down = setDataProfile.phy_physics_water_max_speed_down;
+	Set_Version107_Physics();
 }
 
 // 0x41D419
@@ -423,7 +330,7 @@ void Replacement_LoadProfile_TransferStage_Call(int w, int x, int y, int z)
 	TransferStage(w, x, y, z);
 }
 
-void Replacement_LoadProfile_ClearFade_Call()
+void AvaLoadProfileInit()
 {
 	SetProfileData(); // Set profile data
 	Stage_SetRespawn(); // Set respawn point (this should actually work now?)
@@ -433,8 +340,6 @@ void Replacement_LoadProfile_ClearFade_Call()
 		BKG_ResetBackgrounds();
 
 	ResetTSC_Image();
-
-	ClearFade();
 }
 
 // 0x41D59A

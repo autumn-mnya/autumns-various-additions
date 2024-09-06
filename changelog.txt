@@ -1,3 +1,7 @@
+__Autumns Various Additions v1.2.0__
+-Massive overhauls to the code
+-Many features removed in favor of more cleanliness (Stage table support due to AutPI having it now, and collab mode due to it not being useful for many people, and being really complicated)
+
 __Autumns Various Additions v1.1.1__
 -AVA now requires "AutPI" (Autumns API) to be loaded before ava is loaded. It is included with the new zip file. Add it above autumns_various_additions in mods.txt!
 -<BKG now supports Widescreen

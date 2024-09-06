@@ -50,6 +50,7 @@ char gBkgPath[MAX_PATH];
 char gAudioPath[MAX_PATH];
 char gAVAPath[MAX_PATH];
 char gAVAConfigPath[MAX_PATH];
+char gSavePath[MAX_PATH];
 
 int gCurrentGameMode = 0;
 
@@ -115,6 +116,11 @@ void InitMod(void)
 	strcpy(gAVAConfigPath, gAVAPath);
 	strcat(gAVAConfigPath, "\\config");
 
+	// Get path of the savedata folder
+
+	strcpy(gSavePath, gModulePath);
+	strcat(gSavePath, "\\savedata");
+
 	// The 4 calls above setup gDataPath and gModulePath so they can be used
 
 	// Init settings set by the user
@@ -158,8 +164,7 @@ void InitMod(void)
 	if (setting_enable_ui)
 		InitMod_GameUI();
 
-	if (setting_enable_savedata_code)
-		InitMod_SaveData();
+	InitMod_SaveData();
 
 	// Fix Teleporter menu flicker
 	if (setting_enable_teleporter_bugfix)

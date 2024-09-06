@@ -108,9 +108,9 @@ void InitMod_TileCollision()
 
 void InitMod_SaveData()
 {
-	ModLoader_WriteCall((void*)0x41D213, (void*)Replacement_SaveProfile_LastMemcpy_Call); // autpi
-	ModLoader_WriteCall((void*)0x41D22D, (void*)Replacement_SaveProfile_fwrite_Call); // autpi
-	ModLoader_WriteCall((void*)0x41D353, (void*)Replacement_LoadProfile_fclose_Call); // autpi
+	RegisterSaveProfilePostCloseElement(SaveAvaFile);
+	RegisterLoadProfilePostCloseElement(LoadAvaFile);
+	RegisterLoadProfileInitElement(AvaLoadProfileInit);
 	isLoadingSave = false;
 }
 
@@ -129,7 +129,6 @@ void InitMod_TSCImage()
 {
 	RegisterOpeningInitElement(AutumnsVariousAdditionsModeOpeningInit);
 	RegisterTitleInitElement(AutumnsVariousAdditionsModeTitleInit);
-	ModLoader_WriteCall((void*)0x41D508, (void*)Replacement_LoadProfile_ClearFade_Call);
 	ModLoader_WriteCall((void*)0x41D576, (void*)Replacement_InitializeGame_ClearArmsData_Call); // AUTPI
 	RegisterOpeningBelowTextBoxElement(AutumnsVariousAdditions_ModeOpening_TextBoxBelow);
 	RegisterOpeningAboveTextBoxElement(AutumnsVariousAdditionsTextBoxAbove);
