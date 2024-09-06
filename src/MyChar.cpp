@@ -635,7 +635,7 @@ void AutumnsVariousAdditionsExtraJumpUI()
 	PutPlayersJumps(fx, fy);
 }
 
-void Replacement_SetMyCharPosition_InitStar_Call()
+void SetCustomMyCharTGT()
 {
 	// Possibly reset the offset and locked direction here?
 	custom_tgt_x = gMC.x;

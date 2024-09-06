@@ -87,7 +87,7 @@ void InitMod_SFX()
 // Init MyChar replacement
 void InitMod_MyChar()
 {
-	RegisterInitElement(Replacement_SetMyCharPosition_InitStar_Call);
+	RegisterInitElement(SetCustomMyCharTGT);
 	ModLoader_WriteCall((void*)0x414B5F, (void*)Replacement_InitMyChar_memset_Call); // for initmychar related things, we replace the memset call and do our own thing
 	InitMyCharPhysicsPatch();
 	InitCustomMyCharPatch();

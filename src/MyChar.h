@@ -126,7 +126,7 @@ int GetPlayerPhysicsValue(int x);
 void SetPlayerPhysicsValues(int x, int y);
 void Replacement_PutMyChar_PutChar_Call(const RECT* r, int a, int b, const RECT* r2, SurfaceID s);
 void AutumnsVariousAdditionsExtraJumpUI();
-void Replacement_SetMyCharPosition_InitStar_Call();
+void SetCustomMyCharTGT();
 void setPlayerPhysics(BOOL bKey, Physics* physics);
 void ActMyChar_Normal_Custom(BOOL bKey);
 void SetPlayerCamera(BOOL bKey);
