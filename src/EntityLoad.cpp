@@ -7,6 +7,7 @@
 
 #include "EntityLoad.h"
 
+#include "AutPI.h"
 #include "ModSettings.h"
 #include "cave_story.h"
 #include "main.h"
@@ -59,7 +60,7 @@ BOOL LoadCustomEvent(const char* path_event, int npc_count)
 	memset(gCustomNPC, 0, sizeof(CNPCHAR) * NPC_MAX);
 
 	// Read .cpxe data
-	fread(gCustomNPC + 170, sizeof(CNPCHAR), npc_count, fp);
+	fread(gCustomNPC + ModLoader_GetLong((void*)0x46EC01), sizeof(CNPCHAR), npc_count, fp);
 
 	// Return to TransferStage inside the exe
 	return TRUE;
