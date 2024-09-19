@@ -311,3 +311,18 @@ unsigned long ModLoader_GetLong(void* address)
 
     return func(address);
 }
+
+char* GetCustomSaveName()
+{
+    typedef char*(*funcdef)();
+
+    funcdef func = reinterpret_cast<funcdef>(
+        GetProcAddress(autpiDLL, "GetCustomSaveName"));
+
+    if (func == nullptr) {
+        std::cerr << "Failed to get the function pointer for GetCustomSaveName\n";
+        return "autpi-dll-failure.dat";
+    }
+
+    return func();
+}

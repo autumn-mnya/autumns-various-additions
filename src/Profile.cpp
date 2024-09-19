@@ -7,6 +7,7 @@
 
 #include "Profile.h"
 
+#include "AutPI.h"
 #include "main.h"
 #include "ModInit.h"
 #include "cave_story.h"
@@ -23,7 +24,7 @@
 #include "TextScriptCustomLoad.h"
 #include "TileCollisionMyChar.h"
 
-const char* gAvaSaveFileName = "Profile.AVA.dat";
+const char* gAvaSaveFileName = "AVA";
 const char* gAutumnProfileCode = "AutumnMnyaHazel";
 
 bool isLoadingSave = false;
@@ -36,7 +37,7 @@ void SaveAvaFile()
 	char path[MAX_PATH];
 
 	// Get path
-	sprintf(path, "%s\\%s", gSavePath, gAvaSaveFileName);
+	sprintf(path, "%s\\%s.%s", gSavePath, GetCustomSaveName(), gAvaSaveFileName);
 
 	fp = fopen(path, "wb");
 	if (fp == NULL)
@@ -164,7 +165,7 @@ void LoadAvaFile()
 	char path[MAX_PATH];
 
 	// Get path
-	sprintf(path, "%s\\%s", gSavePath, gAvaSaveFileName);
+	sprintf(path, "%s\\%s.%s", gSavePath, GetCustomSaveName(), gAvaSaveFileName);
 
 	// Open file
 	fp = fopen(path, "rb");

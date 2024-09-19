@@ -176,3 +176,4 @@ BOOL ReloadModScript();
 unsigned char ModLoader_GetByte(void* address);
 unsigned short ModLoader_GetWord(void* address);
 unsigned long ModLoader_GetLong(void* address);
+char* GetCustomSaveName();
