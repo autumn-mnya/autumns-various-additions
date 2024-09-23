@@ -37,7 +37,9 @@ void SaveAvaFile()
 	char path[MAX_PATH];
 
 	// Get path
-	sprintf(path, "%s\\%s.%s", gSavePath, GetCustomSaveName(), gAvaSaveFileName);
+	std::string sp = GetCustomSaveName();
+	std::size_t id = sp.find_last_of("/\\");
+	sprintf(path, "%s\\savedata\\%s.%s", sp.substr(0, id).c_str(), sp.substr(id + 1).c_str(), gAvaSaveFileName);
 
 	fp = fopen(path, "wb");
 	if (fp == NULL)
@@ -165,7 +167,9 @@ void LoadAvaFile()
 	char path[MAX_PATH];
 
 	// Get path
-	sprintf(path, "%s\\%s.%s", gSavePath, GetCustomSaveName(), gAvaSaveFileName);
+	std::string sp = GetCustomSaveName();
+	std::size_t id = sp.find_last_of("/\\");
+	sprintf(path, "%s\\savedata\\%s.%s", sp.substr(0, id).c_str(), sp.substr(id + 1).c_str(), gAvaSaveFileName);
 
 	// Open file
 	fp = fopen(path, "rb");
