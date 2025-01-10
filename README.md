@@ -1,3 +1,9 @@
+# **[Deprecation Notice]**
+
+This project is now deprecated, and while you can still use it (and for new modders, or modders using AutPI, it may be recommended as it adds some useful features) it will only be updated to have bug fixes in the future if absolutely neccessary. Or moving features to separate dlls, if I really feel like it. Or outright removing features and putting them as lua script examples in the autpi repo. Nothing will be added though, more than likely.
+
+__Ensure you use the GitHub issues system, or pull requests if you have bug fixes for Autumns Various Additions__.
+
 # Cave Story Mod Loader ~ Autumn's Various Additions
 This is a mod that adds many features to Cave Story freeware, made with help from multiple people. It can be compiled using Visual Studio 2022 for making dll mods for Cave Story freeware, using [Clownacy's Mod Loader](https://github.com/Clownacy/Cave-Story-Mod-Loader/releases).
 
