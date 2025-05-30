@@ -187,6 +187,11 @@ void InitMod(void)
 	RegisterTitleInitElement(SetModeTitle);
 	RegisterInitElement(SetModeAction);
 
+	// register init dialogue choices (for resetting while mid <CHO)
+	RegisterOpeningInitElement(InitMod_DialogueChoice);
+	RegisterTitleInitElement(InitMod_DialogueChoice);
+	RegisterInitElement(InitMod_DialogueChoice);
+
 	if (pause_menu_ava_enabled)
 	{
 		LoadPauseMenuDll();

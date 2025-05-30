@@ -18,6 +18,7 @@
 #include "ASMLoader.h"
 #include "Collectables.h"
 #include "Config.h"
+#include "DialogueChoice.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
@@ -153,4 +154,9 @@ void InitMod_DisableErrorLog()
 void InitMod_AutumnConfigDefaults()
 {
 	ModLoader_WriteCall((void*)0x4124E0, (void*)Replacement_DefaultConfigData);
+}
+
+void InitMod_DialogueChoice()
+{
+	ClearDialogueChoiceData();
 }

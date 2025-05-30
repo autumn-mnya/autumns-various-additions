@@ -18,3 +18,4 @@ void InitMod_TeleporterMenuFix();
 void InitMod_DisableWindowRect();
 void InitMod_DisableErrorLog();
 void InitMod_AutumnConfigDefaults();
+void InitMod_DialogueChoice();
