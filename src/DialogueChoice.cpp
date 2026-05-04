@@ -4,10 +4,10 @@
 #include <string>
 #include "cave_story.h"
 
-#include <Windows.h>
+#include <windows.h>
 
 #include "Draw.h"
-#include "Main.h"
+#include "main.h"
 #include "Game.h"
 #include "MyChar.h"
 #include "MycParam.h"

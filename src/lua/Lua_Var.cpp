@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <windows.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,14 +15,14 @@ extern "C"
 #include "Lua.h"
 #include "Lua_Var.h"
 
-#include "../Main.h"
+#include "../main.h"
 #include "../mod_loader.h"
 #include "../cave_story.h"
 #include "../ModSettings.h"
 
 #include "../AutPI.h"
 
-#include "../TextScriptVar.h"
+#include "../TextScriptVAR.h"
 
 static int lua_GetVariable(lua_State* L)
 {

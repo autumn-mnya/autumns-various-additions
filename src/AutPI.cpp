@@ -7,12 +7,10 @@
 #include "cave_story.h"
 #include "lua/Lua.h"
 
-HMODULE autpiDLL = nullptr;  // Global variable
+HMODULE autpiDLL = nullptr;
 
-// Function pointer for dynamically loaded functions
 typedef void (*RegisterElementFunc)(void (*)());
 
-// Function to register an element handler
 void RegisterElement(std::vector<void (*)()>& handlers, const char* functionName, void (*handler)())
 {
     if (autpiDLL != nullptr) {
@@ -26,7 +24,6 @@ void RegisterElement(std::vector<void (*)()>& handlers, const char* functionName
         }
         else {
             std::cerr << "Failed to get the function pointer for " << functionName << "\n";
-            // You might want to handle the error appropriately.
         }
     }
 }
@@ -73,13 +70,11 @@ void AutPI_AddEntity(NPCFUNCTION func, char* author, char* name)
     addEntityFunc(func, author, name);
 }
 
-// Function to load autpi.dll
 void LoadAutPiDll()
 {
     autpiDLL = LoadLibrary("autpi.dll");
     if (autpiDLL == nullptr) {
         std::cerr << "Failed to load autpi.dll\n";
-        // You might want to handle the error appropriately, e.g., throw an exception or return early.
     }
 }
 
@@ -148,7 +143,6 @@ typedef lua_State* (*GetLuaLFunc)();
 
 lua_State* GetLuaL()
 {
-    // Load GetLuaL function pointer from the DLL
     GetLuaLFunc getLuaLFunc = reinterpret_cast<GetLuaLFunc>(
         GetProcAddress(autpiDLL, "GetLuaL"));
 
@@ -157,9 +151,8 @@ lua_State* GetLuaL()
         return nullptr;
     }
 
-    // Call GetLuaL function to retrieve lua_State*
     lua_State* luaL = getLuaLFunc();
-    return luaL; // Return the lua_State* obtained from GetLuaL
+    return luaL;
 }
 
 BOOL ReadStructBasic(lua_State* L, const char* name, STRUCT_TABLE* table, void* data, int length)

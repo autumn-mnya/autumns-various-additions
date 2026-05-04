@@ -1,10 +1,12 @@
-#include <Windows.h>
+#include <windows.h>
 #include <shlwapi.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <string>
+#include <algorithm>
+#include <random>
 
 #include "TextScript.h"
 

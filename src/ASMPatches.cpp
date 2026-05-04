@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <windows.h>
 #include <shlwapi.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -16,7 +16,7 @@
 
 #include "mod_loader.h"
 #include "cave_story.h"
-#include "Main.h"
+#include "main.h"
 #include "Draw.h"
 #include "Entity.h"
 #include "EntityLoad.h"
@@ -49,7 +49,7 @@ void InitCustomMyCharPatch()
 		0x74, 0x61                    // je short 4160D7
 	};
 	WriteProcessMemory(GetCurrentProcess(), (void*)0x416063, optimizedSpdLimit, sizeof optimizedSpdLimit, NULL);
-	ModLoader_WriteCall((void*)0x416066, ActMyChar_Normal_Custom); // Insert your function here
+	ModLoader_WriteCall((void*)0x416066, reinterpret_cast<const void*>(ActMyChar_Normal_Custom)); // Insert your function here
 }
 
 // Patch for changing physics (used only when the setting is enabled)
@@ -68,5 +68,5 @@ void InitMyCharPhysicsPatch()
 		0x90,
 	};
 	WriteProcessMemory(GetCurrentProcess(), (void*)0x4156D7, physicsPatch, sizeof physicsPatch, NULL);
-	ModLoader_WriteCall((void*)0x4156DE, setPlayerPhysics);
+	ModLoader_WriteCall((void*)0x4156DE, reinterpret_cast<const void*>(setPlayerPhysics));
 }

@@ -1,5 +1,6 @@
 /.git
 /.vs
+/build*
 /Debug
 /Release
 /ZZ-FinalRelease
@@ -34,3 +35,5 @@ CaveStory/Profile.FMOD.dat
 !CaveStory/ava/config
 !CaveStory/mods/autpi/autpi.dll
 CaveStory/Doukutsu.exe.blbkp
+!CaveStory/mods/mod_loader.dll
+!CaveStory/dsound.dll

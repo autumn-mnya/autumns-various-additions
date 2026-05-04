@@ -8,7 +8,7 @@
 #include "ASMLoader.h"
 
 #include "cave_story.h"
-#include "Main.h"
+#include "main.h"
 #include "ModSettings.h"
 
 #include <iostream>
