@@ -38,8 +38,7 @@ void SaveAvaFile()
 
 	// Get path
 	std::string sp = GetCustomSaveName();
-	std::size_t id = sp.find_last_of("/\\");
-	sprintf(path, "%s\\savedata\\%s.%s", sp.substr(0, id).c_str(), sp.substr(id + 1).c_str(), gAvaSaveFileName);
+	sprintf(path, "%s\\savedata\\%s.%s", gModulePath, sp.c_str(), gAvaSaveFileName);
 
 	fp = fopen(path, "wb");
 	if (fp == NULL)
@@ -168,8 +167,7 @@ void LoadAvaFile()
 
 	// Get path
 	std::string sp = GetCustomSaveName();
-	std::size_t id = sp.find_last_of("/\\");
-	sprintf(path, "%s\\savedata\\%s.%s", sp.substr(0, id).c_str(), sp.substr(id + 1).c_str(), gAvaSaveFileName);
+	sprintf(path, "%s\\savedata\\%s.%s", gModulePath, sp.c_str(), gAvaSaveFileName);
 
 	// Open file
 	fp = fopen(path, "rb");
@@ -181,8 +179,6 @@ void LoadAvaFile()
 	memset(&profile, 0, sizeof(CustomProfileData));
 	fread(&profile, sizeof(CustomProfileData), 1, fp);
 	fclose(fp);
-
-	printf("Trying to do this :(\n");
 
 	strcpy(TSC_IMG_Folder, profile.imgFolder);
 
