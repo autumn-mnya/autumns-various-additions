@@ -291,7 +291,24 @@ void Replacement_SetExpObjects(int x, int y, int exp)
 	}
 }
 
-void Replacement_HitMyCharNpChar(void)
+void Replacement_HitMyCharNpChar_AddExpMyChar_AVA(int amount)
+{
+	AddExpMyChar(amount);
+	if (setting_exp_acts_as_money)
+	{
+		if (setting_money_division)
+		{
+			if (amount != 1)
+				AddMoney(amount / 2);
+			else
+				AddMoney(amount);
+		}
+		else
+			AddMoney(amount);
+	}
+}
+
+void HitMyCharNpChar_AVA()
 {
 	int i;
 	int hit = 0;
@@ -321,83 +338,13 @@ void Replacement_HitMyCharNpChar(void)
 			hit = JudgeHitMyCharNPC3(&gNPC[i]);
 		}
 
-		// Special NPCs (pickups)
-		if (hit != 0 && gNPC[i].code_char == 1)
-		{
-			PlaySoundObject(14, SOUND_MODE_PLAY);
-			AddExpMyChar(gNPC[i].exp);
-			if (setting_exp_acts_as_money)
-			{
-				if (setting_money_division)
-				{
-					if (gNPC[i].exp != 1)
-						AddMoney(gNPC[i].exp / 2);
-					else
-						AddMoney(gNPC[i].exp);
-				}
-				else
-					AddMoney(gNPC[i].exp);
-			}
-			gNPC[i].cond = 0;
-		}
-
-		if (hit != 0 && gNPC[i].code_char == 86)
-		{
-			PlaySoundObject(42, SOUND_MODE_PLAY);
-			AddBulletMyChar(gNPC[i].code_event, gNPC[i].exp);
-			gNPC[i].cond = 0;
-		}
-
-		if (hit != 0 && gNPC[i].code_char == 87)
-		{
-			PlaySoundObject(20, SOUND_MODE_PLAY);
-			AddLifeMyChar(gNPC[i].exp);
-			gNPC[i].cond = 0;
-		}
-
 		if (hit != 0 && gNPC[i].code_char == 459)
 		{
 			PlaySoundObject(14, SOUND_MODE_PLAY);
 			AddMoney(gNPC[i].exp);
 			gNPC[i].cond = 0;
 		}
-
-		// Run event on contact
-		if (!(g_GameFlags & 4) && hit != 0 && gNPC[i].bits & NPC_EVENT_WHEN_TOUCHED)
-			StartTextScript(gNPC[i].code_event);
-
-		// NPC damage
-		if (g_GameFlags & 2 && !(gNPC[i].bits & NPC_INTERACTABLE))
-		{
-			if (gNPC[i].bits & NPC_REAR_AND_TOP_DONT_HURT)
-			{
-				if (hit & 4 && gNPC[i].xm < 0)
-					DamageMyChar(gNPC[i].damage);
-				if (hit & 1 && gNPC[i].xm > 0)
-					DamageMyChar(gNPC[i].damage);
-				if (hit & 8 && gNPC[i].ym < 0)
-					DamageMyChar(gNPC[i].damage);
-				if (hit & 2 && gNPC[i].ym > 0)
-					DamageMyChar(gNPC[i].damage);
-			}
-			else if (hit != 0 && gNPC[i].damage && !(g_GameFlags & 4))
-			{
-				DamageMyChar(gNPC[i].damage);
-			}
-		}
-
-		// Interaction
-		if (!(g_GameFlags & 4) && hit != 0 && gMC.cond & 1 && gNPC[i].bits & NPC_INTERACTABLE)
-		{
-			StartTextScript(gNPC[i].code_event);
-			gMC.xm = 0;
-			gMC.ques = FALSE;
-		}
 	}
-
-	// Create question mark when NPC hasn't been interacted with
-	if (gMC.ques)
-		SetCaret(gMC.x, gMC.y, CARET_QUESTION_MARK, DIR_LEFT);
 }
 
 // Custom Functions

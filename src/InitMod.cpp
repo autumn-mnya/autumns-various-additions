@@ -52,7 +52,8 @@ void InitMod_Entity()
 	{
 		if (setting_enable_money_code == true)
 		{
-			ModLoader_WriteJump((void*)0x419030, (void*)Replacement_HitMyCharNpChar);
+			ModLoader_WriteCall((void*)0x41916E, (void*)Replacement_HitMyCharNpChar_AddExpMyChar_AVA);
+			RegisterActionElement(HitMyCharNpChar_AVA);
 
 			if (setting_money_disable_enemy_money_drops == false)
 				ModLoader_WriteJump((void*)0x46F2B0, (void*)Replacement_SetExpObjects);
