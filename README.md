@@ -7,6 +7,10 @@ __Ensure you use the GitHub issues system, or pull requests if you have bug fixe
 # Cave Story Mod Loader ~ Autumn's Various Additions
 This is a mod that adds many features to Cave Story freeware, through [Clownacy's Mod Loader](https://github.com/Clownacy/Cave-Story-Mod-Loader/releases).
 
+# Editor (2026)
+
+It is recommended to use [Dog Studio](https://github.com/SamanthaKcles/dog-studio) from now on for autumns various additions mod, as it has more features and still supports autumns various additions code.
+
 # Building
 
 The recommended method of compiling this mod is to use [CMake](https://cmake.org/).
