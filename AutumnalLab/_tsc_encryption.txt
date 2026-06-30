@@ -1,1 +1,0 @@
-Add "TSCUNENCRYPTED=1" to your launch arguments to launch boosters lab without tsc encryption.

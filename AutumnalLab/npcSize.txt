@@ -1,4 +1,0 @@
-0 - no smoke
-1 - little smoke
-2 - medium smoke
-3 - lots of smoke
